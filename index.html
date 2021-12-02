@@ -296,7 +296,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-12-02 23:51:10 / 修改时间：23:51:03" itemprop="dateCreated datePublished" datetime="2021-12-02T23:51:10+08:00">2021-12-02</time>
+              <time title="创建时间：2021-12-02 23:51:10 / 修改时间：23:53:35" itemprop="dateCreated datePublished" datetime="2021-12-02T23:51:10+08:00">2021-12-02</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -319,67 +319,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="对数字信号处理的认识"><a href="#对数字信号处理的认识" class="headerlink" title="对数字信号处理的认识"></a>对数字信号处理的认识</h2><p>&emsp;&emsp;《数字信号处理》这门课我觉得其实是两大主题，第一是信号分析，第二是信号处理。</p>
-<p>&emsp;&emsp;信号分析在《信号与线性系统》中有所讲解，但是那时所研究的是连续时间信号的傅里叶级数或傅里叶变换，离散时间信号的傅里叶变换，它们的特点都是：信号无限长，导致计算机无法处理。而为了使用计算机工具帮助对信号进行分析，《数字信号处理》这门课引入了采样、增/减采样和离散傅里叶变换DFT的概念。后续考虑到DFT算法的时间复杂度太高，因此又提出快速傅里叶变换FFT来代替之。</p>
-<p>&emsp;&emsp;信号处理在这门课中主要指滤波。低通、高通、带通、带阻、全通，《信号与线性系统》中共提出过五种模拟滤波器，如何根据所需指标将其转化为对应的数字滤波器来在计算机上使用，是这门课的第二个重点。</p>
-<h5 id="采样"><a href="#采样" class="headerlink" title="采样"></a>采样</h5><p>&emsp;&emsp;模拟信号经过采样、抽取（减采样）后成为计算机可以处理的有限长离散信号。采样后，仍是连续时间信号，但频域上是原始模拟信号频域的周期延拓和幅度放缩。抽取后，变为有限长离散信号，频域点数和时域相同，但横坐标频率被按比例压缩在 0~2pi 范围内，幅值和采样后的一样。</p>
-<h5 id="离散傅里叶变换"><a href="#离散傅里叶变换" class="headerlink" title="离散傅里叶变换"></a>离散傅里叶变换</h5><p>&emsp;&emsp;在傅里叶变换中，离散/连续 和 周期/非周期 相对偶，离散周期序列的傅里叶变换仍是离散周期序列。因为计算机容量有限，其处理的信号长度有限，因此从离散周期信号中取一个周期来代替整个信号分析是一种行之有效的方法。DFT也正是在这种思想下被引出，重点在于循环卷积、旋转因子、各种变换性质。</p>
-<p>&emsp;&emsp;但是，用定义计算DFT的时间复杂度太高，计算机效率低。借助公式中“旋转因子”的周期性，长序列的DFT可以不断分解至一组组两点DFT的组合，大大减少了计算量，这就是FFT算法。</p>
-<h5 id="数字滤波器"><a href="#数字滤波器" class="headerlink" title="数字滤波器"></a>数字滤波器</h5><p>&emsp;&emsp;数字滤波器有很多值得关注的地方，首先是截止频率、纹波幅度等性能指标，然后是幅频特性、相频特性，还有系统函数的极零点、信号流图等。根据冲激响应长度可分为有限脉冲响应滤波器FIR和无限脉冲响应滤波器IIR。从模拟滤波器转换为数字滤波器的方法有冲激响应不变法、双线性变换法。常用的滤波器有巴特沃斯滤波器、切比雪夫滤波器、椭圆滤波器等。</p>
+          <h2 id="Matlab-音频信号处理"><a href="#Matlab-音频信号处理" class="headerlink" title="Matlab 音频信号处理"></a>Matlab 音频信号处理</h2><p>&emsp;&emsp;现有原始音频文件<code>SunshineSquare.wav</code>，后半段音频被人为加上了多频段的噪音，使用matlab工具对其进行分析并消除噪音还原出无噪音频文件。</p>
 <p>&nbsp;</p>
-<p>&nbsp;</p>
-<h2 id="Matlab-音频信号处理"><a href="#Matlab-音频信号处理" class="headerlink" title="Matlab 音频信号处理"></a>Matlab 音频信号处理</h2><p>&emsp;&emsp;现有原始音频文件<code>SunshineSquare.wav</code>，后半段音频被人为加上了多频段的噪音，使用matlab工具对其进行分析并消除噪音还原出无噪音频文件。</p>
-<p>&nbsp;</p>
-<h3 id="Step1：分析原始音频文件"><a href="#Step1：分析原始音频文件" class="headerlink" title="Step1：分析原始音频文件"></a>Step1：分析原始音频文件</h3><h4 id="读取"><a href="#读取" class="headerlink" title="读取"></a>读取</h4><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[audio_data, fs] = audioread(<span class="string">&#x27;../../SunshineSquare.wav&#x27;</span>);</span><br><span class="line">L = <span class="built_in">length</span>(audio_data);</span><br><span class="line"></span><br><span class="line"><span class="comment">% 听一听该音频</span></span><br><span class="line"><span class="comment">% soundsc(audio_data, fs);</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="绘制时域图"><a href="#绘制时域图" class="headerlink" title="绘制时域图"></a>绘制时域图</h4><p>&emsp;&emsp;从下面时域图中可以看出，源音频文件时长11秒左右，从第8秒左右开始为一段强噪声。</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">figure</span>(<span class="string">&#x27;Name&#x27;</span>,<span class="string">&#x27;Original&#x27;</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">tt = (<span class="number">1</span> : L) * <span class="number">1</span>/fs;</span><br><span class="line">subplot(<span class="number">4</span>, <span class="number">1</span>, <span class="number">1</span>);<span class="built_in">plot</span>(tt, audio_data);grid;</span><br><span class="line">title(<span class="string">&#x27;Time Domain&#x27;</span>);xlabel(<span class="string">&#x27;时间（s）&#x27;</span>);ylabel(<span class="string">&#x27;Amp&#x27;</span>);</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211128143427.png" alt="image-20211128143420786"></p>
-<h4 id="频谱分析"><a href="#频谱分析" class="headerlink" title="频谱分析"></a>频谱分析</h4><p>&emsp;&emsp;使用快速傅里叶变换FFT对时域信号进行频谱分析，绘制的频域图反映出有四段噪声频段，后续消除噪声工作就是对这四个频段进行滤波。</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">L = <span class="number">2</span>^<span class="built_in">nextpow2</span>(L); <span class="comment">% 先从原始信号长度确定下一个 2 次幂的新长度,用尾随零填充信号以改善 fft 的性能</span></span><br><span class="line">Spectrum = fft(audio_data,L); <span class="comment">% 快速傅里叶变换，转换为频域</span></span><br><span class="line">f_x = fs*(<span class="number">0</span>:(L/<span class="number">2</span>))/L; <span class="comment">% 定义频域，即变换横坐标量纲为频率</span></span><br><span class="line">mag_FFT_audio_data = <span class="built_in">abs</span>(Spectrum / L); <span class="comment">% 取幅值，并归一化</span></span><br><span class="line">ang_FFT_audio_data = <span class="built_in">angle</span>(Spectrum)*<span class="number">180</span>/<span class="built_in">pi</span>;</span><br><span class="line"></span><br><span class="line">subplot(<span class="number">4</span>, <span class="number">1</span>, <span class="number">2</span>);<span class="built_in">plot</span>(f_x,mag_FFT_audio_data(<span class="number">1</span> : L/<span class="number">2</span>+<span class="number">1</span>)) </span><br><span class="line">title(<span class="string">&#x27;Frequency Domain&#x27;</span>);xlabel(<span class="string">&#x27;频率（Hz）&#x27;</span>);ylabel(<span class="string">&#x27;mag&#x27;</span>);</span><br><span class="line">subplot(<span class="number">4</span>, <span class="number">1</span>, <span class="number">3</span>);<span class="built_in">plot</span>(f_x,ang_FFT_audio_data(<span class="number">1</span> : L/<span class="number">2</span>+<span class="number">1</span>)) </span><br><span class="line">title(<span class="string">&#x27;Frequency Domain&#x27;</span>);xlabel(<span class="string">&#x27;频率（Hz）&#x27;</span>);ylabel(<span class="string">&#x27;ang&#x27;</span>);</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211128143455.png" alt="image-20211128143455368"></p>
-<h4 id="绘制声谱图"><a href="#绘制声谱图" class="headerlink" title="绘制声谱图"></a>绘制声谱图</h4><p>&emsp;&emsp;声谱图能够以颜色反映各频段信号强度随时间的变化和分布情况，如图所示，从第8秒左右开始有4个频段的强度持续较高，这就是上面频域分析出的4个噪声频段。但需要注意到，在噪声的开始和结束时刻，所有频段的强度都很高，在图中显示为两条垂直的黄线，这两条线仅靠滤波无法消除。</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">subplot(<span class="number">4</span>, <span class="number">1</span>, <span class="number">4</span>)</span><br><span class="line">spectrogram(audio_data,hann(<span class="number">256</span>),<span class="number">250</span>,<span class="number">256</span>,fs,<span class="string">&#x27;yaxis&#x27;</span>);</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211128143558.png" alt="image-20211128143558882"></p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<h3 id="Step2：滤波"><a href="#Step2：滤波" class="headerlink" title="Step2：滤波"></a>Step2：滤波</h3><h4 id="滤波法1——手动衰减"><a href="#滤波法1——手动衰减" class="headerlink" title="滤波法1——手动衰减"></a>滤波法1——手动衰减</h4><p>&emsp;&emsp;手动衰减各个噪声频段的幅度，注意FFT变换后的频谱图为偶对称，所以共有4对（8个）频段，逐一消除。</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">[m, n] = <span class="built_in">max</span>(Spectrum)</span><br><span class="line">Spectrum(n<span class="number">-850</span>: n+<span class="number">850</span>) = <span class="number">0</span>; <span class="comment">% 第一个噪声频段</span></span><br><span class="line"></span><br><span class="line">[m, n] = <span class="built_in">max</span>(Spectrum)</span><br><span class="line">Spectrum(n<span class="number">-850</span>: n+<span class="number">850</span>) = <span class="number">0</span>; <span class="comment">% 第二个噪声频段</span></span><br><span class="line"></span><br><span class="line">[m, n] = <span class="built_in">max</span>(Spectrum)</span><br><span class="line">Spectrum(n<span class="number">-850</span>: n+<span class="number">850</span>) = <span class="number">0</span>; <span class="comment">% 第三个噪声频段</span></span><br><span class="line"></span><br><span class="line">[m, n] = <span class="built_in">max</span>(Spectrum)</span><br><span class="line">Spectrum(n<span class="number">-850</span>: n+<span class="number">850</span>) = <span class="number">0</span>; <span class="comment">% 第四个噪声频段</span></span><br><span class="line"></span><br><span class="line">[m, n] = <span class="built_in">max</span>(Spectrum)</span><br><span class="line">Spectrum(n<span class="number">-850</span>: n+<span class="number">850</span>) = <span class="number">0</span>; <span class="comment">% 第五个噪声频段</span></span><br><span class="line"></span><br><span class="line">[m, n] = <span class="built_in">max</span>(Spectrum)</span><br><span class="line">Spectrum(n<span class="number">-850</span>: n+<span class="number">850</span>) = <span class="number">0</span>; <span class="comment">% 第六个噪声频段</span></span><br><span class="line"></span><br><span class="line">[m, n] = <span class="built_in">max</span>(Spectrum)</span><br><span class="line">Spectrum(n: n+<span class="number">850</span>) = <span class="number">0</span>; <span class="comment">% 第七个噪声频段</span></span><br><span class="line"></span><br><span class="line">[m, n] = <span class="built_in">max</span>(Spectrum)</span><br><span class="line">Spectrum(n<span class="number">-850</span>: n+<span class="number">850</span>) = <span class="number">0</span>; <span class="comment">% 第八个噪声频段</span></span><br><span class="line"></span><br><span class="line"><span class="comment">% 逆fft获得处理后的音频</span></span><br><span class="line">ifft_data = <span class="built_in">real</span>(ifft(Spectrum, L));</span><br><span class="line">audio_data = ifft_data(<span class="number">1</span>:<span class="built_in">length</span>(audio_data));</span><br></pre></td></tr></table></figure>
-
-
-
-<h5 id="滤波效果"><a href="#滤波效果" class="headerlink" title="滤波效果"></a>滤波效果</h5><p>&emsp;&emsp;绘制滤波后音频信号的时域图、频域图、声谱图，可看见时域图上噪声被消除，频谱图上4个频段的信号全部被消除，声谱图有四条水平的消磨痕迹。</p>
-<p><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211130213111.png" alt="image-20211130213111056"></p>
-<p>&nbsp;</p>
-<h4 id="滤波法2——数字滤波器"><a href="#滤波法2——数字滤波器" class="headerlink" title="滤波法2——数字滤波器"></a>滤波法2——数字滤波器</h4><p>&emsp;&emsp;设计梳状滤波器，因为有4个噪声频段，所以设计4个带阻滤波器逐一滤波。</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">%h1[n] = [1,-2,1];</span></span><br><span class="line">h1 = [<span class="number">1</span>,<span class="number">-2</span>,<span class="number">1</span>];</span><br><span class="line">h2 = [<span class="number">1</span>,<span class="number">-1.24698</span>,<span class="number">1</span>];</span><br><span class="line">h3 = [<span class="number">1</span>,<span class="number">0.44504</span>,<span class="number">1</span>];</span><br><span class="line">h4 = [<span class="number">1</span>,<span class="number">1.80194</span>,<span class="number">1</span>];</span><br><span class="line">a = [<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">%滤波过程</span></span><br><span class="line">audio_data_h1 = filter(h1,a,audio_data);</span><br><span class="line">audio_data_h2 = filter(h2,a,audio_data_h1);</span><br><span class="line">audio_data_h3 = filter(h3,a,audio_data_h2);</span><br><span class="line">audio_data_h4 = filter(h4,a,audio_data_h3);</span><br><span class="line"></span><br><span class="line">audio_data = audio_data_h4;</span><br></pre></td></tr></table></figure>
-
-
-
-<h6 id="滤波器分析"><a href="#滤波器分析" class="headerlink" title="滤波器分析"></a>滤波器分析</h6><p>&emsp;&emsp;绘制4个滤波器的幅频、相频、衰减及每次滤波后的信号时域图。</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211128145815.png" alt="image-20211128145815600" style="zoom: 25%;" />
-
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211128145835.png" alt="image-20211128145835590" style="zoom:25%;" />
-
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211128153455.png" alt="image-20211128145856791" style="zoom:25%;" />
-
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211128145920.png" alt="image-20211128145920683" style="zoom:25%;" />
-
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<h3 id="Step3：后续处理"><a href="#Step3：后续处理" class="headerlink" title="Step3：后续处理"></a>Step3：后续处理</h3><p>&emsp;&emsp;上面已分析，在噪声开始和结束时刻都有全频段的高强度信号，不是滤波能消除的，这里采用时域衰减，即在时域采用同第一种滤波方法相同的思想，手动衰减这两个时刻的信号强度。随后输出处理过的音频文件。</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[m, n] = <span class="built_in">max</span>(audio_data);</span><br><span class="line">audio_data(n<span class="number">-200</span>: n+<span class="number">200</span>) = <span class="number">0.0001</span> * audio_data(n<span class="number">-200</span>: n+<span class="number">200</span>); <span class="comment">% 衰减第一个高音时段</span></span><br><span class="line">[m, n] = <span class="built_in">max</span>(audio_data);</span><br><span class="line">audio_data(n<span class="number">-200</span>: n+<span class="number">200</span>) = <span class="number">0.0001</span> * audio_data(n<span class="number">-200</span>: n+<span class="number">200</span>); <span class="comment">% 衰减第二个高音频段</span></span><br><span class="line"></span><br><span class="line"><span class="comment">% 听一下处理后的音频</span></span><br><span class="line"><span class="comment">% soundsc(audio_data, fs);</span></span><br><span class="line"></span><br><span class="line"><span class="comment">% 输出音频文件</span></span><br><span class="line">audiowrite(<span class="string">&#x27;SunshineSquare_Processed.wav&#x27;</span>,audio_data,fs); </span><br></pre></td></tr></table></figure>
-
-
-
-<p>使用滤波法2的最终输出信号的分析如下：</p>
-<p><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211128150059.png" alt="image-20211128150059309"></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/12/02/Matlab%20%E9%9F%B3%E9%A2%91%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
