@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title></title>
+      <link href="/2021/12/09/test/"/>
+      <url>/2021/12/09/test/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>插入歌曲</p><p># 歌曲模板</p><script>console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");</script><p># 歌单模板</p><script>console.error("Error: [hexo-tag-aplayer] Meting support is disabled, cannot resolve the meting tags properly.");</script><p>插入视频</p><p>直接外用链接</p><iframe src="//player.bilibili.com/player.html?aid=74371709&cid=127218978&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe><p>使用hexo-tag-dplayer</p><div id="dplayer0" class="dplayer hexo-tag-dplayer-mark" style="margin-bottom: 20px;"></div><script>(function(){var player = new DPlayer({"container":document.getElementById("dplayer0"),"video":{"url":"https://什么什么什么.mp4"},"danmaku":{"api":"https://api.prprpr.me/dplayer/"}});window.dplayers||(window.dplayers=[]);window.dplayers.push(player);})()</script>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>基于令牌桶算法的LTE下行链路调度器设计</title>
       <link href="/2021/12/03/DL%20Packet%20Scheduler%20by%20Token%20Bucket%20Algorithm/"/>
       <url>/2021/12/03/DL%20Packet%20Scheduler%20by%20Token%20Bucket%20Algorithm/</url>
