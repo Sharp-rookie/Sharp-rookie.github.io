@@ -1191,7 +1191,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #4e8f49;
+  background: #f7f762;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2710,6 +2710,14 @@ ul.breadcrumb li + li:last-child {
   .pagination {
     margin: 8px 0 0;
   }
+}
+# 定制网站背景,
+body {
+  background: url("images/background.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
 }
 # 定制网站背景,
 body {
