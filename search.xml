@@ -4,11 +4,36 @@
   
     
     <entry>
+      <title>19级种子班全家福</title>
+      <link href="/2021/12/10/%E7%A7%8D%E5%AD%90%E7%8F%AD%E5%90%88%E7%85%A7/"/>
+      <url>/2021/12/10/%E7%A7%8D%E5%AD%90%E7%8F%AD%E5%90%88%E7%85%A7/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h3 id="19级种子班全家福"><a href="#19级种子班全家福" class="headerlink" title="19级种子班全家福"></a>19级种子班全家福</h3><p><img src="/source/images/photo.jpg" alt="墨镜版"></p><span id="more"></span><p>2021-12-8    华中科技大学主校区图书馆</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> “日常小记” </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Seed Class </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title></title>
       <link href="/2021/12/09/test/"/>
       <url>/2021/12/09/test/</url>
       
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>插入歌曲</p><p># 歌曲模板</p>    <div id="aplayer-BIosISfz" class="aplayer aplayer-tag-marker meting-tag-marker"         data-id="3986040" data-server="netease" data-type="song" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"    ></div><p># 歌单模板</p>    <div id="aplayer-cVSBpYUf" class="aplayer aplayer-tag-marker meting-tag-marker"         data-id="627070825" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"    ></div><p>插入视频</p><p>直接外用链接</p><iframe src="//player.bilibili.com/player.html?aid=74371709&cid=127218978&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe><p>使用hexo-tag-dplayer</p><div id="dplayer0" class="dplayer hexo-tag-dplayer-mark" style="margin-bottom: 20px;"></div><script>(function(){var player = new DPlayer({"container":document.getElementById("dplayer0"),"video":{"url":"https://什么什么什么.mp4"},"danmaku":{"api":"https://api.prprpr.me/dplayer/"}});window.dplayers||(window.dplayers=[]);window.dplayers.push(player);})()</script><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;hello world\n&quot;</span>);</span><br><span class="line">      <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>插入歌曲</p><p># 歌曲模板</p>    <div id="aplayer-yvbOpzMf" class="aplayer aplayer-tag-marker meting-tag-marker"         data-id="3986040" data-server="netease" data-type="song" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"    ></div><p># 歌单模板</p>    <div id="aplayer-AviawzmH" class="aplayer aplayer-tag-marker meting-tag-marker"         data-id="627070825" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"    ></div><p>插入视频</p><p>直接外用链接</p><iframe src="//player.bilibili.com/player.html?aid=74371709&cid=127218978&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe><p>使用hexo-tag-dplayer</p><div id="dplayer0" class="dplayer hexo-tag-dplayer-mark" style="margin-bottom: 20px;"></div><script>(function(){var player = new DPlayer({"container":document.getElementById("dplayer0"),"video":{"url":"https://什么什么什么.mp4"},"danmaku":{"api":"[慢镜下胡桃!火色的梅花瞳映出精灵般花娇的倩影!如此可爱.灵动.无瑕的女孩~——“如闪电与火花并行，甫一现身便点燃一切~”（米哈游原神胡桃细节展示慢镜角色演示）_哔哩哔哩_bilibili](https://www.bilibili.com/video/BV1cU4y1p7wU?spm_id_from=333.999.0.0)"}});window.dplayers||(window.dplayers=[]);window.dplayers.push(player);})()</script><p><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211210082942.jpg" alt="5975244fcc9dc410d96624b9680878e068fdf2f9"></p>]]></content>
       
       
       
