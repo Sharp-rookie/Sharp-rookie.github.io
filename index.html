@@ -211,7 +211,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://sharp-rookie.github.io/2021/12/10/%E7%A7%8D%E5%AD%90%E7%8F%AD%E5%90%88%E7%85%A7/">
+    <link itemprop="mainEntityOfPage" href="https://sharp-rookie.github.io/2021/12/26/Resource_Allocation_for_Network_Slicing_in_5G_Telecommunication_Networks_A_Survey_of_Principles_and_Models/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -225,7 +225,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/12/10/%E7%A7%8D%E5%AD%90%E7%8F%AD%E5%90%88%E7%85%A7/" class="post-title-link" itemprop="url">19级种子班全家福</a>
+            <a href="/2021/12/26/Resource_Allocation_for_Network_Slicing_in_5G_Telecommunication_Networks_A_Survey_of_Principles_and_Models/" class="post-title-link" itemprop="url">5G网络切片资源分配文献综述</a>
         </h2>
 
         <div class="post-meta">
@@ -236,7 +236,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-12-10 08:25:35" itemprop="dateCreated datePublished" datetime="2021-12-10T08:25:35+08:00">2021-12-10</time>
+              <time title="创建时间：2021-12-26 16:28:44" itemprop="dateCreated datePublished" datetime="2021-12-26T16:28:44+08:00">2021-12-26</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -244,12 +244,12 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E2%80%9C%E6%97%A5%E5%B8%B8%E5%B0%8F%E8%AE%B0%E2%80%9D/" itemprop="url" rel="index"><span itemprop="name">“日常小记”</span></a>
+                  <a href="/categories/%E2%80%9C%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E2%80%9D/" itemprop="url" rel="index"><span itemprop="name">“论文阅读”</span></a>
                 </span>
             </span>
 
           
-            <span id="/2021/12/10/%E7%A7%8D%E5%AD%90%E7%8F%AD%E5%90%88%E7%85%A7/" class="post-meta-item leancloud_visitors" data-flag-title="19级种子班全家福" title="阅读次数">
+            <span id="/2021/12/26/Resource_Allocation_for_Network_Slicing_in_5G_Telecommunication_Networks_A_Survey_of_Principles_and_Models/" class="post-meta-item leancloud_visitors" data-flag-title="5G网络切片资源分配文献综述" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -264,8 +264,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2021/12/10/%E7%A7%8D%E5%AD%90%E7%8F%AD%E5%90%88%E7%85%A7/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/12/10/%E7%A7%8D%E5%AD%90%E7%8F%AD%E5%90%88%E7%85%A7/" itemprop="commentCount"></span>
+    <a title="valine" href="/2021/12/26/Resource_Allocation_for_Network_Slicing_in_5G_Telecommunication_Networks_A_Survey_of_Principles_and_Models/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/12/26/Resource_Allocation_for_Network_Slicing_in_5G_Telecommunication_Networks_A_Survey_of_Principles_and_Models/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -280,10 +280,20 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="19级种子班全家福"><a href="#19级种子班全家福" class="headerlink" title="19级种子班全家福"></a>19级种子班全家福</h3>
+          <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>&emsp;&emsp;随着网络需求的快速持续增长，5G网络需要为传统网络运营商、垂直行业、OTT、第三方满足不同服务质量 (QoS)、服务水平协议 (SLA) 和关键绩效指标 (KPI)的要求，在这种情况下，第四代 (4G) 电信网络的“一刀切”和“一网通”类型不再适用。</p>
+<p>&emsp;&emsp;网络切片是一种很有前途的技术，它可以建立包含专用和共享资源的定制端到端逻辑网络，通过利用 SDN 和 NFV，可以定制与资源相关的网络切片，以满足不同的 QoS 和 SLA。网络切片的资源分配在负载均衡、资源利用率和网络性能方面起着举足轻重的作用。</p>
+<p><strong>主要内容</strong></p>
+<ul>
+<li>SDN 和 NFV 的原理及其对网络切片的影响</li>
+<li>网络切片的基本管理和编排（MO）架构</li>
+<li>RAN和CN切片中的资源类型和相应的隔离级别</li>
+<li>5G 网络切片资源分配算法的原理和数学模型</li>
+<li>提出网络切片的几个开放问题以及潜在的解决方案</li>
+</ul>
+<p>&nbsp;</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2021/12/10/%E7%A7%8D%E5%AD%90%E7%8F%AD%E5%90%88%E7%85%A7/#more" rel="contents">
+              <a class="btn" href="/2021/12/26/Resource_Allocation_for_Network_Slicing_in_5G_Telecommunication_Networks_A_Survey_of_Principles_and_Models/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
