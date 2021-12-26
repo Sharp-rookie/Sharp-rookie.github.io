@@ -32,13 +32,14 @@
           }
       })();
   </script>
-  <meta name="description" content="Matlab 音频信号处理&amp;emsp;&amp;emsp;现有原始音频文件SunshineSquare.wav，后半段音频被人为加上了多频段的噪音，使用matlab工具对其进行分析并消除噪音还原出无噪音频文件。 &amp;nbsp;">
+  <meta name="description" content="Matlab 音频信号处理&amp;emsp;&amp;emsp;现有原始音频文件SunshineSquare.wav，后半段音频被人为加上了多频段的噪音，使用matlab工具对其进行分析并消除噪音还原出无噪音频文件。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Matlab音频滤波">
 <meta property="og:url" content="https://sharp-rookie.github.io/2021/12/02/Matlab%20%E9%9F%B3%E9%A2%91%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86/index.html">
 <meta property="og:site_name" content="最忆是江南">
-<meta property="og:description" content="Matlab 音频信号处理&amp;emsp;&amp;emsp;现有原始音频文件SunshineSquare.wav，后半段音频被人为加上了多频段的噪音，使用matlab工具对其进行分析并消除噪音还原出无噪音频文件。 &amp;nbsp;">
+<meta property="og:description" content="Matlab 音频信号处理&amp;emsp;&amp;emsp;现有原始音频文件SunshineSquare.wav，后半段音频被人为加上了多频段的噪音，使用matlab工具对其进行分析并消除噪音还原出无噪音频文件。">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211128143427.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211128143427.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211128143455.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211128143558.png">
@@ -49,7 +50,7 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211128145920.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211128150059.png">
 <meta property="article:published_time" content="2021-12-02T15:51:10.218Z">
-<meta property="article:modified_time" content="2021-12-10T11:37:57.650Z">
+<meta property="article:modified_time" content="2021-12-26T08:36:16.811Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="matlab">
 <meta name="twitter:card" content="summary">
@@ -301,7 +302,7 @@
 
       
         <h2 id="Matlab-音频信号处理"><a href="#Matlab-音频信号处理" class="headerlink" title="Matlab 音频信号处理"></a>Matlab 音频信号处理</h2><p>&emsp;&emsp;现有原始音频文件<code>SunshineSquare.wav</code>，后半段音频被人为加上了多频段的噪音，使用matlab工具对其进行分析并消除噪音还原出无噪音频文件。</p>
-<p>&nbsp;</p>
+<p><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211128143427.png" alt="image-20211128143420786"></p>
 <span id="more"></span>
 
 <h3 id="Step1：分析原始音频文件"><a href="#Step1：分析原始音频文件" class="headerlink" title="Step1：分析原始音频文件"></a>Step1：分析原始音频文件</h3><h4 id="读取"><a href="#读取" class="headerlink" title="读取"></a>读取</h4><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[audio_data, fs] = audioread(<span class="string">&#x27;../../SunshineSquare.wav&#x27;</span>);</span><br><span class="line">L = <span class="built_in">length</span>(audio_data);</span><br><span class="line"></span><br><span class="line"><span class="comment">% 听一听该音频</span></span><br><span class="line"><span class="comment">% soundsc(audio_data, fs);</span></span><br></pre></td></tr></table></figure>
