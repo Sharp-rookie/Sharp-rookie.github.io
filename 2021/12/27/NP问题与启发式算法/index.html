@@ -32,18 +32,18 @@
           }
       })();
   </script>
-  <meta name="description" content="NP问题多项式时间（polynomial time）&amp;emsp;&amp;emsp;时间复杂度是指当程序所处理的问题规模扩大后，程序需要的时间长度对应增长得有多快。根据增量的量级划分，可以分为：  多项式复杂度：O(1)、O(ln(n))、O(n^a)等 非多项式复杂度：O(a^n)、O(n!)等  &amp;emsp;&amp;emsp;非多项式复杂度的程序当问题规模扩大时，计算机将无法承受运算时间开销，因此通常使">
+  <meta name="description" content="计算机科学的两大基础目标，就是发现可证明其执行效率良好且可得最佳解或次佳解的算法。而启发式算法则试图一次提供一或全部目标。 例如它常能发现很不错的解，但也没办法证明它不会得到较坏的解；它通常可在合理时间解出答案，但也没办法知道它是否每次都可以这样的速度求解。 有时候人们会发现在某些特殊情况下，启发式算法会得到很坏的答案或效率极差，然而造成那些特殊情况的数据组合，也许永远不会在现实世界出现。因此现实">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NP问题与启发式算法">
 <meta property="og:url" content="https://sharp-rookie.github.io/2021/12/27/NP%E9%97%AE%E9%A2%98%E4%B8%8E%E5%90%AF%E5%8F%91%E5%BC%8F%E7%AE%97%E6%B3%95/index.html">
 <meta property="og:site_name" content="最忆是江南">
-<meta property="og:description" content="NP问题多项式时间（polynomial time）&amp;emsp;&amp;emsp;时间复杂度是指当程序所处理的问题规模扩大后，程序需要的时间长度对应增长得有多快。根据增量的量级划分，可以分为：  多项式复杂度：O(1)、O(ln(n))、O(n^a)等 非多项式复杂度：O(a^n)、O(n!)等  &amp;emsp;&amp;emsp;非多项式复杂度的程序当问题规模扩大时，计算机将无法承受运算时间开销，因此通常使">
+<meta property="og:description" content="计算机科学的两大基础目标，就是发现可证明其执行效率良好且可得最佳解或次佳解的算法。而启发式算法则试图一次提供一或全部目标。 例如它常能发现很不错的解，但也没办法证明它不会得到较坏的解；它通常可在合理时间解出答案，但也没办法知道它是否每次都可以这样的速度求解。 有时候人们会发现在某些特殊情况下，启发式算法会得到很坏的答案或效率极差，然而造成那些特殊情况的数据组合，也许永远不会在现实世界出现。因此现实">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211227130636.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211227130659.png">
 <meta property="og:image" content="c:/Users/lrk/AppData/Roaming/Typora/typora-user-images/image-20211227130748742.png">
 <meta property="article:published_time" content="2021-12-27T02:49:41.783Z">
-<meta property="article:modified_time" content="2021-12-27T05:08:11.274Z">
+<meta property="article:modified_time" content="2021-12-27T06:31:58.351Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="优化问题">
 <meta property="article:tag" content="Algorithm">
@@ -295,11 +295,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <span id="more"></span>
+        <p>计算机科学的两大基础目标，就是发现可证明其执行效率良好且可得最佳解或次佳解的算法。而启发式算法则试图一次提供一或全部目标。 例如它常能发现很不错的解，但也没办法证明它不会得到较坏的解；它通常可在合理时间解出答案，但也没办法知道它是否每次都可以这样的速度求解。</p>
+<p>有时候人们会发现在某些特殊情况下，启发式算法会得到很坏的答案或效率极差，然而造成那些特殊情况的数据组合，也许永远不会在现实世界出现。因此现实世界中启发式算法常用来解决问题。启发式算法处理许多实际问题时通常可以在合理时间内得到不错的答案。</p>
+<p>有一类的通用启发式策略称为元启发式算法，通常使用乱数搜寻技巧。他们可以应用在非常广泛的问题上，但不能保证效率。</p>
+<span id="more"></span>
 
 <h2 id="NP问题"><a href="#NP问题" class="headerlink" title="NP问题"></a>NP问题</h2><h3 id="多项式时间（polynomial-time）"><a href="#多项式时间（polynomial-time）" class="headerlink" title="多项式时间（polynomial time）"></a>多项式时间（polynomial time）</h3><p>&emsp;&emsp;时间复杂度是指当程序所处理的问题规模扩大后，程序需要的时间长度对应增长得有多快。根据增量的量级划分，可以分为：</p>
 <ul>
-<li>多项式复杂度：O(1)、O(ln(n))、O(n^a)等</li>
+<li>多项式复杂度：O(1)、O(log(n))、O(n^a)等</li>
 <li>非多项式复杂度：O(a^n)、O(n!)等</li>
 </ul>
 <p>&emsp;&emsp;非多项式复杂度的程序当问题规模扩大时，计算机将无法承受运算时间开销，因此通常使用的算法都是多项式级的复杂度。</p>
@@ -309,8 +312,8 @@
 <ul>
 <li>猜测阶段：对问题的一个特定的输入实例x产生一个任意字符串y，在算法的每一次运行时，y的值可能不同，因此，猜测以一种非确定的形式工作。</li>
 <li>验证阶段：用一个确定性算法（有限时间内）验证。<ul>
-<li>①检查在猜测阶段产生的y是否是合适的形式，如果不是，则算法停下来并得到no；</li>
-<li>② 如果y是合适的形式，则验证它是否是问题的解，如果是，则算法停下来并得到yes，否则算法停下来并得到no。它是验证所猜测的解的正确性。</li>
+<li>检查在猜测阶段产生的y是否是合适的形式，如果不是，则算法停下来并得到no；</li>
+<li>如果y是合适的形式，则验证它是否是问题的解，如果是，则算法停下来并得到yes，否则算法停下来并得到no。它是验证所猜测的解的正确性。</li>
 </ul>
 </li>
 </ul>
