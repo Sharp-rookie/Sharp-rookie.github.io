@@ -34,11 +34,12 @@
   </script>
   <meta name="description" content="&amp;emsp;&amp;emsp;强化学习 (Reinforcement Learning) 是一个机器学习大家族中的分支, 由于近些年来的技术突破, 和深度学习 (Deep Learning) 的整合, 使得强化学习有了进一步的运用。比如让计算机学着玩游戏, AlphaGo 挑战世界围棋高手, 都是强化学习在行的事。强化学习让程序从对当前环境完全陌生, 成长为一个在环境中游刃有余的高手。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="强化学习基础">
+<meta property="og:title" content="【强化学习】基础知识">
 <meta property="og:url" content="https://sharp-rookie.github.io/2021/12/28/%E3%80%90%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E3%80%91%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/index.html">
 <meta property="og:site_name" content="最忆是江南">
 <meta property="og:description" content="&amp;emsp;&amp;emsp;强化学习 (Reinforcement Learning) 是一个机器学习大家族中的分支, 由于近些年来的技术突破, 和深度学习 (Deep Learning) 的整合, 使得强化学习有了进一步的运用。比如让计算机学着玩游戏, AlphaGo 挑战世界围棋高手, 都是强化学习在行的事。强化学习让程序从对当前环境完全陌生, 成长为一个在环境中游刃有余的高手。">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211229085342.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211228090245.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211227234235.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211228085646.png">
@@ -70,7 +71,7 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211228110514.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211228105615.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211228112323.png">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211228105831.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211229100620.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211228112010.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211228142817.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211228111541.png">
@@ -78,12 +79,12 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211228135203.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211228134525.png">
 <meta property="article:published_time" content="2021-12-28T06:03:10.934Z">
-<meta property="article:modified_time" content="2021-12-28T06:29:14.638Z">
+<meta property="article:modified_time" content="2021-12-29T02:56:59.345Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="Algorithm">
 <meta property="article:tag" content="Reinforcement Learning">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211228090245.png">
+<meta name="twitter:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211229085342.png">
 
 <link rel="canonical" href="https://sharp-rookie.github.io/2021/12/28/%E3%80%90%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E3%80%91%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/">
 
@@ -98,7 +99,7 @@
   };
 </script>
 
-  <title>强化学习基础 | 最忆是江南</title>
+  <title>【强化学习】基础知识 | 最忆是江南</title>
   
 
 
@@ -268,7 +269,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          强化学习基础
+          【强化学习】基础知识
         </h1>
 
         <div class="post-meta">
@@ -292,7 +293,7 @@
             </span>
 
           
-            <span id="/2021/12/28/%E3%80%90%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E3%80%91%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/" class="post-meta-item leancloud_visitors" data-flag-title="强化学习基础" title="阅读次数">
+            <span id="/2021/12/28/%E3%80%90%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E3%80%91%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/" class="post-meta-item leancloud_visitors" data-flag-title="【强化学习】基础知识" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -336,6 +337,8 @@
 <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="在机器学习中的位置"><a href="#在机器学习中的位置" class="headerlink" title="在机器学习中的位置"></a>在机器学习中的位置</h3><p>​        强化学习是和监督学习，非监督学习并列的第三种机器学习方法。</p>
 <p>​        强化学习和监督学习最大的区别是它没有监督学习已经准备好的训练数据输出值。强化学习只有奖励值，但是这个奖励值和监督学习的输出值不一样，它不是事先给出的，而是延后给出的。同时，强化学习的每一步与时间顺序前后关系紧密。而监督学习的训练数据之间一般都是独立的，没有这种前后的依赖关系。</p>
 <p>​        强化学习和非监督学习的区别。也还是在奖励值这个地方。非监督学习是没有输出值也没有奖励值的，它只有数据特征。同时和监督学习一样，数据之间也都是独立的，没有强化学习这样的前后依赖关系。</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211229085342.png" alt="image-20211229085342314" style="zoom:50%;" />
+
 <h3 id="基本模型"><a href="#基本模型" class="headerlink" title="基本模型"></a>基本模型</h3><p><strong>目标：</strong>找到一个策略 a = π(s) 来确定在状态 s 下选择的动作 a，从而最大化价值函数：</p>
 <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228090245.png" alt="image-20211228090244956" style="zoom:50%;" />
 
@@ -428,7 +431,8 @@
 <p>&nbsp;</p>
 <h2 id="模型求解"><a href="#模型求解" class="headerlink" title="模型求解"></a>模型求解</h2><h3 id="强化学习两个基本问题"><a href="#强化学习两个基本问题" class="headerlink" title="强化学习两个基本问题"></a>强化学习两个基本问题</h3><h6 id="预测问题"><a href="#预测问题" class="headerlink" title="预测问题"></a>预测问题</h6><p>给定：状态集S, 动作集A, 模型状态转化概率矩阵P, 即时奖励R，衰减因子γ,  策略π，求解该策略的状态价值函数v(π)</p>
 <h6 id="控制问题"><a href="#控制问题" class="headerlink" title="控制问题"></a>控制问题</h6><p>给定：状态集S, 动作集A, 模型状态转化概率矩阵P, 即时奖励R，衰减因子γ，求解最优策略π和最优状态价值函数v(π)</p>
-<h6 id="贝尔曼期望方程"><a href="#贝尔曼期望方程" class="headerlink" title="贝尔曼期望方程"></a>贝尔曼期望方程</h6><p><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228091621.png" alt="image-20211228091621142" style="zoom: 67%;" />.</p>
+<h6 id="贝尔曼期望方程"><a href="#贝尔曼期望方程" class="headerlink" title="贝尔曼期望方程"></a>贝尔曼期望方程</h6><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228091621.png" alt="image-20211228091621142" style="zoom: 67%;" />
+
 <p>&nbsp;</p>
 <h3 id="动态规划DP（Model-based）"><a href="#动态规划DP（Model-based）" class="headerlink" title="动态规划DP（Model-based）"></a>动态规划DP（Model-based）</h3><h4 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h4><p>问题的最优解可以由若干小问题的最优解构成，即通过寻找子问题的最优解来得到问题的最优解。</p>
 <p>可以找到子问题状态之间的递推关系，通过较小的子问题状态递推出较大的子问题的状态。</p>
@@ -494,7 +498,7 @@
 <p><strong>算法流程：（以在线学习on-policy的every-visit蒙特卡罗法为例）</strong></p>
 <p>输入：状态集S、动作集A、即时奖励R、衰减因子γ、探索率ϵ</p>
 <p>输出：最有动作价值函数q∗、最优策略π∗</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">1. 初始化所有的动作价值Q(s, a)=0，状态次数N(s, a)=0，采样次数k=0，随机初始化一个策略π</span><br><span class="line"></span><br><span class="line">2. k=k+1，基于策略π进行第k次蒙特卡罗采样，得到一个完整的状态序列:</span><br><span class="line">						S1,A1,R2,S1,A2,R3,...St,At,Rt+1,...,RT,ST</span><br><span class="line"></span><br><span class="line">3. 对于该状态序列里出现的每一状态行为对(St,At)，计算其收获Gt, 更新其计数N(s,a)和行为价值函数Q(s,a)：</span><br><span class="line">			  Gt = 对n累加到T[(γ^(t-n))*(Rt+n)]</span><br><span class="line">			  N(s, a) ++</span><br><span class="line">			  Q(s, a) += (Gt-Q(s, a))/N(s,a)</span><br><span class="line"></span><br><span class="line">4. 基于新计算出的动作价值，更新当前的ϵ−greedy策略：</span><br><span class="line">			  ϵ = 1/k</span><br><span class="line">			  π = ϵ−greedy()</span><br><span class="line"></span><br><span class="line">5. 若所有的Q(s,a)收敛，则对应的所有Q(s,a)即为最优的动作价值函数q∗，对应的策略π(a|s)即为最优策略π∗，否则转到第二步</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">1. 初始化所有的动作价值Q(s, a)=0，状态次数N(s, a)=0，采样次数k=0，随机初始化一个策略π</span><br><span class="line"></span><br><span class="line">2. k=k+1，基于策略π进行第k次蒙特卡罗采样，得到一个完整的状态序列:</span><br><span class="line">				S1,A1,R2,S1,A2,R3,...St,At,Rt+1,...,RT,ST</span><br><span class="line"></span><br><span class="line">3. 对于该状态序列里出现的每一状态行为对(St,At)，计算其收获Gt, 更新其计数N(s,a)和行为价值函数Q(s,a)：</span><br><span class="line">			    Gt = 对n累加到T[(γ^(t-n))*(Rt+n)]</span><br><span class="line">			    N(s, a) ++</span><br><span class="line">			    Q(s, a) += (Gt-Q(s, a))/N(s,a)</span><br><span class="line"></span><br><span class="line">4. 基于新计算出的动作价值，更新当前的ϵ−greedy策略：</span><br><span class="line">			    ϵ = 1/k</span><br><span class="line">			    π = ϵ−greedy()</span><br><span class="line"></span><br><span class="line">5. 若所有的Q(s,a)收敛，则对应的所有Q(s,a)即为最优的动作价值函数q∗，对应的策略π(a|s)即为最优策略π∗，否则转到第二步</span><br></pre></td></tr></table></figure>
 
 <p>&nbsp;</p>
 <h4 id="小结-1"><a href="#小结-1" class="headerlink" title="小结"></a>小结</h4><p>&emsp;&emsp;蒙特卡罗法是不基于模型的强化问题求解方法，它可以避免动态规划求解过于复杂，同时还可以不事先知道环境转化模型，因此可以用于海量数据和复杂模型。但是它每次采样都需要一个完整的状态序列，如果没有完整的状态序列，或者很难拿到较多的完整的状态序列，因此在实际问题中蒙特卡罗法用的不多，所以还需要寻找其他的更灵活的不基于模型的强化问题求解方法。</p>
@@ -537,7 +541,9 @@
 <p>&nbsp;</p>
 <h4 id="TD-λ"><a href="#TD-λ" class="headerlink" title="TD(λ)"></a>TD(λ)</h4><p><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228112323.png" alt="image-20211228112323589"></p>
 <p>&emsp;&emsp;n步时序差分选择多少步数是一个超参数调优问题(一般3~10比较好)。为了能在不增加计算复杂度的情况下综合考虑所有步数的预测，引入一个[0,1]新的参数λ，定义收获是n从1到∞所有步的收获乘以权重的和：</p>
-<p>​                                        <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228105831.png" alt="image-20211228105831111" style="zoom: 25%;" />，每一步的权重是<code>(1−λ)*λ^(n−1)</code></p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211229100620.png" alt="image-20211229100620726" style="zoom:50%;" />
+
+<p>每一步的权重是<code>(1−λ)*λ^(n−1)</code></p>
 <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228112010.png" alt="image-20211228112009881" style="zoom: 33%;" />
 
 <p>&emsp;&emsp;进而有价值函数：</p>
@@ -574,7 +580,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://sharp-rookie.github.io/2021/12/28/%E3%80%90%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E3%80%91%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/" title="强化学习基础">https://sharp-rookie.github.io/2021/12/28/【强化学习】基础概念/</a>
+    <a href="https://sharp-rookie.github.io/2021/12/28/%E3%80%90%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E3%80%91%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/" title="【强化学习】基础知识">https://sharp-rookie.github.io/2021/12/28/【强化学习】基础概念/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -598,7 +604,10 @@
     <a href="/2021/12/27/Network%20Traffic%20%20Characterization%20%20Using%20Token%20%20Bucket%20%20Model/" rel="prev" title="token bucket最优参数的数学推导">
       <i class="fa fa-chevron-left"></i> token bucket最优参数的数学推导
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2021/12/29/%E3%80%90%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E3%80%91%E6%97%B6%E5%BA%8F%E5%B7%AE%E5%88%86%EF%BC%9ASarsa&Q-Lreaning/" rel="next" title="【强化学习】时序差分模型：SARSA & Q-Learning">
+      【强化学习】时序差分模型：SARSA & Q-Learning <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -674,7 +683,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
