@@ -40,7 +40,7 @@
 <meta property="og:description" content="&amp;emsp;&amp;emsp;Python 可以非常方便地和 C 进行相互的调用。 &amp;emsp;&amp;emsp;一般不会使用 C 去直接编写一个 Python 的模块。通常是需要把 C 的相关模块包装一下，然后在 Python 中可以直接调用它。或者是，把 Python 逻辑中的某一效率要求很高的部分使用 C 来实现。整个过程大概是：  引入 Python.h 头文件。 编写包装函数。 函数中处理从 Pyt">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-12-31T09:46:04.955Z">
-<meta property="article:modified_time" content="2021-12-31T09:45:55.768Z">
+<meta property="article:modified_time" content="2021-12-31T10:01:11.218Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="C&#x2F;C++">
 <meta property="article:tag" content="Python">
@@ -318,8 +318,74 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">假设原Python函数是：</span><br><span class="line"><span class="function">def <span class="title">func</span><span class="params">(*args)</span> -&gt; <span class="params">(<span class="keyword">int</span>, <span class="built_in">string</span>)</span>:</span></span><br><span class="line"><span class="function">	···</span></span><br><span class="line"><span class="function">	<span class="keyword">return</span> count, saying</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">则C中对应定义的函数：</span></span><br><span class="line"><span class="function">PyObject* <span class="title">func</span><span class="params">(PyObject* self, PyObject* args)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	···</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> Py_BuildValue(<span class="string">&quot;is&quot;</span>, count, saying);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>常用<code>Py_BuildValue()</code>的格式化字符串形式：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Py_BuildValue(<span class="string">&quot;&quot;</span>)                        						<span class="function">None</span></span><br><span class="line"><span class="function"><span class="title">Py_BuildValue</span><span class="params">(<span class="string">&quot;i&quot;</span>, <span class="number">123</span>)</span>                  						123</span></span><br><span class="line"><span class="function"><span class="title">Py_BuildValue</span><span class="params">(<span class="string">&quot;iii&quot;</span>, <span class="number">123</span>, <span class="number">456</span>, <span class="number">789</span>)</span>      						<span class="params">(<span class="number">123</span>, <span class="number">456</span>, <span class="number">789</span>)</span></span></span><br><span class="line"><span class="function"><span class="title">Py_BuildValue</span><span class="params">(<span class="string">&quot;s&quot;</span>, <span class="string">&quot;hello&quot;</span>)</span>              						&#x27;hello&#x27;</span></span><br><span class="line"><span class="function"><span class="title">Py_BuildValue</span><span class="params">(<span class="string">&quot;y&quot;</span>, <span class="string">&quot;hello&quot;</span>)</span>              						b&#x27;hello&#x27;</span></span><br><span class="line"><span class="function"><span class="title">Py_BuildValue</span><span class="params">(<span class="string">&quot;ss&quot;</span>, <span class="string">&quot;hello&quot;</span>, <span class="string">&quot;world&quot;</span>)</span>    						<span class="params">(<span class="string">&#x27;hello&#x27;</span>, <span class="string">&#x27;world&#x27;</span>)</span></span></span><br><span class="line"><span class="function"><span class="title">Py_BuildValue</span><span class="params">(<span class="string">&quot;s#&quot;</span>, <span class="string">&quot;hello&quot;</span>, <span class="number">4</span>)</span>          						&#x27;hell&#x27;</span></span><br><span class="line"><span class="function"><span class="title">Py_BuildValue</span><span class="params">(<span class="string">&quot;y#&quot;</span>, <span class="string">&quot;hello&quot;</span>, <span class="number">4</span>)</span>          						b&#x27;hell&#x27;</span></span><br><span class="line"><span class="function"><span class="title">Py_BuildValue</span><span class="params">(<span class="string">&quot;()&quot;</span>)</span>                      						<span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="title">Py_BuildValue</span><span class="params">(<span class="string">&quot;(i)&quot;</span>, <span class="number">123</span>)</span>                						<span class="params">(<span class="number">123</span>,)</span></span></span><br><span class="line"><span class="function"><span class="title">Py_BuildValue</span><span class="params">(<span class="string">&quot;(ii)&quot;</span>, <span class="number">123</span>, <span class="number">456</span>)</span>          						<span class="params">(<span class="number">123</span>, <span class="number">456</span>)</span></span></span><br><span class="line"><span class="function"><span class="title">Py_BuildValue</span><span class="params">(<span class="string">&quot;(i,i)&quot;</span>, <span class="number">123</span>, <span class="number">456</span>)</span>         						<span class="params">(<span class="number">123</span>, <span class="number">456</span>)</span></span></span><br><span class="line"><span class="function"><span class="title">Py_BuildValue</span><span class="params">(<span class="string">&quot;[i,i]&quot;</span>, <span class="number">123</span>, <span class="number">456</span>)</span>         						[123, 456]</span></span><br><span class="line"><span class="function"><span class="title">Py_BuildValue</span><span class="params">(<span class="string">&quot;&#123;s:i,s:i&#125;&quot;</span>, <span class="string">&quot;abc&quot;</span>, <span class="number">123</span>, <span class="string">&quot;def&quot;</span>, <span class="number">456</span>)</span>    			</span>&#123;<span class="string">&#x27;abc&#x27;</span>: <span class="number">123</span>, <span class="string">&#x27;def&#x27;</span>: <span class="number">456</span>&#125;</span><br><span class="line">Py_BuildValue(<span class="string">&quot;((ii)(ii)) (ii)&quot;</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)          	(((<span class="number">1</span>, <span class="number">2</span>), (<span class="number">3</span>, <span class="number">4</span>)), (<span class="number">5</span>, <span class="number">6</span>))</span><br></pre></td></tr></table></figure>
-
+<table>
+<thead>
+<tr>
+<th>调用语句</th>
+<th>解析值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Py_BuildValue(“”)</td>
+<td>None</td>
+</tr>
+<tr>
+<td>Py_BuildValue(“i”, 123)</td>
+<td>123</td>
+</tr>
+<tr>
+<td>Py_BuildValue(“iii”, 123, 456, 789)</td>
+<td>(123, 456, 789)</td>
+</tr>
+<tr>
+<td>Py_BuildValue(“s”, “hello”)</td>
+<td>‘hello’</td>
+</tr>
+<tr>
+<td>Py_BuildValue(“y”, “hello”)</td>
+<td>b’hello’</td>
+</tr>
+<tr>
+<td>Py_BuildValue(“ss”, “hello”, “world”)</td>
+<td>(‘hello’, ‘world’)</td>
+</tr>
+<tr>
+<td>Py_BuildValue(“s#”, “hello”, 4)</td>
+<td>‘hell’</td>
+</tr>
+<tr>
+<td>Py_BuildValue(“y#”, “hello”, 4)</td>
+<td>b’hell’</td>
+</tr>
+<tr>
+<td>Py_BuildValue(“()”)</td>
+<td>()</td>
+</tr>
+<tr>
+<td>Py_BuildValue(“(i)”, 123)</td>
+<td>(123,)</td>
+</tr>
+<tr>
+<td>Py_BuildValue(“(ii)”, 123, 456)</td>
+<td>(123, 456)</td>
+</tr>
+<tr>
+<td>Py_BuildValue(“(i,i)”, 123, 456)</td>
+<td>(123, 456)</td>
+</tr>
+<tr>
+<td>Py_BuildValue(“[i,i]”, 123, 456)</td>
+<td>[123, 456]</td>
+</tr>
+<tr>
+<td>Py_BuildValue(“{s:i,s:i}”, “abc”, 123, “def”, 456)</td>
+<td>{‘abc’: 123, ‘def’: 456}</td>
+</tr>
+<tr>
+<td>Py_BuildValue(“((ii)(ii)) (ii)”, 1, 2, 3, 4, 5, 6)</td>
+<td>(((1, 2), (3, 4)), (5, 6))</td>
+</tr>
+</tbody></table>
 <p>&nbsp;</p>
 <h4 id="Step2：把定义好的C函数注册为API"><a href="#Step2：把定义好的C函数注册为API" class="headerlink" title="Step2：把定义好的C函数注册为API"></a>Step2：把定义好的C函数注册为API</h4><p>&emsp;&emsp;注册API，需要用到一个<code>PyMethodDef</code>结构体，其定义如下：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">PyMethodDef</span> &#123;</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span>  *ml_name;   <span class="comment">/* API被调用时的名称 */</span></span><br><span class="line">    PyCFunction ml_meth;    <span class="comment">/* 对应C函数的函数名 */</span></span><br><span class="line">    <span class="keyword">int</span>         ml_flags;   <span class="comment">/* 对应C函数传递的参数类型 */</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span>  *ml_doc;    <span class="comment">/* 函数说明 */</span></span><br><span class="line">&#125;PyMethodDef;</span><br></pre></td></tr></table></figure>
