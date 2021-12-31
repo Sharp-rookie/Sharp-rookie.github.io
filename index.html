@@ -283,14 +283,14 @@
           <p>&emsp;&emsp;Python 可以非常方便地和 C 进行相互的调用。</p>
 <p>&emsp;&emsp;一般不会使用 C 去直接编写一个 Python 的模块。通常是需要把 C 的相关模块包装一下，然后在 Python 中可以直接调用它。或者是，把 Python 逻辑中的某一效率要求很高的部分使用 C 来实现。整个过程大概是：</p>
 <ol>
-<li>引入 Python.h 头文件。</li>
-<li>编写包装函数。</li>
-<li>函数中处理从 Python 传入的参数。</li>
-<li>实现功能逻辑。</li>
-<li>处理 C 中的返回值，包装成 Python 对象。</li>
-<li>在一个 PyMethodDef 结构体中注册需要的函数。</li>
-<li>在一个初始化方法中注册模块名。</li>
-<li>把这个 C 源文件编译成链接库。</li>
+<li>引入 Python.h 头文件</li>
+<li>编写包装函数</li>
+<li>函数中处理从 Python 传入的参数</li>
+<li>实现功能逻辑</li>
+<li>处理 C 中的返回值，包装成 Python 对象</li>
+<li>在一个 PyMethodDef 结构体中注册需要的函数</li>
+<li>在一个初始化方法中注册模块名</li>
+<li>把这个 C 源文件编译成链接库</li>
 </ol>
           <!--noindex-->
             <div class="post-button">
