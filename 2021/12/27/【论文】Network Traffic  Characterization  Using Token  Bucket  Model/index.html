@@ -35,7 +35,7 @@
   <meta name="description" content="主要内容本文研究了从两种情况下观察到的网络数据流的流量模式中导出令牌桶参数的问题：  给定数据流对应一组令牌桶参数，所有数据包都立即传送，不产生任何延迟或丢失 在上述模型中添加一个缓存队列，以临时存储在桶中积累足够的令牌之前无法立即传送的数据包。队列具有平滑流量的效果，因此对令牌桶参数的要求较低，同时还使得派生的令牌桶参数随时间的波动较小。  然后对两个模型严格分析了给定数据流的队列大小和令牌桶参">
 <meta property="og:type" content="article">
 <meta property="og:title" content="token bucket最优参数的数学推导">
-<meta property="og:url" content="https://sharp-rookie.github.io/2021/12/27/Network%20Traffic%20%20Characterization%20%20Using%20Token%20%20Bucket%20%20Model/index.html">
+<meta property="og:url" content="https://sharp-rookie.github.io/2021/12/27/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91Network%20Traffic%20%20Characterization%20%20Using%20Token%20%20Bucket%20%20Model/index.html">
 <meta property="og:site_name" content="最忆是江南">
 <meta property="og:description" content="主要内容本文研究了从两种情况下观察到的网络数据流的流量模式中导出令牌桶参数的问题：  给定数据流对应一组令牌桶参数，所有数据包都立即传送，不产生任何延迟或丢失 在上述模型中添加一个缓存队列，以临时存储在桶中积累足够的令牌之前无法立即传送的数据包。队列具有平滑流量的效果，因此对令牌桶参数的要求较低，同时还使得派生的令牌桶参数随时间的波动较小。  然后对两个模型严格分析了给定数据流的队列大小和令牌桶参">
 <meta property="og:locale" content="zh_CN">
@@ -79,7 +79,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211226194837.png">
 
-<link rel="canonical" href="https://sharp-rookie.github.io/2021/12/27/Network%20Traffic%20%20Characterization%20%20Using%20Token%20%20Bucket%20%20Model/">
+<link rel="canonical" href="https://sharp-rookie.github.io/2021/12/27/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91Network%20Traffic%20%20Characterization%20%20Using%20Token%20%20Bucket%20%20Model/">
 
 
 <script id="page-configurations">
@@ -249,7 +249,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://sharp-rookie.github.io/2021/12/27/Network%20Traffic%20%20Characterization%20%20Using%20Token%20%20Bucket%20%20Model/">
+    <link itemprop="mainEntityOfPage" href="https://sharp-rookie.github.io/2021/12/27/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91Network%20Traffic%20%20Characterization%20%20Using%20Token%20%20Bucket%20%20Model/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -286,7 +286,7 @@
             </span>
 
           
-            <span id="/2021/12/27/Network%20Traffic%20%20Characterization%20%20Using%20Token%20%20Bucket%20%20Model/" class="post-meta-item leancloud_visitors" data-flag-title="token bucket最优参数的数学推导" title="阅读次数">
+            <span id="/2021/12/27/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91Network%20Traffic%20%20Characterization%20%20Using%20Token%20%20Bucket%20%20Model/" class="post-meta-item leancloud_visitors" data-flag-title="token bucket最优参数的数学推导" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -308,8 +308,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2021/12/27/Network%20Traffic%20%20Characterization%20%20Using%20Token%20%20Bucket%20%20Model/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/12/27/Network%20Traffic%20%20Characterization%20%20Using%20Token%20%20Bucket%20%20Model/" itemprop="commentCount"></span>
+    <a title="valine" href="/2021/12/27/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91Network%20Traffic%20%20Characterization%20%20Using%20Token%20%20Bucket%20%20Model/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/12/27/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91Network%20Traffic%20%20Characterization%20%20Using%20Token%20%20Bucket%20%20Model/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -496,7 +496,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://sharp-rookie.github.io/2021/12/27/Network%20Traffic%20%20Characterization%20%20Using%20Token%20%20Bucket%20%20Model/" title="token bucket最优参数的数学推导">https://sharp-rookie.github.io/2021/12/27/Network Traffic  Characterization  Using Token  Bucket  Model/</a>
+    <a href="https://sharp-rookie.github.io/2021/12/27/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91Network%20Traffic%20%20Characterization%20%20Using%20Token%20%20Bucket%20%20Model/" title="token bucket最优参数的数学推导">https://sharp-rookie.github.io/2021/12/27/【论文】Network Traffic  Characterization  Using Token  Bucket  Model/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -519,7 +519,7 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/12/27/NP%E9%97%AE%E9%A2%98%E4%B8%8E%E5%90%AF%E5%8F%91%E5%BC%8F%E7%AE%97%E6%B3%95/" rel="prev" title="NP问题与启发式算法">
+    <a href="/2021/12/27/%E3%80%90%E6%8A%80%E6%9C%AF%E3%80%91NP%E9%97%AE%E9%A2%98%E4%B8%8E%E5%90%AF%E5%8F%91%E5%BC%8F%E7%AE%97%E6%B3%95/" rel="prev" title="NP问题与启发式算法">
       <i class="fa fa-chevron-left"></i> NP问题与启发式算法
     </a></div>
       <div class="post-nav-item">
