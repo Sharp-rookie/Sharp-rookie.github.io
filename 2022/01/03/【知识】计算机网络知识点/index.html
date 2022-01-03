@@ -40,12 +40,13 @@
 <meta property="og:description" content="计算机网络知识点总结   改自18级种子班卢神：计算机网络考试复习 参考：哈工大计网mooc、计算机网络整理">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103160706.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103184648.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220102164253.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103085634.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220102164610.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220102164642.png">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220102162932.png">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220102214224.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103190907.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103192043.png">
 <meta property="og:image" content="https://sharp-rookie.github.io/2022/01/03/AppData/Roaming/Typora/typora-user-images/image-20220102213640515.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220102214759.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220102192243.png">
@@ -92,7 +93,7 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103160126.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103155836.png">
 <meta property="article:published_time" content="2022-01-03T08:07:45.220Z">
-<meta property="article:modified_time" content="2022-01-03T08:25:06.385Z">
+<meta property="article:modified_time" content="2022-01-03T11:22:08.235Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="计算机网络">
 <meta name="twitter:card" content="summary">
@@ -353,11 +354,20 @@
 <p>&nbsp;</p>
 <h1 id="1-计算机网络概述"><a href="#1-计算机网络概述" class="headerlink" title="1. 计算机网络概述"></a>1. 计算机网络概述</h1><h2 id="1-1-基本概念"><a href="#1-1-基本概念" class="headerlink" title="1.1 基本概念"></a>1.1 基本概念</h2><ul>
 <li>计算机网络可以视为是 <code>计算机技术</code> 和 <code>通信技术</code> 的合成</li>
-<li> <code>协议</code>是为进行网络的数据交换和网络通信而建立的规则、标准或约定</li>
-<li>协议三要素：<code>语法</code>、<code>语义</code>、<code>时序</code><ul>
-<li>语法：数据与控制信息的结构或格式、信号电平</li>
-<li>语义：需要发出何种控制信息、完成何种动作以及做出何种响应、差错控制</li>
-<li>时序：事件顺序、速度匹配</li>
+<li>计算机网络设计需求<ul>
+<li>可拓展的连通性<ul>
+<li>为每个结点定义一个地址，路由转发消息</li>
+</ul>
+</li>
+<li>高性价比的资源共享<ul>
+<li>分组交换而不是电路交换</li>
+</ul>
+</li>
+<li>支持通用服务<ul>
+<li>设计传输协议</li>
+</ul>
+</li>
+<li>可管理性</li>
 </ul>
 </li>
 <li>网络通信方式包括 <code>点到点</code> 、 <code>广播</code> 、 <code>点到多点</code> 、 <code>多点到多点</code></li>
@@ -420,10 +430,13 @@
 </li>
 <li><p>电路交换、报文交换、分组交换的优缺点</p>
 <ul>
-<li>电路交换：在通信之前需要在通信双方间建立一条双方独占的物理信道，这个信道由双方之间的交换设备和链路逐段连接而建成的<ul>
+<li><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220103184648.png" alt="image-20220103184648837" style="zoom:50%;" /></li>
+<li><p><strong>电路交换</strong>：在通信之前需要在通信双方间建立一条双方独占的物理信道，这个信道由双方之间的交换设备和链路逐段连接而建成的</p>
+<ul>
 <li>优点：<ul>
-<li>数据直达，传输延迟小，具有很强的实时性</li>
-<li>双方通信是有序的，不存在乱序问题</li>
+<li>带宽保证。数据直达，传输延迟小，具有很强的实时性</li>
+<li>通信可靠。双方通信是有序的，不存在乱序问题，并且丢包概率低</li>
+<li>路由机制简单。基于时分或频分复用，不需要进行数据包头部地址识别</li>
 <li>既可以用于传输模拟信号，也可以用于传输数字信号</li>
 </ul>
 </li>
@@ -435,7 +448,8 @@
 </li>
 </ul>
 </li>
-<li>报文交换：以<code>报文</code>为数据交换的单位，报文中携带目标地址、源地址等信息<ul>
+<li><p><strong>报文交换</strong>：以<code>报文</code>为数据交换的单位，报文中携带目标地址、源地址等信息</p>
+<ul>
 <li>优点：<ul>
 <li>不存在建立时延，可以即时发送</li>
 <li>当某条传输路径发生故障时能够自动选择另一条路径进行传输，提高了传输稳定性</li>
@@ -451,9 +465,10 @@
 </li>
 </ul>
 </li>
-<li>分组交换：报文交换的升级版，仍采用存储转发的方式，但会将一个长报文先分割为若干个较短的分组，然后将短分组添加包头后逐个发送<ul>
+<li><p><strong>分组交换</strong>：报文交换的升级版，仍采用<strong>存储转发</strong>的方式，但会将一个长报文先分割为若干个较短的分组，然后将短分组添加包头后逐个发送</p>
+<ul>
 <li>优点：<ul>
-<li>加速了数据的网络传输</li>
+<li>不存在链路空闲时的带宽浪费，加速了数据的网络传输</li>
 <li>简化了存储管理，从而减少了出错机率和重发数据量</li>
 <li>由于其分组的特点，在优先级策略传输中更具优势</li>
 <li>相较电路交换，更加适用于突发数据的传输</li>
@@ -461,16 +476,19 @@
 </li>
 <li>缺点：<ul>
 <li>时延问题仍存在，但得到减少</li>
+<li>每个分组需要包含源地址和目的地址等信息的首部</li>
 <li>存在乱序、分组丢失或重复问题</li>
 <li>通信效率不高</li>
 </ul>
 </li>
 </ul>
 </li>
-<li>报文交换以完整报文进行存储和转发，分组交换以分割后的报文分组进行存储和转发</li>
-<li><strong>这里涉及报文交换和分组交换的时间计算题</strong><ul>
-<li>分组交换时间计算：</li>
-<li><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220102164253.png" alt="image-20220102164253412" style="zoom: 33%;" /></li>
+<li><p>报文交换以完整报文进行存储和转发，分组交换以分割后的报文分组进行存储和转发</p>
+</li>
+<li><p><strong>这里涉及报文交换和分组交换的时间计算题</strong></p>
+<ul>
+<li><p>分组交换时间计算：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220102164253.png" alt="image-20220102164253412" style="zoom: 33%;" /></li>
 </ul>
 </li>
 </ul>
@@ -554,12 +572,35 @@
 <li>计算机网络通信的显著特点：<code>间歇性</code>、<code>突发性</code></li>
 <li>如果源端发送的每一个消息均希望被目的端接收，可以采用<code>请求/响应</code>的通信方式</li>
 </ul>
-<h2 id="1-4-网络体系架构"><a href="#1-4-网络体系架构" class="headerlink" title="1.4 网络体系架构"></a>1.4 网络体系架构</h2><ul>
-<li><p>构成网络体系的各个层次称为：<code>实体</code></p>
+<h2 id="1-4-网络体系架构"><a href="#1-4-网络体系架构" class="headerlink" title="1.4 网络体系架构"></a>1.4 网络体系架构</h2><h3 id="相关概念"><a href="#相关概念" class="headerlink" title="相关概念"></a>相关概念</h3><ul>
+<li><p>实体（Entity）</p>
+<ul>
+<li>定义：构成网络系统各个层次的抽象对象</li>
+<li>向高层提供服务</li>
+<li>通过调用底层实体提供的服务与远程计算机的对等实体进行通信<ul>
+<li>对等实体：网络中不同主机（结点）的相同层次之间互为对等实体</li>
+</ul>
 </li>
-<li><p>网络中不同主机（结点）的相同层次之间互为：<code>对等实体</code></p>
+</ul>
 </li>
-<li><p>协议是指在不同结点之间进行通信的规则或约定</p>
+<li><p>协议（Protocol）</p>
+<ul>
+<li>定义：两个或多个网络对等实体之间通信所需遵从的特定规则</li>
+<li>是为进行网络的数据交换和网络通信而建立的规则、标准或约定</li>
+<li>向上层实体提供服务</li>
+<li>协议三要素：<code>语法</code>、<code>语义</code>、<code>时序</code><ul>
+<li>语法：数据与控制信息的结构或格式、信号电平</li>
+<li>语义：需要发出何种控制信息、完成何种动作以及做出何种响应、差错控制</li>
+<li>时序：事件顺序、速度匹配</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>实体的接口（Interface）</p>
+<ul>
+<li>垂直（向上）：服务接口</li>
+<li>水平（对端）：与远程计算机对等实体的对等接口</li>
+</ul>
 </li>
 <li><p>同一系统相邻两层的实体进行交互的地方称为：<code>服务访问点</code></p>
 </li>
@@ -573,6 +614,8 @@
 <li>服务是垂直的，即服务是下层向上层通过层间接口提供的</li>
 </ul>
 </li>
+</ul>
+<h3 id="层次化网络体系结构"><a href="#层次化网络体系结构" class="headerlink" title="层次化网络体系结构"></a>层次化网络体系结构</h3><ul>
 <li><p>计算机网络架构的分层</p>
 <ul>
 <li>每一层都实现一种相对独立的功能，降低大系统的复杂度</li>
@@ -587,8 +630,24 @@
 <li>层次结构的方法可以简化计算机网络的实现</li>
 </ul>
 </li>
+<li><p>分层的实现</p>
+<ul>
+<li>封装<ul>
+<li>通过封装，协议实体可以在分组中携带信息通告对等实体如何处理收到的分组</li>
+<li>首部、尾部的加载和分离</li>
+</ul>
+</li>
+<li>复用与解复用<ul>
+<li>复用来自源结点不同高层实体的数据，将数据解复用至目的结点对应的高层实体</li>
+<li>在发送端主机复用，在接收端主机解复用</li>
+</ul>
+</li>
+</ul>
+</li>
 <li><p>下层协议的实现对上层的服务用户是透明的</p>
 </li>
+</ul>
+<h3 id="OSI七层参考模型"><a href="#OSI七层参考模型" class="headerlink" title="OSI七层参考模型"></a>OSI七层参考模型</h3><ul>
 <li><p>在 OSI 参考模型中，第 N 层是第 N+1 层的服务提供者</p>
 </li>
 <li><p>在分层网络模型中，第N层提供的服务是利用第N-1层提供的服务和第N层协议，与对等实体交换信息实现的</p>
@@ -620,7 +679,7 @@
 </tr>
 <tr>
 <td>传输层</td>
-<td>建立、管理和维护端对端的连接</td>
+<td>建立、管理和维护端对端（进程间）的连接</td>
 <td>TCP、UDP</td>
 </tr>
 <tr>
@@ -697,8 +756,8 @@
 </li>
 </ul>
 </li>
-<li><p><strong>TCP/IP网络参考模型</strong></p>
-<ul>
+</ul>
+<h3 id="TCP-IP四层体系结构"><a href="#TCP-IP四层体系结构" class="headerlink" title="TCP/IP四层体系结构"></a><strong>TCP/IP四层体系结构</strong></h3><ul>
 <li><table>
 <thead>
 <tr>
@@ -711,15 +770,15 @@
 <td>HTTP、SMTP、DNS、FTP</td>
 </tr>
 <tr>
-<td>运输层</td>
+<td>运输层（传输层）</td>
 <td>TCP、UDP</td>
 </tr>
 <tr>
-<td>网际层</td>
+<td>网际层（IP层）</td>
 <td>IP</td>
 </tr>
 <tr>
-<td>网络接口层</td>
+<td>网络接口层（网络接入层）</td>
 <td>网络接口</td>
 </tr>
 </tbody></table>
@@ -728,17 +787,12 @@
 </li>
 <li><p>TCP/IP协议族的网络层提供的是：<code>无连接不可靠的数据报服务</code></p>
 </li>
-<li><p>TCP协议是面向连接的协议</p>
-</li>
 <li><p>物理层、数据链路层、网络层传送的数据单位分别为：<code>比特</code>、<code>帧</code>、<code>分组</code></p>
 </li>
+<li><p>对比OSI七层参考模型</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220103190907.png" alt="image-20220103190906970" style="zoom:50%;" /></li>
 </ul>
-</li>
-<li><p>物理链路中实现不同层功能的结点设备</p>
-<ul>
-<li><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220102162932.png" alt="image-20220102162932423" style="zoom: 33%;" /></li>
-<li><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220102214224.png" alt="image-20220102214224524" style="zoom: 33%;" /></li>
-<li><table>
+<h3 id="几种物理设备"><a href="#几种物理设备" class="headerlink" title="几种物理设备"></a>几种物理设备</h3><table>
 <thead>
 <tr>
 <th>设备</th>
@@ -777,54 +831,65 @@
 <td>&gt;L3</td>
 </tr>
 </tbody></table>
-</li>
-<li><p>集线器的缺点是：<strong>不能过滤网络流量</strong></p>
-</li>
+<ul>
+<li>集线器的缺点是：<strong>不能过滤网络流量</strong></li>
 </ul>
-</li>
-</ul>
-<h2 id="1-5-网络性能评估"><a href="#1-5-网络性能评估" class="headerlink" title="1.5 网络性能评估"></a>1.5 网络性能评估</h2><ul>
-<li><code>带宽</code>：<ul>
-<li>指链路上每秒所能传输的比特数，取决于链路时钟和信道编码</li>
+<h2 id="1-5-网络性能评估"><a href="#1-5-网络性能评估" class="headerlink" title="1.5 网络性能评估"></a>1.5 网络性能评估</h2><h3 id="链路带宽"><a href="#链路带宽" class="headerlink" title="链路带宽"></a>链路带宽</h3><ul>
+<li>指链路上每秒所能传输的比特数，单位bps</li>
+<li>取决于链路时钟和信道编码</li>
 <li>带宽往往大于吞吐量</li>
-<li>单位bps</li>
+</ul>
+<h3 id="时延"><a href="#时延" class="headerlink" title="时延"></a>时延</h3><ul>
+<li><p>端到端时延</p>
+<ul>
+<li>将报文从网络一端传到另一端所花费的时间</li>
+<li>= 处理时延 + 排队时延 + 传输时延 + 传播时延</li>
 </ul>
 </li>
-<li><code>吞吐量</code>：<ul>
-<li>单位时间内成功传输的数据量</li>
-<li>受到各种因素影响，带宽10Mbps的链路一吞吐量只能达到2Mbps左右</li>
-<li><strong>链路吞吐量</strong>为：A端结点、B端结点、通信线路三者吞吐量的最小值</li>
-<li><strong>网络设备吞吐量</strong><ul>
+<li><p>传输时延：</p>
+<ul>
+<li>主机或路由器发送数据帧所需的时间，即从帧的一个比特开始到最后一个比特发送完毕所需的时间</li>
+<li>传输时延 = 分组长度 / 链路带宽</li>
+</ul>
+</li>
+<li><p>传播时延</p>
+<ul>
+<li>电磁波在信道中传播一定距离所需的时间</li>
+<li>传播时延 = 物理链路长度 / 电磁波传播速率（注意环境）</li>
+</ul>
+</li>
+<li><p>处理时延</p>
+<ul>
+<li>主机或路由器在收到分组时分析首部、提取数据主体、差错检测等处理花费的时间</li>
+</ul>
+</li>
+<li><p>排队时延</p>
+<ul>
+<li>分组通过网络传输时要经过很多路由器，进入路由器后要先输入队列中排队等待处理。在路由器确定了转发接口后还要在输出队列中等待转发</li>
+</ul>
+</li>
+</ul>
+<h3 id="时延带宽积"><a href="#时延带宽积" class="headerlink" title="时延带宽积"></a>时延带宽积</h3><ul>
+<li>等效于第一个比特到达接收方之前，发送方可以发送的比特数上限</li>
+<li>是网络中能够保持的最大比特数</li>
+<li><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220103192043.png" alt="image-20220103192042971" style="zoom:50%;" /></li>
+</ul>
+<h3 id="吞吐量"><a href="#吞吐量" class="headerlink" title="吞吐量"></a>吞吐量</h3><ul>
+<li><p>单位时间内发送方和接收方之间成功传输的数据量</p>
+</li>
+<li><p>受到各种因素影响，带宽10Mbps的链路一吞吐量只能达到2Mbps左右</p>
+</li>
+<li><p><strong>链路吞吐量</strong>为：A端结点、B端结点、通信线路三者吞吐量的最小值</p>
+</li>
+<li><p><strong>网络设备吞吐量</strong></p>
+<ul>
 <li>单位时间内，网络设备各端口存储转发的比特数之和</li>
 <li>取决于输入输出端口硬件和程序算法设计</li>
 <li>是没有帧丢失时，设备能接收并转发的最大数据速率</li>
 </ul>
 </li>
-</ul>
+<li><p>计算机网络最主要的性能指标：<code>带宽</code>、<code>时延</code></p>
 </li>
-<li><code>时延</code>：<ul>
-<li>传输时延：<ul>
-<li>主机或路由器发送数据帧所需的时间，即从帧的一个比特开始到最后一个比特发送完毕所需的时间</li>
-<li>传输时延 = 分组长度 / 链路带宽</li>
-</ul>
-</li>
-<li>传播时延<ul>
-<li>电磁波在信道中传播一定距离所需的时间</li>
-<li>传播时延 = 物理链路长度 / 电磁波传播速率（注意环境）</li>
-</ul>
-</li>
-<li>处理时延<ul>
-<li>主机或路由器在收到分组时分析首部、提取数据主体、差错检测等处理花费的时间</li>
-</ul>
-</li>
-<li>排队时延<ul>
-<li>分组通过网络传输时要经过很多路由器，进入路由器后要先输入队列中排队等待处理。在路由器确定了转发接口后还要在输出队列中等待转发</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><code>时延带宽积</code>：传播时延 * 带宽，反映数据链路容量</li>
-<li>计算机网络最主要的性能指标：<code>带宽</code>、<code>时延</code></li>
 </ul>
 <p>&nbsp;</p>
 <h1 id="2-物理层"><a href="#2-物理层" class="headerlink" title="2. 物理层"></a>2. 物理层</h1><ul>
@@ -1883,7 +1948,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%A6%82%E8%BF%B0"><span class="nav-text">1. 计算机网络概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-text">1.1 基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-%E4%BA%A4%E6%8D%A2%E5%8E%9F%E7%90%86"><span class="nav-text">1.2 交换原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-%E7%BD%91%E7%BB%9C%E5%BA%94%E7%94%A8"><span class="nav-text">1.3 网络应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-%E7%BD%91%E7%BB%9C%E4%BD%93%E7%B3%BB%E6%9E%B6%E6%9E%84"><span class="nav-text">1.4 网络体系架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-5-%E7%BD%91%E7%BB%9C%E6%80%A7%E8%83%BD%E8%AF%84%E4%BC%B0"><span class="nav-text">1.5 网络性能评估</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E7%89%A9%E7%90%86%E5%B1%82"><span class="nav-text">2. 物理层</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82"><span class="nav-text">3. 数据链路层</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5"><span class="nav-text">3.1 相关概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-%E5%8F%AF%E9%9D%A0%E4%BC%A0%E8%BE%93%E6%9C%BA%E5%88%B6"><span class="nav-text">3.2 可靠传输机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-%E5%A4%9A%E8%B7%AF%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6%EF%BC%88MAC%EF%BC%89"><span class="nav-text">3.3 多路访问控制（MAC）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-%E5%85%B6%E4%BB%96%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="nav-text">3.4 其他知识点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E7%BD%91%E7%BB%9C%E5%B1%82"><span class="nav-text">4. 网络层</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-%E7%BD%91%E7%BB%9C%E4%BA%92%E8%81%94%E4%B8%8E%E8%B7%AF%E7%94%B1%E5%99%A8"><span class="nav-text">4.1 网络互联与路由器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-IP%E6%9C%8D%E5%8A%A1%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8D%8F%E8%AE%AE"><span class="nav-text">4.2 IP服务模型与协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-%E8%B7%AF%E7%94%B1%E7%AE%97%E6%B3%95%E4%B8%8E%E5%8D%8F%E8%AE%AE"><span class="nav-text">4.3 路由算法与协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-4-IP%E5%9C%B0%E5%9D%80%E5%8F%8A%E5%85%B6%E5%88%92%E5%88%86"><span class="nav-text">4.4 IP地址及其划分</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#IPv4"><span class="nav-text">IPv4</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IP%E5%AD%90%E7%BD%91%E5%88%92%E5%88%86"><span class="nav-text">IP子网划分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A0%E5%88%86%E7%B1%BB%E7%BC%96%E5%9D%80CIDR%E4%B8%8E%E8%B7%AF%E7%94%B1%E8%81%9A%E5%90%88"><span class="nav-text">无分类编址CIDR与路由聚合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DHCP%E5%8D%8F%E8%AE%AE"><span class="nav-text">DHCP协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NAT%E5%8D%8F%E8%AE%AE"><span class="nav-text">NAT协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ICMP%E5%8D%8F%E8%AE%AE"><span class="nav-text">ICMP协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IPv6"><span class="nav-text">IPv6</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E4%BC%A0%E8%BE%93%E5%B1%82"><span class="nav-text">5. 传输层</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5"><span class="nav-text">5.1 相关概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-UDP%E5%8D%8F%E8%AE%AE"><span class="nav-text">5.2 UDP协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3-TCP%E5%8D%8F%E8%AE%AE"><span class="nav-text">5.3 TCP协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-4-TCP%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6"><span class="nav-text">5.4 TCP拥塞控制</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-%E5%BA%94%E7%94%A8%E5%B1%82"><span class="nav-text">6. 应用层</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%A6%82%E8%BF%B0"><span class="nav-text">1. 计算机网络概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-text">1.1 基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-%E4%BA%A4%E6%8D%A2%E5%8E%9F%E7%90%86"><span class="nav-text">1.2 交换原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-%E7%BD%91%E7%BB%9C%E5%BA%94%E7%94%A8"><span class="nav-text">1.3 网络应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-%E7%BD%91%E7%BB%9C%E4%BD%93%E7%B3%BB%E6%9E%B6%E6%9E%84"><span class="nav-text">1.4 网络体系架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5"><span class="nav-text">相关概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B1%82%E6%AC%A1%E5%8C%96%E7%BD%91%E7%BB%9C%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="nav-text">层次化网络体系结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OSI%E4%B8%83%E5%B1%82%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B"><span class="nav-text">OSI七层参考模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP-IP%E5%9B%9B%E5%B1%82%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="nav-text">TCP&#x2F;IP四层体系结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%A0%E7%A7%8D%E7%89%A9%E7%90%86%E8%AE%BE%E5%A4%87"><span class="nav-text">几种物理设备</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-5-%E7%BD%91%E7%BB%9C%E6%80%A7%E8%83%BD%E8%AF%84%E4%BC%B0"><span class="nav-text">1.5 网络性能评估</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%93%BE%E8%B7%AF%E5%B8%A6%E5%AE%BD"><span class="nav-text">链路带宽</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E5%BB%B6"><span class="nav-text">时延</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E5%BB%B6%E5%B8%A6%E5%AE%BD%E7%A7%AF"><span class="nav-text">时延带宽积</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%9E%E5%90%90%E9%87%8F"><span class="nav-text">吞吐量</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E7%89%A9%E7%90%86%E5%B1%82"><span class="nav-text">2. 物理层</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82"><span class="nav-text">3. 数据链路层</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5"><span class="nav-text">3.1 相关概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-%E5%8F%AF%E9%9D%A0%E4%BC%A0%E8%BE%93%E6%9C%BA%E5%88%B6"><span class="nav-text">3.2 可靠传输机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-%E5%A4%9A%E8%B7%AF%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6%EF%BC%88MAC%EF%BC%89"><span class="nav-text">3.3 多路访问控制（MAC）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-%E5%85%B6%E4%BB%96%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="nav-text">3.4 其他知识点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E7%BD%91%E7%BB%9C%E5%B1%82"><span class="nav-text">4. 网络层</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-%E7%BD%91%E7%BB%9C%E4%BA%92%E8%81%94%E4%B8%8E%E8%B7%AF%E7%94%B1%E5%99%A8"><span class="nav-text">4.1 网络互联与路由器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-IP%E6%9C%8D%E5%8A%A1%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8D%8F%E8%AE%AE"><span class="nav-text">4.2 IP服务模型与协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-%E8%B7%AF%E7%94%B1%E7%AE%97%E6%B3%95%E4%B8%8E%E5%8D%8F%E8%AE%AE"><span class="nav-text">4.3 路由算法与协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-4-IP%E5%9C%B0%E5%9D%80%E5%8F%8A%E5%85%B6%E5%88%92%E5%88%86"><span class="nav-text">4.4 IP地址及其划分</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#IPv4"><span class="nav-text">IPv4</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IP%E5%AD%90%E7%BD%91%E5%88%92%E5%88%86"><span class="nav-text">IP子网划分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A0%E5%88%86%E7%B1%BB%E7%BC%96%E5%9D%80CIDR%E4%B8%8E%E8%B7%AF%E7%94%B1%E8%81%9A%E5%90%88"><span class="nav-text">无分类编址CIDR与路由聚合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DHCP%E5%8D%8F%E8%AE%AE"><span class="nav-text">DHCP协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NAT%E5%8D%8F%E8%AE%AE"><span class="nav-text">NAT协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ICMP%E5%8D%8F%E8%AE%AE"><span class="nav-text">ICMP协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IPv6"><span class="nav-text">IPv6</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E4%BC%A0%E8%BE%93%E5%B1%82"><span class="nav-text">5. 传输层</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5"><span class="nav-text">5.1 相关概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-UDP%E5%8D%8F%E8%AE%AE"><span class="nav-text">5.2 UDP协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3-TCP%E5%8D%8F%E8%AE%AE"><span class="nav-text">5.3 TCP协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-4-TCP%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6"><span class="nav-text">5.4 TCP拥塞控制</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-%E5%BA%94%E7%94%A8%E5%B1%82"><span class="nav-text">6. 应用层</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
