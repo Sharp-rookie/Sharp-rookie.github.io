@@ -51,7 +51,6 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103194833.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103195035.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103195154.png">
-<meta property="og:image" content="https://sharp-rookie.github.io/2022/01/03/AppData/Roaming/Typora/typora-user-images/image-20220102213640515.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220102214759.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103200424.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103200819.png">
@@ -75,11 +74,15 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103203742.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103210353.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220102203719.png">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220102203812.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103224755.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103225225.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103225357.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220102194429.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220102193852.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220102193926.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103211555.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103233916.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103234630.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103211115.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103211204.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103103928.png">
@@ -117,7 +120,7 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103160126.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103155836.png">
 <meta property="article:published_time" content="2022-01-03T08:07:45.220Z">
-<meta property="article:modified_time" content="2022-01-03T13:25:11.513Z">
+<meta property="article:modified_time" content="2022-01-03T15:47:51.973Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="计算机网络">
 <meta name="twitter:card" content="summary">
@@ -1111,8 +1114,7 @@
 </li>
 <li><p>MAC协议：二进制指数退避算法的CSMA/CD</p>
 <ul>
-<li><p>检测到冲突中止发送后，进入二进制指数退避：</p>
-<img src="../AppData/Roaming/Typora/typora-user-images/image-20220102213640515.png" alt="image-20220102213640515" style="zoom:33%;" /></li>
+<li>检测到冲突中止发送后，进入二进制指数退避</li>
 </ul>
 </li>
 <li><p>以太网交换机：</p>
@@ -1140,18 +1142,32 @@
 </li>
 </ul>
 <h3 id="无线局域网-IEEE802-11"><a href="#无线局域网-IEEE802-11" class="headerlink" title="无线局域网 IEEE802.11"></a>无线局域网 IEEE802.11</h3><ul>
+<li><p>无线链路特性</p>
+<ul>
+<li>信号强度递减（路径损耗）</li>
+<li>其他信号源干扰（各种频段）</li>
+<li>多径传播（乱序到达）</li>
+<li>隐藏终端问题（中间隔着障碍物）</li>
+</ul>
+</li>
 <li><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220102214759.png" alt="image-20220102214759049" style="zoom:33%;" /></li>
-<li>均使用CSMA/CA多路访问控制协议</li>
-<li>截断二进制指数类型退避算法解决了：站点检测到冲突后延迟发送的时间</li>
-<li>无线局域网不使用<code>CSMA/CD</code>，而使用<code>CSMA/CA</code>是因为无线局域网：并非所有站点都能听见对方、无线介质传输特征复杂，存在隐藏终端、暴露终端等问题</li>
-<li>无线通信网中，应对隐藏终端、暴露终端问题的方法是：<code>RTS/CTS 机制</code></li>
-<li>无线局域网：<ul>
+<li><p>均使用CSMA/CA多路访问控制协议</p>
+</li>
+<li><p>截断二进制指数类型退避算法解决了：站点检测到冲突后延迟发送的时间</p>
+</li>
+<li><p>无线局域网不使用<code>CSMA/CD</code>，而使用<code>CSMA/CA</code>是因为无线局域网：并非所有站点都能听见对方、无线介质传输特征复杂，存在隐藏终端、暴露终端等问题</p>
+</li>
+<li><p>无线通信网中，应对隐藏终端、暴露终端问题的方法是：<code>RTS/CTS 机制</code></p>
+</li>
+<li><p>无线局域网：</p>
+<ul>
 <li>无线局域网可分为两大类，即有固定基础设施的和无固定基础设施的</li>
 <li>无固定基础设施的无线局域网又叫做自组织(AD HOC)网络</li>
 <li>有固定基础设施的无线局域网，使用无线接入点（AP）作为基础设施</li>
 </ul>
 </li>
-<li>无线局域网主要采用了<strong>预约信道</strong>方法解决数据帧的碰撞问题</li>
+<li><p>无线局域网主要采用了<strong>预约信道</strong>方法解决数据帧的碰撞问题</p>
+</li>
 </ul>
 <h3 id="网桥与交换机"><a href="#网桥与交换机" class="headerlink" title="网桥与交换机"></a>网桥与交换机</h3><ul>
 <li>网桥<ul>
@@ -1432,7 +1448,7 @@
 </li>
 </ul>
 <h5 id="CSMA-CD"><a href="#CSMA-CD" class="headerlink" title="CSMA/CD"></a>CSMA/CD</h5><ul>
-<li><p>要点：<code>碰撞检测</code>、<code>多点接入</code>、<code>载波监听</code></p>
+<li><p>要点：<code>冲突检测</code>、<code>多点接入</code>、<code>载波监听</code></p>
 </li>
 <li><p>内容</p>
 <ul>
@@ -1440,17 +1456,28 @@
 </li>
 <li><p>有线局域网易实现；无线局域网难以实现（接收信号强度太低，无法与噪声区分）</p>
 </li>
-<li><p>为保证不发生碰撞，在传输时间内必须能收到最远端主机发送的信号，即：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220102203719.png" alt="image-20220102203719361" style="zoom: 33%;" /></li>
+<li><p>为保证不发生碰撞，在传输时间内必须能收到最远端主机发送的信号（见下面最差冲突情况），即：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220102203719.png" alt="image-20220102203719361" style="zoom: 25%;" /></li>
 </ul>
 </li>
 <li><p>冲突</p>
 <ul>
-<li>立即停止发送当前帧，改发送冲突信号广播，然后进行退避处理</li>
+<li><p>结点检测数据帧发送过程中是否发生冲突</p>
+</li>
+<li><p>如果发生冲突，则立即停止发送当前帧，改发送冲突信号广播通知其他结点，然后进行退避处理</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220103224755.png" alt="image-20220103224755596" style="zoom: 50%;" /></li>
+<li><p><strong>二进制退避算法</strong></p>
+<ul>
+<li>第k次冲突，则选择{0,1,2,…,2^k-1}中随机选择一个数乘以512bit，这个值对应的时延作为本次退避的等待时间</li>
+<li>512bit对应51.2us，这是最初时最大覆盖以太网(2500米)往返最大时延</li>
+</ul>
+</li>
+<li><p>冲突的最差情况</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220103225225.png" alt="image-20220103225225595" style="zoom: 67%;" /></li>
 </ul>
 </li>
 <li><p>效率</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220102203812.png" alt="image-20220102203811958" style="zoom: 25%;" /></li>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220103225357.png" alt="image-20220103225357197" style="zoom:50%;" /></li>
 <li><p><strong>以太网</strong>MAC协议用的就是这个</p>
 </li>
 <li><p>计算题</p>
@@ -1472,9 +1499,67 @@
 <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220103211555.png" alt="image-20220103211555710" style="zoom: 50%;" /></li>
 </ul>
 <h5 id="CSMA-CA"><a href="#CSMA-CA" class="headerlink" title="CSMA/CA"></a>CSMA/CA</h5><ul>
-<li><p><strong>TODO</strong></p>
+<li><p>思想</p>
+<ul>
+<li>无线信道传输存在隐藏终端和信道衰落问题，导致难以进行碰撞检测</li>
+<li>与CSMA/CD不同，CSMA/CA目标不是监测碰撞，而是避免碰撞</li>
+</ul>
+</li>
+<li><p>内容</p>
+<ul>
+<li><p>发送端</p>
+<ul>
+<li>如果监听到信道空闲<ul>
+<li>将在一个被称作分布式帧间间隔（DIFS）的短时间段后发送该帧</li>
+</ul>
+</li>
+<li>如果监听到信道正忙 <ul>
+<li>选取一个随机回退值计时</li>
+<li>当信道空闲时递减该值</li>
+<li>当计数值减为0时，该站点发送整个数据帧并等待确认</li>
+<li>如果未收到确认，增加回退值，重复第2步</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>接收端</p>
+<ul>
+<li>如果数据帧接收成功<ul>
+<li>在SIFS时间后返回确认信息（确认信息在隐藏终端问题中是必须的）</li>
+</ul>
+</li>
+</ul>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220103233916.png" alt="image-20220103233916031" style="zoom:50%;" /></li>
+<li><p>虚拟载波监听（预约信道）</p>
+<ul>
+<li><p>在发送数据帧之前交换控制信息</p>
+<ul>
+<li><p>发送方 询问 “Request-to-Send” (RTS)，包括数据帧长度</p>
+</li>
+<li><p>接收方 广播 “Clear-to-Send” (CTS)</p>
+</li>
+</ul>
+</li>
+<li><p>如果发送方收到 CTS，则开始发送数据 (指定长度)</p>
+</li>
+<li><p>其他节点收到 CTS，则认定信道在指定长度数据帧发送期间处于繁忙状态</p>
+</li>
+<li><p>如果多个节点同时检测到一个空闲链路并试图发送一个RTS，那么他们的RTS帧将彼此冲突。当发送端在一段时间内没有收到CTS帧时，节点知道发生冲突，会等待一段随机时间后再试</p>
+</li>
+<li><p>RTS、CTS都很短，因此开销小，并且可以完全避免数据帧碰撞</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220103234630.png" alt="image-20220103234630447" style="zoom:50%;" /></li>
+</ul>
+</li>
+</ul>
 </li>
 <li><p><strong>无线局域网</strong>MAC协议用的就是这个</p>
+<ul>
+<li>不使用<code>CSMA/CD</code>，而使用<code>CSMA/CA</code>的原因<ul>
+<li>无线信道传输中并非所有站点都能听见对方、无线介质传输特征复杂，无线信道传输存在隐藏终端、暴露终端等问题</li>
+<li>无线信道传输难以同时收发，接收信号强度明显弱于发送信号</li>
+</ul>
+</li>
+</ul>
 </li>
 </ul>
 <h3 id="轮转MAC协议"><a href="#轮转MAC协议" class="headerlink" title="轮转MAC协议"></a>轮转MAC协议</h3><ul>
