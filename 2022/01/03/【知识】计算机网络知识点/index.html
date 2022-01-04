@@ -136,7 +136,7 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103160151.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103160126.png">
 <meta property="article:published_time" content="2022-01-03T08:07:45.220Z">
-<meta property="article:modified_time" content="2022-01-04T08:54:27.385Z">
+<meta property="article:modified_time" content="2022-01-04T12:59:43.073Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="计算机网络">
 <meta name="twitter:card" content="summary">
@@ -1309,6 +1309,8 @@
 <ul>
 <li><p>一次性发送N个数据帧</p>
 </li>
+<li><p>接收方收到新数据帧时回传连续序号帧中的最大序号值（未必是当前接收帧的序号，因为可能是后发先到乱序 或者 前面有丢包）</p>
+</li>
 <li><p>如果第k个帧丢失, 对[k, k+N-1]范围内的所有帧重传</p>
 <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220103202238.png" alt="image-20220103202238229" style="zoom:50%;" /></li>
 </ul>
@@ -1355,13 +1357,15 @@
 </li>
 <li><p>缺点: 接收方更复杂</p>
 </li>
+<li><p><strong>发送窗口大小 == 接收窗口大小</strong></p>
+</li>
 <li><p>示例</p>
 <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220103203849.png" alt="image-20220103203849702" style="zoom:67%;" /></li>
 <li><p>存在问题</p>
 <ul>
 <li><p>无法区分：</p>
 <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220103204012.png" alt="image-20220103204012029" style="zoom:50%;" /></li>
-<li><p>解决方法：（k为序号数量）</p>
+<li><p>解决方法：（k为序号比特位数）</p>
 <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220103204146.png" alt="image-20220103204146783" style="zoom:50%;" /></li>
 </ul>
 </li>
@@ -1373,7 +1377,7 @@
 <ul>
 <li><p>发送方</p>
 <ul>
-<li><p>发送窗口大小: 发送方在未收到确认前能够发送的数据帧的最大个数</p>
+<li><p>发送窗口大小：发送方在未收到确认前能够发送的数据帧的最大个数</p>
 </li>
 <li><p>发送方在未收到确认前最多可以发送多个数据帧 (受限于 发送窗口大小)</p>
 </li>
@@ -1383,7 +1387,7 @@
 </li>
 <li><p>接收方</p>
 <ul>
-<li><p>接收窗口大小: 接收方所能接收的乱序期望数据帧的最大个数</p>
+<li><p>接收窗口大小：接收方所能接收的乱序期望数据帧的最大个数</p>
 </li>
 <li><p>接收方通过ACK告知发送方下一次期望其传送的数据帧编号, 避免每次收到数据帧都发送确认</p>
 <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220103203238.png" alt="image-20220103203238050" style="zoom:50%;" /></li>
@@ -1428,7 +1432,7 @@
 </ul>
 <h3 id="静态信道划分MAC协议"><a href="#静态信道划分MAC协议" class="headerlink" title="静态信道划分MAC协议"></a>静态信道划分MAC协议</h3><ul>
 <li>多路复用技术<ul>
-<li>s时分复用（TDMA）</li>
+<li>时分复用（TDMA）</li>
 <li>频分复用（FDMA）</li>
 <li>码分复用（CDMA）</li>
 <li>……</li>
