@@ -133,7 +133,7 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103160151.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103160126.png">
 <meta property="article:published_time" content="2022-01-03T08:07:45.220Z">
-<meta property="article:modified_time" content="2022-01-04T06:01:59.580Z">
+<meta property="article:modified_time" content="2022-01-04T06:51:38.727Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="计算机网络">
 <meta name="twitter:card" content="summary">
@@ -723,7 +723,7 @@
 </tr>
 <tr>
 <td>表示层</td>
-<td>数据格式化、代码转换、数据加密</td>
+<td>数据格式转换、代码转换、数据加密</td>
 <td>无</td>
 </tr>
 <tr>
@@ -905,7 +905,7 @@
 <li>= 处理时延 + 排队时延 + 传输时延 + 传播时延</li>
 </ul>
 </li>
-<li><p>传输时延：</p>
+<li><p>传输时延（发送时延）：</p>
 <ul>
 <li>主机或路由器发送数据帧所需的时间，即从帧的一个比特开始到最后一个比特发送完毕所需的时间</li>
 <li>传输时延 = 分组长度 / 链路带宽</li>
@@ -914,12 +914,13 @@
 <li><p>传播时延</p>
 <ul>
 <li>电磁波在信道中传播一定距离所需的时间</li>
+<li>与数据大小无关</li>
 <li>传播时延 = 物理链路长度 / 电磁波传播速率（注意环境）</li>
 </ul>
 </li>
 <li><p>处理时延</p>
 <ul>
-<li>主机或路由器在收到分组时分析首部、提取数据主体、差错检测等处理花费的时间</li>
+<li>主机或路由器在收到分组时分析首部、提取数据主体、差错检测等<strong>存储转发</strong>操作处理花费的时间</li>
 </ul>
 </li>
 <li><p>排队时延</p>
@@ -1669,15 +1670,17 @@
 <li>数据分段</li>
 <li>协议转换</li>
 <li>数据封装</li>
+<li>不包括流量控制</li>
 </ul>
 </li>
 <li>路由器在能够开始向输出链路传输分组的第一bit之前，必须先接收到整个分组，这种机制称为：<strong>存储转发</strong></li>
 <li><code>ARP</code>协议的作用是：将IP地址映射到数据链路层地址（MAC地址）</li>
 <li>每台路由器都依赖<code>ARP</code>协议，否则无法正确工作</li>
 <li><code>ARP</code>将IP地址转换为物理地址，<code>RARP</code>将物理地址转换为IP地址</li>
-<li>路由器连接的异构网络指的是：<strong>数据链路层和物理层均不同</strong></li>
+<li>路由器连接的<strong>异构网络</strong>指的是：<strong>数据链路层和物理层均不同</strong></li>
 <li>路由器涉及Internet体系结构的<strong>网络接口层</strong>和<strong>网络层</strong></li>
 <li>路由器可以隔离<code>ARP</code>广播帧</li>
+<li><code>intranet</code>与<code>internet</code>互联，必须的互联设备是路由器</li>
 <li>路由器 VS 交换机<ul>
 <li>路由器第三层，交换机第二层</li>
 <li>路由器：寻址，转发（依靠 IP 地址）<br>交换机：过滤，转发（依靠 MAC 地址）</li>
@@ -1956,7 +1959,7 @@
 </li>
 </ul>
 </li>
-<li><p>IP数据报分段发生在路由器，而重组发生在目的主机</p>
+<li><p>IP数据报分片发生在<strong>路由器</strong>，而重组发生在<strong>目的主机</strong></p>
 </li>
 <li><p>如果某一个分段丢失, 目的主机将放弃重组进程并丢弃已收到的分段</p>
 </li>
@@ -1993,11 +1996,11 @@
 <h3 id="IPv4"><a href="#IPv4" class="headerlink" title="IPv4"></a>IPv4</h3><ul>
 <li><p>有类IP地址</p>
 <ul>
-<li><p>A类网络IP地址范围：1.0.0.1 - 127.255.255.254（16777214个）</p>
+<li><p>A类网络IP地址范围：1.0.0.1 - 127.255.255.254（16777214个，2^24）</p>
 </li>
-<li><p>B类网络IP地址范围：128.0.0.1 - 191.255.255.2549（65536个）</p>
+<li><p>B类网络IP地址范围：128.0.0.1 - 191.255.255.254（65536个，2^16）</p>
 </li>
-<li><p>C类网络IP地址范围：192.0.0.1 - 223.255.255.254（256个）</p>
+<li><p>C类网络IP地址范围：192.0.0.1 - 223.255.255.254（256个，2^8）</p>
 <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220103104634.png" alt="image-20220103104634464" style="zoom: 33%;" /></li>
 </ul>
 </li>
@@ -2076,7 +2079,7 @@
 <li>节点X将收到的信息写入其ARP表</li>
 <li>同一网络内的其他主机<ul>
 <li>如果本地的ARP表中已存在节点X的IP地址对应的记录, 则更新记录</li>
-<li>否则, do nothing</li>
+<li>否则，do nothing</li>
 </ul>
 </li>
 </ul>
@@ -2229,22 +2232,24 @@
 <h3 id="距离向量（DV）路由选择"><a href="#距离向量（DV）路由选择" class="headerlink" title="距离向量（DV）路由选择"></a>距离向量（DV）路由选择</h3><h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><ul>
 <li><p>基本思想</p>
 <ul>
+<li>与路由器直接连接的网络的距离值为0</li>
 <li>每个节点构造一个包含到所有其他节点的”距离”(代价)的一维数组(一个向量)</li>
 <li>并将该向量分发给其邻节点</li>
 <li>节点根据接收到的距离向量计算到达其他所有节点的最短路径</li>
 <li>经过距离向量的迭代交换和计算过程最终构造完整的路由表</li>
+<li>注意，只能找到去每个网络的最短路径中的一条，不能所有都找到</li>
 </ul>
 </li>
 <li><p>步骤</p>
 <ul>
-<li><p>步骤1: 最初节点将向量中可直接到达的邻节点的代价设置为<strong>1</strong>, 到所有其他节点的代价赋值为<strong>∞</strong></p>
+<li><p>步骤1：最初节点将向量中可直接到达的邻节点的代价设置为<strong>1</strong>，到所有其他节点的代价赋值为<strong>∞</strong></p>
 </li>
-<li><p>步骤2: 节点将距离向量发送至直接可达的邻节点</p>
+<li><p>步骤2：节点将距离向量发送至直接可达的邻节点</p>
 </li>
-<li><p>步骤3: 根据从邻节点<strong>Y</strong>收到的距离向量, 节点<strong>X</strong></p>
+<li><p>步骤3：根据从邻节点<strong>Y</strong>收到的距离向量，节点<strong>X</strong></p>
 <ul>
-<li>计算本节点到达所有其他节点的距离: 将来自<strong>Y</strong>的向量中到达所有其他节点的距离(例如 <strong>Z</strong>)加上本节点到<strong>Y</strong>的距离 (即<strong>1</strong>）</li>
-<li>比较计算结果与本地向量中对应结果的大小: 如果计算结果更小, 则用该值替换本地距离向量的对应结果, 并记录NextHop 为<strong>Y</strong></li>
+<li>计算本节点到达所有其他节点的距离：将来自<strong>Y</strong>的向量中到达所有其他节点的距离(例如 <strong>Z</strong>)加上本节点到<strong>Y</strong>的距离 (即<strong>1</strong>）</li>
+<li>比较计算结果与本地向量中对应结果的大小：如果计算结果更小，则用该值替换本地距离向量的对应结果，并记录NextHop 为<strong>Y</strong></li>
 </ul>
 </li>
 <li><p>示例</p>
@@ -2291,6 +2296,7 @@
 <li><p>基本思想</p>
 <ul>
 <li>每个节点都知道怎样到达它的邻节点(link state), 并向通告给其他所有节点, 因此<strong>每个节点都可以获得完整的网络信息</strong>来建立其路由表</li>
+<li>链路状态的度量可以是：距离、带宽、时延、费用等</li>
 </ul>
 </li>
 <li><p>依赖链路状态的<strong>可靠洪范</strong></p>
@@ -2459,7 +2465,7 @@
 </ul>
 </li>
 </ul>
-<p>直接封装RIP、OSPF、BGP报文的协议分别为：UDP、IP、TCP</p>
+<p><strong>直接封装RIP、OSPF、BGP报文的协议分别为：UDP、IP、TCP</strong></p>
 <h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><h4 id="IP多播"><a href="#IP多播" class="headerlink" title="IP多播"></a>IP多播</h4><ul>
 <li>又称为 组播，与一组主机进行通信，指多个接收者可以收到同一个或者同一组源节点发送的相同内容的分组</li>
 <li>避免单播的低效和广播的无区分性</li>
