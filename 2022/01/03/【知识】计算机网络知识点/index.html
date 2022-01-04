@@ -106,8 +106,10 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103105529.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220104085055.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220104085338.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220104150405.jpg">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103110934.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103111123.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220104145741.jpg">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103135749.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103140400.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220104101322.png">
@@ -133,7 +135,7 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103160151.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103160126.png">
 <meta property="article:published_time" content="2022-01-03T08:07:45.220Z">
-<meta property="article:modified_time" content="2022-01-04T06:51:38.727Z">
+<meta property="article:modified_time" content="2022-01-04T07:09:31.202Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="计算机网络">
 <meta name="twitter:card" content="summary">
@@ -1674,8 +1676,8 @@
 </ul>
 </li>
 <li>路由器在能够开始向输出链路传输分组的第一bit之前，必须先接收到整个分组，这种机制称为：<strong>存储转发</strong></li>
-<li><code>ARP</code>协议的作用是：将IP地址映射到数据链路层地址（MAC地址）</li>
-<li>每台路由器都依赖<code>ARP</code>协议，否则无法正确工作</li>
+<li><code>ARP</code>协议的作用是：将IP地址映射到数据链路层地址（MAC地址），反过来是<code>RARP</code></li>
+<li>每台路由器都依赖<strong>ARP</strong>协议，否则无法正确工作</li>
 <li><code>ARP</code>将IP地址转换为物理地址，<code>RARP</code>将物理地址转换为IP地址</li>
 <li>路由器连接的<strong>异构网络</strong>指的是：<strong>数据链路层和物理层均不同</strong></li>
 <li>路由器涉及Internet体系结构的<strong>网络接口层</strong>和<strong>网络层</strong></li>
@@ -1996,11 +1998,15 @@
 <h3 id="IPv4"><a href="#IPv4" class="headerlink" title="IPv4"></a>IPv4</h3><ul>
 <li><p>有类IP地址</p>
 <ul>
-<li><p>A类网络IP地址范围：1.0.0.1 - 127.255.255.254（16777214个，2^24）</p>
+<li><p>A类网络IP地址范围：1.0.0.1 - 127.255.255.254（<code>16777216-2</code>个主机/子网，2^24）</p>
 </li>
-<li><p>B类网络IP地址范围：128.0.0.1 - 191.255.255.254（65536个，2^16）</p>
+<li><p>B类网络IP地址范围：128.0.0.1 - 191.255.255.254（<code>65536-2</code>个主机/子网，2^16）</p>
 </li>
-<li><p>C类网络IP地址范围：192.0.0.1 - 223.255.255.254（256个，2^8）</p>
+<li><p>C类网络IP地址范围：192.0.0.1 - 223.255.255.254（<code>256-2</code>个主机/子网，2^8）</p>
+</li>
+<li><p>D类网络IP地址范围：224.0.0.1 - 239.255.255.254（只用于多播）</p>
+</li>
+<li><p>E类网络IP地址范围：240.0.0.1 - 255.255.255.254（留给未来使用）</p>
 <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220103104634.png" alt="image-20220103104634464" style="zoom: 33%;" /></li>
 </ul>
 </li>
@@ -2031,7 +2037,12 @@
 <li><p>IP子网寻址示例</p>
 <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220104085055.png" alt="image-20220104085055931" style="zoom:50%;" /></li>
 <li><p>切记，子网中网络地址（全0）和广播地址（全1）占用了2个地址，因此子网主机数量实际上是<strong>可用主机号数量加2</strong></p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220104085338.png" alt="image-20220104085338005" style="zoom: 67%;" /></li>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220104085338.png" alt="image-20220104085338005" style="zoom: 50%;" /></li>
+<li><p>已知网络类型和子网掩码，计算子网和主机数</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220104150405.jpg" alt="img" style="zoom: 25%;" />
+
+<p>B类有16位（后16位）的主机位，依题，其中前10（8+2）位用作子网号，则子网有2^10=1024个，主机有2^6-2=62个</p>
+</li>
 </ul>
 </li>
 <li><p>优点</p>
@@ -2057,8 +2068,10 @@
 </ul>
 </li>
 <li>最长前缀匹配优先<ul>
-<li>在检索转发表时，优先选择与分组目的地址匹配前缀最长的入口</li>
-<li>使用CIDR查找路由表时可能会得到多个匹配结果，应当从匹配结果中选择具有最长网络前缀的路由，因为网络前缀越长，路由就越具体</li>
+<li><p>在检索转发表时，优先选择与分组目的地址匹配前缀最长的入口</p>
+</li>
+<li><p>使用CIDR查找路由表时可能会得到多个匹配结果，应当从匹配结果中选择具有最长网络前缀的路由，因为网络前缀越长，路由就越具体</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220104145741.jpg" alt="Screenshot_20220104-145630_Superstar" style="zoom: 25%;" /></li>
 </ul>
 </li>
 </ul>
