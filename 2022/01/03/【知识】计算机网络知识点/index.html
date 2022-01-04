@@ -137,7 +137,7 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103160151.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103160126.png">
 <meta property="article:published_time" content="2022-01-03T08:07:45.220Z">
-<meta property="article:modified_time" content="2022-01-04T16:04:16.151Z">
+<meta property="article:modified_time" content="2022-01-04T16:40:49.414Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="计算机网络">
 <meta name="twitter:card" content="summary">
@@ -2629,9 +2629,11 @@
 <h4 id="TCP帧结构"><a href="#TCP帧结构" class="headerlink" title="TCP帧结构"></a>TCP帧结构</h4><ul>
 <li>1 - 2 字节：源端口号</li>
 <li>3 - 4 字节：目的端口号</li>
-<li>5 - 8 字节：序列号</li>
+<li>5 - 8 字节：序列号Seq</li>
 <li>9 - 12 字节：确认号ACK</li>
 <li>14字节：标志位SYN</li>
+<li>17 - 20 字节：缺省通告窗口AdvertisedWindow，描述接收方窗口大小</li>
+<li>其中，AdvertisedWindow必须大于链路的时延带宽积；Sequence Number必须大于AdvertisedWindow的2倍，且大于链路带宽×数据段最大TTL（支持数据段最大生存期）</li>
 </ul>
 <img src="C:/Users/lrk/AppData/Roaming/Typora/typora-user-images/image-20220104235736233.png" alt="image-20220104235736233" style="zoom: 33%;" />
 
@@ -2713,7 +2715,7 @@
 <li>拥塞窗口用于拥塞控制，避免多个发送方使网络过载</li>
 </ul>
 </li>
-<li><p>发送窗口 = min（接收窗口，拥塞窗口）</p>
+<li><p>发送窗口 = min（接收窗口，拥塞窗口，链路时延带宽积）</p>
 </li>
 </ul>
 </li>
