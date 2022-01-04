@@ -46,6 +46,7 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220102164610.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220102164642.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103190907.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220104165049.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220104125432.jpg">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220104125445.jpg">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103192043.png">
@@ -135,7 +136,7 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103160151.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103160126.png">
 <meta property="article:published_time" content="2022-01-03T08:07:45.220Z">
-<meta property="article:modified_time" content="2022-01-04T07:39:46.740Z">
+<meta property="article:modified_time" content="2022-01-04T08:50:59.977Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="计算机网络">
 <meta name="twitter:card" content="summary">
@@ -550,7 +551,7 @@
 <li><p>现有的公共数据网主要采用的技术是<code>分组交换</code>，包含：<code>数据报</code>、<code>信元交换</code>、<code>虚电路</code></p>
 <ul>
 <li><strong>信元交换</strong><ul>
-<li>又叫做异步传输模式（Asynchronous Transfer Mode，ATM），是一种面向连接的快速分组交换技术，通过建立虚电路来进行数据传输</li>
+<li>又叫做异步传输模式（Asynchronous Transfer Mode，ATM），是一种<strong>面向连接</strong>的快速分组交换技术，通过建立虚电路来进行数据传输</li>
 </ul>
 </li>
 <li><strong>数据报服务</strong><ul>
@@ -726,16 +727,16 @@
 <tr>
 <td>表示层</td>
 <td>数据格式转换、代码转换、数据加密</td>
-<td>无</td>
+<td>—</td>
 </tr>
 <tr>
 <td>会话层</td>
 <td>建立、管理和维护会话</td>
-<td>无</td>
+<td>—</td>
 </tr>
 <tr>
 <td>传输层</td>
-<td>建立、管理和维护端对端（进程间）的连接</td>
+<td>建立、管理和维护端对端（进程间）的连接（可靠数据传输）</td>
 <td>TCP、UDP</td>
 </tr>
 <tr>
@@ -849,6 +850,9 @@
 </li>
 <li><p>对比OSI七层参考模型</p>
 <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220103190907.png" alt="image-20220103190906970" style="zoom:50%;" /></li>
+<li><p>七层——四层——五层</p>
+<p><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220104165049.png" alt="image-20220104165049457"></p>
+</li>
 </ul>
 <h3 id="几种物理设备"><a href="#几种物理设备" class="headerlink" title="几种物理设备"></a>几种物理设备</h3><table>
 <thead>
@@ -870,7 +874,7 @@
 </tr>
 <tr>
 <td>网桥 Bridge</td>
-<td>根据数据帧内容转发数据给其他相邻的网络</td>
+<td>根据数据帧内容转发数据给其他相邻的网络；过滤/转发数据帧，拓展LAN</td>
 <td>L2</td>
 </tr>
 <tr>
@@ -941,13 +945,13 @@
 <h3 id="吞吐量"><a href="#吞吐量" class="headerlink" title="吞吐量"></a>吞吐量</h3><ul>
 <li><p>单位时间内发送方和接收方之间成功传输的数据量</p>
 </li>
-<li><p>受到各种因素影响，带宽10Mbps的链路一吞吐量只能达到2Mbps左右</p>
+<li><p>受到各种因素影响，吞吐量小于带宽，带宽10Mbps的链路一吞吐量可能只能达到2Mbps左右</p>
 </li>
 <li><p><strong>链路吞吐量</strong>为：A端结点、B端结点、通信线路三者吞吐量的最小值</p>
 </li>
 <li><p><strong>网络设备吞吐量</strong></p>
 <ul>
-<li>单位时间内，网络设备各端口存储转发的比特数之和</li>
+<li>单位时间内，网络设备各端口存储转发的比特数之<strong>和</strong></li>
 <li>取决于输入输出端口硬件和程序算法设计</li>
 <li>是没有帧丢失时，设备能接收并转发的最大数据速率</li>
 </ul>
@@ -2860,7 +2864,7 @@
 </li>
 <li>使用TCP传输协议<ul>
 <li>客户端发送连接请求（产生socket）给服务器的80端口</li>
-<li>服务器接收从客户端发送来的TCP连接请求</li>
+<li>服务器接收从客户端发送来的<strong>TCP</strong>连接请求</li>
 <li>浏览器（HTTP客户端）和Web服务器（HTTP服务器）之间交换HTTP 消息 (应用层协议消息)</li>
 <li>关闭TCP连接</li>
 </ul>
