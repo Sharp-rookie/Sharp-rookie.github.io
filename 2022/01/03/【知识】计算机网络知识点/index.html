@@ -125,11 +125,13 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103143712.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103144059.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103144605.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220104110059.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103155836.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220104111337.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103160151.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103160126.png">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220103155836.png">
 <meta property="article:published_time" content="2022-01-03T08:07:45.220Z">
-<meta property="article:modified_time" content="2022-01-04T02:52:30.683Z">
+<meta property="article:modified_time" content="2022-01-04T03:14:52.592Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="计算机网络">
 <meta name="twitter:card" content="summary">
@@ -2590,6 +2592,13 @@
 </li>
 <li><p>ACK信息还包括期望接受的下一字节</p>
 </li>
+<li><p>触发传输</p>
+<ul>
+<li>当收集到的字节数达到MSS 时</li>
+<li>发送进程明确要求TCP发送时</li>
+<li>定时器激活</li>
+</ul>
+</li>
 <li><p>超时重传</p>
 <ul>
 <li><p>采用自适应机制估计当前RTT作为定时依据</p>
@@ -2608,20 +2617,32 @@
 </li>
 </ul>
 <h2 id="5-5-TCP拥塞控制"><a href="#5-5-TCP拥塞控制" class="headerlink" title="5.5 TCP拥塞控制"></a>5.5 TCP拥塞控制</h2><ul>
-<li>发送端限制发送速率<ul>
-<li>拥塞窗口CongWin<ul>
-<li>发送端的发送窗口上限值应取<strong>接收方窗口</strong>和<strong>拥塞窗口</strong>中的较小值</li>
+<li><p>发送端限制发送速率</p>
+<ul>
+<li><p>拥塞窗口CongWin</p>
+<ul>
+<li><p>发送端的发送窗口上限值应取<strong>接收方窗口</strong>和<strong>拥塞窗口</strong>中的较小值</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220103143429.png" alt="image-20220103143429277" style="zoom: 33%;" /></li>
 </ul>
 </li>
-<li><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220103143429.png" alt="image-20220103143429277" style="zoom: 33%;" /></li>
+<li><p>接收窗口 VS 拥塞窗口</p>
+<ul>
+<li>接受窗口用于流量控制，避免快速发送方使慢速接收方过载</li>
+<li>拥塞窗口用于拥塞控制，避免多个发送方使网络过载</li>
 </ul>
 </li>
-<li>拥塞事件<ul>
+<li><p>发送窗口 = min（接收窗口，拥塞窗口）</p>
+</li>
+</ul>
+</li>
+<li><p>拥塞事件</p>
+<ul>
 <li>超时</li>
 <li>3个重复ACK</li>
 </ul>
 </li>
-<li>调整发送速率<ul>
+<li><p>调整发送速率</p>
+<ul>
 <li>加性增——乘性减：AIMD<ul>
 <li>加性增：每个RTT将CongWin增大一个MSS——<strong>拥塞避免</strong></li>
 <li>乘性减：发生拥塞事件后将CongWin减半</li>
@@ -2639,13 +2660,13 @@
 </li>
 <li>状态切换：<ul>
 <li>变量Threshold记录AIMD和SS切换的阈值</li>
-<li>基本算法：<ul>
+<li>朴素思想：<ul>
 <li>CongWin小于Threshold时采用SS，大于Threshold时采用AIMD</li>
 <li>发生拥塞事件时Threshold置为拥塞事件瞬间CongWin大小的一半</li>
 <li><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220103144059.png" alt="image-20220103144059883" style="zoom:50%;" /></li>
 </ul>
 </li>
-<li>改进：<ul>
+<li>实际规定：<ul>
 <li>收到3个ACK时，<strong>快速恢复</strong><ul>
 <li>Threshold置为当前CongWin大小的一半</li>
 <li>CongWin减少一半</li>
@@ -2670,10 +2691,21 @@
 </li>
 </ul>
 </li>
-<li>快速重传机制<ul>
-<li>在收到重复ACK时，快速重传对应序号的分组以避免超时</li>
+<li><p><strong>快速重传</strong></p>
+<ul>
+<li>在收到3次重复ACK时，不必等待超时计时器，立刻重传对应序号的分组以避免超时</li>
 </ul>
 </li>
+<li><p>公平性</p>
+<ul>
+<li><p>TCP具有公平性，带宽平均分配（原因：加性增、乘性减）</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220104110059.png" alt="image-20220104110059041" style="zoom:50%;" /></li>
+<li><p>但与UDP同时抢占资源时不占优势</p>
+</li>
+</ul>
+</li>
+<li><p>其他</p>
+<ul>
 <li>TCP协议中观察网络拥塞的办法是 <code>以超时作为网络拥塞的标志</code></li>
 <li>在 TCP/IP 中，实施流量控制的目的是 <code>保证接收方总是来得及接收发送方发出的报文或分组</code></li>
 <li>在 TCP 协议中，如果发送窗口直接按照接收方的通知窗口设置，其结果是 <code>突发流量导致分组无法到达接收方</code></li>
@@ -2684,8 +2716,10 @@
 </ul>
 </li>
 </ul>
+</li>
+</ul>
 <p>&nbsp;</p>
-<h1 id="6-应用层"><a href="#6-应用层" class="headerlink" title="6. 应用层"></a>6. 应用层</h1><ul>
+<h1 id="6-应用层"><a href="#6-应用层" class="headerlink" title="6. 应用层"></a>6. 应用层</h1><h3 id="相关概念-2"><a href="#相关概念-2" class="headerlink" title="相关概念"></a>相关概念</h3><ul>
 <li><p>网络应用体系结构</p>
 <ul>
 <li>客户机/服务器（C/S）结构<ul>
@@ -2709,31 +2743,24 @@
 </li>
 <li><p>在整个Internet上，使用<code>IP地址+端口号</code>唯一标识一个特定的应用进程</p>
 </li>
-<li><p>关于DNS</p>
+<li><p>在 Internet 域名体系中，域的下面可以划分子域，各级域名用圆点分开，按照 <code>从右到左越来越小的方式分多层排列</code></p>
+</li>
+<li><p>当一台计算机从 FTP 服务器下载文件时，在该 FTP 服务器上对数据进行封装的五个转换步骤是 <code>消息，报文段，数据报，数据帧，比特</code></p>
+</li>
+<li><p>网络应用实例</p>
 <ul>
-<li><p>每个域名服务器都维护一个高速缓存，存放最近用过的名字以及从何处获得名字映射信息的记录</p>
-</li>
-<li><p>当客户请求域名服务器转换名字时，服务器首先按标准过程检查它是否被授权管理该名字</p>
-</li>
-<li><p>域名服务器向客户报告缓存中有关名字与地址的绑定(binding)信息</p>
-</li>
-<li><p>查询过程示例</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220103160151.png" alt="image-20220103160151420" style="zoom:33%;" /></li>
-<li><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220103160126.png" alt="image-20220103160126557" style="zoom: 33%;" /></li>
+<li>E-mail</li>
+<li>Web</li>
+<li>即时通信（QQ）</li>
+<li>远程登陆（ssh、telnet）</li>
+<li>P2P文件共享（BitTorrent）</li>
+<li>IP电话（Skype）</li>
+<li>……</li>
 </ul>
 </li>
-<li><p>Web使用<code>HTTP</code>协议进行信息传输</p>
-</li>
-<li><p>用于WWW传输控制的协议是<code>HTTP</code></p>
-</li>
-<li><p>Cookie技术</p>
-<ul>
-<li>因为HTTP协议为无状态，所以为了保存上次浏览内容，引入Cookie技术</li>
-<li>Client访问Server时带上Cookie编号，Server为每个编号Client维护后台数据库</li>
-<li><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220103155836.png" alt="image-20220103155836735" style="zoom: 33%;" /></li>
 </ul>
-</li>
-<li><p>关于WWW的描述</p>
+<h3 id="Web应用与HTTP协议"><a href="#Web应用与HTTP协议" class="headerlink" title="Web应用与HTTP协议"></a>Web应用与HTTP协议</h3><ul>
+<li><p>万维网WWW（World Wide Web）</p>
 <ul>
 <li>浏览器是运行于计算机上的万维网客户端程序；万维网文档所驻留的计算机则运行服务器程序</li>
 <li>WWW工作过程可简要描述为：<ul>
@@ -2750,16 +2777,80 @@
 </li>
 </ul>
 </li>
-<li><p>Email应用组件</p>
+<li><p>Web</p>
 <ul>
-<li>邮件客户端</li>
-<li>邮件服务器</li>
-<li>SMTP协议（Simple Mail Transfer Protocol）、MIME、POP协议</li>
+<li>网页由某些<strong>对象</strong>组成</li>
+<li>对象可以是HTML文件、JPEG图片、Java Applet、音频文件……</li>
+<li>网页由包含以上某些对象的基本HTML文件构成</li>
+<li>每个对象都由一个URL定位</li>
 </ul>
 </li>
-<li><p>在 Internet 域名体系中，域的下面可以划分子域，各级域名用圆点分开，按照 <code>从右到左越来越小的方式分多层排列</code></p>
+<li><p>超文本传输协议（HTTP）</p>
+<ul>
+<li>网络的应用层协议</li>
+<li>无状态协议，服务器不保存客户端之前请求的信息记录</li>
+<li>客户机/服务器模型（C/S）<ul>
+<li>客户机：浏览器请求和接收消息，显示web对象</li>
+<li>服务器：Web 服务器发送对象给浏览器，作为对请求的响应</li>
+</ul>
 </li>
-<li><p>当一台计算机从 FTP 服务器下载文件时，在该 FTP 服务器上对数据进行封装的五个转换步骤是 <code>消息，报文段，数据报，数据帧，比特</code></p>
+<li>使用TCP传输协议<ul>
+<li>客户端发送连接请求（产生socket）给服务器的80端口</li>
+<li>服务器接收从客户端发送来的TCP连接请求</li>
+<li>浏览器（HTTP客户端）和Web服务器（HTTP服务器）之间交换HTTP 消息 (应用层协议消息)</li>
+<li>关闭TCP连接</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Web使用<code>HTTP</code>协议进行信息传输</p>
+</li>
+<li><p>用户—服务器状态：Cookies技术</p>
+<ul>
+<li><p>因为HTTP协议为无状态，所以为了保存上次浏览内容，引入Cookie技术</p>
+</li>
+<li><p>Client访问Server时带上Cookie编号，Server为每个编号Client维护后台数据库</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220103155836.png" alt="image-20220103155836735" style="zoom: 33%;" /></li>
+</ul>
+</li>
+</ul>
+<h3 id="域名解析服务DNS"><a href="#域名解析服务DNS" class="headerlink" title="域名解析服务DNS"></a>域名解析服务DNS</h3><ul>
+<li><p>实现主机名到IP地址的映射</p>
+<ul>
+<li>每个域名服务器都维护一个高速缓存，存放最近用过的名字以及从何处获得名字映射信息的记录</li>
+<li>当客户请求域名服务器转换名字时，服务器首先按标准过程检查它是否被授权管理该名字</li>
+<li>域名服务器向客户报告缓存中有关名字与地址的绑定(binding)信息</li>
+</ul>
+</li>
+<li><p>采用分布式数据库</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220104111337.png" alt="image-20220104111337451" style="zoom:50%;" /></li>
+<li><p>查询过程示例</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220103160151.png" alt="image-20220103160151420" style="zoom:33%;" /></li>
+<li><p>例题</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220103160126.png" alt="image-20220103160126557" style="zoom: 33%;" /></li>
+</ul>
+<h3 id="Email服务与SMTP协议"><a href="#Email服务与SMTP协议" class="headerlink" title="Email服务与SMTP协议"></a>Email服务与SMTP协议</h3><ul>
+<li>Email应用组件<ul>
+<li>邮件客户端</li>
+<li>邮件服务器</li>
+<li>SMTP协议（Simple Mail Transfer Protocol）、MIME、POP协议<ul>
+<li>使用TCP协议从客户端向服务器可靠的发送电子邮件消息，端口号25</li>
+<li>直接传输: 发送服务器到接收服务器</li>
+<li>传输的三个阶段<ul>
+<li>握手 (问候)</li>
+<li>消息发送</li>
+<li>终止</li>
+</ul>
+</li>
+<li>命令/响应的交互<ul>
+<li>命令：ASCII文本信息</li>
+<li>响应：状态码与短语</li>
+</ul>
+</li>
+<li>消息必须是7位ASCII码</li>
+</ul>
+</li>
+</ul>
 </li>
 </ul>
 
@@ -2860,7 +2951,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%A6%82%E8%BF%B0"><span class="nav-text">1. 计算机网络概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-text">1.1 基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-%E4%BA%A4%E6%8D%A2%E5%8E%9F%E7%90%86"><span class="nav-text">1.2 交换原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-%E7%BD%91%E7%BB%9C%E5%BA%94%E7%94%A8"><span class="nav-text">1.3 网络应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-%E7%BD%91%E7%BB%9C%E4%BD%93%E7%B3%BB%E6%9E%B6%E6%9E%84"><span class="nav-text">1.4 网络体系架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5"><span class="nav-text">相关概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B1%82%E6%AC%A1%E5%8C%96%E7%BD%91%E7%BB%9C%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="nav-text">层次化网络体系结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OSI%E4%B8%83%E5%B1%82%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B"><span class="nav-text">OSI七层参考模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP-IP%E5%9B%9B%E5%B1%82%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="nav-text">TCP&#x2F;IP四层体系结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%A0%E7%A7%8D%E7%89%A9%E7%90%86%E8%AE%BE%E5%A4%87"><span class="nav-text">几种物理设备</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-5-%E7%BD%91%E7%BB%9C%E6%80%A7%E8%83%BD%E8%AF%84%E4%BC%B0"><span class="nav-text">1.5 网络性能评估</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%93%BE%E8%B7%AF%E5%B8%A6%E5%AE%BD"><span class="nav-text">链路带宽</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E5%BB%B6"><span class="nav-text">时延</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E5%BB%B6%E5%B8%A6%E5%AE%BD%E7%A7%AF"><span class="nav-text">时延带宽积</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%9E%E5%90%90%E9%87%8F"><span class="nav-text">吞吐量</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E7%89%A9%E7%90%86%E5%B1%82"><span class="nav-text">2. 物理层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5-1"><span class="nav-text">相关概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E7%BC%96%E7%A0%81"><span class="nav-text">网络通信编码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82"><span class="nav-text">3. 数据链路层</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5"><span class="nav-text">3.1 相关概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%84%E5%B8%A7%EF%BC%88%E5%B8%A7%E5%AE%9A%E7%95%8C%E9%97%AE%E9%A2%98%EF%BC%89"><span class="nav-text">组帧（帧定界问题）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A5%E5%A4%AA%E7%BD%91"><span class="nav-text">以太网</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A0%E7%BA%BF%E5%B1%80%E5%9F%9F%E7%BD%91-IEEE802-11"><span class="nav-text">无线局域网 IEEE802.11</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E6%A1%A5%E4%B8%8E%E4%BA%A4%E6%8D%A2%E6%9C%BA"><span class="nav-text">网桥与交换机</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-%E5%B7%AE%E9%94%99%E6%A3%80%E6%B5%8B"><span class="nav-text">3.2 差错检测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-%E5%8F%AF%E9%9D%A0%E4%BC%A0%E8%BE%93%E6%9C%BA%E5%88%B6"><span class="nav-text">3.3 可靠传输机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E8%AF%B7%E6%B1%82%E9%87%8D%E4%BC%A0%EF%BC%88ARQ%EF%BC%89%E6%9C%BA%E5%88%B6"><span class="nav-text">自动请求重传（ARQ）机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%81%9C%E6%AD%A2%E7%AD%89%E5%BE%85%E5%8D%8F%E8%AE%AE"><span class="nav-text">停止等待协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9E%E7%BB%ADARQ%E5%8D%8F%E8%AE%AE"><span class="nav-text">连续ARQ协议</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Go-Back-N%EF%BC%88%E5%90%8E%E9%80%80N%E5%B8%A7%EF%BC%89"><span class="nav-text">Go-Back-N（后退N帧）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E6%80%A7%E9%87%8D%E4%BC%A0"><span class="nav-text">选择性重传</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E5%8D%8F%E8%AE%AE"><span class="nav-text">滑动窗口协议</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-%E5%AA%92%E8%B4%A8%E6%8E%A5%E5%85%A5%E6%8E%A7%E5%88%B6%EF%BC%88MAC%E5%8D%8F%E8%AE%AE%EF%BC%89"><span class="nav-text">3.4 媒质接入控制（MAC协议）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E4%BF%A1%E9%81%93%E5%88%92%E5%88%86MAC%E5%8D%8F%E8%AE%AE"><span class="nav-text">静态信道划分MAC协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E8%AE%BF%E9%97%AEMAC%E5%8D%8F%E8%AE%AE"><span class="nav-text">随机访问MAC协议</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ALOHA"><span class="nav-text">ALOHA</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%97%B6%E9%9A%99ALOHA"><span class="nav-text">时隙ALOHA</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CSMA"><span class="nav-text">CSMA</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%99%AE%E9%80%9ACSMA"><span class="nav-text">普通CSMA</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CSMA-CD"><span class="nav-text">CSMA&#x2F;CD</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CSMA-CA"><span class="nav-text">CSMA&#x2F;CA</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AE%E8%BD%ACMAC%E5%8D%8F%E8%AE%AE"><span class="nav-text">轮转MAC协议</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-5-%E5%85%B6%E4%BB%96%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="nav-text">3.5 其他知识点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E7%BD%91%E7%BB%9C%E5%B1%82"><span class="nav-text">4. 网络层</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-%E7%BD%91%E7%BB%9C%E4%BA%92%E8%81%94%E4%B8%8E%E8%B7%AF%E7%94%B1%E5%99%A8"><span class="nav-text">4.1 网络互联与路由器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-%E4%BA%A4%E6%8D%A2%E5%92%8C%E6%A1%A5%E6%8E%A5"><span class="nav-text">4.2 交换和桥接</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E6%8D%A2%E6%9C%BA"><span class="nav-text">交换机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E6%8D%A2%E7%BD%91%E7%BB%9C"><span class="nav-text">交换网络</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%8A%A5%E7%BD%91%E7%BB%9C"><span class="nav-text">数据报网络</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%99%9A%E7%94%B5%E8%B7%AF%EF%BC%88VC%EF%BC%89%E7%BD%91%E7%BB%9C"><span class="nav-text">虚电路（VC）网络</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BA%90%E8%B7%AF%E7%94%B1"><span class="nav-text">源路由</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E6%A1%A5%E5%92%8C%E5%B1%80%E5%9F%9F%E7%BD%91%E4%BA%A4%E6%8D%A2%E6%9C%BA"><span class="nav-text">网桥和局域网交换机</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%A8%E6%9C%BA"><span class="nav-text">动机</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BD%91%E6%A1%A5"><span class="nav-text">网桥</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-%E8%A7%A3%E5%86%B3%E6%97%A0%E8%84%91%E5%85%A8%E8%BD%AC%E5%8F%91%E7%9A%84%E9%97%AE%E9%A2%98%EF%BC%9A%E9%80%8F%E6%98%8E%E7%BD%91%E6%A1%A5"><span class="nav-text">1. 解决无脑全转发的问题：透明网桥</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%E8%87%AA%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95"><span class="nav-text">2. 自学习算法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-%E8%A7%A3%E5%86%B3%E7%BD%91%E7%BB%9C%E7%8E%AF%E8%B7%AF%E9%97%AE%E9%A2%98%EF%BC%9A%E7%94%9F%E6%88%90%E6%A0%91%E7%AE%97%E6%B3%95"><span class="nav-text">3. 解决网络环路问题：生成树算法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-%E8%A7%A3%E5%86%B3%E5%B9%BF%E6%92%AD%E5%92%8C%E5%A4%9A%E6%92%AD%E9%97%AE%E9%A2%98"><span class="nav-text">4. 解决广播和多播问题</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-%E8%A7%A3%E5%86%B3%E6%8B%93%E5%B1%95%E6%80%A7%E9%97%AE%E9%A2%98%EF%BC%9A%E8%99%9A%E6%8B%9F%E5%B1%80%E5%9F%9F%E7%BD%91VLAN"><span class="nav-text">5. 解决拓展性问题：虚拟局域网VLAN</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BD%91%E6%A1%A5-VS-%E4%BA%A4%E6%8D%A2%E6%9C%BA"><span class="nav-text">网桥 VS 交换机</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B1%E4%BA%AB%E5%BC%8FVS%E4%BA%A4%E6%8D%A2%E5%BC%8F%E4%BB%A5%E5%A4%AA%E7%BD%91"><span class="nav-text">共享式VS交换式以太网</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BE%E5%A4%87%E5%AF%B9%E6%AF%94"><span class="nav-text">设备对比</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8D%8F%E8%AE%AE%E5%AF%B9%E6%AF%94"><span class="nav-text">协议对比</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-IP%E6%9C%8D%E5%8A%A1%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8D%8F%E8%AE%AE"><span class="nav-text">4.3 IP服务模型与协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-4-IP%E5%9C%B0%E5%9D%80%E5%8F%8A%E5%85%B6%E5%88%92%E5%88%86"><span class="nav-text">4.4 IP地址及其划分</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#IP%E7%BC%96%E5%9D%80"><span class="nav-text">IP编址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IPv4"><span class="nav-text">IPv4</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IP%E5%AD%90%E7%BD%91%E5%88%92%E5%88%86"><span class="nav-text">IP子网划分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A0%E5%88%86%E7%B1%BB%E7%BC%96%E5%9D%80CIDR%E4%B8%8E%E8%B7%AF%E7%94%B1%E8%81%9A%E5%90%88"><span class="nav-text">无分类编址CIDR与路由聚合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E5%8D%8F%E8%AE%AE%EF%BC%88ARP%EF%BC%89"><span class="nav-text">地址转换协议（ARP）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E4%B8%BB%E6%9C%BA%E9%85%8D%E7%BD%AE%E5%8D%8F%E8%AE%AEDHCP"><span class="nav-text">动态主机配置协议DHCP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NAT%E5%8D%8F%E8%AE%AE"><span class="nav-text">NAT协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ICMP%E5%8D%8F%E8%AE%AE"><span class="nav-text">ICMP协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IPv6"><span class="nav-text">IPv6</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-5-%E8%B7%AF%E7%94%B1%E7%AE%97%E6%B3%95%E4%B8%8E%E5%8D%8F%E8%AE%AE"><span class="nav-text">4.5 路由算法与协议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AC%E5%8F%91-VS-%E8%B7%AF%E7%94%B1"><span class="nav-text">转发 VS 路由</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%9D%E7%A6%BB%E5%90%91%E9%87%8F%EF%BC%88DV%EF%BC%89%E8%B7%AF%E7%94%B1%E9%80%89%E6%8B%A9"><span class="nav-text">距离向量（DV）路由选择</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-text">原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E9%80%89%E6%8B%A9%E4%BF%A1%E6%81%AF%E5%8D%8F%E8%AE%AE%EF%BC%88RIP%EF%BC%89"><span class="nav-text">路由选择信息协议（RIP）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%93%BE%E8%B7%AF%E7%8A%B6%E6%80%81%EF%BC%88LS%EF%BC%89%E8%B7%AF%E7%94%B1%E9%80%89%E6%8B%A9"><span class="nav-text">链路状态（LS）路由选择</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8E%9F%E7%90%86-1"><span class="nav-text">原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%80%E6%94%BE%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E4%BC%98%E5%85%88%EF%BC%88OSPF%EF%BC%89"><span class="nav-text">开放最短路径优先（OSPF）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E6%B2%BB%E7%B3%BB%E7%BB%9F"><span class="nav-text">自治系统</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E9%83%A8%E7%BD%91%E5%85%B3%E5%8D%8F%E8%AE%AE%EF%BC%88IGP%EF%BC%89"><span class="nav-text">内部网关协议（IGP）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%96%E9%83%A8%E7%BD%91%E5%85%B3%E5%8D%8F%E8%AE%AE%EF%BC%88EGP%EF%BC%9ABGP%EF%BC%89"><span class="nav-text">外部网关协议（EGP：BGP）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-text">其他</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%9A%E6%92%AD"><span class="nav-text">多播</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%9A%E5%8D%8F%E8%AE%AE%E6%A0%87%E7%AD%BE%E4%BA%A4%E6%8D%A2%EF%BC%88MPLS%EF%BC%89"><span class="nav-text">多协议标签交换（MPLS）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8IP"><span class="nav-text">移动IP</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E4%BC%A0%E8%BE%93%E5%B1%82"><span class="nav-text">5. 传输层</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5"><span class="nav-text">5.1 相关概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-%E7%94%A8%E6%88%B7%E6%95%B0%E6%8D%AE%E6%8A%A5%EF%BC%88UDP%EF%BC%89%E5%8D%8F%E8%AE%AE"><span class="nav-text">5.2 用户数据报（UDP）协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3-%E5%8F%AF%E9%9D%A0%E5%AD%97%E8%8A%82%E6%B5%81%EF%BC%88TCP%EF%BC%89%E5%8D%8F%E8%AE%AE"><span class="nav-text">5.3 可靠字节流（TCP）协议</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#TCP%E6%9C%8D%E5%8A%A1%E6%A8%A1%E5%9E%8B"><span class="nav-text">TCP服务模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%BB%BA%E7%AB%8B%E8%BF%9E%E6%8E%A5"><span class="nav-text">三次握手建立连接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B%E6%96%AD%E5%BC%80%E8%BF%9E%E6%8E%A5"><span class="nav-text">四次挥手断开连接</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-4-TCP%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E7%AE%97%E6%B3%95"><span class="nav-text">5.4 TCP滑动窗口算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-5-TCP%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6"><span class="nav-text">5.5 TCP拥塞控制</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-%E5%BA%94%E7%94%A8%E5%B1%82"><span class="nav-text">6. 应用层</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%A6%82%E8%BF%B0"><span class="nav-text">1. 计算机网络概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-text">1.1 基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-%E4%BA%A4%E6%8D%A2%E5%8E%9F%E7%90%86"><span class="nav-text">1.2 交换原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-%E7%BD%91%E7%BB%9C%E5%BA%94%E7%94%A8"><span class="nav-text">1.3 网络应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-%E7%BD%91%E7%BB%9C%E4%BD%93%E7%B3%BB%E6%9E%B6%E6%9E%84"><span class="nav-text">1.4 网络体系架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5"><span class="nav-text">相关概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B1%82%E6%AC%A1%E5%8C%96%E7%BD%91%E7%BB%9C%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="nav-text">层次化网络体系结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OSI%E4%B8%83%E5%B1%82%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B"><span class="nav-text">OSI七层参考模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP-IP%E5%9B%9B%E5%B1%82%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="nav-text">TCP&#x2F;IP四层体系结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%A0%E7%A7%8D%E7%89%A9%E7%90%86%E8%AE%BE%E5%A4%87"><span class="nav-text">几种物理设备</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-5-%E7%BD%91%E7%BB%9C%E6%80%A7%E8%83%BD%E8%AF%84%E4%BC%B0"><span class="nav-text">1.5 网络性能评估</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%93%BE%E8%B7%AF%E5%B8%A6%E5%AE%BD"><span class="nav-text">链路带宽</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E5%BB%B6"><span class="nav-text">时延</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E5%BB%B6%E5%B8%A6%E5%AE%BD%E7%A7%AF"><span class="nav-text">时延带宽积</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%9E%E5%90%90%E9%87%8F"><span class="nav-text">吞吐量</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E7%89%A9%E7%90%86%E5%B1%82"><span class="nav-text">2. 物理层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5-1"><span class="nav-text">相关概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E7%BC%96%E7%A0%81"><span class="nav-text">网络通信编码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82"><span class="nav-text">3. 数据链路层</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5"><span class="nav-text">3.1 相关概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%84%E5%B8%A7%EF%BC%88%E5%B8%A7%E5%AE%9A%E7%95%8C%E9%97%AE%E9%A2%98%EF%BC%89"><span class="nav-text">组帧（帧定界问题）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A5%E5%A4%AA%E7%BD%91"><span class="nav-text">以太网</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A0%E7%BA%BF%E5%B1%80%E5%9F%9F%E7%BD%91-IEEE802-11"><span class="nav-text">无线局域网 IEEE802.11</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E6%A1%A5%E4%B8%8E%E4%BA%A4%E6%8D%A2%E6%9C%BA"><span class="nav-text">网桥与交换机</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-%E5%B7%AE%E9%94%99%E6%A3%80%E6%B5%8B"><span class="nav-text">3.2 差错检测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-%E5%8F%AF%E9%9D%A0%E4%BC%A0%E8%BE%93%E6%9C%BA%E5%88%B6"><span class="nav-text">3.3 可靠传输机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E8%AF%B7%E6%B1%82%E9%87%8D%E4%BC%A0%EF%BC%88ARQ%EF%BC%89%E6%9C%BA%E5%88%B6"><span class="nav-text">自动请求重传（ARQ）机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%81%9C%E6%AD%A2%E7%AD%89%E5%BE%85%E5%8D%8F%E8%AE%AE"><span class="nav-text">停止等待协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9E%E7%BB%ADARQ%E5%8D%8F%E8%AE%AE"><span class="nav-text">连续ARQ协议</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Go-Back-N%EF%BC%88%E5%90%8E%E9%80%80N%E5%B8%A7%EF%BC%89"><span class="nav-text">Go-Back-N（后退N帧）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E6%80%A7%E9%87%8D%E4%BC%A0"><span class="nav-text">选择性重传</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E5%8D%8F%E8%AE%AE"><span class="nav-text">滑动窗口协议</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-%E5%AA%92%E8%B4%A8%E6%8E%A5%E5%85%A5%E6%8E%A7%E5%88%B6%EF%BC%88MAC%E5%8D%8F%E8%AE%AE%EF%BC%89"><span class="nav-text">3.4 媒质接入控制（MAC协议）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E4%BF%A1%E9%81%93%E5%88%92%E5%88%86MAC%E5%8D%8F%E8%AE%AE"><span class="nav-text">静态信道划分MAC协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E8%AE%BF%E9%97%AEMAC%E5%8D%8F%E8%AE%AE"><span class="nav-text">随机访问MAC协议</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ALOHA"><span class="nav-text">ALOHA</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%97%B6%E9%9A%99ALOHA"><span class="nav-text">时隙ALOHA</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CSMA"><span class="nav-text">CSMA</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%99%AE%E9%80%9ACSMA"><span class="nav-text">普通CSMA</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CSMA-CD"><span class="nav-text">CSMA&#x2F;CD</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CSMA-CA"><span class="nav-text">CSMA&#x2F;CA</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AE%E8%BD%ACMAC%E5%8D%8F%E8%AE%AE"><span class="nav-text">轮转MAC协议</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-5-%E5%85%B6%E4%BB%96%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="nav-text">3.5 其他知识点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E7%BD%91%E7%BB%9C%E5%B1%82"><span class="nav-text">4. 网络层</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-%E7%BD%91%E7%BB%9C%E4%BA%92%E8%81%94%E4%B8%8E%E8%B7%AF%E7%94%B1%E5%99%A8"><span class="nav-text">4.1 网络互联与路由器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-%E4%BA%A4%E6%8D%A2%E5%92%8C%E6%A1%A5%E6%8E%A5"><span class="nav-text">4.2 交换和桥接</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E6%8D%A2%E6%9C%BA"><span class="nav-text">交换机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E6%8D%A2%E7%BD%91%E7%BB%9C"><span class="nav-text">交换网络</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%8A%A5%E7%BD%91%E7%BB%9C"><span class="nav-text">数据报网络</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%99%9A%E7%94%B5%E8%B7%AF%EF%BC%88VC%EF%BC%89%E7%BD%91%E7%BB%9C"><span class="nav-text">虚电路（VC）网络</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BA%90%E8%B7%AF%E7%94%B1"><span class="nav-text">源路由</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E6%A1%A5%E5%92%8C%E5%B1%80%E5%9F%9F%E7%BD%91%E4%BA%A4%E6%8D%A2%E6%9C%BA"><span class="nav-text">网桥和局域网交换机</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%A8%E6%9C%BA"><span class="nav-text">动机</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BD%91%E6%A1%A5"><span class="nav-text">网桥</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-%E8%A7%A3%E5%86%B3%E6%97%A0%E8%84%91%E5%85%A8%E8%BD%AC%E5%8F%91%E7%9A%84%E9%97%AE%E9%A2%98%EF%BC%9A%E9%80%8F%E6%98%8E%E7%BD%91%E6%A1%A5"><span class="nav-text">1. 解决无脑全转发的问题：透明网桥</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%E8%87%AA%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95"><span class="nav-text">2. 自学习算法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-%E8%A7%A3%E5%86%B3%E7%BD%91%E7%BB%9C%E7%8E%AF%E8%B7%AF%E9%97%AE%E9%A2%98%EF%BC%9A%E7%94%9F%E6%88%90%E6%A0%91%E7%AE%97%E6%B3%95"><span class="nav-text">3. 解决网络环路问题：生成树算法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-%E8%A7%A3%E5%86%B3%E5%B9%BF%E6%92%AD%E5%92%8C%E5%A4%9A%E6%92%AD%E9%97%AE%E9%A2%98"><span class="nav-text">4. 解决广播和多播问题</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-%E8%A7%A3%E5%86%B3%E6%8B%93%E5%B1%95%E6%80%A7%E9%97%AE%E9%A2%98%EF%BC%9A%E8%99%9A%E6%8B%9F%E5%B1%80%E5%9F%9F%E7%BD%91VLAN"><span class="nav-text">5. 解决拓展性问题：虚拟局域网VLAN</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BD%91%E6%A1%A5-VS-%E4%BA%A4%E6%8D%A2%E6%9C%BA"><span class="nav-text">网桥 VS 交换机</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B1%E4%BA%AB%E5%BC%8FVS%E4%BA%A4%E6%8D%A2%E5%BC%8F%E4%BB%A5%E5%A4%AA%E7%BD%91"><span class="nav-text">共享式VS交换式以太网</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BE%E5%A4%87%E5%AF%B9%E6%AF%94"><span class="nav-text">设备对比</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8D%8F%E8%AE%AE%E5%AF%B9%E6%AF%94"><span class="nav-text">协议对比</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-IP%E6%9C%8D%E5%8A%A1%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%8D%8F%E8%AE%AE"><span class="nav-text">4.3 IP服务模型与协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-4-IP%E5%9C%B0%E5%9D%80%E5%8F%8A%E5%85%B6%E5%88%92%E5%88%86"><span class="nav-text">4.4 IP地址及其划分</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#IP%E7%BC%96%E5%9D%80"><span class="nav-text">IP编址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IPv4"><span class="nav-text">IPv4</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IP%E5%AD%90%E7%BD%91%E5%88%92%E5%88%86"><span class="nav-text">IP子网划分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A0%E5%88%86%E7%B1%BB%E7%BC%96%E5%9D%80CIDR%E4%B8%8E%E8%B7%AF%E7%94%B1%E8%81%9A%E5%90%88"><span class="nav-text">无分类编址CIDR与路由聚合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E5%8D%8F%E8%AE%AE%EF%BC%88ARP%EF%BC%89"><span class="nav-text">地址转换协议（ARP）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E4%B8%BB%E6%9C%BA%E9%85%8D%E7%BD%AE%E5%8D%8F%E8%AE%AEDHCP"><span class="nav-text">动态主机配置协议DHCP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NAT%E5%8D%8F%E8%AE%AE"><span class="nav-text">NAT协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ICMP%E5%8D%8F%E8%AE%AE"><span class="nav-text">ICMP协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IPv6"><span class="nav-text">IPv6</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-5-%E8%B7%AF%E7%94%B1%E7%AE%97%E6%B3%95%E4%B8%8E%E5%8D%8F%E8%AE%AE"><span class="nav-text">4.5 路由算法与协议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AC%E5%8F%91-VS-%E8%B7%AF%E7%94%B1"><span class="nav-text">转发 VS 路由</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%9D%E7%A6%BB%E5%90%91%E9%87%8F%EF%BC%88DV%EF%BC%89%E8%B7%AF%E7%94%B1%E9%80%89%E6%8B%A9"><span class="nav-text">距离向量（DV）路由选择</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-text">原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E9%80%89%E6%8B%A9%E4%BF%A1%E6%81%AF%E5%8D%8F%E8%AE%AE%EF%BC%88RIP%EF%BC%89"><span class="nav-text">路由选择信息协议（RIP）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%93%BE%E8%B7%AF%E7%8A%B6%E6%80%81%EF%BC%88LS%EF%BC%89%E8%B7%AF%E7%94%B1%E9%80%89%E6%8B%A9"><span class="nav-text">链路状态（LS）路由选择</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8E%9F%E7%90%86-1"><span class="nav-text">原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%80%E6%94%BE%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E4%BC%98%E5%85%88%EF%BC%88OSPF%EF%BC%89"><span class="nav-text">开放最短路径优先（OSPF）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E6%B2%BB%E7%B3%BB%E7%BB%9F"><span class="nav-text">自治系统</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E9%83%A8%E7%BD%91%E5%85%B3%E5%8D%8F%E8%AE%AE%EF%BC%88IGP%EF%BC%89"><span class="nav-text">内部网关协议（IGP）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%96%E9%83%A8%E7%BD%91%E5%85%B3%E5%8D%8F%E8%AE%AE%EF%BC%88EGP%EF%BC%9ABGP%EF%BC%89"><span class="nav-text">外部网关协议（EGP：BGP）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-text">其他</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%9A%E6%92%AD"><span class="nav-text">多播</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%9A%E5%8D%8F%E8%AE%AE%E6%A0%87%E7%AD%BE%E4%BA%A4%E6%8D%A2%EF%BC%88MPLS%EF%BC%89"><span class="nav-text">多协议标签交换（MPLS）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8IP"><span class="nav-text">移动IP</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E4%BC%A0%E8%BE%93%E5%B1%82"><span class="nav-text">5. 传输层</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5"><span class="nav-text">5.1 相关概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-%E7%94%A8%E6%88%B7%E6%95%B0%E6%8D%AE%E6%8A%A5%EF%BC%88UDP%EF%BC%89%E5%8D%8F%E8%AE%AE"><span class="nav-text">5.2 用户数据报（UDP）协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3-%E5%8F%AF%E9%9D%A0%E5%AD%97%E8%8A%82%E6%B5%81%EF%BC%88TCP%EF%BC%89%E5%8D%8F%E8%AE%AE"><span class="nav-text">5.3 可靠字节流（TCP）协议</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#TCP%E6%9C%8D%E5%8A%A1%E6%A8%A1%E5%9E%8B"><span class="nav-text">TCP服务模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%BB%BA%E7%AB%8B%E8%BF%9E%E6%8E%A5"><span class="nav-text">三次握手建立连接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B%E6%96%AD%E5%BC%80%E8%BF%9E%E6%8E%A5"><span class="nav-text">四次挥手断开连接</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-4-TCP%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E7%AE%97%E6%B3%95"><span class="nav-text">5.4 TCP滑动窗口算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-5-TCP%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6"><span class="nav-text">5.5 TCP拥塞控制</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-%E5%BA%94%E7%94%A8%E5%B1%82"><span class="nav-text">6. 应用层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5-2"><span class="nav-text">相关概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Web%E5%BA%94%E7%94%A8%E4%B8%8EHTTP%E5%8D%8F%E8%AE%AE"><span class="nav-text">Web应用与HTTP协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E6%9C%8D%E5%8A%A1DNS"><span class="nav-text">域名解析服务DNS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Email%E6%9C%8D%E5%8A%A1%E4%B8%8ESMTP%E5%8D%8F%E8%AE%AE"><span class="nav-text">Email服务与SMTP协议</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
