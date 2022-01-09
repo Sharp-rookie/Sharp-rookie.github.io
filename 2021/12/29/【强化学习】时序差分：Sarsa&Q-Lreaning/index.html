@@ -53,13 +53,12 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211229101924.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211229101944.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211229094439.png">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211229104840.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211229103423.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211229103904.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211229091010.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211229104502.png">
 <meta property="article:published_time" content="2021-12-29T02:49:45.583Z">
-<meta property="article:modified_time" content="2022-01-03T08:25:59.805Z">
+<meta property="article:modified_time" content="2022-01-09T02:54:44.378Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="Reinforcement Learning">
 <meta property="article:tag" content="Algorithm">
@@ -344,18 +343,33 @@
 <p>&emsp;&emsp;其中，<code>γ</code>是衰减因子，<code>α</code>是迭代步长。这里和蒙特卡罗法求解在线控制问题的迭代公式的区别主要是，收获<code>Gt</code>的表达式不同，对于时序差分，收获<code>Gt</code>的表达式是<code>R+γQ(S′,A′)</code>。除了收获<code>Gt</code>的表达式不同，Sarsa算法和蒙特卡罗在线控制算法基本类似。</p>
 <p>&nbsp;</p>
 <h4 id="算法流程"><a href="#算法流程" class="headerlink" title="算法流程"></a>算法流程</h4><p><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211229090934.png" alt="image-20211229090934145"></p>
-<p>输入：迭代轮数T、状态集S、动作集A、步长α、衰减因子γ、探索率ϵ</p>
-<p>输出：所有的状态和动作对应的价值Q</p>
-<p>​        1. 随机初始化所有状态和动作对应的价值Q，终止状态的Q初始化为0</p>
-<p>​        2. for i in [ 1, T ]：</p>
-<p>​                a）初始化S为当前状态序列的第一个状态，依据ϵ−greedy算法对当前状态S 选出动作A</p>
-<p>​                b）执行动作A，由环境得到新状态S‘ 和奖励R</p>
-<p>​                c）依据ϵ−greedy算法对状态S‘ 选出动作A’</p>
-<p>​                d）对当前状态S和动作A，更新价值函数Q（S，A）：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211229084907.png" alt="image-20211229084907741" style="zoom: 50%;" />
+<p>输入：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">迭代轮数T、状态集S、动作集A、步长α、衰减因子γ、探索率ϵ</span><br></pre></td></tr></table></figure>
 
-<p>​                e）前进一步：S = S’，A = A‘</p>
-<p>​                f）if  S’是终止状态，break；else 跳回步骤b</p>
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">所有的状态和动作对应的价值Q</span><br></pre></td></tr></table></figure>
+
+<p>流程：</p>
+<ol>
+<li><p>随机初始化所有状态和动作对应的价值Q，终止状态的Q初始化为0</p>
+</li>
+<li><p>for i in [ 1, T ]：</p>
+<ol>
+<li><p>初始化S为当前状态序列的第一个状态，依据ϵ−greedy算法对当前状态S 选出动作A</p>
+</li>
+<li><p>执行动作A，由环境得到新状态S‘ 和奖励R</p>
+</li>
+<li><p>依据ϵ−greedy算法对状态S‘ 选出动作A’</p>
+</li>
+<li><p>对当前状态S和动作A，更新价值函数Q（S，A）：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211229084907.png" alt="image-20211229084907741" style="zoom: 50%;" /></li>
+<li><p>前进一步：S = S’，A = A‘</p>
+</li>
+<li><p>if  S’是终止状态，break；else 跳回步骤b</p>
+</li>
+</ol>
+</li>
+</ol>
 <p>（注意：步长α一般需要随着迭代逐渐变小，这样才能保证动作价值函数Q可以收敛。当Q收敛时，策略ϵ−greedy算法也就收敛了）</p>
 <p>&nbsp;</p>
 <h4 id="示例一：Windy-GridWorld"><a href="#示例一：Windy-GridWorld" class="headerlink" title="示例一：Windy GridWorld"></a>示例一：Windy GridWorld</h4><h5 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h5><p>&emsp;&emsp;一个10×7的长方形格子世界，标记有一个起始位置 S 和一个终止目标位置 G，格子下方的数字表示对应的列中一定强度的风。当个体进入该列的某个格子时，会按图中箭头所示的方向自动移动数字表示的格数，借此来模拟世界中风的作用。同样格子世界是有边界的，个体任意时刻只能处在世界内部的一个格子中。个体并不清楚这个世界的构造以及有风，也就是说它不知道格子是长方形的，也不知道边界在哪里，也不知道自己在里面移动移步后下一个格子与之前格子的相对位置关系，当然它也不清楚起始位置、终止目标的具体位置。但是个体会记住曾经经过的格子，下次在进入这个格子时，它能准确的辨认出这个格子曾经什么时候来过。格子可以执行的行为是朝上、下、左、右移动一步，每移动一步只要不是进入目标位置都给予一个 -1 的惩罚，直至进入目标位置后获得奖励 0 同时永久停留在该位置。现在要求解的问题是个体应该遵循怎样的策略才能尽快的从起始位置到达目标位置。</p>
@@ -381,27 +395,36 @@
 <h4 id="算法流程-1"><a href="#算法流程-1" class="headerlink" title="算法流程"></a>算法流程</h4><p><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211229100839.png" alt="image-20211229100839670"></p>
 <p>输入：迭代轮数T、状态集S、动作集A、步长α、衰减因子γ、探索率ϵ、多步参数λ</p>
 <p>输出：所有的状态和动作对应的价值Q</p>
-<p>​        1. 随机初始化所有状态和动作对应的价值Q，终止状态的Q初始化为0</p>
-<p>​        2. for i in [ 1, T ]：</p>
-<p>​                a）初始化S为当前状态序列的第一个状态，依据ϵ−greedy算法对当前状态S 选出动作A，初始化所有状态动作的效用迹E为0</p>
-<p>​                b）执行动作A，由环境得到新状态S‘ 和奖励R</p>
-<p>​                c）依据ϵ−greedy算法对状态S‘ 选出动作A’</p>
-<p>​                d）更新效用迹函数E(S, A) 和 误差 δ：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211229101924.png" alt="image-20211229101924200" style="zoom:50%;" />
-
-<p>​                e）对当前序列中<strong>所有</strong>状态S和对应动作A，更新价值函数Q(S, A)和效用迹函数E(S, A) ：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211229101944.png" alt="image-20211229101944186" style="zoom:50%;" />
-
-<p>​                f）前进一步：S = S’，A = A‘</p>
-<p>​                g）if  S’是终止状态，break；else 跳回步骤b</p>
-<p>&emsp;&emsp;（注意：对于步长α，和Sarsa一样，一般也需要随着迭代的进行逐渐变小才能保证动作价值函数Q收敛）</p>
+<ol>
+<li><p>随机初始化所有状态和动作对应的价值Q，终止状态的Q初始化为0</p>
+</li>
+<li><p>for i in [ 1, T ]：</p>
+<ol>
+<li><p>初始化S为当前状态序列的第一个状态，依据ϵ−greedy算法对当前状态S 选出动作A，初始化所有状态动作的效用迹E为0</p>
+</li>
+<li><p>执行动作A，由环境得到新状态S‘ 和奖励R</p>
+</li>
+<li><p>依据ϵ−greedy算法对状态S‘ 选出动作A’</p>
+</li>
+<li><p>更新效用迹函数E(S, A) 和 误差 δ：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211229101924.png" alt="image-20211229101924200" style="zoom:50%;" /></li>
+<li><p>对当前序列中<strong>所有</strong>状态S和对应动作A，更新价值函数Q(S, A)和效用迹函数E(S, A) ：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211229101944.png" alt="image-20211229101944186" style="zoom:50%;" /></li>
+<li><p>前进一步：S = S’，A = A‘</p>
+</li>
+<li><p>if  S’是终止状态，break；else 跳回步骤b</p>
+</li>
+</ol>
+</li>
+</ol>
+<p>（注意：对于步长α，和Sarsa一样，一般也需要随着迭代的进行逐渐变小才能保证动作价值函数Q收敛）</p>
 <p>&nbsp;</p>
 <h4 id="示例：3×3迷宫"><a href="#示例：3×3迷宫" class="headerlink" title="示例：3×3迷宫"></a>示例：3×3迷宫</h4><h5 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h5><p>&emsp;&emsp;<a target="_blank" rel="noopener" href="https://github.com/Sharp-rookie/RL-learning/tree/main/Sarsa(lamda)/Sarsa_lamda_maze">github</a></p>
 <h5 id="效果-2"><a href="#效果-2" class="headerlink" title="效果"></a>效果</h5><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211229094439.png" alt="image-20211229094438992" style="zoom:50%;" />
 
 <p>&nbsp;</p>
-<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>​        SARSA算法和动态规划法比起来，不需要环境的状态转换模型，和蒙特卡罗法比起来，不需要完整的状态序列，因此比较灵活。在传统的强化学习方法中使用比较广泛。</p>
-<p>　　但是SARSA算法也有一个传统强化学习方法共有的问题，就是无法求解太复杂的问题。在 SARSA 算法中，Q(S,A) 的值使用一张大表来存储的，如果状态和动作都达到百万乃至千万级，需要在内存里保存的这张大表会超级大，甚至溢出，因此不是很适合解决规模很大的问题。当然，对于不是特别复杂的问题，使用SARSA还是很不错的一种强化学习问题求解方法。</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>&emsp;&emsp;SARSA算法和动态规划法比起来，不需要环境的状态转换模型，和蒙特卡罗法比起来，不需要完整的状态序列，因此比较灵活。在传统的强化学习方法中使用比较广泛。</p>
+<p>&emsp;&emsp;但是SARSA算法也有一个传统强化学习方法共有的问题，就是无法求解太复杂的问题。在 SARSA 算法中，Q(S,A) 的值使用一张大表来存储的，如果状态和动作都达到百万乃至千万级，需要在内存里保存的这张大表会超级大，甚至溢出，因此不是很适合解决规模很大的问题。当然，对于不是特别复杂的问题，使用SARSA还是很不错的一种强化学习问题求解方法。</p>
 <p>&nbsp;&nbsp;</p>
 <h2 id="Q-Learning"><a href="#Q-Learning" class="headerlink" title="Q-Learning"></a>Q-Learning</h2><blockquote>
 <p>关键词：时序差分、model-free、off-policy、ϵ-greedy、价值迭代</p>
@@ -409,7 +432,41 @@
 <h4 id="引入-1"><a href="#引入-1" class="headerlink" title="引入"></a>引入</h4><p>&emsp;&emsp;Q-Learning也是一种使用时序差分求解强化学习控制问题的方法，它通过价值函数的更新来更新策略，通过策略来产生新的状态和即时奖励，进而更新价值函数。一直进行下去，直到价值函数和策略都收敛。</p>
 <p>&emsp;&emsp;它与Sarsa最大的区别在于Q-Learning是离线控制(off-policy)算法，会使用两个控制策略，一个策略用于选择新的动作，另一个策略用于更新价值函数。具体而言，Q-Learning会使用ϵ−greedy算法来选择新的动作，这部分和SARSA完全相同。但是对于价值函数的更新，Q-Learning使用的是greedy法，而不是SARSA的ϵ−greedy法。这一点就是SARSA和Q-Learning本质区别。</p>
 <h4 id="概述-2"><a href="#概述-2" class="headerlink" title="概述"></a>概述</h4><p><strong>算法思想</strong></p>
-<p>&emsp;&emsp;Q-Learning是强化学习算法中value-based的算法，Q即为Q（s,a）就是在某一时刻的 s 状态下(s∈S)，采取 动作a (a∈A)动作能够获得收益的期望，环境会根据agent的动作反馈相应的回报reward，所以算法的主要思想就是将State与Action构建成一张Q-table来存储Q值，然后根据Q值来选取能够获得最大的收益的动作。<br><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211229104840.png" alt="image-20211229104840695"></p>
+<p>&emsp;&emsp;Q-Learning是强化学习算法中value-based的算法，Q即为Q（s,a）就是在某一时刻的 s 状态下(s∈S)，采取动作a (a∈A)能够获得收益的期望，环境会根据agent的动作反馈相应的回报reward，所以算法的主要思想就是将State与Action构建成一张Q-Table来存储Q值，然后根据Q值来选取能够获得最大的收益的动作。</p>
+<table>
+<thead>
+<tr>
+<th>Q-Table</th>
+<th>A1</th>
+<th>A2</th>
+<th>…</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>s1</td>
+<td>q(s1,a1)</td>
+<td>q(s1,a2)</td>
+<td>…</td>
+</tr>
+<tr>
+<td>s2</td>
+<td>q(s2,a1)</td>
+<td>q(s2,a2)</td>
+<td>…</td>
+</tr>
+<tr>
+<td>s3</td>
+<td>q(s3,a1)</td>
+<td>q(s3,a2)</td>
+<td>…</td>
+</tr>
+<tr>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+</tbody></table>
 <p><strong>算法拓扑图</strong></p>
 <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211229103423.png" alt="image-20211229103423423" style="zoom: 33%;" />
 
@@ -421,14 +478,20 @@
 <h4 id="算法流程-2"><a href="#算法流程-2" class="headerlink" title="算法流程"></a>算法流程</h4><p><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211229091010.png" alt="image-20211229091010771"></p>
 <p>输入：迭代轮数T、状态集S、动作集A、步长α、衰减因子γ、探索率ϵ</p>
 <p>输出：所有的状态和动作对应的价值Q</p>
-<p>​        1. 随机初始化所有的状态和动作对应的价值Q，终止状态的Q初始化为0</p>
-<p>​        2. for i in [ 1, T ]：</p>
-<p>​            a）初始化S为当前序列的第一个状态</p>
-<p>​            b）用ε-greedy策略在当前状态S选择出动作A</p>
-<p>​            c）执行动作A，由环境得到新状态S’ 和奖励R</p>
-<p>​            d）按公式更新价值函数</p>
-<p>​            e）前进一步：S = S’</p>
-<p>​            f）if  S’是终止状态，break；else 跳回步骤b</p>
+<ol>
+<li><p>随机初始化所有的状态和动作对应的价值Q，终止状态的Q初始化为0</p>
+</li>
+<li><p>for i in [ 1, T ]：</p>
+<ol>
+<li>初始化S为当前序列的第一个状态</li>
+<li>用ε-greedy策略在当前状态S选择出动作A</li>
+<li>执行动作A，由环境得到新状态S’ 和奖励R</li>
+<li>按公式更新价值函数</li>
+<li>前进一步：S = S’</li>
+<li>if  S’是终止状态，break；else 跳回步骤b</li>
+</ol>
+</li>
+</ol>
 <p>&nbsp;</p>
 <h4 id="示例：直线寻宝"><a href="#示例：直线寻宝" class="headerlink" title="示例：直线寻宝"></a>示例：直线寻宝</h4><h5 id="问题-1"><a href="#问题-1" class="headerlink" title="问题"></a>问题</h5><p>&emsp;&emsp;宝藏在长度为6的直线的另一端，训练一个不知环境的小车以最短步数到达宝藏处。</p>
 <h5 id="代码-3"><a href="#代码-3" class="headerlink" title="代码"></a>代码</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">np.random.seed(<span class="number">2</span>)  <span class="comment"># reproducible</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">N_STATES = <span class="number">6</span>   <span class="comment"># the length of the 1 dimensional world</span></span><br><span class="line">ACTIONS = [<span class="string">&#x27;left&#x27;</span>, <span class="string">&#x27;right&#x27;</span>]     <span class="comment"># available actions</span></span><br><span class="line">EPSILON = <span class="number">0.9</span>   <span class="comment"># greedy police</span></span><br><span class="line">ALPHA = <span class="number">0.1</span>     <span class="comment"># learning rate</span></span><br><span class="line">GAMMA = <span class="number">0.9</span>    <span class="comment"># discount factor</span></span><br><span class="line">MAX_EPISODES = <span class="number">10</span>   <span class="comment"># maximum episodes</span></span><br><span class="line">FRESH_TIME = <span class="number">0.08</span>    <span class="comment"># fresh time for one move</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">build_q_table</span>(<span class="params">n_states, actions</span>):</span></span><br><span class="line">    table = pd.DataFrame(</span><br><span class="line">        np.zeros((n_states, <span class="built_in">len</span>(actions))),     <span class="comment"># q_table initial values</span></span><br><span class="line">        columns=actions,    <span class="comment"># actions&#x27;s name</span></span><br><span class="line">    )</span><br><span class="line">    <span class="comment"># print(table)    # show table</span></span><br><span class="line">    <span class="keyword">return</span> table</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">choose_action</span>(<span class="params">state, q_table</span>):</span></span><br><span class="line">    <span class="comment"># This is how to choose an action</span></span><br><span class="line">    state_actions = q_table.iloc[state, :]</span><br><span class="line">    <span class="comment"># act non-greedy or state-action have no value</span></span><br><span class="line">    <span class="keyword">if</span> (np.random.uniform() &gt; EPSILON) <span class="keyword">or</span> ((state_actions == <span class="number">0</span>).<span class="built_in">all</span>()):</span><br><span class="line">        action_name = np.random.choice(ACTIONS)</span><br><span class="line">    <span class="keyword">else</span>:   <span class="comment"># act greedy</span></span><br><span class="line">        <span class="comment"># replace argmax to idxmax as argmax means a different function in newer version of pandas</span></span><br><span class="line">        action_name = state_actions.idxmax()</span><br><span class="line">    <span class="keyword">return</span> action_name</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_env_feedback</span>(<span class="params">S, A</span>):</span></span><br><span class="line">    <span class="comment"># This is how agent will interact with the environment</span></span><br><span class="line">    <span class="keyword">if</span> A == <span class="string">&#x27;right&#x27;</span>:    <span class="comment"># move right</span></span><br><span class="line">        <span class="keyword">if</span> S == N_STATES - <span class="number">2</span>:   <span class="comment"># terminate</span></span><br><span class="line">            S_ = <span class="string">&#x27;terminal&#x27;</span></span><br><span class="line">            R = <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            S_ = S + <span class="number">1</span></span><br><span class="line">            R = <span class="number">0</span></span><br><span class="line">    <span class="keyword">else</span>:   <span class="comment"># move left</span></span><br><span class="line">        R = <span class="number">0</span></span><br><span class="line">        <span class="keyword">if</span> S == <span class="number">0</span>:</span><br><span class="line">            S_ = S  <span class="comment"># reach the wall</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            S_ = S - <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> S_, R</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update_env</span>(<span class="params">S, episode, step_counter</span>):</span></span><br><span class="line">    <span class="comment"># This is how environment be updated</span></span><br><span class="line">    env_list = [<span class="string">&#x27;-&#x27;</span>]*(N_STATES-<span class="number">1</span>) + [<span class="string">&#x27;T&#x27;</span>]   <span class="comment"># &#x27;---------T&#x27; our environment</span></span><br><span class="line">    <span class="keyword">if</span> S == <span class="string">&#x27;terminal&#x27;</span>:</span><br><span class="line">        interaction = <span class="string">&#x27;Episode %s: total_steps = %s&#x27;</span> % (</span><br><span class="line">            episode+<span class="number">1</span>, step_counter)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;\r&#123;&#125;&#x27;</span>.<span class="built_in">format</span>(interaction), end=<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">        time.sleep(<span class="number">1.5</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;\r                                &#x27;</span>, end=<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        env_list[S] = <span class="string">&#x27;o&#x27;</span></span><br><span class="line">        interaction = <span class="string">&#x27;&#x27;</span>.join(env_list)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;\r&#123;&#125;&#x27;</span>.<span class="built_in">format</span>(interaction), end=<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">        time.sleep(FRESH_TIME)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">rl</span>():</span></span><br><span class="line">    <span class="comment"># main part of RL loop</span></span><br><span class="line">    q_table = build_q_table(N_STATES, ACTIONS)</span><br><span class="line">    <span class="keyword">for</span> episode <span class="keyword">in</span> <span class="built_in">range</span>(MAX_EPISODES):</span><br><span class="line">        step_counter = <span class="number">0</span></span><br><span class="line">        S = <span class="number">0</span></span><br><span class="line">        is_terminated = <span class="literal">False</span></span><br><span class="line">        update_env(S, episode, step_counter)</span><br><span class="line">        <span class="keyword">while</span> <span class="keyword">not</span> is_terminated:</span><br><span class="line"></span><br><span class="line">            A = choose_action(S, q_table)</span><br><span class="line">            <span class="comment"># take action &amp; get next state and reward</span></span><br><span class="line">            S_, R = get_env_feedback(S, A)</span><br><span class="line">            q_predict = q_table.loc[S, A]</span><br><span class="line">            <span class="keyword">if</span> S_ != <span class="string">&#x27;terminal&#x27;</span>:</span><br><span class="line">                <span class="comment"># next state is not terminal</span></span><br><span class="line">                q_target = R + GAMMA * q_table.iloc[S_, :].<span class="built_in">max</span>()</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                q_target = R     <span class="comment"># next state is terminal</span></span><br><span class="line">                is_terminated = <span class="literal">True</span>    <span class="comment"># terminate this episode</span></span><br><span class="line"></span><br><span class="line">            q_table.loc[S, A] += ALPHA * (q_target - q_predict)  <span class="comment"># update</span></span><br><span class="line">            S = S_  <span class="comment"># move to next state</span></span><br><span class="line"></span><br><span class="line">            update_env(S, episode, step_counter+<span class="number">1</span>)</span><br><span class="line">            step_counter += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> q_table</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    q_table = rl()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;\nQ-table:\n&#x27;</span>)</span><br><span class="line">    <span class="built_in">print</span>(q_table)</span><br><span class="line">    <span class="built_in">print</span>()</span><br></pre></td></tr></table></figure>

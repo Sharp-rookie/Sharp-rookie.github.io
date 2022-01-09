@@ -79,7 +79,7 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211228135203.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211228134525.png">
 <meta property="article:published_time" content="2021-12-28T06:03:10.934Z">
-<meta property="article:modified_time" content="2022-01-03T08:25:54.110Z">
+<meta property="article:modified_time" content="2022-01-09T01:51:06.752Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="Reinforcement Learning">
 <meta property="article:tag" content="Algorithm">
@@ -380,7 +380,7 @@
 </ul>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<h2 id="马尔可夫决策过程MDP"><a href="#马尔可夫决策过程MDP" class="headerlink" title="马尔可夫决策过程MDP"></a>马尔可夫决策过程MDP</h2><p>&emsp;&emsp;在强化学习中，agent与environment一直在互动。在每个时刻t，agent会接收到来自环境的状态s，基于这个状态s，agent会做出动作a，然后这个动作作用在环境上，于是agent可以接收到一个奖赏Rt+1Rt+1，并且agent就会到达新的状态。所以，其实agent与environment之间的交互就是产生了一个序列：</p>
+<h2 id="马尔可夫决策过程MDP"><a href="#马尔可夫决策过程MDP" class="headerlink" title="马尔可夫决策过程MDP"></a>马尔可夫决策过程MDP</h2><p>&emsp;&emsp;在强化学习中，agent与environment一直在互动。在每个时刻t，agent会接收到来自环境的状态s，基于这个状态s，agent会做出动作a，然后这个动作作用在环境上，于是agent可以接收到一个奖赏Rt+1，并且agent就会到达新的状态。所以，其实agent与environment之间的交互就是产生了一个序列：</p>
 <p>&emsp;&emsp;<code>S0,A0,R1,S1,A1,R2,...</code></p>
 <p>&emsp;&emsp;我们称这个为序列决策过程。而马尔科夫决策过程（Morkov Decision Process）就是一个典型的序列决策过程的一种公式化。有了马尔科夫的假设，在求解强化学习模型时才比较方便。</p>
 <h4 id="基本概念-1"><a href="#基本概念-1" class="headerlink" title="基本概念"></a>基本概念</h4><h5 id="MDP定义"><a href="#MDP定义" class="headerlink" title="MDP定义"></a>MDP定义</h5><p>下一个状态的产生只和当前的状态有关，即：</p>
@@ -388,7 +388,7 @@
 <p>直观上讲，下一个状态的产生跟所有历史状态是有关的，也就是等式右边所示。但是Markov的定义则是忽略掉历史信息，只保留了当前状态的信息来预测下一个状态，这称为无后效性/马尔可夫性。</p>
 <p>一个 MDP 可以由一个 5 元组表示为 <code>M = &lt;S,A,P(s&#39;|s,a),R,γ&gt;</code>：</p>
 <p><strong>S</strong> → 一个状态（state）的集合<br><strong>P</strong> → 一个受行为影响的状态转移概率矩阵<br><strong>A</strong> →一个有限动作集<br><strong>R</strong> →  一个用于计算回报的函数<br><strong>γ</strong> → 一个折扣因子，用于做未来回报计算时的衰减系数，γ ∈ ( 0 , 1 )<br>&nbsp;</p>
-<h5 id="状态转移概率Pss′a"><a href="#状态转移概率Pss′a" class="headerlink" title="状态转移概率Pss′a"></a>状态转移概率Pss′a</h5><p>对于一个具体的状态s和它的下一个状态s’ ，它们的状态转移概率(就是从s转移到s’的概率)定义为：</p>
+<h5 id="状态转移概率Pss′a"><a href="#状态转移概率Pss′a" class="headerlink" title="状态转移概率Pss′a"></a>状态转移概率Pss′a</h5><p>对于一个具体的状态s和它的下一个状态s’，它们的状态转移概率(就是从s转移到s’的概率)定义为：</p>
 <p>&emsp;&emsp;<code>Pss′a = P(St+1=s′|St=s,At=a)</code></p>
 <p>也就是说，下一个状态的产生只受到当前状态和动作的影响。</p>
 <p>&nbsp;</p>
@@ -413,7 +413,7 @@
 <p>计算机通常使用第二个递推式迭代地求出MDP中每个状态的价值函数，而不是用公式一硬算。</p>
 <p>&nbsp;</p>
 <h5 id="状态价值与动作价值的递推关系"><a href="#状态价值与动作价值的递推关系" class="headerlink" title="状态价值与动作价值的递推关系"></a>状态价值与动作价值的递推关系</h5><p>状态价值函数是所有动作价值函数基于策略π的期望：<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228085947.png" style="zoom:50%;" /></p>
-<p>利用上贝尔曼方程，也很容易从状态价值函数vπ(s)vπ(s)表示动作价值函数qπ(s,a)qπ(s,a)，即：</p>
+<p>利用上贝尔曼方程，也很容易从状态价值函数vπ(s)表示动作价值函数qπ(s,a)，即：</p>
 <p>​                                                                    <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228090008.png" style="zoom:50%;" /></p>
 <p>二者转化关系如图：</p>
 <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228090154.png" alt="image-20211228090154012" style="zoom: 33%;" />
@@ -485,7 +485,7 @@
 <ol>
 <li><p>同样一个状态可能在一个完整的状态序列中重复出现，第一种应对方法是仅把状态序列中第一次出现该状态时的收获值纳入到收获平均值的计算中；另一种是针对一个状态序列中每次出现的该状态，都计算对应的收获值并纳入到收获平均值的计算中。两种方法对应的蒙特卡罗法分别称为：<strong>首次访问(first visit)</strong> 和<strong>每次访问(every visit)</strong> 蒙特卡罗法。第二种方法比第一种的计算量要大一些，但是在完整的经历样本序列少的场景下会比第一种方法适用。</p>
 </li>
-<li><p>**累进更新平均值（incremental mean)**。在上面预测问题的求解公式里，有一个average的公式，意味着要保存所有该状态的收获值之和最后取平均，这样浪费了太多的存储空间。一个较好的方法是在迭代计算收获均值，即每次保存上一轮迭代得到的收获均值与次数，当计算得到当前轮的收获时，即可计算当前轮收获均值和次数。</p>
+<li><p>累进更新平均值（incremental mean)。在上面预测问题的求解公式里，有一个average的公式，意味着要保存所有该状态的收获值之和最后取平均，这样浪费了太多的存储空间。一个较好的方法是在迭代计算收获均值，即每次保存上一轮迭代得到的收获均值与次数，当计算得到当前轮的收获时，即可计算当前轮收获均值和次数。</p>
 </li>
 </ol>
 <p>&nbsp;</p>
