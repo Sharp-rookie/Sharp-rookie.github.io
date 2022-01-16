@@ -62,7 +62,7 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20210718214253.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220111151330.png">
 <meta property="article:published_time" content="2022-01-16T08:16:53.614Z">
-<meta property="article:modified_time" content="2022-01-16T08:35:29.867Z">
+<meta property="article:modified_time" content="2022-01-16T08:41:41.014Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="Reinforcement Learning">
 <meta property="article:tag" content="Algorithm">
@@ -355,7 +355,7 @@
 <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220109102614.png" alt="image-20220109102614326" style="zoom: 33%;" /></li>
 <li><p>把S‘  和A’ 输入Q网络直接求Q估计值，由经验池Q值和新的Q估计值求损失函数Loss Function，梯度反向传播更新Q网络参数w。这里使用的是均方损失函数：</p>
 <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220109103107.png" alt="image-20220109103107567" style="zoom: 33%;" /></li>
-<li><p>if  S’是终止状态，break；else 跳回步骤b</p>
+<li><p>if  S’是终止状态，break；else 跳回步骤2.2</p>
 </li>
 </ol>
 </li>
@@ -404,7 +404,7 @@
 <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220109103107.png" alt="image-20220109103107567" style="zoom: 33%;" /></li>
 <li><p>if i%C == 0：更新<strong>目标Q网络</strong>参数w’ = w</p>
 </li>
-<li><p>if  S’是终止状态，break；else 跳回步骤b</p>
+<li><p>if  S’是终止状态，break；else 跳回步骤2.2</p>
 </li>
 </ol>
 </li>
@@ -466,7 +466,7 @@
 </li>
 <li><p>if i%C == 0：更新<strong>目标Q网络</strong>参数 w’ = w</p>
 </li>
-<li><p>if  S’是终止状态，break；else 跳回步骤b</p>
+<li><p>if  S’是终止状态，break；else 跳回步骤2.2</p>
 </li>
 </ol>
 </li>
@@ -525,7 +525,7 @@
 </li>
 <li><p>if i%C == 0：更新目标Q网络参数w’ = w</p>
 </li>
-<li><p>if  S’是终止状态，break；else 跳回步骤b</p>
+<li><p>if  S’是终止状态，break；else 跳回步骤3.2</p>
 </li>
 </ol>
 </li>
