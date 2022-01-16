@@ -57,7 +57,7 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220115225212.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220116104916.png">
 <meta property="article:published_time" content="2022-01-16T03:37:44.868Z">
-<meta property="article:modified_time" content="2022-01-16T03:45:16.787Z">
+<meta property="article:modified_time" content="2022-01-16T03:46:48.962Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="Linux">
 <meta property="article:tag" content="计算机网络">
@@ -466,9 +466,7 @@
 <ul>
 <li><p>特点：基于时延</p>
 </li>
-<li><ul>
-<li>拥塞判断标准：RTT增加</li>
-</ul>
+<li><p>拥塞判断标准：RTT增加</p>
 </li>
 <li><p>优点：较好地预测带宽</p>
 </li>
@@ -491,10 +489,11 @@
 </blockquote>
 <ul>
 <li><p>特点：Reno + Vegas</p>
+<ul>
+<li><p>利用Vegas的RTT测量机制，同时保有Reno贪婪、线性增加的机制</p>
 </li>
-<li><ul>
-<li>利用Vegas的RTT测量机制，同时保有Reno贪婪、线性增加的机制</li>
-<li>遇到的丢包大部分是非拥塞产生时，Veno行为接近Reno</li>
+<li><p>遇到的丢包大部分是非拥塞产生时，Veno行为接近Reno</p>
+</li>
 </ul>
 </li>
 <li><p>优点：在<strong>时延带宽积适中的、丢包率高的链路</strong>表现好</p>
@@ -507,15 +506,13 @@
 <li><p>特点：基于带宽和延迟（链路容量）</p>
 </li>
 <li><p>优点：</p>
-</li>
-<li><ul>
+<ul>
 <li>避免Bufferfloat</li>
 <li>丢包不作为拥塞控制信号，在长肥管道场景表现也很好，适用于<strong>高带宽、高时延、有一定丢包率的长肥网络</strong></li>
 </ul>
 </li>
 <li><p>缺点：</p>
-</li>
-<li><ul>
+<ul>
 <li>当网络设备缓存比较大的时候，竞争不过Cubic等激进算法</li>
 <li>公平性问题：RTT越大，抢占能力越强</li>
 </ul>
@@ -526,22 +523,19 @@
 <p>&nbsp;</p>
 <h4 id="TCP-Reno"><a href="#TCP-Reno" class="headerlink" title="TCP Reno"></a>TCP Reno</h4><ul>
 <li><p>特点：</p>
-</li>
-<li><ul>
+<ul>
 <li>基于丢包</li>
 <li>AIMD（线性增乘性减）</li>
 </ul>
 </li>
 <li><p>优点：</p>
-</li>
-<li><ul>
+<ul>
 <li>在早期<strong>低带宽低时延</strong>网络中能很好发挥作用</li>
 <li>公平性</li>
 </ul>
 </li>
 <li><p>缺点：</p>
-</li>
-<li><ul>
+<ul>
 <li>在高带宽高延时网络（long-fat pipe 长肥管道）中，RTT很大，ACK接收时延大，导致拥塞窗口增长慢</li>
 </ul>
 </li>
@@ -549,21 +543,18 @@
 <p>&nbsp;</p>
 <h4 id="TCP-CUBIC"><a href="#TCP-CUBIC" class="headerlink" title="TCP CUBIC"></a>TCP CUBIC</h4><ul>
 <li><p>特点：</p>
-</li>
-<li><ul>
+<ul>
 <li>基于丢包</li>
 <li>三次函数增加，乘性减小</li>
 </ul>
 </li>
 <li><p>优点：</p>
-</li>
-<li><ul>
+<ul>
 <li>Cubic算法的优点在于只要没有出现丢包，就不会主动降低自己的发送速度，可以最大程度的利用网络剩余带宽，提高吞吐量，在<strong>高带宽、低丢包率</strong>的网络中可以发挥较好的性能。</li>
 </ul>
 </li>
 <li><p>缺点：</p>
-</li>
-<li><ul>
+<ul>
 <li>无法区分拥塞丢包和传输错误丢包</li>
 <li>过于激进，在没有出现丢包时会不停地增加拥塞窗口的大小，想要填满缓冲区，导致排队时延增加（Bufferbloat现象）</li>
 </ul>
@@ -642,18 +633,16 @@
 <h4 id="强化学习设计思路"><a href="#强化学习设计思路" class="headerlink" title="强化学习设计思路"></a>强化学习设计思路</h4><p>目标：优化超参数（核心函数：tcp_veno_cong_avoid（））</p>
 <p>输入：</p>
 <ul>
-<li><ul>
-<li>basertt</li>
-<li>minrtt   # 在Veno中这个变量其实是实时rtt，并不是最小rtt</li>
-</ul>
+<li><p>basertt</p>
+</li>
+<li><p>minrtt   # 在Veno中这个变量其实是实时rtt，并不是最小rtt</p>
 </li>
 </ul>
 <p>输出：</p>
 <ul>
-<li><ul>
-<li>beta</li>
-<li>threshold1（加性增时）</li>
-</ul>
+<li><p>beta</p>
+</li>
+<li><p>threshold1（加性增时）</p>
 </li>
 </ul>
 <p>注意，加性增时的”0.5“在源代码中不是通过变量表示的，而是通过标志位veno-&gt;cnt，所以需要重构代码：</p>
