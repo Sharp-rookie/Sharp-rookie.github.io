@@ -40,13 +40,12 @@
 <meta property="og:description" content="&amp;emsp;&amp;emsp;我们使用mininet平台作为网络拓扑仿真工具，选择TCP拥塞控制算法作为研究对象，以项目组工作技术背景：5G无线通信场景中的强化学习作为切入点，对 Linux 内核搭载的经典 TCP 拥塞控制算法：Reno、Vegas、Veno、BBR、CUBIC进行调研学习，最终决定对超参数依赖性较强的TCP_Veno算法进行强化学习调优。期间我们把算法直接集成到Linux内核的拥塞控">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220116104456.png">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/gif/25674791/1640864628705-84ff4bce-fe0d-4d3c-a068-b71088f838a7.gif">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/25674791/1640863271546-560239b6-a321-4b44-9459-51dcecb8b3b0.png">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/25550377/1640867760392-f26087be-4e24-4f4b-b7fc-be4cd4a17c5a.png">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/25550377/1640867801194-4d5105b9-854f-4ed6-aa83-a956b6ed3844.png">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/25550377/1640867835827-2708a558-63be-4db2-a0d7-4606f4e6bc8d.png">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/25550377/1640868042149-65e3db70-cfaf-4873-9aec-bc521da77e78.png">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/25550377/1640868114238-0d8a140d-f724-47f1-b9ee-80274a493ce6.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220116114931.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220116115012.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220116115023.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220116115036.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220116115049.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220116115059.png">
 <meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/25550377/1640869291075-717140c8-c487-471d-b55c-a9b7feed6b5a.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220116105019.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220116105214.png">
@@ -57,7 +56,7 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220115225212.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220116104916.png">
 <meta property="article:published_time" content="2022-01-16T03:37:44.868Z">
-<meta property="article:modified_time" content="2022-01-16T03:47:28.726Z">
+<meta property="article:modified_time" content="2022-01-16T03:51:34.236Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="Reinforcement Learning">
 <meta property="article:tag" content="Linux">
@@ -519,8 +518,6 @@
 </ul>
 </li>
 </ul>
-<img src="https://cdn.nlark.com/yuque/0/2021/gif/25674791/1640864628705-84ff4bce-fe0d-4d3c-a068-b71088f838a7.gif" alt="img" style="zoom:67%;" />
-
 <p>&nbsp;</p>
 <h4 id="TCP-Reno"><a href="#TCP-Reno" class="headerlink" title="TCP Reno"></a>TCP Reno</h4><ul>
 <li><p>特点：</p>
@@ -561,7 +558,7 @@
 </ul>
 </li>
 </ul>
-<img src="https://cdn.nlark.com/yuque/0/2021/png/25674791/1640863271546-560239b6-a321-4b44-9459-51dcecb8b3b0.png" alt="img" style="zoom: 67%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220116114931.png" alt="image-20220116114931639" style="zoom: 40%;" />
 
 <p>&nbsp;</p>
 <h4 id="对比"><a href="#对比" class="headerlink" title="对比"></a>对比</h4><table>
@@ -609,23 +606,23 @@
 <li><p>根据拥塞窗口和往返时间估计当前队列堆积的报文个数N</p>
 <blockquote>
 <p>首先计算期望发送速率和实际速率：</p>
-<img src="https://cdn.nlark.com/yuque/0/2021/png/25550377/1640867760392-f26087be-4e24-4f4b-b7fc-be4cd4a17c5a.png" alt="img" style="zoom: 25%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220116115012.png" alt="image-20220116115012530" style="zoom: 67%;" />
 
 <p>二者差值：</p>
-<img src="https://cdn.nlark.com/yuque/0/2021/png/25550377/1640867801194-4d5105b9-854f-4ed6-aa83-a956b6ed3844.png" alt="img" style="zoom: 25%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220116115023.png" alt="image-20220116115023138" style="zoom: 67%;" />
 
 <p>估计堆积报文个数N：</p>
-<img src="https://cdn.nlark.com/yuque/0/2021/png/25550377/1640867835827-2708a558-63be-4db2-a0d7-4606f4e6bc8d.png" alt="img" style="zoom: 25%;" /></blockquote>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220116115036.png" alt="image-20220116115036767" style="zoom:67%;" /></blockquote>
 </li>
 <li><p>根据N值调整拥塞控制算法</p>
 <blockquote>
 <p>慢启动阶段：与Reno相同无变化</p>
 <p>AIMD——加性增阶段：</p>
-<img src="https://cdn.nlark.com/yuque/0/2021/png/25550377/1640868042149-65e3db70-cfaf-4873-9aec-bc521da77e78.png" alt="img" style="zoom: 50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220116115049.png" alt="image-20220116115049018" style="zoom:67%;" />
 
 <p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;beta 是一个超参数、增速1、0.5也是超参</p>
 <p>AIMD——乘性减阶段：</p>
-<img src="https://cdn.nlark.com/yuque/0/2021/png/25550377/1640868114238-0d8a140d-f724-47f1-b9ee-80274a493ce6.png" alt="img" style="zoom: 50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220116115059.png" alt="image-20220116115059582" style="zoom: 60%;" />
 
 <p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;4/5、1/2也是超参</p>
 </blockquote>
