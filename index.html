@@ -225,7 +225,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/01/16/%E3%80%90%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E3%80%91Actor-Critic%E5%8F%8A%E5%85%B6%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">未命名</a>
+            <a href="/2022/01/16/%E3%80%90%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E3%80%91Actor-Critic%E5%8F%8A%E5%85%B6%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">【强化学习】Actor-Critic及其优化算法</a>
         </h2>
 
         <div class="post-meta">
@@ -238,9 +238,18 @@
 
               <time title="创建时间：2022-01-16 16:37:43" itemprop="dateCreated datePublished" datetime="2022-01-16T16:37:43+08:00">2022-01-16</time>
             </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/" itemprop="url" rel="index"><span itemprop="name">技术分享</span></a>
+                </span>
+            </span>
 
           
-            <span id="/2022/01/16/%E3%80%90%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E3%80%91Actor-Critic%E5%8F%8A%E5%85%B6%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/" class="post-meta-item leancloud_visitors" data-flag-title="" title="阅读次数">
+            <span id="/2022/01/16/%E3%80%90%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E3%80%91Actor-Critic%E5%8F%8A%E5%85%B6%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/" class="post-meta-item leancloud_visitors" data-flag-title="【强化学习】Actor-Critic及其优化算法" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -271,9 +280,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">title: 【强化学习】Actor-Critic及其优化算法</span><br><span class="line">categories: 技术分享</span><br><span class="line">tags: </span><br><span class="line">  - AI</span><br><span class="line">  - Reinforcement Learning</span><br><span class="line">  - Algorithm</span><br><span class="line">comments: true</span><br></pre></td></tr></table></figure>
-
-<p>&emsp;&emsp;使用蒙特卡洛法求解基于策略的强化学习方法需要完整的序列，并且只单独对策略函数进行更新，不容易收敛，因此可以把基于策略和基于价值的思路相结合，由此得到：Actor-Critic算法。</p>
+          <p>&emsp;&emsp;使用蒙特卡洛法求解基于策略的强化学习方法需要完整的序列，并且只单独对策略函数进行更新，不容易收敛，因此可以把基于策略和基于价值的思路相结合，由此得到：Actor-Critic算法。</p>
 <p>&emsp;&emsp;而为了更快地收敛，A3C算法使用了异步并发的强化学习框架，DDPG算法则引用了Nature DQN，DDQN的思想。</p>
           <!--noindex-->
             <div class="post-button">
