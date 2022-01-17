@@ -225,7 +225,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/01/16/%E3%80%90%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E3%80%91Actor-Critic%E5%8F%8A%E5%85%B6%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">【强化学习】Actor-Critic及其优化算法</a>
+            <a href="/2022/01/16/%E3%80%90%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E3%80%91Actor-Critic%E5%8F%8A%E5%85%B6%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">【强化学习】策略梯度及相关算法</a>
         </h2>
 
         <div class="post-meta">
@@ -249,7 +249,7 @@
             </span>
 
           
-            <span id="/2022/01/16/%E3%80%90%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E3%80%91Actor-Critic%E5%8F%8A%E5%85%B6%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/" class="post-meta-item leancloud_visitors" data-flag-title="【强化学习】Actor-Critic及其优化算法" title="阅读次数">
+            <span id="/2022/01/16/%E3%80%90%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E3%80%91Actor-Critic%E5%8F%8A%E5%85%B6%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/" class="post-meta-item leancloud_visitors" data-flag-title="【强化学习】策略梯度及相关算法" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -280,8 +280,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>&emsp;&emsp;使用蒙特卡洛法求解基于策略的强化学习方法需要完整的序列，并且只单独对策略函数进行更新，不容易收敛，因此可以把基于策略和基于价值的思路相结合，由此得到：Actor-Critic算法。</p>
+          <p>&emsp;&emsp;Q-Learning、Sarsa、DQN等强化学习算法都是基于价值函数的学习方式，但在强化学习的领域中还有另一种优化流派：基于策略学习（策略梯度）</p>
+<p>&emsp;&emsp;基于策略学习的问题既可以使用蒙特卡洛法求解，也可以使用其他方法。使用蒙特卡洛法求解基于策略的强化学习方法需要完整的序列，并且只单独对策略函数进行更新，不容易收敛，因此可以把基于策略和基于价值的思路相结合，由此得到：Actor-Critic算法。</p>
 <p>&emsp;&emsp;而为了更快地收敛，A3C算法使用了异步并发的强化学习框架，DDPG算法则引用了Nature DQN，DDQN的思想。</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220112085053.png" alt="image-20220112085053424" style="zoom: 33%;" />
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/01/16/%E3%80%90%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E3%80%91Actor-Critic%E5%8F%8A%E5%85%B6%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/#more" rel="contents">

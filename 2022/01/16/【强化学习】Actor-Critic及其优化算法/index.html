@@ -32,13 +32,26 @@
           }
       })();
   </script>
-  <meta name="description" content="&amp;emsp;&amp;emsp;使用蒙特卡洛法求解基于策略的强化学习方法需要完整的序列，并且只单独对策略函数进行更新，不容易收敛，因此可以把基于策略和基于价值的思路相结合，由此得到：Actor-Critic算法。 &amp;emsp;&amp;emsp;而为了更快地收敛，A3C算法使用了异步并发的强化学习框架，DDPG算法则引用了Nature DQN，DDQN的思想。">
+  <meta name="description" content="&amp;emsp;&amp;emsp;Q-Learning、Sarsa、DQN等强化学习算法都是基于价值函数的学习方式，但在强化学习的领域中还有另一种优化流派：基于策略学习（策略梯度） &amp;emsp;&amp;emsp;基于策略学习的问题既可以使用蒙特卡洛法求解，也可以使用其他方法。使用蒙特卡洛法求解基于策略的强化学习方法需要完整的序列，并且只单独对策略函数进行更新，不容易收敛，因此可以把基于策略和基于价值的思路相结合，">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【强化学习】Actor-Critic及其优化算法">
+<meta property="og:title" content="【强化学习】策略梯度及相关算法">
 <meta property="og:url" content="https://sharp-rookie.github.io/2022/01/16/%E3%80%90%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E3%80%91Actor-Critic%E5%8F%8A%E5%85%B6%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/index.html">
 <meta property="og:site_name" content="最忆是江南">
-<meta property="og:description" content="&amp;emsp;&amp;emsp;使用蒙特卡洛法求解基于策略的强化学习方法需要完整的序列，并且只单独对策略函数进行更新，不容易收敛，因此可以把基于策略和基于价值的思路相结合，由此得到：Actor-Critic算法。 &amp;emsp;&amp;emsp;而为了更快地收敛，A3C算法使用了异步并发的强化学习框架，DDPG算法则引用了Nature DQN，DDQN的思想。">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;Q-Learning、Sarsa、DQN等强化学习算法都是基于价值函数的学习方式，但在强化学习的领域中还有另一种优化流派：基于策略学习（策略梯度） &amp;emsp;&amp;emsp;基于策略学习的问题既可以使用蒙特卡洛法求解，也可以使用其他方法。使用蒙特卡洛法求解基于策略的强化学习方法需要完整的序列，并且只单独对策略函数进行更新，不容易收敛，因此可以把基于策略和基于价值的思路相结合，">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220112085053.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220111162523.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220111162846.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220111163508.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220117182507.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220111164026.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220111164440.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220111164711.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220111165453.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220111165244.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220111165543.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220112085002.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220112084515.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220112090509.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220112090441.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220112090613.png">
@@ -74,12 +87,12 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220113123623.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220113122829.png">
 <meta property="article:published_time" content="2022-01-16T08:37:43.185Z">
-<meta property="article:modified_time" content="2022-01-16T08:39:57.184Z">
+<meta property="article:modified_time" content="2022-01-17T10:33:19.296Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="Reinforcement Learning">
 <meta property="article:tag" content="Algorithm">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220112090509.png">
+<meta name="twitter:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220112085053.png">
 
 <link rel="canonical" href="https://sharp-rookie.github.io/2022/01/16/%E3%80%90%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E3%80%91Actor-Critic%E5%8F%8A%E5%85%B6%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/">
 
@@ -94,7 +107,7 @@
   };
 </script>
 
-  <title>【强化学习】Actor-Critic及其优化算法 | 最忆是江南</title>
+  <title>【强化学习】策略梯度及相关算法 | 最忆是江南</title>
   
 
 
@@ -264,7 +277,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          【强化学习】Actor-Critic及其优化算法
+          【强化学习】策略梯度及相关算法
         </h1>
 
         <div class="post-meta">
@@ -288,7 +301,7 @@
             </span>
 
           
-            <span id="/2022/01/16/%E3%80%90%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E3%80%91Actor-Critic%E5%8F%8A%E5%85%B6%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/" class="post-meta-item leancloud_visitors" data-flag-title="【强化学习】Actor-Critic及其优化算法" title="阅读次数">
+            <span id="/2022/01/16/%E3%80%90%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E3%80%91Actor-Critic%E5%8F%8A%E5%85%B6%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/" class="post-meta-item leancloud_visitors" data-flag-title="【强化学习】策略梯度及相关算法" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -326,11 +339,99 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>&emsp;&emsp;使用蒙特卡洛法求解基于策略的强化学习方法需要完整的序列，并且只单独对策略函数进行更新，不容易收敛，因此可以把基于策略和基于价值的思路相结合，由此得到：Actor-Critic算法。</p>
+        <p>&emsp;&emsp;Q-Learning、Sarsa、DQN等强化学习算法都是基于价值函数的学习方式，但在强化学习的领域中还有另一种优化流派：基于策略学习（策略梯度）</p>
+<p>&emsp;&emsp;基于策略学习的问题既可以使用蒙特卡洛法求解，也可以使用其他方法。使用蒙特卡洛法求解基于策略的强化学习方法需要完整的序列，并且只单独对策略函数进行更新，不容易收敛，因此可以把基于策略和基于价值的思路相结合，由此得到：Actor-Critic算法。</p>
 <p>&emsp;&emsp;而为了更快地收敛，A3C算法使用了异步并发的强化学习框架，DDPG算法则引用了Nature DQN，DDQN的思想。</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220112085053.png" alt="image-20220112085053424" style="zoom: 33%;" />
+
 <span id="more"></span>
 
-<p> &nbsp;</p>
+<p>&nbsp;</p>
+<h2 id="策略梯度（Policy-Gradient）"><a href="#策略梯度（Policy-Gradient）" class="headerlink" title="策略梯度（Policy-Gradient）"></a>策略梯度（Policy-Gradient）</h2><h3 id="Value-based-强化学习方法的不足"><a href="#Value-based-强化学习方法的不足" class="headerlink" title="Value-based 强化学习方法的不足"></a>Value-based 强化学习方法的不足</h3><ol>
+<li><p>对连续动作的处理能力不足</p>
+<p>DQN等算法只处理离散动作，无法处理连续动作，例如：力的方向和大小</p>
+</li>
+<li><p>对受限状态下的问题处理能力不足</p>
+<p>使用特征来描述状态空间中某一个状态时，有可能因为个体观测的限制或者建模的限制导致真实环境下不同的状态具有相同的特征描述</p>
+</li>
+<li><p>无法解决随机策略问题</p>
+<p>Value Based强化学习方法对应的最优策略通常是确定性策略，因为其是从众多行为价值中选择一个最大价值的行为，而有些问题的最优策略却是随机策略，这种情况下同样是无法通过基于价值的学习来求解的</p>
+</li>
+</ol>
+<h3 id="Policy-based-强化学习方法的引入"><a href="#Policy-based-强化学习方法的引入" class="headerlink" title="Policy-based 强化学习方法的引入"></a>Policy-based 强化学习方法的引入</h3><p>&emsp;&emsp;在Value-based强化学习方法里，对价值函数进行了近似表示，引入了一个动作价值函数q，这个函数由参数w描述（例如DQN的Q网络），并接受状态S与动作A作为输入，计算后得到近似的动作价值，即：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220111162523.png" alt="image-20220111162523170" style="zoom: 45%;" />
+
+<p>&emsp;&emsp;在Policy-based强化学习方法下，采样类似的思路，只不过这时对策略进行近似表示。此时策略π可以被被描述为一个包含参数θ的函数，即：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220111162846.png" alt="image-20220111162846573" style="zoom: 45%;" />
+
+<p>&emsp;&emsp;将策略表示成一个连续的函数后就可以用连续函数的优化方法来寻找最优的策略了，最常用的方法就是梯度上升法。</p>
+<h3 id="策略梯度的优化目标"><a href="#策略梯度的优化目标" class="headerlink" title="策略梯度的优化目标"></a>策略梯度的优化目标</h3><table>
+<thead>
+<tr>
+<th>优化目标</th>
+<th>定义式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>初始状态收获的期望</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220111163508.png" alt="image-20220111163508366" style="zoom: 33%;" /></td>
+</tr>
+<tr>
+<td>平均价值</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117182507.png" alt="image-20220111163740877" style="zoom:33%;" /></td>
+</tr>
+<tr>
+<td>每一时间步的平均奖励</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220111164026.png" alt="image-20220111164026634" style="zoom:33%;" /></td>
+</tr>
+<tr>
+<td>……</td>
+<td>……</td>
+</tr>
+</tbody></table>
+<p>无论哪种优化目标，其梯度都可以表示为：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220111164440.png" alt="image-20220111164439961" style="zoom: 45%;" />
+
+<p>不同优化目标只有 <code>Qπ(s,a)</code> 部分不同，策略部分不改变，称为<strong>分值函数</strong>：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220111164711.png" alt="image-20220111164710941" style="zoom: 45%;" />
+
+<h3 id="策略函数的设计"><a href="#策略函数的设计" class="headerlink" title="策略函数的设计"></a>策略函数的设计</h3><h4 id="Softmax策略函数"><a href="#Softmax策略函数" class="headerlink" title="Softmax策略函数"></a>Softmax策略函数</h4><p>&emsp;&emsp;主要应用于离散空间中，使用描述状态和行为的特征 <code>ϕ(s,a)</code> 与参数 <code>θ </code>的线性组合来权衡一个行为发生的几率，即：   </p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220111165453.png" alt="image-20220111165453539" style="zoom:45%;" />
+
+<p>则通过求导求出对应的分值函数为：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220111165244.png" alt="image-20220111165244127" style="zoom: 45%;" />
+
+<h4 id="Gauss策略函数"><a href="#Gauss策略函数" class="headerlink" title="Gauss策略函数"></a>Gauss策略函数</h4><p>&emsp;&emsp;主要应用于连续行为空间，对应的行为从高斯分布 <code>N(ϕ(s)^T θ,σ^2)</code> 中产生。对应的分值函数通过对策略求导可以得到：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220111165543.png" alt="image-20220111165543029" style="zoom:45%;" />
+
+<p>&nbsp;</p>
+<h2 id="蒙特卡罗策略梯度算法"><a href="#蒙特卡罗策略梯度算法" class="headerlink" title="蒙特卡罗策略梯度算法"></a>蒙特卡罗策略梯度算法</h2><p><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220112085002.png" alt="image-20220112085002544"></p>
+<p>&emsp;&emsp;蒙特卡罗策略梯度是最简单的策略梯度算法，使用价值函数 v(s) 来近似代替策略梯度公式里面的 Qπ(s,a)。</p>
+<h3 id="算法流程"><a href="#算法流程" class="headerlink" title="算法流程"></a>算法流程</h3><p>输入：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">N个蒙特卡罗完整序列，训练步长α</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">策略函数的参数θ</span><br></pre></td></tr></table></figure>
+
+<p>流程：</p>
+<ol>
+<li><p>for 每个蒙特卡罗序列：</p>
+<ul>
+<li><p>用蒙特卡罗法计算序列每个时间位置t的状态价值 vt</p>
+</li>
+<li><p>对序列每个时间位置t，使用梯度上升法更新策略函数的参数θ：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220112084515.png" alt="image-20220112084515658" style="zoom:50%;" /></li>
+</ul>
+</li>
+<li><p>返回策略函数的参数θ（策略函数可以是Softmax策略，高斯策略或者其他策略 ）</p>
+</li>
+</ol>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><h4 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h4><p>//TODO</p>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><p>//TODO</p>
+<h4 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h4><p>//TODO</p>
+<p>&nbsp;</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>&emsp;&emsp;策略梯度提供了和 DQN 之类的方法不同的新思路，但是简单的蒙特卡罗策略梯度reinforce算法却并不完美。蒙特卡罗法需要完全的序列样本才能做算法迭代，同时蒙特卡罗法使用收获的期望来计算状态价值，会导致行为有较多的变异性，参数更新的方向很可能不是策略梯度的最优方向。因此，Policy-based的强化学习方法还需要改进，例如 Policy-based与Value-based结合的策略梯度方法Actor-Critic。</p>
+<p>&nbsp;</p>
 <h2 id="Actor-Critic算法"><a href="#Actor-Critic算法" class="headerlink" title="Actor-Critic算法"></a>Actor-Critic算法</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>&emsp;&emsp;Actor-Critic包括两部分：演员(Actor)、评价者(Critic)。其中Actor使用策略函数，负责生成动作(Action)并和环境交互，而Critic使用价值函数，负责评估Actor的表现，并指导Actor下一阶段的动作。在Policy-Gradient中，策略函数就是Actor，但是那里没有Critic，而是使用了蒙特卡罗法来计算每一步的价值部分从而替代了Critic的功能，但是场景比较受限。因此现在使用类似DQN中用的价值近似来替代蒙特卡罗法，作为一个比较通用的Critic。</p>
 <p>&emsp;&emsp;Actor-Critic算法中做了两组近似：</p>
 <h4 id="策略函数的近似"><a href="#策略函数的近似" class="headerlink" title="策略函数的近似"></a>策略函数的近似</h4><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220112090509.png" alt="image-20220112090509167" style="zoom:45%;" />
@@ -409,11 +510,11 @@
 <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220112103230.png" alt="image-20220112103230292" style="zoom:50%;" />
 
 <p>&nbsp;</p>
-<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><h4 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h4><p>//TODO</p>
-<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><p>//TODO</p>
-<h4 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h4><p>//TODO</p>
+<h3 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h3><h4 id="问题-1"><a href="#问题-1" class="headerlink" title="问题"></a>问题</h4><p>//TODO</p>
+<h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><p>//TODO</p>
+<h4 id="效果-1"><a href="#效果-1" class="headerlink" title="效果"></a>效果</h4><p>//TODO</p>
 <p>&nbsp;</p>
-<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>&emsp;&emsp;基本版的Actor-Critic算法已经是一个很好的算法框架，但是离实际应用还比较远。主要原因是这里有两个神经网络，都需要梯度更新，而且互相依赖，所以难以收敛。</p>
+<h3 id="小结-1"><a href="#小结-1" class="headerlink" title="小结"></a>小结</h3><p>&emsp;&emsp;基本版的Actor-Critic算法已经是一个很好的算法框架，但是离实际应用还比较远。主要原因是这里有两个神经网络，都需要梯度更新，而且互相依赖，所以难以收敛。</p>
 <p>&emsp;&emsp;目前改进的比较好的有两个经典算法，一个是DDPG算法，使用了双Actor神经网络和双Critic神经网络的方法来改善收敛性。这个方法在从DQN到Nature DQN的过程中用过。另一个是A3C算法，使用了多线程的方式，一个主线程负责更新Actor和Critic的参数，多个辅线程负责分别和环境交互，得到梯度更新值，汇总更新主线程的参数。而所有的辅线程会定期从主线程更新网络参数。这些辅线程起到了类似DQN中经验回放的作用，但是效果更好。</p>
 <p>&nbsp;</p>
 <h2 id="A3C"><a href="#A3C" class="headerlink" title="A3C"></a>A3C</h2><h3 id="概述-1"><a href="#概述-1" class="headerlink" title="概述"></a>概述</h3><h4 id="针对问题"><a href="#针对问题" class="headerlink" title="针对问题"></a>针对问题</h4><p>&emsp;&emsp;单纯的Actor-Critic算法难以收敛</p>
@@ -433,7 +534,7 @@
 <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220112095453.png" alt="image-20220112095453116" style="zoom:45%;" />
 
 <p>&nbsp;</p>
-<h3 id="算法流程"><a href="#算法流程" class="headerlink" title="算法流程"></a>算法流程</h3><p>A3C是多线程的，这里给出任意一个线程的算法流程：</p>
+<h3 id="算法流程-1"><a href="#算法流程-1" class="headerlink" title="算法流程"></a>算法流程</h3><p>A3C是多线程的，这里给出任意一个线程的算法流程：</p>
 <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220113125452.png" alt="image-20220113125452328" style="zoom: 50%;" />
 
 <p>输入：</p>
@@ -481,11 +582,11 @@
 </li>
 </ol>
 <p>&nbsp;</p>
-<h3 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h3><h4 id="问题-1"><a href="#问题-1" class="headerlink" title="问题"></a>问题</h4><p>//TODO</p>
-<h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><p>//TODO</p>
-<h4 id="效果-1"><a href="#效果-1" class="headerlink" title="效果"></a>效果</h4><p>//TODO</p>
+<h3 id="示例-2"><a href="#示例-2" class="headerlink" title="示例"></a>示例</h3><h4 id="问题-2"><a href="#问题-2" class="headerlink" title="问题"></a>问题</h4><p>//TODO</p>
+<h4 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h4><p>//TODO</p>
+<h4 id="效果-2"><a href="#效果-2" class="headerlink" title="效果"></a>效果</h4><p>//TODO</p>
 <p>&nbsp;</p>
-<h3 id="小结-1"><a href="#小结-1" class="headerlink" title="小结"></a>小结</h3><p>&emsp;&emsp;A3C解决了Actor-Critic难以收敛的问题，同时更重要的是，提供了一种通用的异步的并发的强化学习框架，也就是说，这个并发框架不光可以用于A3C，还可以用于其他的强化学习算法，是A3C最大的贡献。目前，已经有基于GPU的A3C框架，这样A3C的框架训练速度就更快了。</p>
+<h3 id="小结-2"><a href="#小结-2" class="headerlink" title="小结"></a>小结</h3><p>&emsp;&emsp;A3C解决了Actor-Critic难以收敛的问题，同时更重要的是，提供了一种通用的异步的并发的强化学习框架，也就是说，这个并发框架不光可以用于A3C，还可以用于其他的强化学习算法，是A3C最大的贡献。目前，已经有基于GPU的A3C框架，这样A3C的框架训练速度就更快了。</p>
 <p>&emsp;&emsp;除了A3C，DDPG算法也可以改善Actor-Critic难收敛的问题。它使用了Nature DQN，DDQN类似的思想，用两个Actor网络，两个Critic网络，一共4个神经网络来迭代更新模型参数。</p>
 <p>&nbsp;</p>
 <h2 id="DDPG"><a href="#DDPG" class="headerlink" title="DDPG"></a>DDPG</h2><h3 id="概述-2"><a href="#概述-2" class="headerlink" title="概述"></a>概述</h3><h4 id="针对问题-1"><a href="#针对问题-1" class="headerlink" title="针对问题"></a>针对问题</h4><p>&emsp;&emsp;对于某一些动作集合来说，它可能是连续值，或者非常高维的离散值，这样动作的空间维度极大。如果使用随机策略，即像DQN一样研究它所有的可能动作的概率，并计算各个可能的动作的价值的话，那需要的样本量是非常大才可行的</p>
@@ -541,7 +642,7 @@
 <h6 id="Actor当前网络"><a href="#Actor当前网络" class="headerlink" title="Actor当前网络"></a>Actor当前网络</h6><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220113123623.png" alt="image-20220113123623061" style="zoom:45%;" />
 
 <p>&nbsp;</p>
-<h3 id="算法流程-1"><a href="#算法流程-1" class="headerlink" title="算法流程"></a>算法流程</h3><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220113125412.png" alt="image-20220113125412297" style="zoom:50%;" />
+<h3 id="算法流程-2"><a href="#算法流程-2" class="headerlink" title="算法流程"></a>算法流程</h3><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220113125412.png" alt="image-20220113125412297" style="zoom:50%;" />
 
 <p>输入：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Actor当前/目标网络，Critic当前/目标网络，参数分别为θ、θ′、w、w′，衰减因子γ、软更新系数τ、批量梯度下降的样本数m、目标Q网络参数更新频率C、最大迭代次数T、随机噪音函数N</span><br></pre></td></tr></table></figure>
@@ -583,11 +684,11 @@
 </ol>
 <p>（注意，上面πθ由Actor目标网络得到，Q‘由Critic目标网络得到）</p>
 <p>&nbsp;</p>
-<h3 id="示例-2"><a href="#示例-2" class="headerlink" title="示例"></a>示例</h3><h4 id="问题-2"><a href="#问题-2" class="headerlink" title="问题"></a>问题</h4><p>//TODO</p>
-<h4 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h4><p>//TODO</p>
-<h4 id="效果-2"><a href="#效果-2" class="headerlink" title="效果"></a>效果</h4><p>//TODO</p>
+<h3 id="示例-3"><a href="#示例-3" class="headerlink" title="示例"></a>示例</h3><h4 id="问题-3"><a href="#问题-3" class="headerlink" title="问题"></a>问题</h4><p>//TODO</p>
+<h4 id="代码-3"><a href="#代码-3" class="headerlink" title="代码"></a>代码</h4><p>//TODO</p>
+<h4 id="效果-3"><a href="#效果-3" class="headerlink" title="效果"></a>效果</h4><p>//TODO</p>
 <p>&nbsp;</p>
-<h3 id="小结-2"><a href="#小结-2" class="headerlink" title="小结"></a>小结</h3><p>&emsp;&emsp;DDPG参考了DDQN的算法思想，通过双网络和经验回放，加一些其他的优化，比较好的解决了Actor-Critic难收敛的问题。因此在实际产品中尤其是自动化相关的产品中用的比较多，是一个比较成熟的Actor-Critic算法。</p>
+<h3 id="小结-3"><a href="#小结-3" class="headerlink" title="小结"></a>小结</h3><p>&emsp;&emsp;DDPG参考了DDQN的算法思想，通过双网络和经验回放，加一些其他的优化，比较好的解决了Actor-Critic难收敛的问题。因此在实际产品中尤其是自动化相关的产品中用的比较多，是一个比较成熟的Actor-Critic算法。</p>
 <p>&emsp;&emsp;以上就是Policy Based RL系列算法，算上前面的Value Based RL系列算法，还剩下Model Based RL系列算法没研究，后面再说。</p>
 
     </div>
@@ -604,7 +705,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://sharp-rookie.github.io/2022/01/16/%E3%80%90%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E3%80%91Actor-Critic%E5%8F%8A%E5%85%B6%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/" title="【强化学习】Actor-Critic及其优化算法">https://sharp-rookie.github.io/2022/01/16/【强化学习】Actor-Critic及其优化算法/</a>
+    <a href="https://sharp-rookie.github.io/2022/01/16/%E3%80%90%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E3%80%91Actor-Critic%E5%8F%8A%E5%85%B6%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/" title="【强化学习】策略梯度及相关算法">https://sharp-rookie.github.io/2022/01/16/【强化学习】Actor-Critic及其优化算法/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -688,7 +789,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Actor-Critic%E7%AE%97%E6%B3%95"><span class="nav-text">Actor-Critic算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AD%96%E7%95%A5%E5%87%BD%E6%95%B0%E7%9A%84%E8%BF%91%E4%BC%BC"><span class="nav-text">策略函数的近似</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0%E7%9A%84%E8%BF%91%E4%BC%BC"><span class="nav-text">价值函数的近似</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%AF%E9%80%89%E5%BD%A2%E5%BC%8F"><span class="nav-text">可选形式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B%EF%BC%88%E5%9F%BA%E4%BA%8ETD%E8%AF%AF%E5%B7%AE%EF%BC%89"><span class="nav-text">算法流程（基于TD误差）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-text">示例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-text">问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-text">代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%88%E6%9E%9C"><span class="nav-text">效果</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#A3C"><span class="nav-text">A3C</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0-1"><span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%92%88%E5%AF%B9%E9%97%AE%E9%A2%98"><span class="nav-text">针对问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%98%E5%8C%96"><span class="nav-text">优化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BC%82%E6%AD%A5%E8%AE%AD%E7%BB%83%E6%A1%86%E6%9E%B6"><span class="nav-text">异步训练框架</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%E4%BC%98%E5%8C%96"><span class="nav-text">网络结构优化</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Critic%E9%80%89%E6%8B%A9%E7%9A%84%E4%BC%98%E5%8C%96"><span class="nav-text">Critic选择的优化</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E4%BC%98%E5%8C%96"><span class="nav-text">损失函数优化</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B"><span class="nav-text">算法流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-1"><span class="nav-text">示例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98-1"><span class="nav-text">问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-1"><span class="nav-text">代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%88%E6%9E%9C-1"><span class="nav-text">效果</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-1"><span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DDPG"><span class="nav-text">DDPG</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0-2"><span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%92%88%E5%AF%B9%E9%97%AE%E9%A2%98-1"><span class="nav-text">针对问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%EF%BC%9A%E7%A1%AE%E5%AE%9A%E6%80%A7%E7%AD%96%E7%95%A5%EF%BC%88DPG%EF%BC%89"><span class="nav-text">优化：确定性策略（DPG）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DDPG%E5%8E%9F%E7%90%86"><span class="nav-text">DDPG原理</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9B%9E%E9%A1%BEDDQN%E7%9A%84%E5%8F%8C%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B"><span class="nav-text">回顾DDQN的双网络模型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#DDPG%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-text">DDPG工作原理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#DDPG-4%E4%B8%AA%E7%BD%91%E7%BB%9C%E7%9A%84%E5%8A%9F%E8%83%BD"><span class="nav-text">DDPG 4个网络的功能</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E5%8F%82%E6%95%B0%E7%9A%84%E5%A4%8D%E5%88%B6"><span class="nav-text">网络参数的复制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8A%A8%E4%BD%9C%E5%99%AA%E5%A3%B0"><span class="nav-text">动作噪声</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="nav-text">损失函数</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#Critic%E5%BD%93%E5%89%8D%E7%BD%91%E7%BB%9C%EF%BC%9A%E5%9D%87%E6%96%B9%E8%AF%AF%E5%B7%AE"><span class="nav-text">Critic当前网络：均方误差</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Actor%E5%BD%93%E5%89%8D%E7%BD%91%E7%BB%9C"><span class="nav-text">Actor当前网络</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B-1"><span class="nav-text">算法流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-2"><span class="nav-text">示例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98-2"><span class="nav-text">问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-2"><span class="nav-text">代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%88%E6%9E%9C-2"><span class="nav-text">效果</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-2"><span class="nav-text">小结</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%EF%BC%88Policy-Gradient%EF%BC%89"><span class="nav-text">策略梯度（Policy-Gradient）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Value-based-%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95%E7%9A%84%E4%B8%8D%E8%B6%B3"><span class="nav-text">Value-based 强化学习方法的不足</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Policy-based-%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95%E7%9A%84%E5%BC%95%E5%85%A5"><span class="nav-text">Policy-based 强化学习方法的引入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E7%9A%84%E4%BC%98%E5%8C%96%E7%9B%AE%E6%A0%87"><span class="nav-text">策略梯度的优化目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%96%E7%95%A5%E5%87%BD%E6%95%B0%E7%9A%84%E8%AE%BE%E8%AE%A1"><span class="nav-text">策略函数的设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Softmax%E7%AD%96%E7%95%A5%E5%87%BD%E6%95%B0"><span class="nav-text">Softmax策略函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Gauss%E7%AD%96%E7%95%A5%E5%87%BD%E6%95%B0"><span class="nav-text">Gauss策略函数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%92%99%E7%89%B9%E5%8D%A1%E7%BD%97%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E7%AE%97%E6%B3%95"><span class="nav-text">蒙特卡罗策略梯度算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B"><span class="nav-text">算法流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-text">示例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-text">问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-text">代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%88%E6%9E%9C"><span class="nav-text">效果</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Actor-Critic%E7%AE%97%E6%B3%95"><span class="nav-text">Actor-Critic算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AD%96%E7%95%A5%E5%87%BD%E6%95%B0%E7%9A%84%E8%BF%91%E4%BC%BC"><span class="nav-text">策略函数的近似</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0%E7%9A%84%E8%BF%91%E4%BC%BC"><span class="nav-text">价值函数的近似</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%AF%E9%80%89%E5%BD%A2%E5%BC%8F"><span class="nav-text">可选形式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B%EF%BC%88%E5%9F%BA%E4%BA%8ETD%E8%AF%AF%E5%B7%AE%EF%BC%89"><span class="nav-text">算法流程（基于TD误差）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-1"><span class="nav-text">示例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98-1"><span class="nav-text">问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-1"><span class="nav-text">代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%88%E6%9E%9C-1"><span class="nav-text">效果</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-1"><span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#A3C"><span class="nav-text">A3C</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0-1"><span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%92%88%E5%AF%B9%E9%97%AE%E9%A2%98"><span class="nav-text">针对问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%98%E5%8C%96"><span class="nav-text">优化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BC%82%E6%AD%A5%E8%AE%AD%E7%BB%83%E6%A1%86%E6%9E%B6"><span class="nav-text">异步训练框架</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%E4%BC%98%E5%8C%96"><span class="nav-text">网络结构优化</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Critic%E9%80%89%E6%8B%A9%E7%9A%84%E4%BC%98%E5%8C%96"><span class="nav-text">Critic选择的优化</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E4%BC%98%E5%8C%96"><span class="nav-text">损失函数优化</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B-1"><span class="nav-text">算法流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-2"><span class="nav-text">示例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98-2"><span class="nav-text">问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-2"><span class="nav-text">代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%88%E6%9E%9C-2"><span class="nav-text">效果</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-2"><span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DDPG"><span class="nav-text">DDPG</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0-2"><span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%92%88%E5%AF%B9%E9%97%AE%E9%A2%98-1"><span class="nav-text">针对问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%EF%BC%9A%E7%A1%AE%E5%AE%9A%E6%80%A7%E7%AD%96%E7%95%A5%EF%BC%88DPG%EF%BC%89"><span class="nav-text">优化：确定性策略（DPG）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DDPG%E5%8E%9F%E7%90%86"><span class="nav-text">DDPG原理</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9B%9E%E9%A1%BEDDQN%E7%9A%84%E5%8F%8C%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B"><span class="nav-text">回顾DDQN的双网络模型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#DDPG%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-text">DDPG工作原理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#DDPG-4%E4%B8%AA%E7%BD%91%E7%BB%9C%E7%9A%84%E5%8A%9F%E8%83%BD"><span class="nav-text">DDPG 4个网络的功能</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E5%8F%82%E6%95%B0%E7%9A%84%E5%A4%8D%E5%88%B6"><span class="nav-text">网络参数的复制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8A%A8%E4%BD%9C%E5%99%AA%E5%A3%B0"><span class="nav-text">动作噪声</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="nav-text">损失函数</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#Critic%E5%BD%93%E5%89%8D%E7%BD%91%E7%BB%9C%EF%BC%9A%E5%9D%87%E6%96%B9%E8%AF%AF%E5%B7%AE"><span class="nav-text">Critic当前网络：均方误差</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Actor%E5%BD%93%E5%89%8D%E7%BD%91%E7%BB%9C"><span class="nav-text">Actor当前网络</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B-2"><span class="nav-text">算法流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-3"><span class="nav-text">示例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98-3"><span class="nav-text">问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-3"><span class="nav-text">代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%88%E6%9E%9C-3"><span class="nav-text">效果</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-3"><span class="nav-text">小结</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
