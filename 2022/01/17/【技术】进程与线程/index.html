@@ -44,6 +44,7 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220117233202.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220117195333.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220117195450.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220118112901.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220117215326.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220117215406.png">
 <meta property="og:image" content="https://gitee.com/Lrk612/md_picture2/raw/master/img/image-20211023215258482.png">
@@ -68,8 +69,9 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220117204949.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220117205002.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220117211135.png">
+<meta property="og:image" content="c:/Users/lrk/AppData/Roaming/Typora/typora-user-images/image-20220118113211331.png">
 <meta property="article:published_time" content="2022-01-17T15:00:29.738Z">
-<meta property="article:modified_time" content="2022-01-17T16:31:22.860Z">
+<meta property="article:modified_time" content="2022-01-18T04:59:57.251Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="OS">
 <meta property="article:tag" content="Linux">
@@ -328,12 +330,12 @@
 <span id="more"></span>
 
 <p>&nbsp;</p>
-<h1 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h1><h2 id="相关概念"><a href="#相关概念" class="headerlink" title="相关概念"></a>相关概念</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>&emsp;&emsp;进程是一个具有一定独立功能的程序关于某个数据集合的一次运行活动。它是操作系统动态执行的基本单元，在传统的操作系统中，进程既是基本的分配单元，也是基本的执行单元</p>
+<h1 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h1><h2 id="相关概念"><a href="#相关概念" class="headerlink" title="相关概念"></a>相关概念</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>&emsp;&emsp;进程是资源（CPU时间、内存等）分配的基本单位，程序运行时系统就会创建一个进程并为它分配资源，然后该进程进入就绪队列，进程调度器选中就绪的进程并为它分配CPU时间使该进程的程序开始运行。在传统的操作系统中，进程既是基本的分配单元，也是基本的执行单元。</p>
 <p>&emsp;&emsp;Linux进程结构可由三部分组成：代码段、数据段、堆栈段，也就是程序、数据、进程控制块PCB（Process Control Block）组成。进程控制块是进程存在的惟一标识，系统通过PCB的存在而感知进程的存在。<br>&emsp;&emsp;系统通过PCB对进程进行管理和调度。PCB包括创建进程、执行程序、退出进程以及改变进程的优先级等。而进程中的PCB用一个名为 <code>task_struct</code> 的结构体来表示，定义在 <code>include/linux/sched.h</code> 中，每当创建一新进程时，便在内存中申请一个空的 <code>task_struct</code> 结构，填入所需信息，同时，指向该结构的指针也被加入到task数组中，所有进程控制块都存储在task[]数组中。</p>
 <h3 id="特征"><a href="#特征" class="headerlink" title="特征"></a>特征</h3><ul>
-<li>动态性：进程的实质是程序在多道程序系统中的一次执行过程，进程是动态产生，动态消亡的</li>
-<li>并发性：任何进程都可以同其他进程一起并发执行</li>
-<li>独立性：进程是一个能独立运行的基本单位，同时也是系统分配资源和调度的独立单位</li>
+<li>动态性：进程序只是指令集合，进程是被赋予了时间概念的指令，具有生命周期和不同状态</li>
+<li>并发性：多个进程可以在单个CPU上并发执行，不会互相影响</li>
+<li>独立性：每个进程拥有私有的地址空间，不同进程的信息无法相互直接使用，可以通过进程间通信来传输信息</li>
 <li>异步性：由于进程间的相互制约，使进程具有执行的间断性，即进程按各自独立的、不可预知的速度向前推 进</li>
 <li>结构特征：进程由程序、数据和进程控制块三部分组成</li>
 </ul>
@@ -403,6 +405,11 @@
 <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117195450.png" alt="image-20220117195450631" style="zoom:50%;" />
 </blockquote>
 <p>如果进程太多，可以使用 <code>ps -ef | more</code> 命令使结果分页显示。</p>
+<p>使用 <code>top</code> 查看进程</p>
+<blockquote>
+<p>例：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220118112901.png" alt="image-20220118112901440" style="zoom:45%;" />
+</blockquote>
 <p>使用 <code>kill</code> 中止进程：</p>
 <blockquote>
 <p>killall &lt;进程名&gt;</p>
@@ -824,8 +831,120 @@
 <p>&emsp;&emsp;父进程忽视子进程的退出信号：<code>signal(SIGCHLD,SIG_IGN);</code></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<h1 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h1><p>//TODO</p>
+<h1 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h1><h2 id="相关概念-1"><a href="#相关概念-1" class="headerlink" title="相关概念"></a>相关概念</h2><h3 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h3><p>&emsp;&emsp;线程是一条执行路径，是程序执行时的最小单位，即进程的一个执行流，是CPU调度和分派的基本单位。一个进程可以由多个线程组成，线程间共享进程的所有资源，但也有自己的堆栈和局部变量。线程由CPU独立调度执行，在D多CPU环境下允许多个线程同时进行。</p>
+<ul>
+<li>对于单核CPU而言：多线程就是一个CPU在来回的切换，在交替执行。</li>
+<li>对于多核CPU而言：多线程就是同时有多条执行路径在同时(并行)执行，每个核执行一个线程，多个核就有可能是一块同时执行的。</li>
+</ul>
+<p>使用 <code>top -H</code> 查看线程</p>
+<blockquote>
+<p>例：</p>
+<img src="C:/Users/lrk/AppData/Roaming/Typora/typora-user-images/image-20220118113211331.png" alt="image-20220118113211331" style="zoom:45%;" />
+</blockquote>
+<h3 id="线程和进程"><a href="#线程和进程" class="headerlink" title="线程和进程"></a>线程和进程</h3><p>&emsp;&emsp;一个程序就是一个进程，而一个程序中的多个任务则被称为线程。进程是表示资源分配的基本单位，又是调度运行的基本单位，亦即执行处理机调度的基本单位。</p>
+<ul>
+<li><p>一个线程只能属于一个进程，而一个进程可以有多个线程，但至少有一个线程。线程是操作系统可识别的最小执行和调度单位。</p>
+</li>
+<li><p>资源分配给进程，同一进程的所有线程共享该进程的所有资源。同一进程中的多个线程共享代码段(代码和常量)，数据段(全局变量和静态变量)，扩展段(堆存储)。但是每个线程拥有自己的栈段，栈段又叫运行时段，用来存放所有局部变量和临时变量，即每个线程都有自己的堆栈和局部变量。</p>
+</li>
+<li><p>处理机分给线程，即真正在处理机上运行的是线程。</p>
+</li>
+<li><p>线程在执行过程中，需要协作同步。不同进程的线程间要利用消息通信的办法实现同步。</p>
+</li>
+</ul>
+<h3 id="线程的状态"><a href="#线程的状态" class="headerlink" title="线程的状态"></a>线程的状态</h3><table>
+<thead>
+<tr>
+<th>状态</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>创建</td>
+<td>准备好了一个多线程对象</td>
+</tr>
+<tr>
+<td>就绪</td>
+<td>等待CPU调度执行</td>
+</tr>
+<tr>
+<td>运行</td>
+<td>执行程序</td>
+</tr>
+<tr>
+<td>阻塞</td>
+<td>放弃CPU使用权，暂停执行线程，将线程挂起，将资源交给其他线程使用</td>
+</tr>
+</tbody></table>
+<h2 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h2><p>&emsp;&emsp;和多进程相比，多线程是一种比较节省资源的多任务操作方式。启动一个新的进程必须分配给它独立的地址空间，每个进程都有自己的堆栈段和数据段，系统开销比较高，进行数据的传递只能通过进程间通信的方式进行。在同一个进程中，可以运行多个线程，运行于同一个进程中的多个线程，它们彼此之间使用相同的地址空间，共享全局变量和对象，启动一个线程所消耗的资源比启动一个进程所消耗的资源要少。</p>
+<p>&emsp;&emsp;不过Linux没有真正意义上的线程，它的实现是由进程来模拟，属于用户级线程。所以，在Linux系统下，进程与线程在性能和资源消耗方面没有本质的差别。但是进程不能共享全局数据，线程可以共享全局数据。</p>
+<h3 id="线程的使用"><a href="#线程的使用" class="headerlink" title="线程的使用"></a>线程的使用</h3><h4 id="C-封装函数-2"><a href="#C-封装函数-2" class="headerlink" title="C++封装函数"></a>C++封装函数</h4><p>Linux在c++头文件中提供了封装的函数用于操作线程：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;pthread.h&gt;</span></span></span><br></pre></td></tr></table></figure>
 
+<p>注意：编译时必须带上 <code>-pthread</code> 以调用静态链接库，因为pthread并不是Linux系统的默认库</p>
+<h4 id="创建线程"><a href="#创建线程" class="headerlink" title="创建线程"></a>创建线程</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_create</span><span class="params">(<span class="keyword">pthread_t</span> *thread, <span class="keyword">const</span> <span class="keyword">pthread_attr_t</span> *attr,<span class="keyword">void</span> *(*start_routine) (<span class="keyword">void</span> *), <span class="keyword">void</span> *arg)</span></span>;</span><br><span class="line"><span class="comment">// thread: 指向线程标识符的地址。</span></span><br><span class="line"><span class="comment">// attr: 用于设置线程属性，一般为空，表示使用默认属性。</span></span><br><span class="line"><span class="comment">// start_routine: 线程运行函数的地址，填函数名就可以了。</span></span><br><span class="line"><span class="comment">// arg: 线程运行函数的参数。</span></span><br><span class="line"><span class="comment">// 新创建的线程从start_routine函数的地址开始运行，该函数只有一个无类型指针参数arg。若要向start_routine传递多个参数，可以将多个参数放在一个结构体中，然后把结构体的地址作为arg参数传入</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="终止线程"><a href="#终止线程" class="headerlink" title="终止线程"></a>终止线程</h4><p>&emsp;&emsp;如果进程中的任一线程调用了exit，则整个进程会终止，所以，在线程的start_routine函数中，不能采用exit或return。</p>
+<p>线程的终止有三种方式：</p>
+<p>1）线程的 <code>start_routine()</code> 函数代码结束，自然消亡</p>
+<p>2）线程的 <code>start_routine()</code> 函数调用 <code>pthread_exit()</code> 结束</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">pthread_exit</span><span class="params">(<span class="keyword">void</span> *retval)</span></span>;</span><br><span class="line"><span class="comment">// retval：填0</span></span><br></pre></td></tr></table></figure>
+
+<p>3）被主进程或其它线程中止</p>
+<h4 id="线程资源回收"><a href="#线程资源回收" class="headerlink" title="线程资源回收"></a>线程资源回收</h4><p>&emsp;&emsp;线程有<code>joinable</code>和<code>unjoinable</code>两种状态，如果线程是<code>joinable</code>状态，当线程主函数终止时（自己退出或调用<code>pthread_exit()</code>退出）不会释放线程所占用内存资源和其它资源，这种线程被称为“<strong>僵尸线程</strong>”。创建线程时默认是非分离的，或者称为可连接的（<code>joinable</code>）。可以通过将线程设置为<code>detached</code>状态来避免僵尸线程。</p>
+<p><strong>方法一</strong></p>
+<p>&emsp;&emsp;创建线程前，调用<code>pthread_attr_setdetachstate()</code>将线程设为<code>detached</code>，这样线程退出时，系统自动回收线程资源</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pthread_attr_t</span> attr;</span><br><span class="line"><span class="built_in">pthread_attr_init</span>(&amp;attr);</span><br><span class="line"><span class="built_in">pthread_attr_setdetachstate</span>(&amp;attr, PTHREAD_CREATE_DETACHED);  <span class="comment">// 设置线程的属性。</span></span><br><span class="line"><span class="built_in">pthread_create</span>(&amp;pthid, &amp;attr, pth_main, (<span class="keyword">void</span>*)((<span class="keyword">long</span>)TcpServer.m_clientfd);</span><br></pre></td></tr></table></figure>
+
+<p><strong>方法二</strong></p>
+<p>&emsp;&emsp;创建线程后，在创建线程的程序中调用<code>pthread_detach()</code>将新创建的线程设置为<code>detached</code>状态</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">pthread_detach</span>(pthid);</span><br></pre></td></tr></table></figure>
+
+<p><strong>方法三</strong></p>
+<p>&emsp;&emsp;在线程主函数中调用<code>pthread_detach()</code>改变自己的状态</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">pthread_detach</span>(<span class="built_in">pthread_self</span>());</span><br></pre></td></tr></table></figure>
+
+<p><strong>方法四</strong></p>
+<p>&emsp;&emsp;创建线程后，在创建线程的程序中调用<code>pthread_join()</code>等待线程退出，一般不会采用这种方法，因为<code>pthread_join()</code>会发生阻塞</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">pthread_join</span>(pthid, <span class="literal">NULL</span>);</span><br></pre></td></tr></table></figure>
+
+<h4 id="示例-2"><a href="#示例-2" class="headerlink" title="示例"></a>示例</h4><h3 id="线程同步与互斥锁"><a href="#线程同步与互斥锁" class="headerlink" title="线程同步与互斥锁"></a>线程同步与互斥锁</h3><p>&emsp;&emsp;多线程可以共享资源（变量和对象），对编程带来了方便，但是某些对象虽然可以共享，但在同一个时间只能由一个线程使用，多个线程同时使用会产生冲突，例如socket连接，数据库连接池。互斥锁机制是同一时刻只允许一个线程占有共享的资源。</p>
+<h4 id="初始化锁"><a href="#初始化锁" class="headerlink" title="初始化锁"></a>初始化锁</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_mutex_init</span><span class="params">(<span class="keyword">pthread_mutex_t</span> *mutex,<span class="keyword">const</span> <span class="keyword">pthread_mutex_attr_t</span> *mutexattr)</span></span>;</span><br><span class="line"><span class="comment">// mutexattr：用于指定锁的属性（见下），如果为NULL则使用缺省属性</span></span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;互斥锁的属性在创建锁的时候指定，当资源被某线程锁住的时候，其它的线程在试图加锁时表现将不同。当前有四个值可供选择：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PTHREAD_MUTEX_TIMED_NP</td>
+<td>缺省值，即普通锁，当一个线程加锁以后，其余请求锁的线程将形成一个等待队列，并在解锁后按优先级获得锁。这种锁策略保证了资源分配的公平性</td>
+</tr>
+<tr>
+<td>PTHREAD_MUTEX_RECURSIVE_NP</td>
+<td>嵌套锁，允许同一个线程对同一个锁成功获得多次，并通过多次unlock解锁</td>
+</tr>
+<tr>
+<td>PTHREAD_MUTEX_ERRORCHECK_NP</td>
+<td>检错锁，如果同一个线程请求同一个锁，则返回EDEADLK，否则与PTHREAD_MUTEX_TIMED_NP类型动作相同</td>
+</tr>
+<tr>
+<td>PTHREAD_MUTEX_ADAPTIVE_NP</td>
+<td>适应锁，动作最简单的锁类型，等待解锁后重新竞争</td>
+</tr>
+</tbody></table>
+<h4 id="阻塞加锁"><a href="#阻塞加锁" class="headerlink" title="阻塞加锁"></a>阻塞加锁</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_mutex_lock</span><span class="params">(pthread_mutex *mutex)</span></span>;</span><br><span class="line"><span class="comment">// 如果是锁是空闲状态，本线程将获得这个锁；如果锁已经被占据，本线程将排队等待，直到成功的获取锁</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="非阻塞加锁"><a href="#非阻塞加锁" class="headerlink" title="非阻塞加锁"></a>非阻塞加锁</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_mutex_trylock</span><span class="params">( <span class="keyword">pthread_mutex_t</span> *mutex)</span></span>;</span><br><span class="line"><span class="comment">// 该函数语义与 pthread_mutex_lock() 类似，不同的是在锁已经被占据时立即返回 EBUSY，不是挂起等待</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="解锁"><a href="#解锁" class="headerlink" title="解锁"></a>解锁</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_mutex_unlock</span><span class="params">(pthread_mutex *mutex)</span></span>;</span><br><span class="line"><span class="comment">// 线程把自己持有的锁释放</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="销毁锁"><a href="#销毁锁" class="headerlink" title="销毁锁"></a>销毁锁</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_mutex_destroy</span><span class="params">(pthread_mutex *mutex)</span></span>;</span><br><span class="line"><span class="comment">// 销毁锁之前，锁必需是空闲状态（unlock），否则返回EBUSY</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="示例-3"><a href="#示例-3" class="headerlink" title="示例"></a>示例</h4>
     </div>
 
     
@@ -925,7 +1044,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B"><span class="nav-text">进程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5"><span class="nav-text">相关概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89"><span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E5%BE%81"><span class="nav-text">特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%A8%8B%E5%BA%8F"><span class="nav-text">进程与程序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E7%9A%843%E7%A7%8D%E5%9F%BA%E6%9C%AC%E7%8A%B6%E6%80%81"><span class="nav-text">进程的3种基本状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E7%9B%B8%E5%85%B3%E6%8C%87%E4%BB%A4"><span class="nav-text">进程相关指令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1"><span class="nav-text">进程间通信</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1"><span class="nav-text">进程通信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%A1%E5%8F%B7"><span class="nav-text">信号</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%A1%E5%8F%B7%E7%9A%84%E6%9D%A5%E6%BA%90"><span class="nav-text">信号的来源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%A1%E5%8F%B7%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="nav-text">信号的类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%A1%E5%8F%B7%E7%9A%84%E6%8D%95%E8%8E%B7%E5%A4%84%E7%90%86"><span class="nav-text">信号的捕获处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%A1%E5%8F%B7%E7%9A%84%E5%8F%91%E9%80%81"><span class="nav-text">信号的发送</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%A1%E5%8F%B7%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-text">信号的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B1%8F%E8%94%BD%E4%BF%A1%E5%8F%B7"><span class="nav-text">屏蔽信号</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%90%9E%E7%82%B9%E5%A5%BD%E7%8E%A9%E7%9A%84"><span class="nav-text">搞点好玩的</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%BF%E7%B3%BB%E7%BB%9F%E4%BC%91%E7%9C%A0"><span class="nav-text">使系统休眠</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98"><span class="nav-text">共享内存</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-text">使用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#C-%E5%B0%81%E8%A3%85%E5%87%BD%E6%95%B0"><span class="nav-text">C++封装函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E6%88%96%E5%88%9B%E5%BB%BA"><span class="nav-text">获取或创建</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5"><span class="nav-text">连接</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%86%E7%A6%BB"><span class="nav-text">分离</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E4%B8%8E%E5%88%A0%E9%99%A4"><span class="nav-text">控制与删除</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-text">示例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%A1%E5%8F%B7%E9%87%8F"><span class="nav-text">信号量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B1%E4%BA%AB%E8%B5%84%E6%BA%90%E8%B0%83%E5%BA%A6"><span class="nav-text">共享资源调度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95-1"><span class="nav-text">使用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#C-%E5%B0%81%E8%A3%85%E5%87%BD%E6%95%B0-1"><span class="nav-text">C++封装函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E6%88%96%E5%88%9B%E5%BB%BA-1"><span class="nav-text">获取或创建</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E4%B8%8E%E5%88%A0%E9%99%A4"><span class="nav-text">初始化与删除</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BF%A1%E5%8F%B7%E9%87%8F%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="nav-text">信号量的操作</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B%EF%BC%9A%E4%BA%8C%E8%BF%9B%E5%88%B6%E4%BF%A1%E5%8F%B7%E7%81%AF%E6%8E%A7%E5%88%B6%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98%E6%93%8D%E4%BD%9C"><span class="nav-text">示例：二进制信号灯控制共享内存操作</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A5%97%E6%8E%A5%E5%AD%97"><span class="nav-text">套接字</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1-Socket"><span class="nav-text">网络通信 Socket</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%81Socket-%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="nav-text">流Socket 工作流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-1"><span class="nav-text">示例</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%95%88%E6%9E%9C"><span class="nav-text">效果</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E8%BF%9B%E7%A8%8B"><span class="nav-text">多进程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%EF%BC%9A%E5%B9%B6%E5%8F%91%E7%9A%84%E6%9C%8D%E5%8A%A1%E7%AB%AF"><span class="nav-text">应用：并发的服务端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%83%B5%E5%B0%B8%E8%BF%9B%E7%A8%8B"><span class="nav-text">僵尸进程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B"><span class="nav-text">线程</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B"><span class="nav-text">进程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5"><span class="nav-text">相关概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89"><span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E5%BE%81"><span class="nav-text">特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%A8%8B%E5%BA%8F"><span class="nav-text">进程与程序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E7%9A%843%E7%A7%8D%E5%9F%BA%E6%9C%AC%E7%8A%B6%E6%80%81"><span class="nav-text">进程的3种基本状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E7%9B%B8%E5%85%B3%E6%8C%87%E4%BB%A4"><span class="nav-text">进程相关指令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1"><span class="nav-text">进程间通信</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1"><span class="nav-text">进程通信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%A1%E5%8F%B7"><span class="nav-text">信号</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%A1%E5%8F%B7%E7%9A%84%E6%9D%A5%E6%BA%90"><span class="nav-text">信号的来源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%A1%E5%8F%B7%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="nav-text">信号的类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%A1%E5%8F%B7%E7%9A%84%E6%8D%95%E8%8E%B7%E5%A4%84%E7%90%86"><span class="nav-text">信号的捕获处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%A1%E5%8F%B7%E7%9A%84%E5%8F%91%E9%80%81"><span class="nav-text">信号的发送</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%A1%E5%8F%B7%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-text">信号的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B1%8F%E8%94%BD%E4%BF%A1%E5%8F%B7"><span class="nav-text">屏蔽信号</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%90%9E%E7%82%B9%E5%A5%BD%E7%8E%A9%E7%9A%84"><span class="nav-text">搞点好玩的</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%BF%E7%B3%BB%E7%BB%9F%E4%BC%91%E7%9C%A0"><span class="nav-text">使系统休眠</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98"><span class="nav-text">共享内存</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-text">使用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#C-%E5%B0%81%E8%A3%85%E5%87%BD%E6%95%B0"><span class="nav-text">C++封装函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E6%88%96%E5%88%9B%E5%BB%BA"><span class="nav-text">获取或创建</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5"><span class="nav-text">连接</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%86%E7%A6%BB"><span class="nav-text">分离</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E4%B8%8E%E5%88%A0%E9%99%A4"><span class="nav-text">控制与删除</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-text">示例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%A1%E5%8F%B7%E9%87%8F"><span class="nav-text">信号量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B1%E4%BA%AB%E8%B5%84%E6%BA%90%E8%B0%83%E5%BA%A6"><span class="nav-text">共享资源调度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95-1"><span class="nav-text">使用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#C-%E5%B0%81%E8%A3%85%E5%87%BD%E6%95%B0-1"><span class="nav-text">C++封装函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E6%88%96%E5%88%9B%E5%BB%BA-1"><span class="nav-text">获取或创建</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E4%B8%8E%E5%88%A0%E9%99%A4"><span class="nav-text">初始化与删除</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BF%A1%E5%8F%B7%E9%87%8F%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="nav-text">信号量的操作</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B%EF%BC%9A%E4%BA%8C%E8%BF%9B%E5%88%B6%E4%BF%A1%E5%8F%B7%E7%81%AF%E6%8E%A7%E5%88%B6%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98%E6%93%8D%E4%BD%9C"><span class="nav-text">示例：二进制信号灯控制共享内存操作</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A5%97%E6%8E%A5%E5%AD%97"><span class="nav-text">套接字</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1-Socket"><span class="nav-text">网络通信 Socket</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%81Socket-%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="nav-text">流Socket 工作流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-1"><span class="nav-text">示例</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%95%88%E6%9E%9C"><span class="nav-text">效果</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E8%BF%9B%E7%A8%8B"><span class="nav-text">多进程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%EF%BC%9A%E5%B9%B6%E5%8F%91%E7%9A%84%E6%9C%8D%E5%8A%A1%E7%AB%AF"><span class="nav-text">应用：并发的服务端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%83%B5%E5%B0%B8%E8%BF%9B%E7%A8%8B"><span class="nav-text">僵尸进程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B"><span class="nav-text">线程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5-1"><span class="nav-text">相关概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89-1"><span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B"><span class="nav-text">线程和进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E7%9A%84%E7%8A%B6%E6%80%81"><span class="nav-text">线程的状态</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="nav-text">多线程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-text">线程的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#C-%E5%B0%81%E8%A3%85%E5%87%BD%E6%95%B0-2"><span class="nav-text">C++封装函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E7%BA%BF%E7%A8%8B"><span class="nav-text">创建线程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%88%E6%AD%A2%E7%BA%BF%E7%A8%8B"><span class="nav-text">终止线程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E8%B5%84%E6%BA%90%E5%9B%9E%E6%94%B6"><span class="nav-text">线程资源回收</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-2"><span class="nav-text">示例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5%E4%B8%8E%E4%BA%92%E6%96%A5%E9%94%81"><span class="nav-text">线程同步与互斥锁</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E9%94%81"><span class="nav-text">初始化锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%98%BB%E5%A1%9E%E5%8A%A0%E9%94%81"><span class="nav-text">阻塞加锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9D%9E%E9%98%BB%E5%A1%9E%E5%8A%A0%E9%94%81"><span class="nav-text">非阻塞加锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%A3%E9%94%81"><span class="nav-text">解锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%94%80%E6%AF%81%E9%94%81"><span class="nav-text">销毁锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-3"><span class="nav-text">示例</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
