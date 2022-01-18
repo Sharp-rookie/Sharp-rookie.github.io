@@ -74,11 +74,11 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220118145241.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220118145255.png">
 <meta property="article:published_time" content="2022-01-17T15:00:29.738Z">
-<meta property="article:modified_time" content="2022-01-18T06:59:00.439Z">
+<meta property="article:modified_time" content="2022-01-18T07:02:37.871Z">
 <meta property="article:author" content="Lrk612">
+<meta property="article:tag" content="C&#x2F;C++">
 <meta property="article:tag" content="OS">
 <meta property="article:tag" content="Linux">
-<meta property="article:tag" content="C&#x2F;C++">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220117234703.png">
 
@@ -926,7 +926,7 @@
 <li><p>客户端2</p>
   <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220118145255.png" alt="image-20220118145255493" style="zoom:50%;" /></li>
 </ul>
-<h3 id="线程同步与互斥锁"><a href="#线程同步与互斥锁" class="headerlink" title="线程同步与互斥锁"></a>线程同步与互斥锁</h3><p>&emsp;&emsp;多线程可以共享资源（变量和对象），对编程带来了方便，但是某些对象虽然可以共享，但在同一个时间只能由一个线程使用，多个线程同时使用会产生冲突，例如socket连接，数据库连接池。互斥锁机制是同一时刻只允许一个线程占有共享的资源。</p>
+<h3 id="线程同步与互斥锁"><a href="#线程同步与互斥锁" class="headerlink" title="线程同步与互斥锁"></a>线程同步与互斥锁</h3><p>&emsp;&emsp;多线程可以共享进程的资源（变量和对象），对编程带来了方便，但是某些对象虽然可以共享，但在同一个时间只能由一个线程使用，多个线程同时使用会产生冲突，例如socket连接，数据库连接池。互斥锁机制是同一时刻只允许一个线程占有共享的资源。</p>
 <h4 id="初始化锁"><a href="#初始化锁" class="headerlink" title="初始化锁"></a>初始化锁</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_mutex_init</span><span class="params">(<span class="keyword">pthread_mutex_t</span> *mutex,<span class="keyword">const</span> <span class="keyword">pthread_mutex_attr_t</span> *mutexattr)</span></span>;</span><br><span class="line"><span class="comment">// mutexattr：用于指定锁的属性（见下），如果为NULL则使用缺省属性</span></span><br></pre></td></tr></table></figure>
 
 <p>&emsp;&emsp;互斥锁的属性在创建锁的时候指定，当资源被某线程锁住的时候，其它的线程在试图加锁时表现将不同。当前有四个值可供选择：</p>
@@ -988,9 +988,9 @@
 
       <footer class="post-footer">
           <div class="post-tags">
+              <a href="/tags/C-C/" rel="tag"># C/C++</a>
               <a href="/tags/OS/" rel="tag"># OS</a>
               <a href="/tags/Linux/" rel="tag"># Linux</a>
-              <a href="/tags/C-C/" rel="tag"># C/C++</a>
           </div>
 
         
