@@ -51,7 +51,7 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211201192413.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211201192430.png">
 <meta property="article:published_time" content="2021-12-03T00:10:27.863Z">
-<meta property="article:modified_time" content="2022-01-20T12:08:24.951Z">
+<meta property="article:modified_time" content="2022-01-20T12:16:42.866Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="5G">
 <meta property="article:tag" content="Network Slice">
@@ -355,7 +355,7 @@
 
 <p>&emsp;&emsp;参数 r 较大的nGBR用户在资源分配中优先于其他用户。</p>
 <p>&nbsp;</p>
-<h5 id="频域调度"><a href="#频域调度" class="headerlink" title="频域调度"></a>频域调度</h5><p>&emsp;&emsp;FD调度器负责将RBs分配给不同的持有人。FD调度器根据TD调度器发来的候选列表来确定在特定TTI中必须服务哪些Bearer。FD调度器优先服务于GBR Bearer，然后服务于nGBR Bearer。通过令牌桶算法确定允许分配资源的GBR Bearer，然后使用改进的LWDF、M-LWDFS对这些Bearer进行调度。<strong>（这里与流程图不符，流程图是PF算法调度）</strong></p>
+<h5 id="频域调度"><a href="#频域调度" class="headerlink" title="频域调度"></a>频域调度</h5><p>&emsp;&emsp;FD调度器负责将RBs分配给不同的Active UE。FD调度器根据TD调度器发来的候选列表来确定在特定TTI中必须服务哪些Bearer。FD调度器优先服务于GBR Bearer，然后服务于nGBR Bearer。通过令牌桶算法确定允许分配资源的GBR Bearer，然后使用改进的LWDF、M-LWDFS对这些Bearer进行调度。<strong>（这里与流程图不符，流程图是PF算法调度）</strong></p>
 <p>&emsp;&emsp;当GBR流量或相关令牌分配完后，FD调度器开始将资源分配给nGBR用户。采用了PF算法，在用户公平性和小区整体性能之间取得了较好的平衡。该算法计算用户信道的当前状态和先前接收的服务但是却不考虑QoS，因此PF适合非RT流量而不适合RT流量。</p>
 <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211201185426.png" alt="image-20211201185425952" style="zoom:50%;" />
 
