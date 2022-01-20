@@ -39,6 +39,7 @@
 <meta property="og:site_name" content="最忆是江南">
 <meta property="og:description" content="背景&amp;emsp;&amp;emsp;LTE网络支持共享无线接入和核心网络资源的不同类型的服务，包括：尽力而为、延迟敏感和实时（RT）服务。每种服务在比特率、延迟和分组丢失方面都有不同的QoS要求。 &amp;emsp;&amp;emsp;基站eNB的第一个目标是为UE提供高频谱效率，使更多的活跃用户可以在网络中接收服务。第二个目标是用户对接收的服务质量（QoS）的满意度。为了实现这些目标，eNB中的资源分配必须知道信道条">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220120200737.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211203080439.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211201184317.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211201184346.png">
@@ -50,13 +51,13 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211201192413.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211201192430.png">
 <meta property="article:published_time" content="2021-12-03T00:10:27.863Z">
-<meta property="article:modified_time" content="2022-01-19T08:25:07.808Z">
+<meta property="article:modified_time" content="2022-01-20T12:08:24.951Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="5G">
 <meta property="article:tag" content="Network Slice">
 <meta property="article:tag" content="Token Bucket">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211203080439.png">
+<meta name="twitter:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220120200737.png">
 
 <link rel="canonical" href="https://sharp-rookie.github.io/2021/12/03/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91DL%20Packet%20Scheduler%20by%20Token%20Bucket%20Algorithm/">
 
@@ -333,6 +334,10 @@
 <p>&emsp;&emsp;本论文提出了一种QoS感知的调度方法，包含时域和频域。先使用经典的五元组将不同的流映射到不同的载波。将VOIP和video流量分为GBR类、FTP和HTTP分为nGBR类。在GBR类中利用令牌桶算法来阻止其使用所有资源。这种不仅保证了两个类间资源分配的公平性，还提高了系统的总吞吐量。</p>
 <p>&nbsp;</p>
 <h3 id="LTE下行链路调度器"><a href="#LTE下行链路调度器" class="headerlink" title="LTE下行链路调度器"></a>LTE下行链路调度器</h3><p>&emsp;&emsp;正交频分多址（OFDMA）将分布在整个频谱中的一组子载波专用于用户。带宽被划分为180kHz的子信道，包括12个连续的子载波。时间/频率无线电资源扩展到时域中的两个时隙和频域中的一个子信道上，称为资源块（RB），是LTE中用于资源分配的最小单元。RBs的数量取决于系统带宽，例如，对于5 MHz系统，RBs数量为25，而在10 MHz系统中，RBs数量为50。</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220120200737.png" alt="image-20220120200737207" style="zoom:50%;" />
+
+<center>RB就是图中的小方块</center>
+
 <p>&emsp;&emsp;eNB使用信道状态信息获取每个用户链路上的信息。用户在每个TTI中向eNB报告其下行链路流状态。数据包优先级由eNB的调度器根据数据包延迟、下行链路状态、缓冲区状态、流量类型等参数确定。而特定数据包流的专用RB数量取决于调度器中使用的资源分配算法。以前大多数工作中的数据包调度器有两个阶段。先是时域调度器基于调度算法（自行设计）的输入参数选出请求服务的用户，然后频域调度器按照算法（自行设计）将资源分配给时域中选择出的用户。分组调度器使用CQI获取所有rb中的每个信道的质量信息。</p>
 <p>&nbsp;</p>
 <h3 id="本文算法"><a href="#本文算法" class="headerlink" title="本文算法"></a>本文算法</h3><h5 id="业务分类"><a href="#业务分类" class="headerlink" title="业务分类"></a>业务分类</h5><p>&emsp;&emsp;VOIP、Conversational Video 归为 GBR业务</p>
