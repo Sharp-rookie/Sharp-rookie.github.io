@@ -39,11 +39,12 @@
 <meta property="og:site_name" content="最忆是江南">
 <meta property="og:description" content="&amp;emsp;&amp;emsp;强化学习 (Reinforcement Learning) 是一个机器学习大家族中的分支, 由于近些年来的技术突破, 和深度学习 (Deep Learning) 的整合, 使得强化学习有了进一步的运用。比如让计算机学着玩游戏, AlphaGo 挑战世界围棋高手, 都是强化学习在行的事。强化学习让程序从对当前环境完全陌生, 成长为一个在环境中游刃有余的高手。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="c:/Users/lrk/AppData/Roaming/Typora/typora-user-images/image-20220126110940334.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126150606.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126150457.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211229085342.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211227234235.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126113400.png">
-<meta property="og:image" content="c:/Users/lrk/AppData/Roaming/Typora/typora-user-images/image-20220126115026053.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126150458.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211228085646.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211228085646.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211228085858.png">
@@ -61,7 +62,7 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211228140047.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211228092413.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211228135735.png">
-<meta property="og:image" content="c:/Users/lrk/AppData/Roaming/Typora/typora-user-images/image-20220126143115081.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126150459.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211228095500.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126143244.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211228141900.png">
@@ -81,13 +82,13 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211228135203.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211228134525.png">
 <meta property="article:published_time" content="2021-12-28T06:03:10.934Z">
-<meta property="article:modified_time" content="2022-01-26T07:02:06.174Z">
+<meta property="article:modified_time" content="2022-01-26T07:06:14.727Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="AI">
 <meta property="article:tag" content="Reinforcement Learning">
 <meta property="article:tag" content="Algorithm">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="c:/Users/lrk/AppData/Roaming/Typora/typora-user-images/image-20220126110940334.png">
+<meta name="twitter:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126150606.png">
 
 <link rel="canonical" href="https://sharp-rookie.github.io/2021/12/28/%E3%80%90%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E3%80%91%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/">
 
@@ -335,12 +336,14 @@
 
       
         <p>&emsp;&emsp;强化学习 (Reinforcement Learning) 是一个机器学习大家族中的分支, 由于近些年来的技术突破, 和深度学习 (Deep Learning) 的整合, 使得强化学习有了进一步的运用。比如让计算机学着玩游戏, AlphaGo 挑战世界围棋高手, 都是强化学习在行的事。强化学习让程序从对当前环境完全陌生, 成长为一个在环境中游刃有余的高手。</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126150606.png" alt="image-20220126150606364" style="zoom: 67%;" />
+
 <span id="more"></span>
 
 <p>&nbsp;</p>
 <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="在机器学习中的位置"><a href="#在机器学习中的位置" class="headerlink" title="在机器学习中的位置"></a>在机器学习中的位置</h3><p>&emsp;&emsp;强化学习是和监督学习，非监督学习并列的第三种机器学习方法，是机器学习中的一个独立领域。与后两者相同，强化学习有自己一套比较完整的数据处理、建模、训练、调优的套路，成为了一种方法论或模型体系。</p>
 <h4 id="监督学习"><a href="#监督学习" class="headerlink" title="监督学习"></a>监督学习</h4><p>&emsp;&emsp;监督学习是比较传统的一个机器学习领域，简而言之是给定（输入，输出）对，反向推导从输入到输出这个映射中的参数值或组合，即给定映射形式：</p>
-<img src="C:/Users/lrk/AppData/Roaming/Typora/typora-user-images/image-20220126110940334.png" alt="image-20220126110940334" style="zoom: 67%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126150457.png" alt="image-20220126110940334" style="zoom: 67%;" />
 
 <p>然后根据已有数据集(x, y)键值对推导参数 <code>θ</code> ，这个过程称为训练。</p>
 <h4 id="非监督学习"><a href="#非监督学习" class="headerlink" title="非监督学习"></a>非监督学习</h4><p>&emsp;&emsp;非监督学习也是比较传统的一个机器学习领域，比较常见的是聚类模型，例如：K-Means算法，只给定输入 x，输出并没有给定目标值。</p>
@@ -389,7 +392,7 @@
 <p>&nbsp;</p>
 <h3 id="模型求解"><a href="#模型求解" class="headerlink" title="模型求解"></a>模型求解</h3><p>&emsp;&emsp;强化学习模型求解过程本质就是智能体在不断与环境交互，产生序列：<code>S0,A0,R1,S1,A1,R2,...</code>，并在这个过程中推导出最优的决策算法，从而实现价值最大化。</p>
 <h4 id="直接法"><a href="#直接法" class="headerlink" title="直接法"></a>直接法</h4><p>&emsp;&emsp;直接法的前提是策略形式为： <code>a=π(s|θ)</code> ，即由参数 <code>θ</code> 描述策略，优化策略就是优化参数 <code>θ</code>。那么既然是要优化，就一定有优化的目标或评价函数，在这里是所有状态State下动作Action的奖励期望值：</p>
-<img src="C:/Users/lrk/AppData/Roaming/Typora/typora-user-images/image-20220126115026053.png" alt="image-20220126115026053" style="zoom:70%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126150458.png" alt="image-20220126115026053" style="zoom:70%;" />
 
 <p>&emsp;&emsp;但实际上，大多策略都不是仅靠参数<code>θ</code>就能描述的，因此强化学习策略优化用的主要是下面的间接法。</p>
 <h4 id="间接法"><a href="#间接法" class="headerlink" title="间接法"></a>间接法</h4><p>&emsp;&emsp;间接法的思想就是，计算出各个状态在策略<code>π</code>下的价值，然后决策时选择能够达到最大价值的下一状态的动作，这就是最优策略。其中，状态价值公式如下：</p>
@@ -508,7 +511,7 @@
 <p>&emsp;&emsp;同样一个状态可能在一个完整的状态序列（episode）中重复出现，第一种应对方法是仅把状态序列中第一次出现该状态时的收获值纳入到收获平均值的计算中；另一种是针对一个状态序列中每次出现的该状态，都计算对应的收获值并纳入到收获平均值的计算中。两种方法对应的蒙特卡罗法分别称为：<strong>首次访问(first visit)</strong> 和<strong>每次访问(every visit)</strong> 蒙特卡罗法。第二种方法比第一种的计算量要大一些，但是在完整的经历样本序列少的场景下会比第一种方法适用。</p>
 <p><strong>累进更新平均值（incremental mean)</strong></p>
 <p>&emsp;&emsp;按照蒙特卡洛求平均值来代表状态价值的公式里，每个状态都需要维护一个计数器和累加器，分别保存其出现次数和价值之和用于最后求平均，这样浪费了太多的存储空间：</p>
-<img src="C:/Users/lrk/AppData/Roaming/Typora/typora-user-images/image-20220126143115081.png" alt="image-20220126143115081" style="zoom: 67%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126150459.png" alt="image-20220126143115081" style="zoom: 67%;" />
 
 <p>注意，这里的 <code>Gt</code> 不能用贝尔曼方程计算，只能由采样的奖励值序列按定义式计算：</p>
 <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228095500.png" alt="image-20211228095500637" style="zoom:50%;" />
