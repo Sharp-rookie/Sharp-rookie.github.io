@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"sharp-rookie.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+<script> 
+   (function(){
+          if(''){
+              if (prompt('请输入文章密码') !== ''){
+                  alert('密码错误！');
+                  history.back();
+              }
+          }
+      })();
+  </script>
+  <meta name="description" content="因为经常用到画流程图、时序图等，所以这里总结一下常用的画图工具&#x2F;方法：  VSCode+PlantUML Typora 神经网络结构图  还有绘图网站：  draw.io">
+<meta property="og:type" content="article">
+<meta property="og:title" content="常用画图工具&#x2F;方法">
+<meta property="og:url" content="https://sharp-rookie.github.io/2022/01/26/%E3%80%90%E6%8A%80%E6%9C%AF%E3%80%91%E7%BB%98%E5%9B%BE%E6%96%B9%E6%B3%95/index.html">
+<meta property="og:site_name" content="最忆是江南">
+<meta property="og:description" content="因为经常用到画流程图、时序图等，所以这里总结一下常用的画图工具&#x2F;方法：  VSCode+PlantUML Typora 神经网络结构图  还有绘图网站：  draw.io">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="c:/Users/lrk/AppData/Roaming/Typora/typora-user-images/image-20220126181332755.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20210825123356.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126184441.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126184412.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126182343.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20210825123358.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126182609.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/e7e45fb167a8bdca3bbd15db36200413.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126182758.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20210825123401.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126182842.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20210825123402.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126182914.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20210825123403.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126183011.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20210825123404.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126183107.png">
+<meta property="og:image" content="https://gitee.com/Lrk612/md_picture2/raw/master/img/image-20210826125958845.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126183139.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20210825123405.png">
+<meta property="og:image" content="c:/Users/lrk/AppData/Roaming/Typora/typora-user-images/image-20220126183216677.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20210825123406.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126185758.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126185426.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126185820.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126185859.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126185937.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126190005.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126190401.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126190056.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126190421.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126190432.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126190516.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126190535.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126190606.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126190652.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126190723.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126190751.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126190824.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126190908.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126190941.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126191010.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126191345.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126191414.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126191545.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126191454.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126191628.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126191655.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126192936.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126193208.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126193221.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126193308.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126193329.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126193444.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126193459.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126193549.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126193609.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126193650.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126193720.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126194153.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126194207.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126195117.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220126195133.png">
+<meta property="article:published_time" content="2022-01-26T12:55:07.977Z">
+<meta property="article:modified_time" content="2022-01-26T12:59:44.285Z">
+<meta property="article:author" content="Lrk612">
+<meta property="article:tag" content="高效工具">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:/Users/lrk/AppData/Roaming/Typora/typora-user-images/image-20220126181332755.png">
+
+<link rel="canonical" href="https://sharp-rookie.github.io/2022/01/26/%E3%80%90%E6%8A%80%E6%9C%AF%E3%80%91%E7%BB%98%E5%9B%BE%E6%96%B9%E6%B3%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>常用画图工具/方法 | 最忆是江南</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+        <a target="_blank" rel="noopener" href="https://github.com/Sharp-rookie" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">最忆是江南</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Love actually is all around</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th-list fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-friendlink">
+
+    <a href="/friendlink/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="fa fa-download fa-fw"></i>资源</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://sharp-rookie.github.io/2022/01/26/%E3%80%90%E6%8A%80%E6%9C%AF%E3%80%91%E7%BB%98%E5%9B%BE%E6%96%B9%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Lrk612">
+      <meta itemprop="description" content="Lrk's blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="最忆是江南">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          常用画图工具/方法
+        </h1>
+
+        <div class="post-meta">
+         
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-01-26 20:55:07" itemprop="dateCreated datePublished" datetime="2022-01-26T20:55:07+08:00">2022-01-26</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/" itemprop="url" rel="index"><span itemprop="name">技术分享</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2022/01/26/%E3%80%90%E6%8A%80%E6%9C%AF%E3%80%91%E7%BB%98%E5%9B%BE%E6%96%B9%E6%B3%95/" class="post-meta-item leancloud_visitors" data-flag-title="常用画图工具/方法" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/01/26/%E3%80%90%E6%8A%80%E6%9C%AF%E3%80%91%E7%BB%98%E5%9B%BE%E6%96%B9%E6%B3%95/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/01/26/%E3%80%90%E6%8A%80%E6%9C%AF%E3%80%91%E7%BB%98%E5%9B%BE%E6%96%B9%E6%B3%95/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>因为经常用到画流程图、时序图等，所以这里总结一下常用的画图工具/方法：</p>
+<ul>
+<li>VSCode+PlantUML</li>
+<li>Typora</li>
+<li>神经网络结构图</li>
+</ul>
+<p>还有绘图网站：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.draw.io/index.html">draw.io</a></li>
+</ul>
+<span id="more"></span>
+
+<p>&nbsp;</p>
+<h2 id="MarkDown绘图"><a href="#MarkDown绘图" class="headerlink" title="MarkDown绘图"></a>MarkDown绘图</h2><p>&emsp;&emsp;Mermaid是一种简单的类似 Markdown 的脚本语言，通过 JavaScript 编程语言，将文本转换为图片。实现画图功能的并不是 Typora 本身，而是它内置的对 Mermaid 的支持。</p>
+<h3 id="时序图"><a href="#时序图" class="headerlink" title="时序图"></a>时序图</h3><p><strong>示例</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">Title:example</span><br><span class="line">    Alice-&gt;&gt;John: Hello John, how are you?</span><br><span class="line">    John--&gt;&gt;Alice: Great!</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">Title:example</span><br><span class="line">    Alice-&gt;&gt;John: Hello John, how are you?</span><br><span class="line">    John--&gt;&gt;Alice: Great!</span><br></pre></td></tr></table></figure>
+
+<p>&nbsp;</p>
+<h3 id="状态图"><a href="#状态图" class="headerlink" title="状态图"></a>状态图</h3><p><code>[*]</code> 表示开始或者结束，如果在箭头右边则表示结束。</p>
+<p><strong>示例</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">stateDiagram</span><br><span class="line">    [*] --&gt; s1</span><br><span class="line">    s1 --&gt; [*]</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">stateDiagram</span><br><span class="line">    [*] --&gt; s1</span><br><span class="line">    s1 --&gt; [*]</span><br></pre></td></tr></table></figure>
+
+<p>&nbsp;</p>
+<h3 id="类图"><a href="#类图" class="headerlink" title="类图"></a><strong>类图</strong></h3><p>语法解释：<code>&lt;|--</code> 表示继承，<code>+</code> 表示 <code>public</code>，<code>-</code> 表示 <code>private</code>，学过 Java 的应该都知道。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">classDiagram</span><br><span class="line">      Animal &lt;|-- Duck</span><br><span class="line">      Animal &lt;|-- Fish</span><br><span class="line">      Animal &lt;|-- Zebra</span><br><span class="line">      Animal : +int age</span><br><span class="line">      Animal : +String gender</span><br><span class="line">      Animal: +isMammal()</span><br><span class="line">      Animal: +mate()</span><br><span class="line">      class Duck&#123;</span><br><span class="line">          +String beakColor</span><br><span class="line">          +swim()</span><br><span class="line">          +quack()</span><br><span class="line">      &#125;</span><br><span class="line">      class Fish&#123;</span><br><span class="line">          -int sizeInFeet</span><br><span class="line">          -canEat()</span><br><span class="line">      &#125;</span><br><span class="line">      class Zebra&#123;</span><br><span class="line">          +bool is_wild</span><br><span class="line">          +run()</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">classDiagram</span><br><span class="line">      Animal &lt;|-- Duck</span><br><span class="line">      Animal &lt;|-- Fish</span><br><span class="line">      Animal &lt;|-- Zebra</span><br><span class="line">      Animal : +int age</span><br><span class="line">      Animal : +String gender</span><br><span class="line">      Animal: +isMammal()</span><br><span class="line">      Animal: +mate()</span><br><span class="line">      class Duck&#123;</span><br><span class="line">          +String beakColor</span><br><span class="line">          +swim()</span><br><span class="line">          +quack()</span><br><span class="line">      &#125;</span><br><span class="line">      class Fish&#123;</span><br><span class="line">          -int sizeInFeet</span><br><span class="line">          -canEat()</span><br><span class="line">      &#125;</span><br><span class="line">      class Zebra&#123;</span><br><span class="line">          +bool is_wild</span><br><span class="line">          +run()</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
+
+<p>&nbsp;</p>
+<h3 id="流程图"><a href="#流程图" class="headerlink" title="流程图"></a>流程图</h3><p><strong>方向</strong></p>
+<table>
+<thead>
+<tr>
+<th>字母表示</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>TB</td>
+<td>从上到下</td>
+</tr>
+<tr>
+<td>BT</td>
+<td>从下到上</td>
+</tr>
+<tr>
+<td>LR</td>
+<td>从左到右</td>
+</tr>
+<tr>
+<td>RL</td>
+<td>从右到左</td>
+</tr>
+</tbody></table>
+<p><strong>节点</strong></p>
+<table>
+<thead>
+<tr>
+<th>表述</th>
+<th>说明</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id[文字]</td>
+<td>矩形节点</td>
+<td>表示过程</td>
+</tr>
+<tr>
+<td>id(文字)</td>
+<td>圆角矩形节点</td>
+<td>表示开始与结束</td>
+</tr>
+<tr>
+<td>id((文字))</td>
+<td>圆形节点</td>
+<td>表示连接。为避免流程过长或有交叉，可将流程切开成对</td>
+</tr>
+<tr>
+<td>id{文字}</td>
+<td>菱形节点</td>
+<td>表示判断、决策</td>
+</tr>
+<tr>
+<td>id&gt;文字 ]</td>
+<td>右向旗帜节点</td>
+<td></td>
+</tr>
+</tbody></table>
+<p><strong>示例</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">graph TB;</span><br><span class="line">subgraph 分情况</span><br><span class="line">A(开始)--&gt;B&#123;判断&#125;</span><br><span class="line">end</span><br><span class="line">B--第一种情况--&gt;C[第一种方案]</span><br><span class="line">B--第二种情况--&gt;D[第二种方案]</span><br><span class="line">B--第三种情况--&gt;F&#123;第三种方案&#125;</span><br><span class="line">subgraph 分种类</span><br><span class="line">F-.第1个.-&gt;J((测试圆形))</span><br><span class="line">F-.第2个.-&gt;H&gt;右向旗帜形]</span><br><span class="line">end</span><br><span class="line">H---I(测试完毕)</span><br><span class="line">C--票数100---I(测试完毕)</span><br><span class="line">D---I(测试完毕)</span><br><span class="line">J---I(测试完毕)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">graph TB;</span><br><span class="line">subgraph 分情况</span><br><span class="line">A(开始)--&gt;B&#123;判断&#125;</span><br><span class="line">end</span><br><span class="line">B--第一种情况--&gt;C[第一种方案]</span><br><span class="line">B--第二种情况--&gt;D[第二种方案]</span><br><span class="line">B--第三种情况--&gt;F&#123;第三种方案&#125;</span><br><span class="line">subgraph 分种类</span><br><span class="line">F-.第1个.-&gt;J((测试圆形))</span><br><span class="line">F-.第2个.-&gt;H&gt;右向旗帜形]</span><br><span class="line">end</span><br><span class="line">H---I(测试完毕)</span><br><span class="line">C--票数100---I(测试完毕)</span><br><span class="line">D---I(测试完毕)</span><br><span class="line">J---I(测试完毕)</span><br></pre></td></tr></table></figure>
+
+<p>&nbsp;</p>
+<h3 id="序列图"><a href="#序列图" class="headerlink" title="序列图"></a>序列图</h3><p>序列图共有5个部分，分别是：<strong>参与者、消息线、循环、选择、可选、并行、注解</strong></p>
+<p><strong>消息线</strong></p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-&gt;</td>
+<td>无箭头的实线</td>
+</tr>
+<tr>
+<td>–&gt;</td>
+<td>无箭头的虚线</td>
+</tr>
+<tr>
+<td>-&gt;&gt;</td>
+<td>有箭头的实线(主动发出消息)</td>
+</tr>
+<tr>
+<td>–&gt;&gt;</td>
+<td>有箭头的虚线(响应)</td>
+</tr>
+<tr>
+<td>-x</td>
+<td>末端为X的实线(主动发出异步消息)</td>
+</tr>
+<tr>
+<td>–x</td>
+<td>有箭头的实线(以异步形式响应消息)</td>
+</tr>
+</tbody></table>
+<p><strong>示例</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">Title: 小明买书</span><br><span class="line"></span><br><span class="line">participant consumer as 小明</span><br><span class="line">participant store as 书店</span><br><span class="line">participant publisher as 出版社</span><br><span class="line"></span><br><span class="line">consumer -&gt;&gt; store: 想买一本限量版书籍</span><br><span class="line">store --&gt;&gt; consumer: 缺货</span><br><span class="line">consumer -&gt;&gt; store: 隔一个月再次询问</span><br><span class="line">store --&gt;&gt; consumer: 抢完了</span><br><span class="line">loop 一个星期一次</span><br><span class="line">consumer -x +store: 有货了吗</span><br><span class="line">store --x -consumer: 正在订,有货马上通知你</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">store -&gt;&gt; publisher: 我要订购一批货</span><br><span class="line">publisher --x store: 返回所有书籍的类别信息</span><br><span class="line"></span><br><span class="line">alt 书籍类别符合要求</span><br><span class="line">store -&gt;&gt; publisher: 请求书单信息</span><br><span class="line">publisher --x store: 返回该类别书单信息</span><br><span class="line"><span class="keyword">else</span> 书单里的书有市场需求</span><br><span class="line">store -&gt;&gt; publisher: 购买指定数据</span><br><span class="line">publisher --x store: 确认订单</span><br><span class="line"><span class="keyword">else</span> 书籍不符合要求</span><br><span class="line">store --&gt;&gt; publisher: 暂时不购买</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">par 并行执行</span><br><span class="line">publisher -&gt;&gt; publisher : 生产</span><br><span class="line">publisher -&gt;&gt; publisher : 销售</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">opt 书籍购买量&gt;=500 &amp;&amp; 库存&gt;=50</span><br><span class="line">publisher -&gt;&gt; store : 出货</span><br><span class="line">store --x publisher : 确认收货</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">Note left of consumer : 图书收藏家</span><br><span class="line">Note over consumer,store : 去书店购买书籍</span><br><span class="line">Note left of store : 全国知名书店</span><br><span class="line">Note over store,publisher : 去出版社进货</span><br><span class="line">Note left of publisher : 持有版权的出版社</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">Title: 小明买书</span><br><span class="line"></span><br><span class="line">participant consumer as 小明</span><br><span class="line">participant store as 书店</span><br><span class="line">participant publisher as 出版社</span><br><span class="line"></span><br><span class="line">consumer -&gt;&gt; store: 想买一本限量版书籍</span><br><span class="line">store --&gt;&gt; consumer: 缺货</span><br><span class="line">consumer -&gt;&gt; store: 隔一个月再次询问</span><br><span class="line">store --&gt;&gt; consumer: 抢完了</span><br><span class="line">loop 一个星期一次</span><br><span class="line">consumer -x +store: 有货了吗</span><br><span class="line">store --x -consumer: 正在订,有货马上通知你</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">store -&gt;&gt; publisher: 我要订购一批货</span><br><span class="line">publisher --x store: 返回所有书籍的类别信息</span><br><span class="line"></span><br><span class="line">alt 书籍类别符合要求</span><br><span class="line">store -&gt;&gt; publisher: 请求书单信息</span><br><span class="line">publisher --x store: 返回该类别书单信息</span><br><span class="line">else 书单里的书有市场需求</span><br><span class="line">store -&gt;&gt; publisher: 购买指定数据</span><br><span class="line">publisher --x store: 确认订单</span><br><span class="line">else 书籍不符合要求</span><br><span class="line">store --&gt;&gt; publisher: 暂时不购买</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">par 并行执行</span><br><span class="line">publisher -&gt;&gt; publisher : 生产</span><br><span class="line">publisher -&gt;&gt; publisher : 销售</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">opt 书籍购买量&gt;=500 &amp;&amp; 库存&gt;=50</span><br><span class="line">publisher -&gt;&gt; store : 出货</span><br><span class="line">store --x publisher : 确认收货</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">Note left of consumer : 图书收藏家</span><br><span class="line">Note over consumer,store : 去书店购买书籍</span><br><span class="line">Note left of store : 全国知名书店</span><br><span class="line">Note over store,publisher : 去出版社进货</span><br><span class="line">Note left of publisher : 持有版权的出版社</span><br></pre></td></tr></table></figure>
+
+<p>&nbsp;</p>
+<h3 id="饼图"><a href="#饼图" class="headerlink" title="饼图"></a>饼图</h3><p><strong>示例</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">pie</span><br><span class="line"> title Pie Chart</span><br><span class="line"> <span class="string">&quot;Dogs&quot;</span> : 386</span><br><span class="line"> <span class="string">&quot;cats&quot;</span> : 567</span><br><span class="line"> <span class="string">&quot;rabbit&quot;</span> : 700</span><br><span class="line"> <span class="string">&quot;pig&quot;</span>:365</span><br><span class="line"> <span class="string">&quot;tiger&quot;</span> : 15</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">pie</span><br><span class="line"> title Pie Chart</span><br><span class="line"> &quot;Dogs&quot; : 386</span><br><span class="line"> &quot;cats&quot; : 567</span><br><span class="line"> &quot;rabbit&quot; : 700</span><br><span class="line"> &quot;pig&quot;:365</span><br><span class="line"> &quot;tiger&quot; : 15</span><br></pre></td></tr></table></figure>
+
+<p>&nbsp;</p>
+<h3 id="甘特图"><a href="#甘特图" class="headerlink" title="甘特图"></a>甘特图</h3><p>甘特图一般用来表示项目的计划排期，目前在工作中经常会用到,语法也非常简单，从上到下依次是图片标题、日期格式、项目、项目细分的任务。</p>
+<p><strong>示例</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">gantt</span><br><span class="line">    title 工作计划</span><br><span class="line">    dateFormat  YYYY-MM-DD	//底部的时间格式</span><br><span class="line">    </span><br><span class="line">    section Section</span><br><span class="line">    task1:	a1, 2020-01-01, 30d</span><br><span class="line">    task2:	des3, 2020-03-01, 15d</span><br><span class="line"> 	task3:	crit, <span class="keyword">done</span>, 2020-02-30, 24h</span><br><span class="line">    Another task:	after a1, 20d</span><br><span class="line">    </span><br><span class="line">    section Another</span><br><span class="line">    Task <span class="keyword">in</span> sec:	2020-01-12, 12d</span><br><span class="line">    another task:	24d</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">gantt</span><br><span class="line">    title 工作计划</span><br><span class="line">    dateFormat  YYYY-MM-DD	//底部的时间格式</span><br><span class="line">    </span><br><span class="line">    section Section</span><br><span class="line">    task1:	a1, 2020-01-01, 30d</span><br><span class="line">    task2:	a2, 2020-01-15, 15d</span><br><span class="line"> 	task3:	crit, done, 2020-01-30, 24h</span><br><span class="line">    Another task:	after a2, 20d</span><br><span class="line">    </span><br><span class="line">    section Another</span><br><span class="line">    Task in sec:	2020-01-12, 12d</span><br><span class="line">    another task:	24d</span><br></pre></td></tr></table></figure>
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2 id="PlantUML"><a href="#PlantUML" class="headerlink" title="PlantUML"></a>PlantUML</h2><h3 id="时序图-1"><a href="#时序图-1" class="headerlink" title="时序图"></a>时序图</h3><p>&emsp;&emsp;时序图（Sequence Diagram），又名序列图、循序图、顺序图，是一种UML交互图。它通过描述对象之间发送消息的时间顺序显示多个对象之间的动态协作。它可以表示用例的行为顺序，当执行一个用例行为时，其中的每条消息对应一个类操作或状态机中引起转换的触发事件。</p>
+<p>参考：<a href="%5B(95%E6%9D%A1%E6%B6%88%E6%81%AF">PlantUML时序图</a> 捣鼓PlantUML（三、时序图）_To build a better world !-CSDN博客_plantuml](<a target="_blank" rel="noopener" href="https://blog.csdn.net/zh_weir/article/details/72675013?ops_request_misc=%7B%22request_id%22:%22164319070816780274150424%22,%22scm%22:%2220140713.130102334..%22%7D&amp;request_id=164319070816780274150424&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-3-72675013.pc_search_insert_es_download&amp;utm_term=plantuml&amp;spm=1018.2226.3001.4187">https://blog.csdn.net/zh_weir/article/details/72675013?ops_request_misc=%7B%22request%5Fid%22%3A%22164319070816780274150424%22%2C%22scm%22%3A%2220140713.130102334..%22%7D&amp;request_id=164319070816780274150424&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-3-72675013.pc_search_insert_es_download&amp;utm_term=plantuml&amp;spm=1018.2226.3001.4187</a>))</p>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>代码</th>
+<th>效果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>实、虚线</td>
+<td><img src="C:\Users\lrk\AppData\Roaming\Typora\typora-user-images\image-20220126181332755.png" alt="image-20220126181332755" style="zoom:45%;" /></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20210825123356.png" alt="image-20210825105656559" width="20%" /></td>
+</tr>
+<tr>
+<td>加上消息序号</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126184441.png" alt="image-20220126184441218" style="zoom:40%;" /></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126184412.png" alt="image-20220126184412284" style="zoom:25%;" /></td>
+</tr>
+<tr>
+<td>加上消息注释</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126182343.png" alt="image-20220126182343867" style="zoom:40%;" /></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20210825123358.png" alt="image-20210825112152648" width="50%" /></td>
+</tr>
+<tr>
+<td>使用html标签</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126182609.png" alt="image-20220126182609565" style="zoom: 50%;" /></td>
+<td><img src="https://img-blog.csdnimg.cn/img_convert/e7e45fb167a8bdca3bbd15db36200413.png" alt="image-20210825120605218" style="zoom: 50%;" /></td>
+</tr>
+<tr>
+<td>划分阶段</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126182758.png" alt="image-20220126182757973" style="zoom:40%;" /></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20210825123401.png" alt="image-20210825120927516" width="25%" /></td>
+</tr>
+<tr>
+<td>延时</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126182842.png" alt="image-20220126182842660" style="zoom:40%;" /></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20210825123402.png" alt="image-20210825121326063" width="25%" /></td>
+</tr>
+<tr>
+<td>加入间隔</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126182914.png" alt="image-20220126182914287" style="zoom:40%;" /></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20210825123403.png" alt="image-20210825122232668" width="25%" /></td>
+</tr>
+<tr>
+<td>消息者组合</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126183011.png" alt="image-20220126183011477" style="zoom:40%;" /></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20210825123404.png" alt="image-20210825122610329" width="35%" /></td>
+</tr>
+<tr>
+<td>加入时序图说明</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126183107.png" alt="image-20220126183107261" style="zoom:40%;" /></td>
+<td><img src="https://gitee.com/Lrk612/md_picture2/raw/master/img/image-20210826125958845.png" width="25%" /></td>
+</tr>
+<tr>
+<td>加入标题和隐藏底部对象</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126183139.png" alt="image-20220126183139774" style="zoom:40%;" /></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20210825123405.png" alt="image-20210825122941222" width="25%" /></td>
+</tr>
+<tr>
+<td>不同消息者图案</td>
+<td><img src="C:\Users\lrk\AppData\Roaming\Typora\typora-user-images\image-20220126183216677.png" alt="image-20220126183216677" style="zoom:50%;" /></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20210825123406.png" alt="image-20210825110640942" width="60%" /></td>
+</tr>
+</tbody></table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3 id="流程图-1"><a href="#流程图-1" class="headerlink" title="流程图"></a>流程图</h3><p>参考：<a href="%5B(95%E6%9D%A1%E6%B6%88%E6%81%AF">PlantUML流程图</a> PlantUML画复杂流程图_zhangjikuan的专栏-CSDN博客_plantuml 流程图](<a target="_blank" rel="noopener" href="https://blog.csdn.net/zhangjikuan/article/details/53484558?ops_request_misc=%7B%22request_id%22:%22164319070816780274150424%22,%22scm%22:%2220140713.130102334..%22%7D&amp;request_id=164319070816780274150424&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-2-53484558.pc_search_insert_es_download&amp;utm_term=plantuml&amp;spm=1018.2226.3001.4187">https://blog.csdn.net/zhangjikuan/article/details/53484558?ops_request_misc=%7B%22request%5Fid%22%3A%22164319070816780274150424%22%2C%22scm%22%3A%2220140713.130102334..%22%7D&amp;request_id=164319070816780274150424&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-2-53484558.pc_search_insert_es_download&amp;utm_term=plantuml&amp;spm=1018.2226.3001.4187</a>))</p>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>代码</th>
+<th>效果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>基本</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126185758.png" alt="image-20220126185758399" style="zoom:50%;" /></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126185426.png" alt="image-20220126185426351" style="zoom: 60%;" /></td>
+</tr>
+<tr>
+<td>if 判断</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126185820.png" alt="image-20220126185820699" style="zoom:50%;" /></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126185859.png" alt="image-20220126185859311" style="zoom:50%;" /></td>
+</tr>
+<tr>
+<td>if-else 分支</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126185937.png" alt="image-20220126185937281" style="zoom:50%;" /></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126190005.png" alt="image-20220126190005635" style="zoom:50%;" /></td>
+</tr>
+<tr>
+<td>while 循环A</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126190401.png" alt="image-20220126190401364" style="zoom:50%;" /></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126190056.png" alt="image-20220126190056722" style="zoom:50%;" /></td>
+</tr>
+<tr>
+<td>while 循环B</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126190421.png" alt="image-20220126190421580" style="zoom:50%;" /></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126190432.png" alt="image-20220126190432003" style="zoom:50%;" /></td>
+</tr>
+<tr>
+<td>并行分支</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126190516.png" alt="image-20220126190516615" style="zoom:50%;" /></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126190535.png" alt="image-20220126190535053" style="zoom:50%;" /></td>
+</tr>
+<tr>
+<td>注释</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126190606.png" alt="image-20220126190606694" style="zoom:50%;" /></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126190652.png" alt="image-20220126190652905" style="zoom:50%;" /></td>
+</tr>
+<tr>
+<td>箭头类型</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126190723.png" alt="image-20220126190723569" style="zoom:50%;" /></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126190751.png" alt="image-20220126190751147" style="zoom:50%;" /></td>
+</tr>
+<tr>
+<td>加框</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126190824.png" alt="image-20220126190824440" style="zoom:50%;" /></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126190908.png" alt="image-20220126190908480" style="zoom:50%;" /></td>
+</tr>
+<tr>
+<td>分类</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126190941.png" alt="image-20220126190941323" style="zoom:50%;" /></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126191010.png" alt="image-20220126191010243" style="zoom:50%;" /></td>
+</tr>
+<tr>
+<td>分离</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126191345.png" alt="image-20220126191345064" style="zoom:50%;" /></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126191414.png" alt="image-20220126191414944" style="zoom:50%;" /></td>
+</tr>
+<tr>
+<td>示例一</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126191545.png" alt="image-20220126191545310" style="zoom:50%;" /></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126191454.png" alt="image-20220126191454204" style="zoom:50%;" /></td>
+</tr>
+<tr>
+<td>示例二</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126191628.png" alt="image-20220126191628012" style="zoom:50%;" /></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126191655.png" alt="image-20220126191655656" style="zoom:50%;" /></td>
+</tr>
+</tbody></table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3 id="类图-1"><a href="#类图-1" class="headerlink" title="类图"></a>类图</h3><p>类图显示了系统的静态结构<br>类：类图中的主要元素，用矩形表示。矩形的上层表示类名、中层表示属性、下层表示方法。<br>类之间的关系：关联、依赖、聚集、泛化和实现五种。</p>
+<p>五种类间关系的图形表示介绍：</p>
+<table>
+<thead>
+<tr>
+<th>关联</th>
+<th>依赖</th>
+<th>聚集</th>
+<th>泛化 extends</th>
+<th>实现 implements</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>带实线的箭头</td>
+<td>带虚线的箭头</td>
+<td>菱形箭头</td>
+<td>带实线的三角形箭头</td>
+<td>带虚线的三角形箭头</td>
+</tr>
+</tbody></table>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126192936.png" alt="image-20220126192936034" style="zoom: 67%;" />
+
+<p>参考：<a href="%5B(95%E6%9D%A1%E6%B6%88%E6%81%AF">PlantUML类图</a> PlantUML 之类图_DEVELOPER-CSDN博客_plantuml 类图](<a target="_blank" rel="noopener" href="https://blog.csdn.net/junhuahouse/article/details/80767632?ops_request_misc=%7B%22request_id%22:%22164319596516780265433006%22,%22scm%22:%2220140713.130102334..%22%7D&amp;request_id=164319596516780265433006&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-1-80767632.pc_search_insert_es_download&amp;utm_term=plantuml%E7%B1%BB%E5%9B%BE&amp;spm=1018.2226.3001.4187">https://blog.csdn.net/junhuahouse/article/details/80767632?ops_request_misc=%7B%22request%5Fid%22%3A%22164319596516780265433006%22%2C%22scm%22%3A%2220140713.130102334..%22%7D&amp;request_id=164319596516780265433006&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-1-80767632.pc_search_insert_es_download&amp;utm_term=plantuml类图&amp;spm=1018.2226.3001.4187</a>))</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">@startuml</span><br><span class="line">skinparam packageStyle rect/&#x27; 加入这行代码，样式纯矩形&#x27;/</span><br><span class="line">interface Set&lt;&lt;接口&gt;&gt;&#123;</span><br><span class="line">boolean add (Object o)</span><br><span class="line">boolean remove(Object o)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace com.ztman.org #green&#123;</span><br><span class="line">class HashSet&#123;</span><br><span class="line">+boolean add (Object o)</span><br><span class="line">+boolean remove(Object o)</span><br><span class="line">&#125;</span><br><span class="line">interface IntSet&#123;</span><br><span class="line">boolean add (int i)</span><br><span class="line">boolean remove(int i)</span><br><span class="line">&#125;</span><br><span class="line">class IntHashSet&#123;</span><br><span class="line">+boolean add (int i)</span><br><span class="line">+boolean remove(int i)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.Set &lt;|.. HashSet</span><br><span class="line">HashSet &lt;|-- IntHashSet</span><br><span class="line">IntSet &lt;|.. IntHashSet</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">namespace cn #orange&#123;</span><br><span class="line">class TreeSet &#123;</span><br><span class="line">+boolean add (Object o)</span><br><span class="line">+boolean remove(Object o)</span><br><span class="line">&#125;</span><br><span class="line">class IntTreeSet&#123;</span><br><span class="line">+boolean add (int i)</span><br><span class="line">+boolean remove(int i)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">com.ztman.org.IntSet &lt;|.. IntTreeSet</span><br><span class="line">TreeSet &lt;|-- IntTreeSet</span><br><span class="line">.Set &lt;|.. TreeSet</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@enduml</span><br></pre></td></tr></table></figure>
+
+
+
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>代码</th>
+<th>效果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>定义一个类（上层-类名、中层-属性、下层-方法）</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126193208.png" alt="image-20220126193208462" style="zoom:50%;" /></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126193221.png" alt="image-20220126193221888" style="zoom:60%;" /></td>
+</tr>
+<tr>
+<td>多样定义</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126193308.png" alt="image-20220126193308095" style="zoom:50%;" /></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126193329.png" alt="image-20220126193329644" style="zoom:50%;" /></td>
+</tr>
+<tr>
+<td>静态属性+抽象方法</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126193444.png" alt="image-20220126193444427" style="zoom:50%;" /></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126193459.png" alt="image-20220126193459834" style="zoom:50%;" /></td>
+</tr>
+<tr>
+<td>自定义类主题</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126193549.png" alt="image-20220126193549745" style="zoom:50%;" /></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126193609.png" alt="image-20220126193609454" style="zoom:50%;" /></td>
+</tr>
+<tr>
+<td>注释</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126193650.png" alt="image-20220126193650671" style="zoom:50%;" /></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126193720.png" alt="image-20220126193720778" style="zoom: 70%;" /></td>
+</tr>
+<tr>
+<td>类及衍生类之间的关系逻辑</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126194153.png" alt="image-20220126194153706" style="zoom:50%;" /></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126194207.png" alt="image-20220126194207216" style="zoom:50%;" /></td>
+</tr>
+<tr>
+<td>以命名空间分割，并在不同空间内类之间建立关系</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126195117.png" alt="image-20220126195117872" style="zoom:50%;" /></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126195133.png" alt="image-20220126195133029" style="zoom: 70%;" /></td>
+</tr>
+</tbody></table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2 id="神经网络结构图"><a href="#神经网络结构图" class="headerlink" title="神经网络结构图"></a>神经网络结构图</h2><p>//TODO</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Lrk612
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://sharp-rookie.github.io/2022/01/26/%E3%80%90%E6%8A%80%E6%9C%AF%E3%80%91%E7%BB%98%E5%9B%BE%E6%96%B9%E6%B3%95/" title="常用画图工具&#x2F;方法">https://sharp-rookie.github.io/2022/01/26/【技术】绘图方法/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E9%AB%98%E6%95%88%E5%B7%A5%E5%85%B7/" rel="tag"># 高效工具</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/01/24/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91Reinforcement%20Learning%20for%20Dynamic%20Resource%20Optimization%20in%205G%20Radio%20Access%20Network%20Slicing/" rel="prev" title="基于强化学习的5G无线接入网络切片动态资源优化">
+      <i class="fa fa-chevron-left"></i> 基于强化学习的5G无线接入网络切片动态资源优化
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#MarkDown%E7%BB%98%E5%9B%BE"><span class="nav-text">MarkDown绘图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E5%BA%8F%E5%9B%BE"><span class="nav-text">时序图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E5%9B%BE"><span class="nav-text">状态图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E5%9B%BE"><span class="nav-text">类图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%81%E7%A8%8B%E5%9B%BE"><span class="nav-text">流程图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E5%9B%BE"><span class="nav-text">序列图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A5%BC%E5%9B%BE"><span class="nav-text">饼图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%98%E7%89%B9%E5%9B%BE"><span class="nav-text">甘特图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PlantUML"><span class="nav-text">PlantUML</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E5%BA%8F%E5%9B%BE-1"><span class="nav-text">时序图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%81%E7%A8%8B%E5%9B%BE-1"><span class="nav-text">流程图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E5%9B%BE-1"><span class="nav-text">类图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%E5%9B%BE"><span class="nav-text">神经网络结构图</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Lrk612"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Lrk612</p>
+  <div class="site-description" itemprop="description">Lrk's blog</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.csdn.net/" title="https:&#x2F;&#x2F;www.csdn.net&#x2F;" rel="noopener" target="_blank">CSDN</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.google.com/" title="https:&#x2F;&#x2F;www.google.com" rel="noopener" target="_blank">Google</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        <!-- 访问量 -->
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客数<span id="busuanzi_value_site_uv"></span>人</span>
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+$(document).ready(function() {
+
+    var int = setInterval(fixCount, 50);  // 50ms周期检测函数
+    var countOffset = 20000;  // 初始化首次数据
+
+    function fixCount() {            
+       if (document.getElementById("busuanzi_container_site_pv").style.display != "none")
+        {
+            $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + countOffset); 
+            clearInterval(int);
+        }                  
+        if ($("#busuanzi_container_site_pv").css("display") != "none")
+        {
+            $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + countOffset); // 加上初始数据 
+            clearInterval(int); // 停止检测
+        }  
+    }
+       	
+});
+</script> 
+
+
+<!-- 版权 -->
+<div class="copyright">
+  
+  &copy; 2021-12-1 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lrk612</span>
+</div>
+
+<!-- ICP备案 -->
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">ICP备案 </a>
+      <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211209170739.png" style="display: inline-block;"><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=2021035798" rel="noopener" target="_blank">豫ICP备2021035798号 </a>
+  </div>
+
+<!-- 不知道是什么 -->
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'fH6OdGBcCG8D6jC8NeeJlX9b-gzGzoHsz',
+      appKey     : '1UoIb6vszMw6wl0n7kreb4Xz',
+      placeholder: "Just go go ^_^",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+    var infoEle = document.querySelector('#comments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0){
+      infoEle.childNodes.forEach(function(item) {
+        item.parentNode.removeChild(item);
+      });
+    }
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
