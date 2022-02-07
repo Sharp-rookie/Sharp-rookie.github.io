@@ -70,7 +70,7 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220111151330.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220117152314.png">
 <meta property="article:published_time" content="2022-01-16T08:16:53.614Z">
-<meta property="article:modified_time" content="2022-02-07T06:58:36.978Z">
+<meta property="article:modified_time" content="2022-02-07T07:02:44.063Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="AI">
 <meta property="article:tag" content="Reinforcement Learning">
@@ -340,7 +340,7 @@
 
 <p>&nbsp;</p>
 <h2 id="NIPS-DQN算法"><a href="#NIPS-DQN算法" class="headerlink" title="NIPS DQN算法"></a>NIPS DQN算法</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>&emsp;&emsp;基本思路来源于Q-Learning，但是和Q-Learning不同的地方在于，它Q值不是直接通过状态值S和动作A来计算，而是通过上面讲到的Q网络来计算，这个Q网络是一个神经网络。是2013年由 DeepMind 在NIPS上发表的一篇论文中提出的，也是DQN算法族的第一位成员，是最原始的DQN算法。</p>
-<p>论文：</p>
+<p>论文：<a target="_blank" rel="noopener" href="https://lrk612.com/resources/Playing%20Atari%20with%20Deep%20Reinforcement%20Learning.pdf">Playing Atari with Deep Reinforcement Learning</a></p>
 <h3 id="经验回放（experience-replay）"><a href="#经验回放（experience-replay）" class="headerlink" title="经验回放（experience replay）"></a><strong>经验回放（experience replay）</strong></h3><p>&emsp;&emsp;将每次和环境交互得到的奖励与状态更新情况都保存在经验池中，用于后面目标Q值的更新。Q-Learning有一张Q表来保存所有的Q值的当前结果的，而DQN在做动作价值函数更新时靠的就是经验回放。从通过经验回放得到的目标Q值和通过Q网络直接计算得到的Q估计值肯定是不等的，二者的差别构成神经网络的损失函数Loss Function，然后通过梯度的反向传播来更新神经网络的参数w，当w收敛后就得到的近似的Q值计算方法，进而贪婪策略也就求出来了。</p>
 <h3 id="算法流程"><a href="#算法流程" class="headerlink" title="算法流程"></a>算法流程</h3><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220207145830.png" alt="image-20220207145830293" style="zoom:60%;" />
 
@@ -391,6 +391,7 @@
 <p>&emsp;&emsp;使用到了当前待训练网络的参数，而计算的结果 yj 又被用于反向传播更新网络的参数，二者循环依赖，相关性太强不利于算法收敛。</p>
 <h4 id="优化：双网络结构"><a href="#优化：双网络结构" class="headerlink" title="优化：双网络结构"></a>优化：双网络结构</h4><p>&emsp;&emsp;Nature DQN尝试用两个Q网络来减少 <code>目标Q值的计算 </code>和 <code>待更新Q网络参数 </code>之间的依赖关系。</p>
 <p>&emsp;&emsp;<strong>当前Q网络</strong>计算Q估计值用于选择动作，更新模型参数，<strong>目标Q网络</strong>用于计算目标Q值。目标Q网络的网络参数不需要迭代更新，而是每隔一段时间从当前Q网络复制过来，即延时更新，这样可以减少目标Q值和当前Q值的相关性。二者其余部分基本是完全相同的。（要注意的是，两个Q网络的结构是一模一样的。这样才可以复制网络参数 ）</p>
+<p>论文：<a target="_blank" rel="noopener" href="https://lrk612.com/resources/Human-level%20control%20through%20deep%20reinforcement%20learning.pdf">Human-level control through deep reinforcement learning</a></p>
 <h3 id="算法流程-1"><a href="#算法流程-1" class="headerlink" title="算法流程"></a>算法流程</h3><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220207145618.png" alt="image-20220207145618398" style="zoom:60%;" />
 
 <p>输入：</p>
@@ -462,6 +463,7 @@
 <p>综合起来写就是：</p>
 <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220110192450.png" alt="image-20220110192450277" style="zoom:33%;" />
 
+<p>论文：<a target="_blank" rel="noopener" href="https://lrk612.com/resources/Dueling%20Network%20Architectures%20for%20Deep%20Reinforcement%20Learning.pdf">Dueling Network Architectures for Deep Reinforcement Learning</a></p>
 <h3 id="算法流程-2"><a href="#算法流程-2" class="headerlink" title="算法流程"></a>算法流程</h3><p>输入：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">迭代轮数T、状态特征维度n、动作集A、步长α、衰减因子γ、探索率ϵ、当前Q网络、目标Q网络、批量梯度下降的样本数m、目标Q网络参数更新频率C</span><br></pre></td></tr></table></figure>
 
@@ -575,6 +577,7 @@
 <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220111151330.png" alt="image-20220111151330160" style="zoom:33%;" />
 
 <p>（其中，w是公共部分的网络参数，而α是价值函数部分独有的网络参数，β是优势函数部分独有的网络参数 ，对优势函数部分做了中心化的处理 ）</p>
+<p>论文：<a target="_blank" rel="noopener" href="https://lrk612.com/resources/Deep%20Reinforcement%20Learning%20with%20Double%20Q-learning.pdf">Deep Reinforcement Learning with Double Q-learning</a></p>
 <p>&nbsp;</p>
 <h3 id="示例-4"><a href="#示例-4" class="headerlink" title="示例"></a>示例</h3><h4 id="问题-4"><a href="#问题-4" class="headerlink" title="问题"></a>问题</h4><p>&emsp;&emsp;CartPole-v0游戏</p>
 <h4 id="代码-4"><a href="#代码-4" class="headerlink" title="代码"></a>代码</h4><p>&emsp;&emsp;与Nature DQN代码只有两个Q网络的结构不一样</p>
