@@ -70,7 +70,7 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220111151330.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220117152314.png">
 <meta property="article:published_time" content="2022-01-16T08:16:53.614Z">
-<meta property="article:modified_time" content="2022-02-08T08:17:23.448Z">
+<meta property="article:modified_time" content="2022-02-08T08:25:37.714Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="AI">
 <meta property="article:tag" content="Reinforcement Learning">
@@ -506,7 +506,7 @@
 
 <h3 id="小结-2"><a href="#小结-2" class="headerlink" title="小结"></a>小结</h3><p>&emsp;&emsp;过估计问题是Q-Learning算法与生俱来的，并遗传给了后代”DQN“。从统计学的角度来看，如果在输出端对每个动作的估值Q的过估计幅度都一样，那么和没有过估计效果是一样的。但是如果过估计是不均匀的，那么这样学到的策略未必是最优解，此时Double DQN就派上用场了。</p>
 <p>&nbsp;</p>
-<h2 id="Prioritized-Replay-DQN算法"><a href="#Prioritized-Replay-DQN算法" class="headerlink" title="Prioritized Replay DQN算法"></a>Prioritized Replay DQN算法</h2><h3 id="概述-3"><a href="#概述-3" class="headerlink" title="概述"></a>概述</h3><p>&emsp;&emsp;优先回放的概念最早在2016年由发表于ICLR的论文</p>
+<h2 id="Prioritized-Replay-DQN算法"><a href="#Prioritized-Replay-DQN算法" class="headerlink" title="Prioritized Replay DQN算法"></a>Prioritized Replay DQN算法</h2><h3 id="概述-3"><a href="#概述-3" class="headerlink" title="概述"></a>概述</h3><p>&emsp;&emsp;优先回放的概念最早在2016年由发表于ICLR的论文：<a target="_blank" rel="noopener" href="https://lrk612.com/resources/Prioritized%20experience%20%20replay.pdf">Prioritized experience  replay</a></p>
 <h4 id="针对问题-2"><a href="#针对问题-2" class="headerlink" title="针对问题"></a>针对问题</h4><p>&emsp;&emsp;普通DQN、Nature DQN、DDQN等都是通过经验回放来采样，进而做目标Q值的计算的。在采样时经验池里的所有样本都有相同的被采样概率。但是注意到在经验池里面的不同的样本由于TD误差的不同，对反向传播的作用是不一样的。TD误差越大，对反向传播的作用越大。而TD误差小的样本对反向梯度的计算影响不大。在Q网络中，TD误差就是目标Q网络计算的目标Q值和当前Q网络计算的Q值之间的差距。这样如果TD误差的绝对值|δ(t)|较大的样本更容易被采样，则算法会比较容易收敛。</p>
 <h4 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h4><h5 id="经验池优化"><a href="#经验池优化" class="headerlink" title="经验池优化"></a>经验池优化</h5><p>&emsp;&emsp;Prioritized Replay DQN的经验池中每个样本的优先级正比于TD误差绝对值|δ(t)|。由于引入了经验回放的优先级，Prioritized Replay DQN的经验池和之前的其他DQN算法的经验池不一样，因为这个优先级大小会影响它被采样的概率。在实际使用中，通常使用SumTree这样的二叉树结构来做带优先级的经验回放池样本的存储：</p>
 <p>​                                                                    <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20210718214249.png" alt="image-20210717092213437" style="zoom: 33%;" /></p>
@@ -612,7 +612,7 @@
 </tr>
 <tr>
 <td>Prioritized Replay DQN</td>
-<td></td>
+<td>在经验回放时引入优先级概念，提高网络学习效率</td>
 </tr>
 </tbody></table>
 <p>&emsp;&emsp;当然DQN家族的算法远远不止这些，还有一些其他的DQN算法没有总结，比如使用一些较复杂的CNN和RNN网络来提高DQN的表达能力，又比如改进探索状态空间的方法等，主要是在DQN的基础上持续优化。</p>
