@@ -52,7 +52,7 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220112102707.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220118130134.png">
 <meta property="article:published_time" content="2022-02-09T08:13:37.700Z">
-<meta property="article:modified_time" content="2022-02-09T11:03:30.711Z">
+<meta property="article:modified_time" content="2022-02-09T11:05:10.440Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="AI">
 <meta property="article:tag" content="Reinforcement Learning">
@@ -321,7 +321,7 @@
 <p>&emsp;&emsp;A3C是第一个以显示方式表示可以使用并行化的强化学习算法，由此，在线学习可以成倍地提高样本手机效率，拿CPU计算资源换取时间效率。不过要注意，多线程异步并行Agent与环境的交互过程只能通过CPU来计算，GPU这时帮不上忙，GPU只在定期更新网络参数时起到加速的作用，因此CPU的处理速度和线程数量显得额外重要。</p>
 <p><strong>异步更新</strong></p>
 <p>&emsp;&emsp;A3C中有两处网络参数更新，一个是当前Q网络（估计Q值）更新，另一个是目标Q网络（计算目标Q值）。这两步都是周期更新，所有线程维护两个公共计数器，当计数器到达时，当前所处的线程就更新对应网络。由此可见两个网络的更新都是异步的，而由经验可知，异步的间隔越大，就越像离线学习，估值就越稳定、收敛越平稳，因此两个计数器的计数阈值的大小会影响Agent所表现出来的进步效率和收敛稳定性之间的平衡。一般建议这两个值设的大一些。</p>
-<p>取消Replay <strong>Memory</strong></p>
+<p><strong>取消Replay Memory</strong></p>
 <p>&emsp;&emsp;在DQN算法族中大部分算法都是用经验回放来消除样本之间的关联性，从而帮助网络更好地收敛，但是在A3C算法中不再需要使用这个方法来消除关联性，因为本身多个Agent就是异步并行地对环境进行交互试探，得到的经验是不相关的，而网络的更新是各个Agent的经验按周期一同使用，所以数据的相关性通过这种并行性就已经消除了。关于这点，论文中也有给出专门的论述。</p>
 <p>&emsp;&emsp;并且由于不再需要使用经验回放，计算机的内存资源也得到了释放，这使得在线学习算法的执行效率得到了提高。</p>
 <h3 id="算法流程"><a href="#算法流程" class="headerlink" title="算法流程"></a>算法流程</h3><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220113125452.png" alt="image-20220113125452328" style="zoom:50%;" />
