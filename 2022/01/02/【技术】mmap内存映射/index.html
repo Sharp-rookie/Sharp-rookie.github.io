@@ -39,6 +39,7 @@
 <meta property="og:site_name" content="最忆是江南">
 <meta property="og:description" content="&amp;emsp;mmap是一种内存映射文件的方法，即将一个文件或者其它对象映射到进程的地址空间，实现文件磁盘地址和进程虚拟地址空间中一段虚拟地址的一一对映关系。实现这样的映射关系后，进程就可以采用指针的方式读写操作这一段内存，而系统会自动回写脏页面到对应的文件磁盘上，即完成了对文件的操作而不必再调用read()、write()等系统调用函数。同时，内核空间对这段区域的修改也直接反映用户空间，从而可以实">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220209123614.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220102092829.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220101235153.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220102002540.png">
@@ -46,13 +47,13 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220102090515.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220102092156.png">
 <meta property="article:published_time" content="2022-01-02T01:24:00.936Z">
-<meta property="article:modified_time" content="2022-01-03T08:25:18.810Z">
+<meta property="article:modified_time" content="2022-02-09T04:36:30.552Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="OS">
 <meta property="article:tag" content="Linux">
 <meta property="article:tag" content="C&#x2F;C++">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220102092829.png">
+<meta name="twitter:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220209123614.png">
 
 <link rel="canonical" href="https://sharp-rookie.github.io/2022/01/02/%E3%80%90%E6%8A%80%E6%9C%AF%E3%80%91mmap%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84/">
 
@@ -300,6 +301,8 @@
 
       
         <p>&emsp;<code>mmap</code>是一种内存映射文件的方法，即将一个文件或者其它对象映射到进程的地址空间，实现文件磁盘地址和进程虚拟地址空间中一段虚拟地址的一一对映关系。实现这样的映射关系后，进程就可以采用指针的方式读写操作这一段内存，而系统会自动回写脏页面到对应的文件磁盘上，即完成了对文件的操作而不必再调用<code>read()</code>、<code>write()</code>等系统调用函数。同时，内核空间对这段区域的修改也直接反映用户空间，从而可以实现不同进程间的文件共享。</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220209123614.png" alt="image-20220209123614653" style="zoom: 30%;" />
+
 <span id="more"></span>
 
 <p>&nbsp;</p>
