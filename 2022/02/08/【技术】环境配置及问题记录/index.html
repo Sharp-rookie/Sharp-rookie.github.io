@@ -43,8 +43,9 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220208110358.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220208110523.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220209154944.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220210212409.png">
 <meta property="article:published_time" content="2022-02-08T03:39:00.633Z">
-<meta property="article:modified_time" content="2022-02-09T07:54:35.810Z">
+<meta property="article:modified_time" content="2022-02-10T13:27:22.450Z">
 <meta property="article:author" content="Lrk612">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220208110252.png">
@@ -356,6 +357,29 @@
 <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220209154944.png" alt="image-20220209154944060" style="zoom:50%;" />
 
 <p>自行查看可以用版本即可。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<hr>
+<h3 id="Windows文件传到Linux后去除-M"><a href="#Windows文件传到Linux后去除-M" class="headerlink" title="Windows文件传到Linux后去除^M"></a>Windows文件传到Linux后去除^M</h3><p>在Windows环境下编辑的文件，上传到Linux后会在文件中产生 <code>^M</code>字符。尤其是对sh脚本的运行产生影响：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="comment">#!coding=utf-8</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    x = <span class="string">&quot;abc123&quot;</span></span><br><span class="line">    <span class="built_in">print</span>(x[<span class="number">2</span>:<span class="number">4</span>])</span><br></pre></td></tr></table></figure>
+
+<p>WSL下的执行结果：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220210212409.png" alt="image-20220210212409708" style="zoom: 67%;" />
+
+<p><strong>原因</strong></p>
+<p>&emsp;&emsp;CRLF(\r\n)是Windows环境下的行尾结束符，LF(\n)Linux环境下的行尾结束符，在Linux环境下，无法识别Windows环境下文件的行尾结束符引起。</p>
+<p><strong>处理</strong></p>
+<p>查看方法：<code>cat -A &lt;filename&gt;</code></p>
+<p>消除方法（4种）：</p>
+<ul>
+<li><code>sed -i &#39;s/^M$//g&#39; &lt;filename&gt;</code></li>
+<li><code>cat &lt;filename1&gt; | tr -d &#39;\r&#39; &gt; &lt;filename&gt;</code></li>
+<li><code>dos2unix &lt;filename&gt;</code></li>
+<li><code>vim &lt;filename&gt; </code> + 输入 <code>: set ff=unix</code> + 输入 <code>:wq</code> 退出</li>
+</ul>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<hr>
 
     </div>
 
@@ -454,7 +478,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Gym%E5%AE%89%E8%A3%85%E6%AD%A3%E5%B8%B8%EF%BC%8C%E4%BD%86atari%E6%B8%B8%E6%88%8F%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8"><span class="nav-text">Gym安装正常，但atari游戏无法使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Part1%EF%BC%9A%E5%AE%89%E8%A3%85"><span class="nav-text">Part1：安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Part2%EF%BC%9A%E5%88%A4%E6%96%AD%E7%89%88%E6%9C%AC"><span class="nav-text">Part2：判断版本</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Gym%E5%AE%89%E8%A3%85%E6%AD%A3%E5%B8%B8%EF%BC%8C%E4%BD%86atari%E6%B8%B8%E6%88%8F%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8"><span class="nav-text">Gym安装正常，但atari游戏无法使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Part1%EF%BC%9A%E5%AE%89%E8%A3%85"><span class="nav-text">Part1：安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Part2%EF%BC%9A%E5%88%A4%E6%96%AD%E7%89%88%E6%9C%AC"><span class="nav-text">Part2：判断版本</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Windows%E6%96%87%E4%BB%B6%E4%BC%A0%E5%88%B0Linux%E5%90%8E%E5%8E%BB%E9%99%A4-M"><span class="nav-text">Windows文件传到Linux后去除^M</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
