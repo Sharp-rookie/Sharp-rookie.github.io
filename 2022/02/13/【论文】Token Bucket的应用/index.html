@@ -32,12 +32,12 @@
           }
       })();
   </script>
-  <meta name="description" content="调研目录 Performance Analysis of a Token Bucket Shaper for MPEG4 Video and Real Audio Signal Cooperative Fair Bandwidth Scaling in Contention-based Wireless Networks using Time Token Bucket">
+  <meta name="description" content="调研目录 Performance Analysis of a Token Bucket Shaper for MPEG4 Video and Real Audio Signal Cooperative Fair Bandwidth Scaling in Contention-based Wireless Networks using Time Token Bucket Token Bucket B">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Token Bucket的应用调研">
 <meta property="og:url" content="https://sharp-rookie.github.io/2022/02/13/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91Token%20Bucket%E7%9A%84%E5%BA%94%E7%94%A8/index.html">
 <meta property="og:site_name" content="最忆是江南">
-<meta property="og:description" content="调研目录 Performance Analysis of a Token Bucket Shaper for MPEG4 Video and Real Audio Signal Cooperative Fair Bandwidth Scaling in Contention-based Wireless Networks using Time Token Bucket">
+<meta property="og:description" content="调研目录 Performance Analysis of a Token Bucket Shaper for MPEG4 Video and Real Audio Signal Cooperative Fair Bandwidth Scaling in Contention-based Wireless Networks using Time Token Bucket Token Bucket B">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220213101527.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220213101528.png">
@@ -49,8 +49,36 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220213093357.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220213093515.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220213093853.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220213104328.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220213105742.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220213105138.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220213105224.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220213110008.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220213110106.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220213110118.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220213110300.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220213110642.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220213110736.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220213110720.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220213142952.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143016.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143321.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143346.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143403.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143426.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143444.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143507.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143526.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143546.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143602.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143628.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143649.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143717.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143801.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143818.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143835.png">
 <meta property="article:published_time" content="2022-02-13T02:09:13.982Z">
-<meta property="article:modified_time" content="2022-02-13T02:16:19.155Z">
+<meta property="article:modified_time" content="2022-02-13T06:41:14.999Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="5G">
 <meta property="article:tag" content="Token Bucket">
@@ -306,6 +334,7 @@
         <h2 id="调研目录"><a href="#调研目录" class="headerlink" title="调研目录"></a>调研目录</h2><ul>
 <li>Performance Analysis of a Token Bucket Shaper for MPEG4 Video and Real Audio Signal</li>
 <li>Cooperative Fair Bandwidth Scaling in Contention-based Wireless Networks using Time Token Bucket</li>
+<li>Token Bucket Based Traffic Shaping and Monitoring for WLAN-based Control Systems</li>
 </ul>
 <span id="more"></span>
 
@@ -329,7 +358,7 @@
 <p>&nbsp;</p>
 <hr>
 <p>&nbsp;</p>
-<h2 id="用于资源分配"><a href="#用于资源分配" class="headerlink" title="用于资源分配"></a>用于资源分配</h2><blockquote>
+<h2 id="用于时间资源分配"><a href="#用于时间资源分配" class="headerlink" title="用于时间资源分配"></a>用于时间资源分配</h2><blockquote>
 <p>原文：<a target="_blank" rel="noopener" href="https://lrk612.com/resources/Cooperative%20Fair%20Bandwidth%20Scaling%20in%20Contention-based%20Wireless%20Networks%20using%20Time%20Token%20Bucket.pdf">Cooperative Fair Bandwidth Scaling in Contention-based Wireless Networks using Time Token Bucket</a></p>
 <p>应用：</p>
 <p>&emsp;&emsp;提出了一种使用时间令牌桶方法进行动态协作带宽缩放的协作算法，以公平的方式提高了带宽利用率，动态响应拓扑变化，实现了参与节点的稳定带宽使用</p>
@@ -337,7 +366,7 @@
 <p>&emsp;&emsp;IEEE 802.11 (WiFi) 等当今现成的无线标准不能很好地支持具有服务质量 (QoS) 要求的应用。指定一系列最低要求的基本 QoS 和首选 QoS，并在此范围内结合动态扩展会有助于支持 QoS，同时提高网络利用率。但是扩展通常以贪婪且不公平的方式发生，每个节点都试图最大化其吞吐量</p>
 <p>内容：</p>
 <p>&emsp;&emsp;文章首先定义了节点间的公平性，然后利用时间令牌桶算法分配带宽资源，又定义了节点等级 level，通过放缩 level 来改变节点的可分配资源量，从而实现整体公平的频谱资源调度策略</p>
-<p>参考论文：<a target="_blank" rel="noopener" href="https://lrk612.com/resources/Token%20Bucket%20Based%20Traffic%20Shaping%20and%20Monitoring%20for%20WLAN-based%20Control%20Systems.pdf">Token Bucket Based Traffic Shaping and Monitoring for WLAN-based Control Systems</a></p>
+<p>参考论文：<a target="_blank" rel="noopener" href="https://lrk612.com/resources/Token%20Bucket%20Based%20Traffic%20Shaping%20and%20Monitoring%20for%20WLAN-based%20Control%20Systems.pdf">Token Bucket Based Traffic Shaping and Monitoring for WLAN-based Control Systems</a>（见下面）</p>
 </blockquote>
 <h3 id="模型-1"><a href="#模型-1" class="headerlink" title="模型"></a>模型</h3><h4 id="QoS-公平性"><a href="#QoS-公平性" class="headerlink" title="QoS 公平性"></a>QoS 公平性</h4><p>文章不仅仅是以公平的方式扩展带宽使用，同时还是为了支持带宽需求。这意味着对公平的定义不仅仅是每个节点应该获得大约相同的带宽。相反，文章首先要求每个节点至少应该获得足够的带宽来满足其基本带宽要求。然后，扩展带宽应该在基本和首选带宽要求之间以公平的方式发生。</p>
 <p>为了形式化对公平性的定义，首先定义节点 v 的带宽需求如下：</p>
@@ -441,6 +470,137 @@
 </tbody></table>
 <p>对于缩减条件 2和 3，文章为节点由于介质争用而无法使用的带宽量设置了上限阈值，即 <em>不可用的浪费带宽比率</em>，例如最多 5% 的分配带宽可能无法使用。</p>
 <p>总而言之，扩展条件确保节点以公平的方式扩展，并且尽可能优化整体吞吐量。</p>
+<p>&nbsp;</p>
+<hr>
+<p>&nbsp;</p>
+<h2 id="用于时间资源分配-1"><a href="#用于时间资源分配-1" class="headerlink" title="用于时间资源分配"></a>用于时间资源分配</h2><blockquote>
+<p>原文：<a target="_blank" rel="noopener" href="https://lrk612.com/resources/Token%20Bucket%20Based%20Traffic%20Shaping%20and%20Monitoring%20for%20WLAN-based%20Control%20Systems.pdf">Token Bucket Based Traffic Shaping and Monitoring for WLAN-based Control Systems</a></p>
+<p>应用：</p>
+<p>&emsp;&emsp;提出了一种应用令牌桶算法变体的流量整形方法，以及一种流量监控方法，以确定网络过载；引入并应用了不可用浪费带宽比，该指标源自不可用的浪费令牌的数量，用于检测本地网络过载</p>
+<p>背景：</p>
+<p>&emsp;&emsp;为了监测和控制工业环境中的生产过程，无线网络控制系统 (WNCS)用于灵活且经济的方式连接传感器、执行器和控制器，甚至可以支持移动对象。WNCS 的控制应用程序通常具有关于带宽、传输延迟和帧丢失率的服务质量 (QoS) 要求。一种基于反馈的闭环控制方法能够提供足够的QoS保证，但是这需要合适的流量监控方法，即感知当前网络负载和流量整形，例如延迟或丢弃帧。</p>
+<p>内容：</p>
+<p>&emsp;&emsp;文章首先对节点预留带宽进行规划，然后使用时间令牌桶模型对资源调度进行建模，给出了令牌通道各项参数指标。</p>
+</blockquote>
+<h3 id="模型-2"><a href="#模型-2" class="headerlink" title="模型"></a>模型</h3><h4 id="带宽预留"><a href="#带宽预留" class="headerlink" title="带宽预留"></a>带宽预留</h4><p>带宽预留由集中式带宽管理器 (CBM) 动态执行。除了分散式方法之外，该解决方案还可以精确控制分配的带宽。文章中，术语带宽表示允许节点使用介质进行传输的最大时间量或最大介质占用持续时间。为了有效地运行网络，文章只使用了无线网络 G 的总带宽的一定比例 <code>bwr_G_assgn</code> ∈ [0,1]，例如20%。选择该比率一是为了使介质争用保持足够小，二是取决于外部流量的影响。类似地，<code>bwr_v_avail</code> ∈ [0,1] 表示节点 v 的可用本地带宽。</p>
+<p>假设每个节点 v ∈ Vi 有一个相对带宽要求 <code>bwr_v_required</code> ∈ [0,1]，从 CBM 请求。基于 <code>bwr_G_avail</code> 和当前分配的相对带宽 <code>bwr_G_assgn</code>，CBM 决定是否可以批准请求。如果批准，CBM 将 <code>bwr_v_required</code> 作为 <code>bwr_v_assgn</code> 返回，否则返回 0。更具体地说，CBM 必须强制执行以下约束：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213104328.png" alt="image-20220213104328033" style="zoom:40%;" />
+
+<p>在多跳网络中，带宽预留建立在用于自动链路检测的协议之上，提供用于路由目的的拓扑信息。</p>
+<h4 id="流量整形"><a href="#流量整形" class="headerlink" title="流量整形"></a>流量整形</h4><p>流量整形的目的是监控节点v的本地带宽使用 <code>bwr_v_used</code> 是否符合分配的相对带宽 <code>bwr_v_assgn</code>，延迟或丢弃超过它的帧，并均匀分配流量以避免全局峰值和高争用情况</p>
+<p>文章为流量整形设计了一种改进的令牌桶算法（图1）。与原始令牌桶算法一样，令牌以恒定的重新填充间隔放入桶中。在原始令牌桶算法中，每个令牌代表发送一定字节数的权利。在 WLAN 上，可以以许多不同的传输速率发送帧，因此传输一定数量字节的时间可能会有很大差异。考虑到这一点，文章使用等长的时间片作为标记。每个时间片代表对介质的短期访问权。为了调度帧进行传输，必须在桶中收集足以覆盖帧传输时间（包括开销）的令牌。当帧从到达队列移动到发送队列时，这些令牌会从存储桶中删除。当桶已经被填满时，进一步的重新填充尝试会导致溢出，即令牌丢失。</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213105742.png" alt="image-20220213105742432" style="zoom:40%;" />
+
+<center>图 1</center>
+
+<p>节点 v ∈ V i 的令牌桶由带宽配置文件 bpv 表征。要确定 bpv，除了 <code>bwr_v_required</code> 之外，CBM 还需要最大有效负载大小。节点 v 的带宽配置文件是一个元组 bpv：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213105138.png" alt="image-20220213105138694" style="zoom:40%;" />
+
+<p>其中：</p>
+<ul>
+<li><p><code>d_v_txMax</code> ∈ N0 [μs] 是节点 v 的最大介质占用持续时间或最大突发大小。为了最小化可能的突发并保证可以发送所有帧，文章将其设置为以最低传输速率传输最大可能帧所需的持续时间：</p>
+  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213105224.png" alt="image-20220213105224270" style="zoom:40%;" />
+
+<p>  其中，<code>bMLO</code> 表示 MAC 层开销（以字节为单位），dPLO 是 PHY 层开销的平均值（以微秒为单位），包括帧间距、平均退避间隔和 PHY 前导码。</p>
+</li>
+<li><p><code>d_v_refill</code> ∈ N0 [μs] 是在节点 v 的桶中收集的介质占用持续时间增加的再填充间隔。作为启发式，重新填充间隔应该足够小以避免不必要的延迟，平均每帧半个令牌。</p>
+</li>
+<li><p><code>bwr_v_assgn</code> ∈ [0,1]：<code>bwr_v_requested</code>，如果被批准；否则为 0。它是分配给节点 v 的带宽相对于网络带宽。</p>
+</li>
+</ul>
+<p>与通用令牌桶 [4] 相比，<code>d_v_txMax</code> 和 <code>d_v_refill</code> 分别表示桶大小和令牌重新填充间隔。从 bpv 可以确定节点 v 的进一步桶参数如下：</p>
+<ul>
+<li><p><code>d_v_token</code> [μs] 表示令牌的大小：</p>
+  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213110008.png" alt="image-20220213110008829" style="zoom:40%;" /></li>
+<li><p><code>n_v_fillings</code> 表示完全填充桶所需的令牌总数：</p>
+  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213110106.png" alt="image-20220213110106057" style="zoom:40%;" /></li>
+<li><p><code>d_v_bucket</code> [μs] 表示完全填满空桶所需的最短时间：</p>
+  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213110118.png" alt="image-20220213110118919" style="zoom:40%;" /></li>
+</ul>
+<p>接下来，文章讨论了一个根据应用需求计算桶参数的例子。考虑在节点 v 上运行的周期性应用程序 appX，其值如下：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213110300.png" alt="image-20220213110300487" style="zoom:40%;" />
+
+<p>其中：</p>
+<ul>
+<li>b_appX_ payload ∈N0 是以字节为单位的有效载荷大小</li>
+<li>d_appX_ period ∈N0 [μs] 是应用周期长度</li>
+<li>n_appX_msg ∈ N0 是周期性应用程序在一个周期内发送的消息数</li>
+</ul>
+<p>代入上面公式可得：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213110642.png" style="zoom:40%;" />
+
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213110736.png" alt="image-20220213110736058" style="zoom:40%;" />
+
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213110720.png" alt="image-20220213110720737" style="zoom:40%;" />
+
+<p>图 1 说明了改进的令牌桶算法的操作。要发送的帧被放入帧到达队列中。如果桶已满且帧发送队列为空，则可以安排下一帧进行传输，方法是将其放入发送队列并从桶中消耗所需数量的令牌。如果桶中没有足够的令牌或者帧发送队列仍然包含一个帧，那么下一帧会被延迟，直到两个条件都成立。令牌被放入存储桶中，由重新填充间隔确定。</p>
+<p>请注意，通过将帧发送队列的大小限制为 1 并通过保持桶大小保持较小，可以限制传输突发。当一个帧被调度传输时，下一帧被延迟。因此，节点v的使用带宽比 <code>bwr_v_used</code> 被限制为 <code>bwr_v_assgn</code>。</p>
+<h4 id="流量监测"><a href="#流量监测" class="headerlink" title="流量监测"></a>流量监测</h4><p>通过监控令牌桶来进行流量监控。当分配的带宽未被利用时，令牌桶会溢出，导致令牌浪费。这可能有两个原因：</p>
+<ol>
+<li>分配的带宽超过使用的带宽，即 <code>bwr_v_assgn</code> ≥ <code>bwr_v_used</code>。这里浪费的令牌称为<em>可用的浪费令牌</em>，因为应用程序可以使用它们，只是不需要</li>
+<li>网络过载，即 <code>bwr_v_assgn</code> ≥ <code>bwr__vavail</code>。由于高竞争，帧在发送队列中停留的时间更长，因此到达队列中的帧不能使用重新填充的令牌，从而导致溢出。这样无法使用的token称为<em>不可用的浪费令牌</em>，因为过多的介质争用而无法使用它们。</li>
+</ol>
+<p>为了监控可用和不可用的浪费令牌，文章引入了两个计数器：</p>
+<ol>
+<li>计数器 <code>n_v_WT_usable(t)</code> 表示在时间 t 之前浪费的<em>可用令牌</em>。如果令牌桶已满，且帧发送队列和帧到达队列均为空时，则在生成令牌时递增</li>
+<li>计数器 <code>nv_WT_unusable(t)</code> 表示在时间 t 之前浪费的<em>不可用令牌</em>。如果令牌桶已满，且帧发送队列或帧到达队列不为空，则在生成令牌时递增</li>
+</ol>
+<p>使用这些计数器并基于监控的传输活动，可以得出以下特征参数：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>含义</th>
+<th>公式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213142952.png" alt="image-20220213142952535" style="zoom:50%;" /></td>
+<td>从实验开始到时间 t，节点 v 使用介质传输帧的总时间</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143016.png" alt="image-20220213143016580" style="zoom:40%;" /></td>
+</tr>
+<tr>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143321.png" alt="image-20220213143321820" style="zoom:50%;" /></td>
+<td>从节点开始时间到时间 t，节点 v 使用的分配带宽的比率。</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143346.png" alt="image-20220213143346594" style="zoom:40%;" /></td>
+</tr>
+<tr>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143403.png" alt="image-20220213143403387" style="zoom:50%;" /></td>
+<td>自开始以来，节点 v 在时间 t 的不可用浪费分配带宽的比率</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143426.png" alt="image-20220213143426615" style="zoom:40%;" /></td>
+</tr>
+<tr>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143444.png" alt="image-20220213143444428" style="zoom:50%;" /></td>
+<td>自开始以来节点 v 在时间 t 的可用浪费分配带宽的比率</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143507.png" alt="image-20220213143507229" style="zoom:40%;" /></td>
+</tr>
+<tr>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143526.png" alt="image-20220213143526909" style="zoom:50%;" /></td>
+<td>自开始以来，节点 v 在时间 t 浪费的分配带宽的比率</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143546.png" alt="image-20220213143546280" style="zoom:40%;" /></td>
+</tr>
+<tr>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143602.png" alt="image-20220213143602603" style="zoom:50%;" /></td>
+<td>在时间 t 来自节点 v 的硬件寄存器的值 Channel Busy Time (CBT)</td>
+<td></td>
+</tr>
+<tr>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143628.png" alt="image-20220213143628603" style="zoom:50%;" /></td>
+<td>从开始到时间 t，节点 v 观察到介质繁忙的时间比率</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143649.png" alt="image-20220213143649739" style="zoom:40%;" /></td>
+</tr>
+<tr>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143717.png" alt="image-20220213143717099" style="zoom:50%;" /></td>
+<td>节点v感知介质能量的时间量，不包括从开始到时间 t 的传输持续时间</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143801.png" alt="image-20220213143801843" style="zoom:40%;" /></td>
+</tr>
+<tr>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143818.png" alt="image-20220213143818871" style="zoom:50%;" /></td>
+<td>从开始到时间 t，节点感知介质能量（不包括其传输持续时间）的时间比率</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143835.png" alt="image-20220213143835843" style="zoom: 40%;" /></td>
+</tr>
+</tbody></table>
+<p>注：第一行 Fv(t) 表示节点 v 在时间 t 之前发送的帧，b_f_payload 表示单个帧的有效载荷大小，r_f_tx 表示发送它的速率</p>
 
     </div>
 
@@ -541,7 +701,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E7%A0%94%E7%9B%AE%E5%BD%95"><span class="nav-text">调研目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E4%BA%8E%E6%95%B0%E6%8D%AE%E5%8C%85%E6%95%B4%E5%BD%A2"><span class="nav-text">用于数据包整形</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B"><span class="nav-text">模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E4%BA%8E%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D"><span class="nav-text">用于资源分配</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B-1"><span class="nav-text">模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#QoS-%E5%85%AC%E5%B9%B3%E6%80%A7"><span class="nav-text">QoS 公平性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%97%B6%E9%97%B4-Token-Bucket-%E7%AE%97%E6%B3%95"><span class="nav-text">时间 Token Bucket 算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%A6%E5%AE%BD%E7%BC%A9%E6%94%BE"><span class="nav-text">带宽缩放</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%A6%E5%AE%BD%E7%BC%A9%E6%94%BE%E7%9A%84%E6%9D%A1%E4%BB%B6"><span class="nav-text">带宽缩放的条件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%8A%E8%B0%83%E6%9D%A1%E4%BB%B6"><span class="nav-text">上调条件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%8B%E8%B0%83%E6%9D%A1%E4%BB%B6"><span class="nav-text">下调条件</span></a></li></ol></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E7%A0%94%E7%9B%AE%E5%BD%95"><span class="nav-text">调研目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E4%BA%8E%E6%95%B0%E6%8D%AE%E5%8C%85%E6%95%B4%E5%BD%A2"><span class="nav-text">用于数据包整形</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B"><span class="nav-text">模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E4%BA%8E%E6%97%B6%E9%97%B4%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D"><span class="nav-text">用于时间资源分配</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B-1"><span class="nav-text">模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#QoS-%E5%85%AC%E5%B9%B3%E6%80%A7"><span class="nav-text">QoS 公平性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%97%B6%E9%97%B4-Token-Bucket-%E7%AE%97%E6%B3%95"><span class="nav-text">时间 Token Bucket 算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%A6%E5%AE%BD%E7%BC%A9%E6%94%BE"><span class="nav-text">带宽缩放</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%A6%E5%AE%BD%E7%BC%A9%E6%94%BE%E7%9A%84%E6%9D%A1%E4%BB%B6"><span class="nav-text">带宽缩放的条件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%8A%E8%B0%83%E6%9D%A1%E4%BB%B6"><span class="nav-text">上调条件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%8B%E8%B0%83%E6%9D%A1%E4%BB%B6"><span class="nav-text">下调条件</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E4%BA%8E%E6%97%B6%E9%97%B4%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D-1"><span class="nav-text">用于时间资源分配</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B-2"><span class="nav-text">模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%A6%E5%AE%BD%E9%A2%84%E7%95%99"><span class="nav-text">带宽预留</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%81%E9%87%8F%E6%95%B4%E5%BD%A2"><span class="nav-text">流量整形</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%81%E9%87%8F%E7%9B%91%E6%B5%8B"><span class="nav-text">流量监测</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
