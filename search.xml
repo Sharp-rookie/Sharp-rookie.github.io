@@ -8,7 +8,7 @@
       <link href="/2022/02/13/%E3%80%90%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E3%80%91UNREAL%EF%BC%9A%E7%A3%A8%E5%88%80%E4%B8%8D%E8%AF%AF%E7%A0%8D%E6%9F%B4%E5%B7%A5/"/>
       <url>/2022/02/13/%E3%80%90%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E3%80%91UNREAL%EF%BC%9A%E7%A3%A8%E5%88%80%E4%B8%8D%E8%AF%AF%E7%A0%8D%E6%9F%B4%E5%B7%A5/</url>
       
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>&emsp;&emsp; 2016年DeepMind 的一篇论文 <a href="https://lrk612.com/resources/Reinforcement%20Learning%20with%20Unsupervised%20Auxiliary%20tasks.pdf">Reinforcement Learning with Unsupervised Auxiliary tasks</a> 中提出了一种叫作 <code>UNsupervised REinforcement and Auxiliary Learning</code> 的模型，缩写为 <strong>UNREAL</strong>。论文篇幅14页，洋洋洒洒，论述精彩，其核心思想是在训练A3C的同时，训练多个辅助任务来改进算法。</p><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213160657.png" alt="image-20220213160612491" style="zoom: 30%;" /><span id="more"></span><p>&nbsp;</p>]]></content>
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>&emsp;&emsp; 2016年DeepMind 的一篇论文 <a href="https://lrk612.com/resources/Reinforcement%20Learning%20with%20Unsupervised%20Auxiliary%20tasks.pdf">Reinforcement Learning with Unsupervised Auxiliary tasks</a> 中提出了一种叫作 <code>UNsupervised REinforcement and Auxiliary Learning</code> 的模型，缩写为 <strong>UNREAL</strong>。论文篇幅14页，洋洋洒洒，论述精彩，其核心思想是在训练 A3C 的同时，训练多个辅助任务来改进算法。</p><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213160657.png" alt="image-20220213160612491" style="zoom: 30%;" /><span id="more"></span><p>&nbsp;</p><h2 id="UNREAL"><a href="#UNREAL" class="headerlink" title="UNREAL"></a>UNREAL</h2><p>&emsp;&emsp;UNREAL模型分为4部分：</p><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213160657.png" alt="image-20220213160612491" style="zoom: 40%;" /><p>&nbsp;</p><h3 id="主任务-A3C"><a href="#主任务-A3C" class="headerlink" title="主任务 A3C"></a>主任务 A3C</h3><p>&emsp;&emsp;如上图(a)部分所示，UNREAL的主任务是一个普通的基于 A3C 模型的 Agent，网络结构为 CNN-LSTM，也就是一个前半部分为卷积神经网络、后半部分为 LSTM 的网络结构。其训练方式和 A3C 模型没有本质区别，使用的损失函数也是 A3C 模型的，唯一值得一提的是 LSTM 部分，它带来的好处就是能记忆这一帧的前n帧内容对当前内容的影响。传统的DQN模型使用4个连续的帧组成了一个完整输入模型的 x，使用 LSTM 网络来实现记忆功能。</p><p>&emsp;&emsp;在图中，三角形代表卷积神经网络层，圆形代表 LSTM 网络层。最后一次 Feature Map 的后面有两个不同的后端网络：一个是V网络，用于拟合状态估值；另一个是π网络，用于学习策略。4张输入的图片是连续4帧按时间序列逐一输入网络的。在这个过程中收集的 Transition 信息放入 Replay Buffer中。</p><p>&nbsp;</p><h3 id="像素控制任务"><a href="#像素控制任务" class="headerlink" title="像素控制任务"></a>像素控制任务</h3><p>&emsp;&emsp;如上图(b)部分所示，UNREAL的像素控制任务（Pixel Control）要训练一个辅助策略网络 <code>Qaux</code>，希望能够通过训练把输入图片的不同区域的像素强度（Pixel Intensity）最大化。从形式上看，这部分就是对从 Replay Buffer 中取出的一帧图像进行<strong>反卷积</strong>（deconvolution）。</p><p>&emsp;&emsp;反卷积又称为转置卷积（Transposed Convolution），是一种升采样的手段。与深度学习中的降采样 Max Pooling、Average Pooling等手段目的相反，反卷积对数据进行升维。卷积运算可以视为是<code>原始像素矩阵</code>左乘一个<code>卷积核构成的矩阵</code>，得到一个<code>压缩尺寸的像素矩阵</code>；而反卷积就是把<code>压缩尺寸的像素矩阵</code>左乘<code>卷积核矩阵的转置</code>，从而还原回<code>原始像素矩阵的尺寸</code>，但是要注意，这样说只是在维度上进行解释，实际反卷积使用的矩阵元素值与卷积时的矩阵无关，通过梯度下降优化。</p><p>&emsp;&emsp;在这个任务中，网络的前半部分和主任务共享一套 CNN 和 LSTM，只是后半部分的反卷积神经网络是其独有的。最终输出一个 <code>Nact×n×n</code> 的矩阵，称为 <code>Qaux</code>。其中 <code>Nact</code> 表示动作空间的数量，n×n 表示像素快。矩阵 <code>Qaux(a, i, j)</code> 的含义是：执行动作a，下一帧画面变为 i×j 这个矩阵描述的内容。训练时使用 MSE Loss 计算两帧画面像素矩阵的差。</p><p>&nbsp;</p><h3 id="奖励值预测"><a href="#奖励值预测" class="headerlink" title="奖励值预测"></a>奖励值预测</h3><p>&nbsp;</p><h3 id="值函数回放"><a href="#值函数回放" class="headerlink" title="值函数回放"></a>值函数回放</h3><p>&nbsp;</p><h3 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h3>]]></content>
       
       
       <categories>
@@ -51,9 +51,9 @@
             
             <tag> 5G </tag>
             
-            <tag> Resource Management </tag>
-            
             <tag> Token Bucket </tag>
+            
+            <tag> Resource Management </tag>
             
         </tags>
       
@@ -613,9 +613,9 @@
             
             <tag> Network Slice </tag>
             
-            <tag> Resource Management </tag>
-            
             <tag> Token Bucket </tag>
+            
+            <tag> Resource Management </tag>
             
         </tags>
       
@@ -684,7 +684,7 @@
       <link href="/2021/12/09/test/"/>
       <url>/2021/12/09/test/</url>
       
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>分享每月歌单</p><span id="more"></span><h5 id="2021-12"><a href="#2021-12" class="headerlink" title="2021-12"></a>2021-12</h5><p># 歌曲模板</p>    <div id="aplayer-YosnSJWC" class="aplayer aplayer-tag-marker meting-tag-marker"         data-id="3986040" data-server="netease" data-type="song" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"    ></div><p># 歌单模板</p>    <div id="aplayer-ngfgyEuu" class="aplayer aplayer-tag-marker meting-tag-marker"         data-id="627070825" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"    ></div>]]></content>
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>分享每月歌单</p><span id="more"></span><h5 id="2021-12"><a href="#2021-12" class="headerlink" title="2021-12"></a>2021-12</h5><p># 歌曲模板</p>    <div id="aplayer-tafYzaBz" class="aplayer aplayer-tag-marker meting-tag-marker"         data-id="3986040" data-server="netease" data-type="song" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"    ></div><p># 歌单模板</p>    <div id="aplayer-dnDsWRmt" class="aplayer aplayer-tag-marker meting-tag-marker"         data-id="627070825" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"    ></div>]]></content>
       
       
       <categories>
@@ -725,9 +725,9 @@
             
             <tag> Network Slice </tag>
             
-            <tag> Resource Management </tag>
-            
             <tag> Token Bucket </tag>
+            
+            <tag> Resource Management </tag>
             
         </tags>
       
