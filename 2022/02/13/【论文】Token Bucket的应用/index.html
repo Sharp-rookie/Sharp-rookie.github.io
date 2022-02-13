@@ -32,15 +32,15 @@
           }
       })();
   </script>
-  <meta name="description" content="[toc]">
+  <meta name="description" content="调研目录 Performance Analysis of a Token Bucket Shaper for MPEG4 Video and Real Audio Signal Cooperative Fair Bandwidth Scaling in Contention-based Wireless Networks using Time Token Bucket">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Token Bucket的应用调研">
 <meta property="og:url" content="https://sharp-rookie.github.io/2022/02/13/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91Token%20Bucket%E7%9A%84%E5%BA%94%E7%94%A8/index.html">
 <meta property="og:site_name" content="最忆是江南">
-<meta property="og:description" content="[toc]">
+<meta property="og:description" content="调研目录 Performance Analysis of a Token Bucket Shaper for MPEG4 Video and Real Audio Signal Cooperative Fair Bandwidth Scaling in Contention-based Wireless Networks using Time Token Bucket">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://sharp-rookie.github.io/2022/02/13/AppData/Roaming/Typora/typora-user-images/image-20220211163734069.png">
-<meta property="og:image" content="https://sharp-rookie.github.io/2022/02/13/AppData/Roaming/Typora/typora-user-images/image-20220213085320943.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220213101527.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220213101528.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220213085610.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220213085703.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220213085730.png">
@@ -50,13 +50,13 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220213093515.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220213093853.png">
 <meta property="article:published_time" content="2022-02-13T02:09:13.982Z">
-<meta property="article:modified_time" content="2022-02-13T02:08:50.451Z">
+<meta property="article:modified_time" content="2022-02-13T02:16:19.155Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="5G">
 <meta property="article:tag" content="Token Bucket">
 <meta property="article:tag" content="Resource Management">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://sharp-rookie.github.io/2022/02/13/AppData/Roaming/Typora/typora-user-images/image-20220211163734069.png">
+<meta name="twitter:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220213101527.png">
 
 <link rel="canonical" href="https://sharp-rookie.github.io/2022/02/13/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91Token%20Bucket%E7%9A%84%E5%BA%94%E7%94%A8/">
 
@@ -303,7 +303,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>[toc]</p>
+        <h2 id="调研目录"><a href="#调研目录" class="headerlink" title="调研目录"></a>调研目录</h2><ul>
+<li>Performance Analysis of a Token Bucket Shaper for MPEG4 Video and Real Audio Signal</li>
+<li>Cooperative Fair Bandwidth Scaling in Contention-based Wireless Networks using Time Token Bucket</li>
+</ul>
 <span id="more"></span>
 
 <p>&nbsp;</p>
@@ -321,7 +324,7 @@
 <p>对比论文：<a target="_blank" rel="noopener" href="https://lrk612.com/resources/Correlated%20token%20bucket%20shapers%20for%20multiple%20traffic%20classes.pdf">Correlated token bucket shapers for multiple traffic classes</a></p>
 </blockquote>
 <h3 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h3><p>&emsp;&emsp;文中使用的方法基于对每个流量类别使用多个独立令牌桶整形器。这种令牌桶整形器的优点是与多个相关的令牌桶整形器相比，其实现要简单得多。每个令牌桶整形器都有自己的流量生成器、令牌桶和数据包队列。用户能够改变桶大小、队列长度和令牌生成率的值。从用户端发送的MPEG4视频和真实音频信号数据由各自的令牌桶整形器独立整形。仅当令牌桶中存在足够的令牌时，数据才会发送到网络。一个桶中存在令牌不会对另一个流量类别的性能产生任何影响。</p>
-<img src="../AppData/Roaming/Typora/typora-user-images/image-20220211163734069.png" alt="image-20220211163734069" style="zoom: 67%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213101527.png" alt="image-20220211163734069" style="zoom: 67%;" />
 
 <p>&nbsp;</p>
 <hr>
@@ -343,7 +346,7 @@
 <li>requestBwPref ∈ [0, 1]，节点v的相对首选带宽</li>
 </ul>
 <p>假设每个节点上的应用程序都有可以派生对以上值的要求。比如，应用程序可能必须每秒发送大小在 <code>base</code> 和 <code>preferred</code> 帧之间的帧。若数据速率为 <code>rate</code>，则有：</p>
-<img src="../AppData/Roaming/Typora/typora-user-images/image-20220213085320943.png" alt="image-20220213085320943" style="zoom:60%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213101528.png" alt="image-20220213085320943" style="zoom:60%;" />
 
 <p>假设所有节点都使用其基本带宽进行传输是可能的。在单跳网络中，这意味着所有节点 V 的相对请求带宽之和不得超过 1：</p>
 <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213085610.png" alt="image-20220213085610396" style="zoom:60%;" />
@@ -538,7 +541,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E4%BA%8E%E6%95%B0%E6%8D%AE%E5%8C%85%E6%95%B4%E5%BD%A2"><span class="nav-text">用于数据包整形</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B"><span class="nav-text">模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E4%BA%8E%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D"><span class="nav-text">用于资源分配</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B-1"><span class="nav-text">模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#QoS-%E5%85%AC%E5%B9%B3%E6%80%A7"><span class="nav-text">QoS 公平性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%97%B6%E9%97%B4-Token-Bucket-%E7%AE%97%E6%B3%95"><span class="nav-text">时间 Token Bucket 算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%A6%E5%AE%BD%E7%BC%A9%E6%94%BE"><span class="nav-text">带宽缩放</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%A6%E5%AE%BD%E7%BC%A9%E6%94%BE%E7%9A%84%E6%9D%A1%E4%BB%B6"><span class="nav-text">带宽缩放的条件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%8A%E8%B0%83%E6%9D%A1%E4%BB%B6"><span class="nav-text">上调条件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%8B%E8%B0%83%E6%9D%A1%E4%BB%B6"><span class="nav-text">下调条件</span></a></li></ol></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E7%A0%94%E7%9B%AE%E5%BD%95"><span class="nav-text">调研目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E4%BA%8E%E6%95%B0%E6%8D%AE%E5%8C%85%E6%95%B4%E5%BD%A2"><span class="nav-text">用于数据包整形</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B"><span class="nav-text">模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E4%BA%8E%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D"><span class="nav-text">用于资源分配</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B-1"><span class="nav-text">模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#QoS-%E5%85%AC%E5%B9%B3%E6%80%A7"><span class="nav-text">QoS 公平性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%97%B6%E9%97%B4-Token-Bucket-%E7%AE%97%E6%B3%95"><span class="nav-text">时间 Token Bucket 算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%A6%E5%AE%BD%E7%BC%A9%E6%94%BE"><span class="nav-text">带宽缩放</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%A6%E5%AE%BD%E7%BC%A9%E6%94%BE%E7%9A%84%E6%9D%A1%E4%BB%B6"><span class="nav-text">带宽缩放的条件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%8A%E8%B0%83%E6%9D%A1%E4%BB%B6"><span class="nav-text">上调条件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%8B%E8%B0%83%E6%9D%A1%E4%BB%B6"><span class="nav-text">下调条件</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
