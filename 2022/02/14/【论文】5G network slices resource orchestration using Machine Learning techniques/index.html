@@ -64,8 +64,9 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220214142200.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220214142222.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220214142259.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220214143530.png">
 <meta property="article:published_time" content="2022-02-14T05:59:51.745Z">
-<meta property="article:modified_time" content="2022-02-14T06:27:58.390Z">
+<meta property="article:modified_time" content="2022-02-14T07:03:46.647Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="Reinforcement Learning">
 <meta property="article:tag" content="Regression">
@@ -572,31 +573,68 @@
 <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220214141913.png" alt="image-20220214141913246" style="zoom:40%;" />
 
 <p>其中，<code>𝑒𝑡</code> 是所需流量与前一次迭代的流量之间的流量误差； <code>𝑢𝑡-1</code> 表示来自前一个时间步的控制输入；<code>𝑏𝑡</code> 是反映流量误差最小幅度的二元变量，如果 <code>𝑒𝑡</code>^2 ≤ <code>𝜀</code>，则 <code>𝑏𝑡</code>=1，否则 <code>𝑏𝑡</code>=0，<code>𝜀</code> 是一个小的预设阈值。可以观察到，当误差的大小和先前的控制输入较小时，奖励值较大，反之亦然。此外，通过在平方误差项前面使用 10% 的系数进一步降低了误差的影响。这个乘数是任意选择的（小于 1），以确保只有一小部分错误会影响奖励值。</p>
-<p>&emsp;&emsp;用 𝑝 表示从状态 𝑠 到另一个状态的转移概率，用 E 表示期望。首先，我们需要找到使总奖励最大化的最优策略 𝛱∗，如下所示：</p>
+<p>&emsp;&emsp;用 𝑝 表示从状态 𝑠 到另一个状态的转移概率，用 E 表示期望。首先需要找到使总奖励最大化的最优策略 𝛱∗，如下所示：</p>
 <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220214141949.png" alt="image-20220214141949278" style="zoom:35%;" />
 
-<p>其中 𝑡 是时间步长，𝛿 是 ≤ 1 的折扣因子。另一方面，我们将价值函数 𝑉 𝛱(𝑠) 定义为遵循策略 𝛱 的预期累积奖励，从状态 𝑠 开始，如下所示：</p>
+<p>其中 𝑡 是时间步长，𝛿 是 ≤ 1 的折扣因子。另一方面，将价值函数 𝑉 𝛱(𝑠) 定义为遵循策略 𝛱 的预期累积奖励，从状态 𝑠 开始：</p>
 <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220214142022.png" alt="image-20220214142022059" style="zoom:35%;" />
 
-<p>我们将质量 (Q) 值 𝑄𝛱(𝑠,𝑎) 定义为在状态 𝑠 下采取行动 𝑎 并遵循政策 𝛱 的预期累积奖励，如下所示：</p>
+<p>将质量 Q 值 <code>𝑄^𝛱(𝑠,𝑎)</code> 定义为在状态 𝑠 下采取行动 𝑎 并遵循政策 𝛱 的预期累积奖励：</p>
 <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220214142056.png" alt="image-20220214142056160" style="zoom:35%;" />
 
-<p>另一方面，基于系统模型中定义的动作，以及（13）中的 Q 值和我们设计的即时奖励，我们可以将特定策略的 DRL 问题写成期望 Q-值如下：</p>
+<p>另一方面，基于系统模型中定义的动作，以及前面设计的即时奖励，可以将特定策略的 DRL 问题写成期望Q值：</p>
 <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220214142135.png" alt="image-20220214142135262" style="zoom:35%;" />
 
-<p>基于贝尔曼方程[48]，问题（14a）可以以递归形式重写，如下所示：</p>
+<p>基于贝尔曼方程[48]，上式的递归形式为：</p>
 <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220214142200.png" alt="image-20220214142200822" style="zoom:35%;" />
 
-<p>其中𝑄∗(𝑠′,𝑎′)是下一个时间步长Q值。为了将这个问题解决到最优，我们可以使用如下的值迭代：</p>
+<p>其中 <code>𝑄∗(𝑠′,𝑎′)</code> 是下一个时间步长Q值。使用值迭代求最优解：</p>
 <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220214142222.png" alt="image-20220214142222781" style="zoom:35%;" />
 
-<p>我们可以说，在 (16) 中表达的 𝑄𝑖 当 𝑖 →∞ 时会收敛到 𝑄∗。然而，这个问题是不可扩展的。因此，我们建议使用函数逼近器通过利用深度神经网络来估计𝑄(𝑠,𝑎)。首先，我们建议使用 Q 值的深度 Q 学习 (DQL) 函数逼近器，如第 3.5.3 节所示</p>
-<p>为了避免过于复杂的 Q 函数并为可能的连续动作空间提供面向未来的证明，我们还考虑为所有可能的动作 [9] 学习最佳策略 𝛱∗。因此，另一方面，我们还建议使用深度神经网络来学习 Q 值和最优策略，分别使用 Q-learning 和 Policy Gradients 方法，通过训练参与者（策略）和批评者（Q 值），如 3.5.4 节所示。在这种情况下，我们使用深度确定性策略梯度 (DDPG) 代理来学习 𝛱 和 𝑄，并找到最大化长期奖励的最优策略 (𝛱∗)。我们将在接下来的评估部分中研究这两种方法的性能。</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220214142259.png" alt="image-20220214142259631" style="zoom:50%;" />
+<p>上式中，当 𝑖 →∞ 时 𝑄𝑖 会收敛到 𝑄∗。不过，这个问题是不可扩展的。因此，文章建议使用函数逼近器通过利用深度神经网络来估计𝑄(𝑠,𝑎)，见下节 DQN。同时为了得到连续动作，文章还考虑了DDPG。</p>
+<h4 id="DQN算法"><a href="#DQN算法" class="headerlink" title="DQN算法"></a>DQN算法</h4><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220214142259.png" alt="image-20220214142259631" style="zoom:50%;" />
 
 
 
-<h4 id="DDPG算法"><a href="#DDPG算法" class="headerlink" title="DDPG算法"></a>DDPG算法</h4><p><strong>感受</strong></p>
+<h4 id="DDPG算法"><a href="#DDPG算法" class="headerlink" title="DDPG算法"></a>DDPG算法</h4><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220214143530.png" alt="image-20220214143530229" style="zoom:50%;" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p><strong>感受</strong></p>
 <p>和之前读的普通论文相比，Introduction部分废话少，介绍本文工作的逻辑层次很清晰分明；Related Work部分工作做的很全面详细，且和本文4部分模型都一一对应，并且时时强调别人论文中的不足以及本文比其更优的地方；在模型部分，文章每个子模型提出的算法都用正规格式打了出来，并分析了复杂度；</p>
 
     </div>
@@ -702,7 +740,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-text">背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E5%B7%A5%E4%BD%9C"><span class="nav-text">核心工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%86%E5%9F%9F%E7%A0%94%E7%A9%B6"><span class="nav-text">领域研究</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%86%E7%B1%BB%E5%92%8C%E5%88%87%E7%89%87%E6%96%B9%E6%B3%95"><span class="nav-text">分类和切片方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%81%E9%87%8F%E5%92%8C%E8%B5%84%E6%BA%90%E9%A2%84%E6%B5%8B%E6%96%B9%E6%B3%95"><span class="nav-text">流量和资源预测方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1%E6%8E%A7%E5%88%B6%E5%92%8C%E8%B0%83%E5%BA%A6%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95"><span class="nav-text">任务控制和调度优化方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%87%AA%E9%80%82%E5%BA%94%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E6%96%B9%E6%B3%95"><span class="nav-text">自适应资源管理方法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1"><span class="nav-text">系统设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%88%E9%97%A8%E4%BA%BA%E6%A8%A1%E5%9E%8B"><span class="nav-text">守门人模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%B3%E7%AD%96%E8%80%85%E6%A8%A1%E5%9E%8B"><span class="nav-text">决策者模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A2%84%E6%B5%8B%E6%84%9F%E7%9F%A5%E5%88%87%E7%89%87%E5%99%A8"><span class="nav-text">预测感知切片器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%9E%E5%BD%92%E6%A0%91%E7%9A%84%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95"><span class="nav-text">回归树的生成算法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%86%E5%85%A5%E6%8E%A7%E5%88%B6%E5%99%A8"><span class="nav-text">准入控制器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%BA%E6%99%AF%E5%BB%BA%E6%A8%A1"><span class="nav-text">场景建模</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#D-MCKP-%E7%AE%97%E6%B3%95"><span class="nav-text">D-MCKP 算法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%87%E7%89%87%E8%B0%83%E5%BA%A6%E5%99%A8"><span class="nav-text">切片调度器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E5%99%A8%EF%BC%88%E6%B2%A1%E7%9C%8B%E6%87%82%EF%BC%89"><span class="nav-text">资源管理器（没看懂）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#System-Model%EF%BC%88%E6%B2%A1%E7%9C%8B%E6%87%82%EF%BC%89"><span class="nav-text">System Model（没看懂）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%BA%E6%99%AF%E5%BB%BA%E6%A8%A1-1"><span class="nav-text">场景建模</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DDPG%E7%AE%97%E6%B3%95"><span class="nav-text">DDPG算法</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-text">背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E5%B7%A5%E4%BD%9C"><span class="nav-text">核心工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%86%E5%9F%9F%E7%A0%94%E7%A9%B6"><span class="nav-text">领域研究</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%86%E7%B1%BB%E5%92%8C%E5%88%87%E7%89%87%E6%96%B9%E6%B3%95"><span class="nav-text">分类和切片方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%81%E9%87%8F%E5%92%8C%E8%B5%84%E6%BA%90%E9%A2%84%E6%B5%8B%E6%96%B9%E6%B3%95"><span class="nav-text">流量和资源预测方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1%E6%8E%A7%E5%88%B6%E5%92%8C%E8%B0%83%E5%BA%A6%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95"><span class="nav-text">任务控制和调度优化方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%87%AA%E9%80%82%E5%BA%94%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E6%96%B9%E6%B3%95"><span class="nav-text">自适应资源管理方法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1"><span class="nav-text">系统设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%88%E9%97%A8%E4%BA%BA%E6%A8%A1%E5%9E%8B"><span class="nav-text">守门人模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%B3%E7%AD%96%E8%80%85%E6%A8%A1%E5%9E%8B"><span class="nav-text">决策者模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A2%84%E6%B5%8B%E6%84%9F%E7%9F%A5%E5%88%87%E7%89%87%E5%99%A8"><span class="nav-text">预测感知切片器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%9E%E5%BD%92%E6%A0%91%E7%9A%84%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95"><span class="nav-text">回归树的生成算法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%86%E5%85%A5%E6%8E%A7%E5%88%B6%E5%99%A8"><span class="nav-text">准入控制器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%BA%E6%99%AF%E5%BB%BA%E6%A8%A1"><span class="nav-text">场景建模</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#D-MCKP-%E7%AE%97%E6%B3%95"><span class="nav-text">D-MCKP 算法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%87%E7%89%87%E8%B0%83%E5%BA%A6%E5%99%A8"><span class="nav-text">切片调度器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E5%99%A8%EF%BC%88%E6%B2%A1%E7%9C%8B%E6%87%82%EF%BC%89"><span class="nav-text">资源管理器（没看懂）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#System-Model%EF%BC%88%E6%B2%A1%E7%9C%8B%E6%87%82%EF%BC%89"><span class="nav-text">System Model（没看懂）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%BA%E6%99%AF%E5%BB%BA%E6%A8%A1-1"><span class="nav-text">场景建模</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DQN%E7%AE%97%E6%B3%95"><span class="nav-text">DQN算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DDPG%E7%AE%97%E6%B3%95"><span class="nav-text">DDPG算法</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
