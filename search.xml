@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>【启发式算法】遗传算法 GA</title>
+      <link href="/2022/02/16/%E3%80%90%E5%90%AF%E5%8F%91%E5%BC%8F%E7%AE%97%E6%B3%95%E3%80%91%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%20GA/"/>
+      <url>/2022/02/16/%E3%80%90%E5%90%AF%E5%8F%91%E5%BC%8F%E7%AE%97%E6%B3%95%E3%80%91%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%20GA/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>&emsp;&emsp;由于遗传算法的整体搜索策略和优化搜索方法在计算时不依赖于梯度信息或其它辅助知识，而只需要影响搜索方向的目标函数和相应的适应度函数，所以遗传算法提供了一种求解复杂系统问题的通用框架，不依赖于问题的具体领域，对问题的种类有很强的鲁棒性，广泛应用于许多场景。</p><span id="more"></span><p>&nbsp;</p><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>&emsp;&emsp;遗传算法（Genetic Algorithm）是一类借鉴生物界的进化规律（遗传变异、优胜劣汰、适者生存）演化而来的随机化搜索方法。与其说遗传算法是一类算法，不如说是一种处理问题的思想。它包括5个核心组件：</p><h4 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h4><p>&emsp;&emsp;在遗传算法的建模中，编码是关键。在遗传算法中，遗传空间的染色体或者个体建模为一系列bit位的0、1二进制数值串，也就是说需要把原问题的解空间一一映射为二进制定长数值串，后续的遗传、基因重组、变异都是在数值串基础上进行的。</p><p>评估编码策略有以下3个规范：</p><ul><li>完备性(completeness)：问题解空间中的所有解都能被映射为GA空间中的某个点(染色体)</li><li>健全性(soundness)：GA空间中的染色体能对应问题解空间中的所有解</li><li>非冗余性(nonredundancy)：染色体和候选解一一对应</li></ul><h4 id="适应度"><a href="#适应度" class="headerlink" title="适应度"></a>适应度</h4><p>&emsp;&emsp;进化论中的适应度（fitness），是表示某一个体对环境的适应能力，也表示该个体繁殖后代的能力。那么遗传算法的适应度函数相应就是用来表示该个体实现问题目标的优劣程度，也叫评价函数，类似强化学习中的奖励函数。</p><p>&emsp;&emsp;遗传算法在搜索进化过程中一般不需要其他外部信息，仅用评估函数来评估个体或解的优劣，并作为以后遗传操作的依据。由于遗传算法中，适应度函数要比较排序并在此基础上计算选择概率，所以适应度函数的值要取<strong>正值</strong>，所以适应度函数必须是求最大值形式且非负的。适应度函数的设计主要满足以下条件：</p><ul><li><p>单值、连续、非负、最大化</p></li><li><p>合理、一致性</p></li><li><p>计算量小</p></li><li><p>通用性强</p></li></ul><p>在具体应用中，适应度函数的设计要结合求解问题本身的要求而定。适应度适应度函数设计直接影响到遗传过程的收敛和性能。</p><h4 id="初始种群"><a href="#初始种群" class="headerlink" title="初始种群"></a>初始种群</h4><p>遗传算法中初始群体中的个体是随机产生的。一般来讲，初始群体的设定可采取如下的策略:</p><ul><li>根据问题固有知识，设法把握最优解所占空间在整个问题空间中的分布范围，然后，在此分布范围内设定初始群体</li><li>先随机生成一定数目的个体，然后从中挑出最好的个体加到初始群体中。这种过程不断迭代，直到初始群体中个体数达到了预先确定的规模</li></ul><h4 id="遗传算子"><a href="#遗传算子" class="headerlink" title="遗传算子"></a>遗传算子</h4><p><strong>基因选择</strong></p><p>&emsp;&emsp;从群体中选择优胜的个体，淘汰劣质个体的操作叫选择。选择算子有时又称为再生算子（reproduction operator）。选择的目的是把优化的个体（或解）直接遗传到下一代或通过配对交叉产生新的个体再遗传到下一代。选择操作是建立在群体中个体的适应度评估基础上的，常用的选择算子有以下几种：适应度比例方法（常用）、随机遍历抽样法、局部选择法。</p><p><strong>基因重组</strong></p><p>&emsp;&emsp;在自然界生物进化过程中起核心作用的是生物遗传基因的重组（加上变异）。同样，遗传算法中起核心作用的是遗传操作的交叉算子。所谓交叉是指把被选择出来的两个父代个体的部分结构加以替换重组而生成新个体的操作，实际上是在解空间中较优解附近有“指向性地”进行探索。</p><p><strong>基因突变</strong></p><p>&emsp;&emsp;变异算子的基本内容是对群体中的个体随机基因上的基因值（二进制数值串随机bit位）作变动。遗传算法引入变异的目的有两个：</p><ol><li>使遗传算法具有局部的随机搜索能力，当遗传算法通过交叉算子已接近最优解邻域时，利用变异算子的这种局部随机搜索能力可以加速向最优解收敛。显然，此种情况下的变异概率应取较小值，否则接近最优解的积木块会因变异而遭到破坏</li><li>使遗传算法可维持群体多样性，以防止出现未成熟收敛现象。也就是说搜索的前期，突变概率应取较大值</li></ol><h4 id="中止条件"><a href="#中止条件" class="headerlink" title="中止条件"></a>中止条件</h4><p>&emsp;&emsp;当最优个体的适应度达到给定的阈值，或者最优个体的适应度和群体适应度不再上升时，或者迭代次数达到预设的代数时，算法收敛、终止。</p><p>&nbsp;</p><h2 id="算法流程"><a href="#算法流程" class="headerlink" title="算法流程"></a>算法流程</h2><p>&nbsp;</p><h2 id="示例一：背包问题"><a href="#示例一：背包问题" class="headerlink" title="示例一：背包问题"></a>示例一：背包问题</h2><p>背包问题（Knapsack problem）是一种组合优化的NP完全问题。问题可以描述为：给定一组物品，每种物品都有自己的重量和价格，在限定的总重量内，如何选择才能使得物品的总价格最高。</p><p>问题的名称来源于如何选择最合适的物品放置于给定背包中，相似问题经常出现在商业、组合数学，计算复杂性理论、密码学和应用数学等领域中。</p><p><strong>场景</strong></p><p>现在假设有一个承重80的包，还有6个物体：</p><table><thead><tr><th>物体</th><th>质量</th><th>价值</th></tr></thead><tbody><tr><td>1</td><td>10</td><td>15</td></tr><tr><td>2</td><td>15</td><td>25</td></tr><tr><td>3</td><td>20</td><td>35</td></tr><tr><td>4</td><td>25</td><td>45</td></tr><tr><td>5</td><td>30</td><td>55</td></tr><tr><td>6</td><td>35</td><td>70</td></tr></tbody></table><p><strong>编码</strong></p><p><strong>初始种群</strong></p><p><strong>适性度</strong></p><p><strong>遗传</strong></p><p><strong>迭代至收敛</strong></p><p><strong>代码</strong></p><p><strong>效果</strong></p><p>&nbsp;</p><h2 id="示例二：凸函数最大值"><a href="#示例二：凸函数最大值" class="headerlink" title="示例二：凸函数最大值"></a>示例二：凸函数最大值</h2><p><strong>场景</strong></p><p>求二元函数 <code>z(x,y) = y*sin(x) + x*cos(y)</code> 的最大值点，使用matlab绘制图像如下：</p><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[x,y] = <span class="built_in">meshgrid</span>(<span class="number">-10</span>:<span class="number">0.01</span>:<span class="number">10</span>);</span><br><span class="line">z = y.*<span class="built_in">sin</span>(x)+x.*<span class="built_in">cos</span>(y);</span><br><span class="line">mesh(x,y,z),xlabel(<span class="string">&#x27;x&#x27;</span>),ylabel(<span class="string">&#x27;y&#x27;</span>),zlabel(<span class="string">&#x27;z&#x27;</span>)</span><br></pre></td></tr></table></figure><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220216230845.svg" alt="untitled" style="zoom:50%;" /><p><strong>编码</strong></p><p><strong>初始种群</strong></p><p><strong>适性度</strong></p><p><strong>遗传</strong></p><p><strong>迭代至收敛</strong></p><p><strong>代码</strong></p><p><strong>效果</strong></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 技术分享 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Algorithm </tag>
+            
+            <tag> 优化问题 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>5G network slices resource orchestration using Machine Learning techniques</title>
       <link href="/2022/02/14/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%915G%20network%20slices%20resource%20orchestration%20using%20Machine%20Learning%20techniques/"/>
       <url>/2022/02/14/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%915G%20network%20slices%20resource%20orchestration%20using%20Machine%20Learning%20techniques/</url>
@@ -721,7 +748,7 @@
       <link href="/2021/12/09/test/"/>
       <url>/2021/12/09/test/</url>
       
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>分享每月歌单</p><span id="more"></span><h5 id="2021-12"><a href="#2021-12" class="headerlink" title="2021-12"></a>2021-12</h5><p># 歌曲模板</p>    <div id="aplayer-EltQrWLP" class="aplayer aplayer-tag-marker meting-tag-marker"         data-id="3986040" data-server="netease" data-type="song" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"    ></div><p># 歌单模板</p>    <div id="aplayer-vjUuiDeA" class="aplayer aplayer-tag-marker meting-tag-marker"         data-id="627070825" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"    ></div>]]></content>
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>分享每月歌单</p><span id="more"></span><h5 id="2021-12"><a href="#2021-12" class="headerlink" title="2021-12"></a>2021-12</h5><p># 歌曲模板</p>    <div id="aplayer-aGatyNPl" class="aplayer aplayer-tag-marker meting-tag-marker"         data-id="3986040" data-server="netease" data-type="song" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"    ></div><p># 歌单模板</p>    <div id="aplayer-GELVRBqp" class="aplayer aplayer-tag-marker meting-tag-marker"         data-id="627070825" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"    ></div>]]></content>
       
       
       <categories>

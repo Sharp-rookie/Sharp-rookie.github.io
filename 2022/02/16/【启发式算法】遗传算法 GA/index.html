@@ -32,26 +32,23 @@
           }
       })();
   </script>
-  <meta name="description" content="&amp;emsp;&amp;emsp; 2016年DeepMind 的一篇论文 Reinforcement Learning with Unsupervised Auxiliary tasks 中提出了一种叫作 UNsupervised REinforcement and Auxiliary Learning 的模型，缩写为 UNREAL。论文篇幅14页，洋洋洒洒，论述精彩，其核心思想是在训练 A3C 的同时，">
+  <meta name="description" content="&amp;emsp;&amp;emsp;由于遗传算法的整体搜索策略和优化搜索方法在计算时不依赖于梯度信息或其它辅助知识，而只需要影响搜索方向的目标函数和相应的适应度函数，所以遗传算法提供了一种求解复杂系统问题的通用框架，不依赖于问题的具体领域，对问题的种类有很强的鲁棒性，广泛应用于许多场景。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【强化学习】UNREAL：磨刀不误砍柴工">
-<meta property="og:url" content="https://sharp-rookie.github.io/2022/02/13/%E3%80%90%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E3%80%91UNREAL%EF%BC%9A%E7%A3%A8%E5%88%80%E4%B8%8D%E8%AF%AF%E7%A0%8D%E6%9F%B4%E5%B7%A5/index.html">
+<meta property="og:title" content="【启发式算法】遗传算法 GA">
+<meta property="og:url" content="https://sharp-rookie.github.io/2022/02/16/%E3%80%90%E5%90%AF%E5%8F%91%E5%BC%8F%E7%AE%97%E6%B3%95%E3%80%91%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%20GA/index.html">
 <meta property="og:site_name" content="最忆是江南">
-<meta property="og:description" content="&amp;emsp;&amp;emsp; 2016年DeepMind 的一篇论文 Reinforcement Learning with Unsupervised Auxiliary tasks 中提出了一种叫作 UNsupervised REinforcement and Auxiliary Learning 的模型，缩写为 UNREAL。论文篇幅14页，洋洋洒洒，论述精彩，其核心思想是在训练 A3C 的同时，">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;由于遗传算法的整体搜索策略和优化搜索方法在计算时不依赖于梯度信息或其它辅助知识，而只需要影响搜索方向的目标函数和相应的适应度函数，所以遗传算法提供了一种求解复杂系统问题的通用框架，不依赖于问题的具体领域，对问题的种类有很强的鲁棒性，广泛应用于许多场景。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220213160657.png">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220213160657.png">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220213182224.png">
-<meta property="article:published_time" content="2022-02-13T08:07:17.224Z">
-<meta property="article:modified_time" content="2022-02-13T10:38:07.179Z">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220216230845.svg">
+<meta property="article:published_time" content="2022-02-16T15:10:01.107Z">
+<meta property="article:modified_time" content="2022-02-16T15:09:51.733Z">
 <meta property="article:author" content="Lrk612">
-<meta property="article:tag" content="AI">
-<meta property="article:tag" content="Reinforcement Learning">
 <meta property="article:tag" content="Algorithm">
+<meta property="article:tag" content="优化问题">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220213160657.png">
+<meta name="twitter:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220216230845.svg">
 
-<link rel="canonical" href="https://sharp-rookie.github.io/2022/02/13/%E3%80%90%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E3%80%91UNREAL%EF%BC%9A%E7%A3%A8%E5%88%80%E4%B8%8D%E8%AF%AF%E7%A0%8D%E6%9F%B4%E5%B7%A5/">
+<link rel="canonical" href="https://sharp-rookie.github.io/2022/02/16/%E3%80%90%E5%90%AF%E5%8F%91%E5%BC%8F%E7%AE%97%E6%B3%95%E3%80%91%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%20GA/">
 
 
 <script id="page-configurations">
@@ -64,7 +61,7 @@
   };
 </script>
 
-  <title>【强化学习】UNREAL：磨刀不误砍柴工 | 最忆是江南</title>
+  <title>【启发式算法】遗传算法 GA | 最忆是江南</title>
   
 
 
@@ -221,7 +218,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://sharp-rookie.github.io/2022/02/13/%E3%80%90%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E3%80%91UNREAL%EF%BC%9A%E7%A3%A8%E5%88%80%E4%B8%8D%E8%AF%AF%E7%A0%8D%E6%9F%B4%E5%B7%A5/">
+    <link itemprop="mainEntityOfPage" href="https://sharp-rookie.github.io/2022/02/16/%E3%80%90%E5%90%AF%E5%8F%91%E5%BC%8F%E7%AE%97%E6%B3%95%E3%80%91%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%20GA/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -234,7 +231,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          【强化学习】UNREAL：磨刀不误砍柴工
+          【启发式算法】遗传算法 GA
         </h1>
 
         <div class="post-meta">
@@ -245,7 +242,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-02-13 16:07:17" itemprop="dateCreated datePublished" datetime="2022-02-13T16:07:17+08:00">2022-02-13</time>
+              <time title="创建时间：2022-02-16 23:10:01" itemprop="dateCreated datePublished" datetime="2022-02-16T23:10:01+08:00">2022-02-16</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -253,12 +250,12 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/" itemprop="url" rel="index"><span itemprop="name">知识分享</span></a>
+                  <a href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/" itemprop="url" rel="index"><span itemprop="name">技术分享</span></a>
                 </span>
             </span>
 
           
-            <span id="/2022/02/13/%E3%80%90%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E3%80%91UNREAL%EF%BC%9A%E7%A3%A8%E5%88%80%E4%B8%8D%E8%AF%AF%E7%A0%8D%E6%9F%B4%E5%B7%A5/" class="post-meta-item leancloud_visitors" data-flag-title="【强化学习】UNREAL：磨刀不误砍柴工" title="阅读次数">
+            <span id="/2022/02/16/%E3%80%90%E5%90%AF%E5%8F%91%E5%BC%8F%E7%AE%97%E6%B3%95%E3%80%91%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%20GA/" class="post-meta-item leancloud_visitors" data-flag-title="【启发式算法】遗传算法 GA" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -280,8 +277,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2022/02/13/%E3%80%90%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E3%80%91UNREAL%EF%BC%9A%E7%A3%A8%E5%88%80%E4%B8%8D%E8%AF%AF%E7%A0%8D%E6%9F%B4%E5%B7%A5/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/02/13/%E3%80%90%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E3%80%91UNREAL%EF%BC%9A%E7%A3%A8%E5%88%80%E4%B8%8D%E8%AF%AF%E7%A0%8D%E6%9F%B4%E5%B7%A5/" itemprop="commentCount"></span>
+    <a title="valine" href="/2022/02/16/%E3%80%90%E5%90%AF%E5%8F%91%E5%BC%8F%E7%AE%97%E6%B3%95%E3%80%91%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%20GA/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/02/16/%E3%80%90%E5%90%AF%E5%8F%91%E5%BC%8F%E7%AE%97%E6%B3%95%E3%80%91%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%20GA/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -296,32 +293,113 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>&emsp;&emsp; 2016年DeepMind 的一篇论文 <a target="_blank" rel="noopener" href="https://lrk612.com/resources/Reinforcement%20Learning%20with%20Unsupervised%20Auxiliary%20tasks.pdf">Reinforcement Learning with Unsupervised Auxiliary tasks</a> 中提出了一种叫作 <code>UNsupervised REinforcement and Auxiliary Learning</code> 的模型，缩写为 <strong>UNREAL</strong>。论文篇幅14页，洋洋洒洒，论述精彩，其核心思想是在训练 A3C 的同时，训练多个辅助任务来改进算法。</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213160657.png" alt="image-20220213160612491" style="zoom: 30%;" />
-
+        <p>&emsp;&emsp;由于遗传算法的整体搜索策略和优化搜索方法在计算时不依赖于梯度信息或其它辅助知识，而只需要影响搜索方向的目标函数和相应的适应度函数，所以遗传算法提供了一种求解复杂系统问题的通用框架，不依赖于问题的具体领域，对问题的种类有很强的鲁棒性，广泛应用于许多场景。</p>
 <span id="more"></span>
 
 <p>&nbsp;</p>
-<h2 id="UNREAL"><a href="#UNREAL" class="headerlink" title="UNREAL"></a>UNREAL</h2><p>&emsp;&emsp;UNREAL模型分为4部分：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213160657.png" alt="image-20220213160612491" style="zoom: 50%;" />
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>&emsp;&emsp;遗传算法（Genetic Algorithm）是一类借鉴生物界的进化规律（遗传变异、优胜劣汰、适者生存）演化而来的随机化搜索方法。与其说遗传算法是一类算法，不如说是一种处理问题的思想。它包括5个核心组件：</p>
+<h4 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h4><p>&emsp;&emsp;在遗传算法的建模中，编码是关键。在遗传算法中，遗传空间的染色体或者个体建模为一系列bit位的0、1二进制数值串，也就是说需要把原问题的解空间一一映射为二进制定长数值串，后续的遗传、基因重组、变异都是在数值串基础上进行的。</p>
+<p>评估编码策略有以下3个规范：</p>
+<ul>
+<li>完备性(completeness)：问题解空间中的所有解都能被映射为GA空间中的某个点(染色体)</li>
+<li>健全性(soundness)：GA空间中的染色体能对应问题解空间中的所有解</li>
+<li>非冗余性(nonredundancy)：染色体和候选解一一对应</li>
+</ul>
+<h4 id="适应度"><a href="#适应度" class="headerlink" title="适应度"></a>适应度</h4><p>&emsp;&emsp;进化论中的适应度（fitness），是表示某一个体对环境的适应能力，也表示该个体繁殖后代的能力。那么遗传算法的适应度函数相应就是用来表示该个体实现问题目标的优劣程度，也叫评价函数，类似强化学习中的奖励函数。</p>
+<p>&emsp;&emsp;遗传算法在搜索进化过程中一般不需要其他外部信息，仅用评估函数来评估个体或解的优劣，并作为以后遗传操作的依据。由于遗传算法中，适应度函数要比较排序并在此基础上计算选择概率，所以适应度函数的值要取<strong>正值</strong>，所以适应度函数必须是求最大值形式且非负的。适应度函数的设计主要满足以下条件：</p>
+<ul>
+<li><p>单值、连续、非负、最大化</p>
+</li>
+<li><p>合理、一致性</p>
+</li>
+<li><p>计算量小</p>
+</li>
+<li><p>通用性强</p>
+</li>
+</ul>
+<p>在具体应用中，适应度函数的设计要结合求解问题本身的要求而定。适应度适应度函数设计直接影响到遗传过程的收敛和性能。</p>
+<h4 id="初始种群"><a href="#初始种群" class="headerlink" title="初始种群"></a>初始种群</h4><p>遗传算法中初始群体中的个体是随机产生的。一般来讲，初始群体的设定可采取如下的策略:</p>
+<ul>
+<li>根据问题固有知识，设法把握最优解所占空间在整个问题空间中的分布范围，然后，在此分布范围内设定初始群体</li>
+<li>先随机生成一定数目的个体，然后从中挑出最好的个体加到初始群体中。这种过程不断迭代，直到初始群体中个体数达到了预先确定的规模</li>
+</ul>
+<h4 id="遗传算子"><a href="#遗传算子" class="headerlink" title="遗传算子"></a>遗传算子</h4><p><strong>基因选择</strong></p>
+<p>&emsp;&emsp;从群体中选择优胜的个体，淘汰劣质个体的操作叫选择。选择算子有时又称为再生算子（reproduction operator）。选择的目的是把优化的个体（或解）直接遗传到下一代或通过配对交叉产生新的个体再遗传到下一代。选择操作是建立在群体中个体的适应度评估基础上的，常用的选择算子有以下几种：适应度比例方法（常用）、随机遍历抽样法、局部选择法。</p>
+<p><strong>基因重组</strong></p>
+<p>&emsp;&emsp;在自然界生物进化过程中起核心作用的是生物遗传基因的重组（加上变异）。同样，遗传算法中起核心作用的是遗传操作的交叉算子。所谓交叉是指把被选择出来的两个父代个体的部分结构加以替换重组而生成新个体的操作，实际上是在解空间中较优解附近有“指向性地”进行探索。</p>
+<p><strong>基因突变</strong></p>
+<p>&emsp;&emsp;变异算子的基本内容是对群体中的个体随机基因上的基因值（二进制数值串随机bit位）作变动。遗传算法引入变异的目的有两个：</p>
+<ol>
+<li>使遗传算法具有局部的随机搜索能力，当遗传算法通过交叉算子已接近最优解邻域时，利用变异算子的这种局部随机搜索能力可以加速向最优解收敛。显然，此种情况下的变异概率应取较小值，否则接近最优解的积木块会因变异而遭到破坏</li>
+<li>使遗传算法可维持群体多样性，以防止出现未成熟收敛现象。也就是说搜索的前期，突变概率应取较大值</li>
+</ol>
+<h4 id="中止条件"><a href="#中止条件" class="headerlink" title="中止条件"></a>中止条件</h4><p>&emsp;&emsp;当最优个体的适应度达到给定的阈值，或者最优个体的适应度和群体适应度不再上升时，或者迭代次数达到预设的代数时，算法收敛、终止。</p>
+<p>&nbsp;</p>
+<h2 id="算法流程"><a href="#算法流程" class="headerlink" title="算法流程"></a>算法流程</h2><p>&nbsp;</p>
+<h2 id="示例一：背包问题"><a href="#示例一：背包问题" class="headerlink" title="示例一：背包问题"></a>示例一：背包问题</h2><p>背包问题（Knapsack problem）是一种组合优化的NP完全问题。问题可以描述为：给定一组物品，每种物品都有自己的重量和价格，在限定的总重量内，如何选择才能使得物品的总价格最高。</p>
+<p>问题的名称来源于如何选择最合适的物品放置于给定背包中，相似问题经常出现在商业、组合数学，计算复杂性理论、密码学和应用数学等领域中。</p>
+<p><strong>场景</strong></p>
+<p>现在假设有一个承重80的包，还有6个物体：</p>
+<table>
+<thead>
+<tr>
+<th>物体</th>
+<th>质量</th>
+<th>价值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>10</td>
+<td>15</td>
+</tr>
+<tr>
+<td>2</td>
+<td>15</td>
+<td>25</td>
+</tr>
+<tr>
+<td>3</td>
+<td>20</td>
+<td>35</td>
+</tr>
+<tr>
+<td>4</td>
+<td>25</td>
+<td>45</td>
+</tr>
+<tr>
+<td>5</td>
+<td>30</td>
+<td>55</td>
+</tr>
+<tr>
+<td>6</td>
+<td>35</td>
+<td>70</td>
+</tr>
+</tbody></table>
+<p><strong>编码</strong></p>
+<p><strong>初始种群</strong></p>
+<p><strong>适性度</strong></p>
+<p><strong>遗传</strong></p>
+<p><strong>迭代至收敛</strong></p>
+<p><strong>代码</strong></p>
+<p><strong>效果</strong></p>
+<p>&nbsp;</p>
+<h2 id="示例二：凸函数最大值"><a href="#示例二：凸函数最大值" class="headerlink" title="示例二：凸函数最大值"></a>示例二：凸函数最大值</h2><p><strong>场景</strong></p>
+<p>求二元函数 <code>z(x,y) = y*sin(x) + x*cos(y)</code> 的最大值点，使用matlab绘制图像如下：</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[x,y] = <span class="built_in">meshgrid</span>(<span class="number">-10</span>:<span class="number">0.01</span>:<span class="number">10</span>);</span><br><span class="line">z = y.*<span class="built_in">sin</span>(x)+x.*<span class="built_in">cos</span>(y);</span><br><span class="line">mesh(x,y,z),xlabel(<span class="string">&#x27;x&#x27;</span>),ylabel(<span class="string">&#x27;y&#x27;</span>),zlabel(<span class="string">&#x27;z&#x27;</span>)</span><br></pre></td></tr></table></figure>
 
-<p>&nbsp;</p>
-<h3 id="主任务-A3C"><a href="#主任务-A3C" class="headerlink" title="主任务 A3C"></a>主任务 A3C</h3><p>&emsp;&emsp;如上图(a)部分所示，UNREAL的主任务是一个普通的基于 A3C 模型的 Agent，网络结构为 CNN-LSTM，也就是一个前半部分为卷积神经网络、后半部分为 LSTM 的网络结构。其训练方式和 A3C 模型没有本质区别，使用的损失函数也是 A3C 模型的，唯一值得一提的是 LSTM 部分，它带来的好处就是能记忆这一帧的前n帧内容对当前内容的影响。传统的DQN模型使用4个连续的帧组成了一个完整输入模型的 x，使用 LSTM 网络来实现记忆功能。</p>
-<p>&emsp;&emsp;在图中，三角形代表卷积神经网络层，圆形代表 LSTM 网络层。最后一次 Feature Map 的后面有两个不同的后端网络：一个是V网络，用于拟合状态估值；另一个是π网络，用于学习策略。4张输入的图片是连续4帧按时间序列逐一输入网络的。在这个过程中收集的 Transition 信息放入 Replay Buffer中。</p>
-<p>&nbsp;</p>
-<h3 id="像素控制任务"><a href="#像素控制任务" class="headerlink" title="像素控制任务"></a>像素控制任务</h3><p>&emsp;&emsp;如上图(b)部分所示，UNREAL的像素控制任务（Pixel Control）要训练一个辅助策略网络 <code>Qaux</code>，希望能够通过训练把输入图片的不同区域的像素强度（Pixel Intensity）最大化。从形式上看，这部分就是对从 Replay Buffer 中取出的一帧图像进行<strong>反卷积</strong>（deconvolution）。</p>
-<p>&emsp;&emsp;反卷积又称为转置卷积（Transposed Convolution），是一种升采样的手段。与深度学习中的降采样 Max Pooling、Average Pooling等手段目的相反，反卷积对数据进行升维。卷积运算可以视为是 <code>原始像素矩阵</code> 左乘一个 <code>卷积核构成的矩阵</code>，得到一个 <code>压缩尺寸的像素矩阵</code>；而反卷积就是把 <code>压缩尺寸的像素矩阵</code> 左乘 <code>卷积核矩阵的转置</code>，从而还原回 <code>原始像素矩阵的尺寸</code>，但是要注意，这样说只是在维度上进行解释，实际反卷积使用的矩阵元素值与卷积时的矩阵无关，通过梯度下降优化。</p>
-<p>&emsp;&emsp;在这个任务中，网络的前半部分和主任务共享一套 CNN 和 LSTM，只是后半部分的反卷积神经网络是其独有的。最终输出一个 <code>Nact×n×n</code> 的矩阵，称为 <code>Qaux</code>。其中 <code>Nact</code> 表示动作空间的数量，n×n 表示像素快。矩阵 <code>Qaux(a, i, j)</code> 的含义是：执行动作a，下一帧画面变为 i×j 这个矩阵描述的内容。训练时使用 MSE Loss 计算两帧画面像素矩阵的差。</p>
-<p>&nbsp;</p>
-<h3 id="奖励值预测"><a href="#奖励值预测" class="headerlink" title="奖励值预测"></a>奖励值预测</h3><p>&emsp;&emsp;如上图(c)部分所示，奖励值预测是根据相邻的3帧图像 <code>τ-3</code>、<code>τ-2</code>、<code>τ-1</code> 预测下一帧图像 <code>τ</code> 的奖励值，是个典型的回归问题、监督学习场景。网络的前半部分也是用了主任务的 CNN，而后半部分负责从 CNN 提取后的特征中对Reward进行预测。论文中专门配了一幅图，左边表示机器人在迷宫中的视角，右边表示“上帝视角”。这幅图说明了一种非常典型的情况：如果吃到前面的苹果，可以得到+1的奖励值；如果还能吃到更远处的糖葫芦，可以得到+10奖励且游戏重新开始。</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213182224.png" alt="image-20220213182224554" style="zoom:50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220216230845.svg" alt="untitled" style="zoom:50%;" />
 
-<p>&nbsp;</p>
-<h3 id="值函数回放"><a href="#值函数回放" class="headerlink" title="值函数回放"></a>值函数回放</h3><p>&emsp;&emsp;如上图(d)部分所示，是值函数回放（Value Function Replay）部分。论文里没有给出实现值函数回放的具体方案，不过说明了几个要点。首先对收集到的 Replay Memory 中的 Transition 信息做了分类：一类叫做“Rewarding Subset”，即：带有回报的 Transition；另一类叫做“Non-Rewarding Subset”，即：无回报的 Transition。因为游戏中并非苹果满地，所以有回报的 Transition 其实是小样本集合，很稀疏。文中对此采用了<strong>过采样</strong>（Oversampling）的方式来处理。</p>
-<p>&emsp;&emsp;过采样是机器学习中面对分布较偏的样本的技巧。比如一个二分类数据集，样本A只占5%，其他95%都是样本B，那么可以通过把样本A复制18份，从而提高模型对样本B的“谨慎性”，即至少不会太过容易判断为B而取得高的准确率，但这样做会不可避免地导致对样本A的判断出现过拟合，因为单纯数量的增加并不能使样本集中蕴含的特征变得丰富。</p>
-<p>&emsp;&emsp;为了应对上述情况，大牛们提出一种叫作 <strong>SMOTE</strong>（Synthetic Minority Oversampling Technique）的算法进一步增强过采样的效果。大致是插值的思想，即对小样本集做聚类分析，同一类下“距离”最近的两、三个样本按自定义的比例融合出一个新的样本，由此来自行制造补充稀缺样本。</p>
-<p>&nbsp;</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>&emsp;&emsp;UNREAL模型期望通过一些辅助性质的工作来尽可能实现自动化的高效训练过程。主要体现为损失函数有很多因素组成，这些因素反映每个辅助工作的完成效果。</p>
+<p><strong>编码</strong></p>
+<p><strong>初始种群</strong></p>
+<p><strong>适性度</strong></p>
+<p><strong>遗传</strong></p>
+<p><strong>迭代至收敛</strong></p>
+<p><strong>代码</strong></p>
+<p><strong>效果</strong></p>
 
     </div>
 
@@ -337,7 +415,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://sharp-rookie.github.io/2022/02/13/%E3%80%90%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E3%80%91UNREAL%EF%BC%9A%E7%A3%A8%E5%88%80%E4%B8%8D%E8%AF%AF%E7%A0%8D%E6%9F%B4%E5%B7%A5/" title="【强化学习】UNREAL：磨刀不误砍柴工">https://sharp-rookie.github.io/2022/02/13/【强化学习】UNREAL：磨刀不误砍柴工/</a>
+    <a href="https://sharp-rookie.github.io/2022/02/16/%E3%80%90%E5%90%AF%E5%8F%91%E5%BC%8F%E7%AE%97%E6%B3%95%E3%80%91%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%20GA/" title="【启发式算法】遗传算法 GA">https://sharp-rookie.github.io/2022/02/16/【启发式算法】遗传算法 GA/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -348,9 +426,8 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/AI/" rel="tag"># AI</a>
-              <a href="/tags/Reinforcement-Learning/" rel="tag"># Reinforcement Learning</a>
               <a href="/tags/Algorithm/" rel="tag"># Algorithm</a>
+              <a href="/tags/%E4%BC%98%E5%8C%96%E9%97%AE%E9%A2%98/" rel="tag"># 优化问题</a>
           </div>
 
         
@@ -359,13 +436,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/02/13/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91Token%20Bucket%E7%9A%84%E5%BA%94%E7%94%A8/" rel="prev" title="Token Bucket的应用调研">
-      <i class="fa fa-chevron-left"></i> Token Bucket的应用调研
+    <a href="/2022/02/14/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%915G%20network%20slices%20resource%20orchestration%20using%20Machine%20Learning%20techniques/" rel="prev" title="5G network slices resource orchestration using Machine Learning techniques">
+      <i class="fa fa-chevron-left"></i> 5G network slices resource orchestration using Machine Learning techniques
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2022/02/14/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%915G%20network%20slices%20resource%20orchestration%20using%20Machine%20Learning%20techniques/" rel="next" title="5G network slices resource orchestration using Machine Learning techniques">
-      5G network slices resource orchestration using Machine Learning techniques <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -425,7 +499,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#UNREAL"><span class="nav-text">UNREAL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E4%BB%BB%E5%8A%A1-A3C"><span class="nav-text">主任务 A3C</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%83%8F%E7%B4%A0%E6%8E%A7%E5%88%B6%E4%BB%BB%E5%8A%A1"><span class="nav-text">像素控制任务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A5%96%E5%8A%B1%E5%80%BC%E9%A2%84%E6%B5%8B"><span class="nav-text">奖励值预测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%80%BC%E5%87%BD%E6%95%B0%E5%9B%9E%E6%94%BE"><span class="nav-text">值函数回放</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%96%E7%A0%81"><span class="nav-text">编码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%82%E5%BA%94%E5%BA%A6"><span class="nav-text">适应度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E7%A7%8D%E7%BE%A4"><span class="nav-text">初始种群</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%81%97%E4%BC%A0%E7%AE%97%E5%AD%90"><span class="nav-text">遗传算子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%AD%E6%AD%A2%E6%9D%A1%E4%BB%B6"><span class="nav-text">中止条件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B"><span class="nav-text">算法流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B%E4%B8%80%EF%BC%9A%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98"><span class="nav-text">示例一：背包问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B%E4%BA%8C%EF%BC%9A%E5%87%B8%E5%87%BD%E6%95%B0%E6%9C%80%E5%A4%A7%E5%80%BC"><span class="nav-text">示例二：凸函数最大值</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
