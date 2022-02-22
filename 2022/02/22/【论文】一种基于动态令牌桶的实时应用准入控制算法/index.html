@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"sharp-rookie.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+<script> 
+   (function(){
+          if(''){
+              if (prompt('请输入文章密码') !== ''){
+                  alert('密码错误！');
+                  history.back();
+              }
+          }
+      })();
+  </script>
+  <meta name="description" content="摘要&amp;emsp;&amp;emsp;现有分组交换网络（例如 Internet）的“尽力而为”服务质量（QoS）不能很好地支持来自交互式实时网络应用程序的数据连续传输。为了提供 QoS 支持，准入控制机制必须确保一个新的数据流能获得其请求的 QoS，同时不会影响其他已经存在于网络中的数据流的 QoS。 &amp;emsp;&amp;emsp;当前的准入控制方法通常是基于参数或基于测量的 [1]。基于参数的方法取决于先验的交">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一种基于动态令牌桶的实时应用准入控制算法">
+<meta property="og:url" content="https://sharp-rookie.github.io/2022/02/22/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91%E4%B8%80%E7%A7%8D%E5%9F%BA%E4%BA%8E%E5%8A%A8%E6%80%81%E4%BB%A4%E7%89%8C%E6%A1%B6%E7%9A%84%E5%AE%9E%E6%97%B6%E5%BA%94%E7%94%A8%E5%87%86%E5%85%A5%E6%8E%A7%E5%88%B6%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:site_name" content="最忆是江南">
+<meta property="og:description" content="摘要&amp;emsp;&amp;emsp;现有分组交换网络（例如 Internet）的“尽力而为”服务质量（QoS）不能很好地支持来自交互式实时网络应用程序的数据连续传输。为了提供 QoS 支持，准入控制机制必须确保一个新的数据流能获得其请求的 QoS，同时不会影响其他已经存在于网络中的数据流的 QoS。 &amp;emsp;&amp;emsp;当前的准入控制方法通常是基于参数或基于测量的 [1]。基于参数的方法取决于先验的交">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220222151235.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220222151312.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220222151809.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220222152031.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220222152208.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220222152310.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220222153132.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220222153110.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220222153558.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220222153701.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220222153751.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220222153803.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220222154055.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220222154127.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220222161807.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220222162025.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220222162043.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220222163220.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220222163703.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220222164415.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220222164428.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220222164748.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220222164838.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220222165743.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220222154055.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220222170407.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220222170458.png">
+<meta property="article:published_time" content="2022-02-22T09:12:35.361Z">
+<meta property="article:modified_time" content="2022-02-22T09:10:00.926Z">
+<meta property="article:author" content="Lrk612">
+<meta property="article:tag" content="Network Slice">
+<meta property="article:tag" content="Resource Management">
+<meta property="article:tag" content="Token Bucket">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220222151235.png">
+
+<link rel="canonical" href="https://sharp-rookie.github.io/2022/02/22/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91%E4%B8%80%E7%A7%8D%E5%9F%BA%E4%BA%8E%E5%8A%A8%E6%80%81%E4%BB%A4%E7%89%8C%E6%A1%B6%E7%9A%84%E5%AE%9E%E6%97%B6%E5%BA%94%E7%94%A8%E5%87%86%E5%85%A5%E6%8E%A7%E5%88%B6%E7%AE%97%E6%B3%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>一种基于动态令牌桶的实时应用准入控制算法 | 最忆是江南</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+        <a target="_blank" rel="noopener" href="https://github.com/Sharp-rookie" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">最忆是江南</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Love actually is all around</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th-list fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-friendlink">
+
+    <a href="/friendlink/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="fa fa-download fa-fw"></i>资源</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://sharp-rookie.github.io/2022/02/22/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91%E4%B8%80%E7%A7%8D%E5%9F%BA%E4%BA%8E%E5%8A%A8%E6%80%81%E4%BB%A4%E7%89%8C%E6%A1%B6%E7%9A%84%E5%AE%9E%E6%97%B6%E5%BA%94%E7%94%A8%E5%87%86%E5%85%A5%E6%8E%A7%E5%88%B6%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Lrk612">
+      <meta itemprop="description" content="Lrk's blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="最忆是江南">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          一种基于动态令牌桶的实时应用准入控制算法
+        </h1>
+
+        <div class="post-meta">
+         
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-02-22 17:12:35" itemprop="dateCreated datePublished" datetime="2022-02-22T17:12:35+08:00">2022-02-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">论文阅读</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2022/02/22/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91%E4%B8%80%E7%A7%8D%E5%9F%BA%E4%BA%8E%E5%8A%A8%E6%80%81%E4%BB%A4%E7%89%8C%E6%A1%B6%E7%9A%84%E5%AE%9E%E6%97%B6%E5%BA%94%E7%94%A8%E5%87%86%E5%85%A5%E6%8E%A7%E5%88%B6%E7%AE%97%E6%B3%95/" class="post-meta-item leancloud_visitors" data-flag-title="一种基于动态令牌桶的实时应用准入控制算法" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/02/22/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91%E4%B8%80%E7%A7%8D%E5%9F%BA%E4%BA%8E%E5%8A%A8%E6%80%81%E4%BB%A4%E7%89%8C%E6%A1%B6%E7%9A%84%E5%AE%9E%E6%97%B6%E5%BA%94%E7%94%A8%E5%87%86%E5%85%A5%E6%8E%A7%E5%88%B6%E7%AE%97%E6%B3%95/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/02/22/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91%E4%B8%80%E7%A7%8D%E5%9F%BA%E4%BA%8E%E5%8A%A8%E6%80%81%E4%BB%A4%E7%89%8C%E6%A1%B6%E7%9A%84%E5%AE%9E%E6%97%B6%E5%BA%94%E7%94%A8%E5%87%86%E5%85%A5%E6%8E%A7%E5%88%B6%E7%AE%97%E6%B3%95/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>&emsp;&emsp;现有分组交换网络（例如 Internet）的“尽力而为”服务质量（QoS）不能很好地支持来自交互式实时网络应用程序的数据连续传输。为了提供 QoS 支持，准入控制机制必须确保一个新的数据流能获得其请求的 QoS，同时不会影响其他已经存在于网络中的数据流的 QoS。</p>
+<p>&emsp;&emsp;当前的准入控制方法通常是基于参数或基于测量的 [1]。基于参数的方法取决于先验的交通特征，缺点是无法预先准确地表征大量突发流量。基于测量的方法 [1-4] 侧重于为可以容忍某些 QoS 恶化的实时应用程序实现更高的资源利用率，基于实际交通量的测量值。因此，基于测量的准入控制过程能够更好地利用可用于实时流量的带宽。</p>
+<p>&emsp;&emsp;文章提出了基于测量的准入控制方案，根据观察到的实时流量源的QoS 要求和其他性能指标的不同组合，调整 r 和 b 来处理网络条件的变化。</p>
+<p><strong>原文</strong></p>
+<p><a target="_blank" rel="noopener" href="https://lrk612.com/resources/Adaptive%20resource%20negotiation%20based%20control%20for%20real%20time%20applications.pdf">Adaptive resource negotiation based control for real time applications</a></p>
+<span id="more"></span>
+
+<p>&nbsp;</p>
+<h2 id="Token-Bucket-模型反映流量特征"><a href="#Token-Bucket-模型反映流量特征" class="headerlink" title="Token Bucket 模型反映流量特征"></a>Token Bucket 模型反映流量特征</h2><p>&emsp;&emsp;文章提出的准入控制算法中，每个数据源的流量特征用token bucket模型来描述，具体就是用参数 <code>(r ，b)</code> 来描述，其中 <code>r</code> 是令牌生成速率、<code>b</code> 是令牌桶大小（bits）。假设数据包长度随机，且进入网络传输的数据包必须完整不能拆分。所以令牌数量小于数据包大小时就不允许传输，必须进入等待队列，等令牌生成足够。此时该数据包就产生了<strong>排队时延</strong>。令牌桶的参数应该根据源的流量模式（Traffic Pattern）来选择，以便在这个队列中产生的延迟相当小。鉴于此，文章提出一种动态且灵活的机制来调整令牌桶的参数。</p>
+<p>&emsp;&emsp;为了不产生排队时延，可以把队列长度设置为0。但这也会导致没有足够数量token的数据包会被截断并丢弃。流量源的<strong>截断率</strong>是反映其当前的令牌桶参数 <code>(r ，b)</code> 是否适合的重要指标。</p>
+<p>&emsp;&emsp;在文章提出的方案中，考虑了两个应用程序类型，其中第 1 类应用程序的输入缓冲区队列设置为 0，第 2 类应用程序允许输入缓冲区的最坏情况排队延迟为 10 毫秒。这里最坏情况的排队延迟定义为 <code>Q/r</code>，<code>Q</code> 是输入缓冲区的大小。</p>
+<h3 id="r、b-的上下限"><a href="#r、b-的上下限" class="headerlink" title="r、b 的上下限"></a>r、b 的上下限</h3><p>对于特定的流量源，假设在时间 <code>t0</code> 开始执行测量，测量间隔中有 <code>T</code> 个数据包到达。令 <code>tn</code> 为该间隔中大小为 <code>Pn</code> 的第 <code>n</code> 个数据包的到达时刻，令 <code>b0</code> 表示 <code>t0</code> 时刻令牌桶中的初始令牌数。直观地说，如果令牌生成率 <code>r</code> 太小，那么无论 <code>b</code> 的值如何，桶中都没有足够的令牌用于所有传入的数据包。假设 <code>b</code> 和 <code>r</code> 都设置得当，不会因为令牌桶溢出而丢失令牌，并且基本测量块是 <code>T</code> 个分组传输单元的测量窗口，满足无延迟要求的必要条件是：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220222151235.png" alt="image-20220222151235427" style="zoom:43%;" />
+
+<p>其中 <code>r</code> 定义如下：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220222151312.png" alt="image-20220222151312918" style="zoom:43%;" />
+
+<p>其中 <code>t0</code> 是测量块开始的时刻，<code>tn</code> 是在 <code>t0</code> 之后到达的第 <code>n</code> 个数据包的到达时刻，<code>T</code> 是在测量间隔内到达的数据包总数。如果初始令牌计数设置为 0，则 <code>r_min</code> 恰为该流量模式的平均比特率。</p>
+<hr>
+<p><code>r</code> 的值可以取很高，但没必要太大，因为这样会由于令牌桶溢出而造成令牌浪费。最大 <code>r</code> 值满足在每个间隔期间生成的令牌数足够每个新数据包的发送即可，即：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220222151809.png" alt="image-20220222151808963" style="zoom:43%;" />
+
+<p>如果初始令牌数设置为 0，则 <code>r_max</code> 恰为流量源的峰值比特率。</p>
+<hr>
+<p>由于系统只会将完整的数据包传入网络，因此令牌的最小数量必须大于数据包的大小。当 <code>r</code> 取最大值时，<code>b</code> 可以取最小值：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220222152031.png" alt="image-20220222152030992" style="zoom:43%;" />
+
+<p>其中 <code>M</code> 是最大数据包大小，在 IETF 集成服务规范 [5] 中有定义。</p>
+<hr>
+<p>令 <code>b(r)_n</code> 表示在数据包 <code>n</code> 到达之前累积的令牌数。假设令牌桶不会溢出，则有：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220222152208.png" alt="image-20220222152208908" style="zoom:43%;" />
+
+<p>因此，最大 <code>b</code> 值为：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220222152310.png" alt="image-20220222152310749" style="zoom:43%;" />
+
+
+
+<h3 id="在给定-r-和队列大小，求-b-的最优值"><a href="#在给定-r-和队列大小，求-b-的最优值" class="headerlink" title="在给定 r 和队列大小，求 b 的最优值"></a>在给定 r 和队列大小，求 b 的最优值</h3><p>令 <code>d_n = t_n-t_n-1</code> 表示数据包 <code>n</code> 和 <code>n-1</code> 之间的到达间隔时间，其中 <code>n=1,2,……,T</code>。令 <code>b(r)_n</code> 表示在数据包 <code>n</code> 到达之前的瞬间桶中的令牌数。由于 <code>b(r)_n</code> 不能超过令牌桶大小 <code>b</code>，有：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220222153132.png" alt="image-20220222153132920" style="zoom:43%;" />
+
+<p>其中 <code>J_n</code> 是在 <code>t_n</code> 时刻数据包 <code>n</code> 到达之前已经传输的最后一个包的索引。</p>
+<p>注意，如果<code>J_n = J_n-1</code>，则说明在 <code>dn</code> 中没有数据包传输，即：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220222153110.png" alt="image-20220222153110151" style="zoom:43%;" />
+
+<hr>
+<p>如果缓冲队列大小为 <code>Q</code>，那么如要实现无丢包，<code>Q</code> 应该足够大以容纳仍在等待令牌的比特总数。因此有：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220222153558.png" alt="image-20220222153558646" style="zoom:43%;" />
+
+<p>综上可得：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220222153701.png" alt="image-20220222153701196" style="zoom:43%;" />
+
+<p>如要满足上不等式，则必须同时满足：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220222153751.png" alt="image-20220222153751645" style="zoom:43%;" />
+
+<p>和</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220222153803.png" alt="image-20220222153803525" style="zoom:43%;" />
+
+<hr>
+<p>对于<code>n = T, =T-1,T-2,……,1</code> 、令牌速率 <code>r</code>、队列长度 <code>Q</code>，满足数据包无损传输的 b 的最小值为：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220222154055.png" alt="image-20220222154055858" style="zoom:43%;" />
+
+<hr>
+<p>如果缓冲队列长度为0，则：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220222154127.png" alt="image-20220222154127454" style="zoom:43%;" />
+
+<hr>
+<p>显然，<code>b_no_Q</code> &gt; <code>b_opt</code>，因为无队列令牌桶要保留比有队列令牌桶更多的资源。这也代表着在资源利用率和 QoS 性能之间的权衡。使用队列时，突发流量将被平滑，因此派生的令牌桶参数比无队列情况下的要求更低，并且更好地利用网络资源。</p>
+<p>&nbsp;</p>
+<h2 id="准入控制和资源再协调方案"><a href="#准入控制和资源再协调方案" class="headerlink" title="准入控制和资源再协调方案"></a>准入控制和资源再协调方案</h2><h3 id="准入控制决策"><a href="#准入控制决策" class="headerlink" title="准入控制决策"></a>准入控制决策</h3><p>&emsp;&emsp;文中假设网络流量由实时和非实时应用程序组成，只有实时应用程序需要明确的准入控制程序，而非实时应用程序继续使用传统的“尽力而为”服务。</p>
+<p>&emsp;&emsp;基于测量的准入控制方案最适合具有高聚合度的链路，如果聚合水平较低，即使平均到达率相当高，测量的到达率也可能在很长一段时间内保持较低水平。如果发生这种情况，那么系统可能会接纳比应有的更多的新数据流。当到达率恢复到更正常的较高水平时，会产生后续问题。基于此，对于具有低聚合级别的链路，准入控制过程可以简单地基于准入流的峰值速率；而对于具有更高级别聚合的链路，基于测量的准入控制程序可能会带来很大的好处。</p>
+<p>&emsp;&emsp;准入决定基于新数据流 <code>α</code> 的最坏情况流量，由令牌桶 <code>&#123;b_α, r_α&#125;</code> 建模。在 [7]中已经证明，如果为此数据流保留最小带宽是 <code>r_α</code>，那么最坏情况的排队延迟是 <code>b_α</code> / <code>r_α</code>。在最坏情况下，只要网络可以缓冲 <code>b_α</code> 大小的突发并提供至少与 <code>r_α</code> 相同的持续速率，就可以保证不丢失来自源的数据包。</p>
+<hr>
+<p>对于总容量为 C 的链路，以下条件指导准入决定：</p>
+<ul>
+<li><p>资源状况</p>
+<p>  接纳新数据流后的总带宽使用量不能超过 mC，其中 m 是链路容量的选定部分。用 <code>ρ_i</code> 表示现有数据流的第 <code>i</code> 类的估计总流量速率，<code>ρ_α</code> 表示新数据流 <code>α</code> 的流量速率（注意：<code>ρ_α</code> = <code>r_α</code> ），则有：</p>
+  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220222161807.png" alt="image-20220222161806959" style="zoom:43%;" /></li>
+<li><p>QoS状况</p>
+<p>  接纳新数据流不能影响相同优先级数据流的延迟限制。假设数据流 <code>α</code> 来自 <code>k</code> 类，那么最坏情况下估计 k 类的新延迟为：</p>
+  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220222162025.png" alt="image-20220222162025857" style="zoom:43%;" />
+
+<p>  其中：</p>
+  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220222162043.png" alt="image-20220222162043365" style="zoom:43%;" />
+
+<p>  是在准入数据流 <code>α</code> 之前的聚合类 <code>k</code> 的延迟，可以通过测量现有流量的聚合速率来获得。在准入数据流 <code>α</code> 之后，聚合类 <code>k</code> 的延迟与 <code>b_α</code> 成线性关系</p>
+</li>
+</ul>
+<hr>
+<p>文章使用静态优先级方案来研究这种基于测量的准入控制方案。因此，新类 <code>k</code> 的准入也会影响优先级更低的类 <code>j</code> 的延迟。</p>
+<p>有：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220222163220.png" alt="image-20220222163220080" style="zoom:43%;" />
+
+<p>其中 <code>Dj</code> 是准入数据流 <code>α</code> 之前的 j 类数据流的总延迟。注意，新数据流 <code>α</code> 不会影响优先级高于其类型的数据流的排队延迟。</p>
+<h3 id="参数测量"><a href="#参数测量" class="headerlink" title="参数测量"></a>参数测量</h3><ol>
+<li><p>时延</p>
+<p> 测量变量 <code>Di</code> 跟踪 <code>I</code> 类数据流的估计最大排队延迟。使用 T 个数据包传输单元的测量窗口作为基本测量块。<code>Di</code> 的值在测量块结束时更新，以反映在测量块中看到的最大数据包延迟，即：</p>
+ <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220222163703.png" alt="image-20220222163703206" style="zoom:43%;" />
+
+<p> 其中 <code>dk</code> 是测量块中第 <code>k</code> 个传输单元的分组排队延迟</p>
+</li>
+<li><p>速率</p>
+<p> 测量变量 <code>∑ρ</code> 跟踪第 <code>i</code> 类数据流的最高采样流量速率。通过计算 S 个传输单元的平均比特率，在大小为 S 个单元的平均周期结束时获得每个测量样本。大小为 T(=nS) 单位的测量块包含 n 个测量样本，表示为 <code>S1, S2, ……,Sn</code>。在测量块结束时，使用 S 中的 n 个平均周期的最高平均比特率更新 <code>∑ρ</code> ：</p>
+ <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220222164415.png" alt="image-20220222164415266" style="zoom:43%;" />
+
+ <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220222164428.png" alt="image-20220222164428514" style="zoom:43%;" />
+
+<p> 其中 <code>Pm</code> 是第 <code>m</code> 个数据包的数据包大小，<code>ts</code> 是大小为 <code>S</code> 个单位的平均周期内最后一个数据包的到达时间</p>
+</li>
+</ol>
+<p>对于以下特殊情况，可以更快地更新估计值，以提高方案的响应能力：</p>
+<ul>
+<li><p>如果在测量块的中间准入了一个新的数据流，则先前估计的延迟和速率（即在前一个测量块结束时采用的那些）立即更新：</p>
+  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220222164748.png" alt="image-20220222164748070" style="zoom: 43%;" />
+
+  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220222164838.png" alt="image-20220222164838619" style="zoom:30%;" /></li>
+<li><p>当测量块中的平均周期的一次测量超过目前的估计值时，则立即更新（一超过就更新）</p>
+</li>
+</ul>
+<h3 id="资源再协调"><a href="#资源再协调" class="headerlink" title="资源再协调"></a>资源再协调</h3><p>当流量源的丢包率大于用户指定的丢包率 <code>L</code> 或 一段时间内没有发现丢包时，开启资源再协调过程。</p>
+<hr>
+<p>初始令牌速率 <code>r</code> 设置为 <code>rmax</code>（=峰值比特率，<code>P</code>），初始令牌大小设为 <code>bmin</code>（=最大数据包尺寸，M）。如前所述，令牌桶参数的这组值满足无丢失无延迟条件。随后进行资源再协调时，<code>r</code> 的值是实际测量的平均数据速率：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220222165743.png" alt="image-20220222165743204" style="zoom:30%;" />
+
+<p><code>b</code> 的最佳值由上面的公式计算得出：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220222154055.png" alt="image-20220222154055858" style="zoom:43%;" />
+
+<p>令牌桶参数的最优值也可以根据用户的QoS要求和实时流量情况进行调整。</p>
+<hr>
+<p>文章提出的用于主机系统和中间节点的自适应资源协调准入控制方案的流程图如图 1 和图 2 所示。</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220222170407.png" alt="image-20220222170407318" style="zoom:45%;" />
+
+<center>图1 for主机系统</center>
+
+<p>最初，用户指定其 QoS 参数要求（例如L 和 D) 和应用参数（例如P 和 M）。数据源将初始令牌率和令牌大小值分别设置为 <code>rmax</code> 和 <code>bmin</code>。呼叫准入“请求包”将从源发送到目的地，“请求包”由令牌桶参数和QoS参数信息组成。当一个中间节点（例如路由器）从数据源或前一个节点接收到呼叫准入包，在做出准入决定时会考虑资源条件和QoS条件。只有当这两个条件都满足，呼叫准入请求包才会被中继到下一个路由器，否则会向源返回一个“拒绝包”。只有当路径上的所有网络节点都准入该数据流时，该请求才会被准入。在这种情况下，“请求数据包”最终会到达目的地，而目的地将向源发送一个“准入数据包”。当数据源接收到来自目标的“接受数据包”时，数据源将开始向目标发送数据包。随后，它将定期检测丢包率。只要丢包率超过用户指定的丢包率 <code>L</code>，或者在一定时间内没有丢包，就会启动资源再协调过程。将计算 <code>r</code> 和 <code>b</code> 的最佳值并将其用于资源再协调过程。资源再协调过程遵循与上述呼叫准入过程相同的过程。不过在资源再协调时，即使“请求包”被拒绝，数据源仍然可以使用其先前的参数继续发送数据包。</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220222170458.png" alt="image-20220222170458869" style="zoom:45%;" />
+
+<center>图2 for中间节点</center>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>第 4 节通过使用各种网络拓扑和源流量模型 [4] 的模拟进行了测试，并表明在利用率和 QoS 参数方面提供了相当好的性能</p>
+<p>结论部分报告了对各种系统和流量参数对本文准入控制算法的影响</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Lrk612
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://sharp-rookie.github.io/2022/02/22/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91%E4%B8%80%E7%A7%8D%E5%9F%BA%E4%BA%8E%E5%8A%A8%E6%80%81%E4%BB%A4%E7%89%8C%E6%A1%B6%E7%9A%84%E5%AE%9E%E6%97%B6%E5%BA%94%E7%94%A8%E5%87%86%E5%85%A5%E6%8E%A7%E5%88%B6%E7%AE%97%E6%B3%95/" title="一种基于动态令牌桶的实时应用准入控制算法">https://sharp-rookie.github.io/2022/02/22/【论文】一种基于动态令牌桶的实时应用准入控制算法/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Network-Slice/" rel="tag"># Network Slice</a>
+              <a href="/tags/Resource-Management/" rel="tag"># Resource Management</a>
+              <a href="/tags/Token-Bucket/" rel="tag"># Token Bucket</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/02/20/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91Token%20bucket%20based%20CAC%20and%20packet%20scheduling%20for%20IEEE%20802.16%20broadband%20wireless%20access%20networks/" rel="prev" title="一种基于令牌桶的802.16无线接入网呼叫准入控制和上行包调度算法">
+      <i class="fa fa-chevron-left"></i> 一种基于令牌桶的802.16无线接入网呼叫准入控制和上行包调度算法
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Token-Bucket-%E6%A8%A1%E5%9E%8B%E5%8F%8D%E6%98%A0%E6%B5%81%E9%87%8F%E7%89%B9%E5%BE%81"><span class="nav-text">Token Bucket 模型反映流量特征</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#r%E3%80%81b-%E7%9A%84%E4%B8%8A%E4%B8%8B%E9%99%90"><span class="nav-text">r、b 的上下限</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E7%BB%99%E5%AE%9A-r-%E5%92%8C%E9%98%9F%E5%88%97%E5%A4%A7%E5%B0%8F%EF%BC%8C%E6%B1%82-b-%E7%9A%84%E6%9C%80%E4%BC%98%E5%80%BC"><span class="nav-text">在给定 r 和队列大小，求 b 的最优值</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E5%85%A5%E6%8E%A7%E5%88%B6%E5%92%8C%E8%B5%84%E6%BA%90%E5%86%8D%E5%8D%8F%E8%B0%83%E6%96%B9%E6%A1%88"><span class="nav-text">准入控制和资源再协调方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%86%E5%85%A5%E6%8E%A7%E5%88%B6%E5%86%B3%E7%AD%96"><span class="nav-text">准入控制决策</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E6%B5%8B%E9%87%8F"><span class="nav-text">参数测量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E5%86%8D%E5%8D%8F%E8%B0%83"><span class="nav-text">资源再协调</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Lrk612"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Lrk612</p>
+  <div class="site-description" itemprop="description">Lrk's blog</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.csdn.net/" title="https:&#x2F;&#x2F;www.csdn.net&#x2F;" rel="noopener" target="_blank">CSDN</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.google.com/" title="https:&#x2F;&#x2F;www.google.com" rel="noopener" target="_blank">Google</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        <!-- 访问量 -->
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客数<span id="busuanzi_value_site_uv"></span>人</span>
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+$(document).ready(function() {
+
+    var int = setInterval(fixCount, 50);  // 50ms周期检测函数
+    var countOffset = 20000;  // 初始化首次数据
+
+    function fixCount() {            
+       if (document.getElementById("busuanzi_container_site_pv").style.display != "none")
+        {
+            $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + countOffset); 
+            clearInterval(int);
+        }                  
+        if ($("#busuanzi_container_site_pv").css("display") != "none")
+        {
+            $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + countOffset); // 加上初始数据 
+            clearInterval(int); // 停止检测
+        }  
+    }
+       	
+});
+</script> 
+
+
+<!-- 版权 -->
+<div class="copyright">
+  
+  &copy; 2021-12-1 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lrk612</span>
+</div>
+
+<!-- ICP备案 -->
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">ICP备案 </a>
+      <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211209170739.png" style="display: inline-block;"><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=2021035798" rel="noopener" target="_blank">豫ICP备2021035798号 </a>
+  </div>
+
+<!-- 不知道是什么 -->
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'fH6OdGBcCG8D6jC8NeeJlX9b-gzGzoHsz',
+      appKey     : '1UoIb6vszMw6wl0n7kreb4Xz',
+      placeholder: "Just go go ^_^",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+    var infoEle = document.querySelector('#comments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0){
+      infoEle.childNodes.forEach(function(item) {
+        item.parentNode.removeChild(item);
+      });
+    }
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
