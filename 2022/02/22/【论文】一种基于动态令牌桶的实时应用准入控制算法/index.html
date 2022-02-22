@@ -67,7 +67,7 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220222170407.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220222170458.png">
 <meta property="article:published_time" content="2022-02-22T09:12:35.361Z">
-<meta property="article:modified_time" content="2022-02-22T09:13:26.839Z">
+<meta property="article:modified_time" content="2022-02-22T10:48:13.641Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="Network Slice">
 <meta property="article:tag" content="Resource Management">
@@ -449,14 +449,15 @@
 <p>令牌桶参数的最优值也可以根据用户的QoS要求和实时流量情况进行调整。</p>
 <hr>
 <p>文章提出的用于主机系统和中间节点的自适应资源协调准入控制方案的流程图如图 1 和图 2 所示。</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220222170407.png" alt="image-20220222170407318" style="zoom:45%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220222170407.png" alt="image-20220222170407318" style="zoom:55%;" />
 
 <center>图1 for主机系统</center>
 
 <p>最初，用户指定其 QoS 参数要求（例如L 和 D) 和应用参数（例如P 和 M）。数据源将初始令牌率和令牌大小值分别设置为 <code>rmax</code> 和 <code>bmin</code>。呼叫准入“请求包”将从源发送到目的地，“请求包”由令牌桶参数和QoS参数信息组成。当一个中间节点（例如路由器）从数据源或前一个节点接收到呼叫准入包，在做出准入决定时会考虑资源条件和QoS条件。只有当这两个条件都满足，呼叫准入请求包才会被中继到下一个路由器，否则会向源返回一个“拒绝包”。只有当路径上的所有网络节点都准入该数据流时，该请求才会被准入。在这种情况下，“请求数据包”最终会到达目的地，而目的地将向源发送一个“准入数据包”。当数据源接收到来自目标的“接受数据包”时，数据源将开始向目标发送数据包。随后，它将定期检测丢包率。只要丢包率超过用户指定的丢包率 <code>L</code>，或者在一定时间内没有丢包，就会启动资源再协调过程。将计算 <code>r</code> 和 <code>b</code> 的最佳值并将其用于资源再协调过程。资源再协调过程遵循与上述呼叫准入过程相同的过程。不过在资源再协调时，即使“请求包”被拒绝，数据源仍然可以使用其先前的参数继续发送数据包。</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220222170458.png" alt="image-20220222170458869" style="zoom:45%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220222170458.png" alt="image-20220222170458869" style="zoom:55%;" />
 
 <center>图2 for中间节点</center>
+
 
     </div>
 
