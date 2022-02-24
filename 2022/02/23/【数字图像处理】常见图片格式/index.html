@@ -69,7 +69,7 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220224142409.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220224143410.png">
 <meta property="article:published_time" content="2022-02-23T07:28:49.640Z">
-<meta property="article:modified_time" content="2022-02-24T06:35:03.708Z">
+<meta property="article:modified_time" content="2022-02-24T06:43:57.272Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="数字图像处理">
 <meta name="twitter:card" content="summary">
@@ -583,7 +583,11 @@
 <p><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220223150412.png" alt="image-20220223150412147"></p>
 <p>完全符合NotePad++中观察的结果</p>
 <p>&nbsp;</p>
-<h2 id="GIF格式"><a href="#GIF格式" class="headerlink" title="GIF格式"></a>GIF格式</h2><h3 id="简介-2"><a href="#简介-2" class="headerlink" title="简介"></a>简介</h3><h3 id="整体信息-1"><a href="#整体信息-1" class="headerlink" title="整体信息"></a>整体信息</h3><p><a target="_blank" rel="noopener" href="https://link.jianshu.com/?t=http://giflib.sourceforge.net/index.html">http://giflib.sourceforge.net/index.html</a>（科学.上网）是一个比较完整详细的GIF格式参考资料，其中有一张介绍GIF文件内部组成的图：</p>
+<h2 id="GIF格式"><a href="#GIF格式" class="headerlink" title="GIF格式"></a>GIF格式</h2><h3 id="简介-2"><a href="#简介-2" class="headerlink" title="简介"></a>简介</h3><p>GIF格式的名称是Graphics Interchange Format的缩写，是在1987年由Compu Serve公司为了填补跨平台图像格式的空白而发展起来的，可以被 PC 和 Mactiontosh 等多种平台上被支持。</p>
+<p>GIF采用Lempel-Zev-Welch（LZW）压缩算法，最高支持256种颜色，因此适用于色彩较少的图片，比如卡通造型、公司标志等。如果碰到需要用真彩色的场合，那么GIF的表现力就有限了。</p>
+<p>GIF通常会自带一个调色板，里面存放需要用到的各种颜色。在Web运用中，图像的文件量的大小将会明显地影响到下载的速度，因此可以根据GIF带调色板的特性来优化调色板，减少图像使用的颜色数（有些图像用不到的颜色可以舍去）而不影响图片质量。</p>
+<p>GIF格式和其他图像格式的最大区别在于，它完全是作为一种公用标准而设计的，由于Compu Serve网络的流行，许多平台都支持GIF格式。</p>
+<h3 id="整体信息-1"><a href="#整体信息-1" class="headerlink" title="整体信息"></a>整体信息</h3><p><a target="_blank" rel="noopener" href="https://link.jianshu.com/?t=http://giflib.sourceforge.net/index.html">http://giflib.sourceforge.net/index.html</a>（科学.上网）是一个比较完整详细的GIF格式参考资料，其中有一张介绍GIF文件内部组成的图：</p>
 <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220224081432.png" alt="image-20220224081425494" style="zoom: 30%;" />
 
 <p>其中共有11个模块，有8块是GIF图像必备的：</p>
