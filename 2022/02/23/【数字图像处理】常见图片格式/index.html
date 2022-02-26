@@ -68,8 +68,28 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220224141058.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220224142409.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220224143410.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220226161825.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220226162145.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220226162352.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220226164530.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220226170611.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220226170702.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220226170720.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220226170735.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220226170752.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220226170900.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220226171830.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220226171843.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220226171855.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220226171907.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220226171920.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220226171939.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220226171954.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220226172005.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220226172016.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220226172027.png">
 <meta property="article:published_time" content="2022-02-23T07:28:49.640Z">
-<meta property="article:modified_time" content="2022-02-25T13:35:42.075Z">
+<meta property="article:modified_time" content="2022-02-26T09:53:16.808Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="数字图像处理">
 <meta name="twitter:card" content="summary">
@@ -779,7 +799,509 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#! /usr/local/bin/python3</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> fileinput <span class="keyword">import</span> filename</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> imageio</span><br><span class="line"></span><br><span class="line">filename = <span class="string">&quot;小亮.gif&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">AnalysisGif</span>(<span class="params">gifPath</span>):</span></span><br><span class="line">    image = Image.<span class="built_in">open</span>(gifPath)</span><br><span class="line">    pngDir = gifPath[:-<span class="number">4</span>]</span><br><span class="line">    <span class="keyword">if</span> os.path.exists(pngDir):</span><br><span class="line">        files = os.listdir(pngDir)</span><br><span class="line">        <span class="keyword">for</span> file <span class="keyword">in</span> files:</span><br><span class="line">            file = pngDir + <span class="string">&quot;/&quot;</span> + file</span><br><span class="line">            os.remove(file)</span><br><span class="line">        os.rmdir(pngDir)</span><br><span class="line"></span><br><span class="line">    os.mkdir(pngDir)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            current = image.tell()</span><br><span class="line">            pngPath = pngDir+<span class="string">&#x27;/&#x27;</span>+<span class="built_in">str</span>(current)+<span class="string">&#x27;.png&#x27;</span></span><br><span class="line">            image.save(pngPath, quality=<span class="number">100</span>)</span><br><span class="line">            image.seek(current+<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">except</span> EOFError:</span><br><span class="line">        <span class="built_in">print</span>(EOFError)</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Combine2Gif</span>(<span class="params">folderPath, gifFilePath</span>):</span></span><br><span class="line">    files = os.listdir(folderPath)</span><br><span class="line">    pngFiles = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="built_in">len</span>(files), <span class="number">5</span>):</span><br><span class="line">        pngFiles.append(folderPath + <span class="string">&quot;/&quot;</span> + (<span class="string">&#x27;%d.png&#x27;</span> % i))</span><br><span class="line"></span><br><span class="line">    GenerateGif(<span class="number">0.15</span>, gifFilePath, pngFiles)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">GenerateGif</span>(<span class="params">step, gifPath, filterPngs</span>):</span></span><br><span class="line">    images = []</span><br><span class="line">    <span class="keyword">for</span> filePath <span class="keyword">in</span> filterPngs:</span><br><span class="line">        images.append(imageio.imread(filePath))</span><br><span class="line">    imageio.mimsave(gifPath, images, duration=step)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    gifPath = filename</span><br><span class="line">    AnalysisGif(gifPath)</span><br><span class="line">    Combine2Gif(gifPath[:-<span class="number">4</span>], gifPath[:-<span class="number">4</span>]+<span class="string">&quot;_zip.gif&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;== finished ==&quot;</span>)</span><br></pre></td></tr></table></figure>
 
 <p>&nbsp;</p>
-<h2 id="TIF格式"><a href="#TIF格式" class="headerlink" title="TIF格式"></a>TIF格式</h2><p>&nbsp;</p>
+<h2 id="TIFF格式"><a href="#TIFF格式" class="headerlink" title="TIFF格式"></a>TIFF格式</h2><h3 id="简介-3"><a href="#简介-3" class="headerlink" title="简介"></a>简介</h3><p>TIFF （Tagged Image File Format）一种灵活的位图格式，主要用来存储包括照片和艺术图在内的图像。TIFF 与其他文件格式最大的不同在于，除了图像数据，它还可以记录图像的很多其他信息。理论上，任何其他格式的图像都能为 TIFF 所用，嵌入到 TIFF 中。</p>
+<h3 id="整体信息-2"><a href="#整体信息-2" class="headerlink" title="整体信息"></a>整体信息</h3><p>TIFF 文件由4部分组成：图像文件头Image File Header（IFH）、图像文件目录Image File Directory（IFD）、目录项Directory Entry（DE）、图像数据Image Data。</p>
+<p>每一幅图像都是以8字节的 IFH 开始的，IFH 指向第一个 IFD，IFD 包含了图像的各种信息，同时也包含了一个指向实际图像数据的指针。</p>
+<h4 id="IFH"><a href="#IFH" class="headerlink" title="IFH"></a>IFH</h4><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>字节数</th>
+<th>数据类型</th>
+<th>含义</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Byteorder</td>
+<td>2</td>
+<td>short</td>
+<td>TIF 标记</td>
+<td>4D4D—大字节序<br/>4949—小字节序</td>
+</tr>
+<tr>
+<td>Version</td>
+<td>2</td>
+<td>short</td>
+<td>版本号</td>
+<td>恒为：2A00或002A</td>
+</tr>
+<tr>
+<td>Offset to first IFD</td>
+<td>4</td>
+<td>int</td>
+<td>第一个 IFD 的偏移量</td>
+<td>IFD常位于图像数据的后面，<br/>所以需要记录IFH到第一个IFD的偏移量<br/>但必须在一个word的边界，即4的整数倍</td>
+</tr>
+</tbody></table>
+<h4 id="IFD"><a href="#IFD" class="headerlink" title="IFD"></a>IFD</h4><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>字节数</th>
+<th>数据类型</th>
+<th>含义</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Directory Entry Count</td>
+<td>2</td>
+<td>short</td>
+<td>此 IFD 中 DE 的数量</td>
+<td>——</td>
+</tr>
+<tr>
+<td>Directory Entry (1)</td>
+<td>12</td>
+<td>——</td>
+<td>目录项</td>
+<td>具体结构见下面</td>
+</tr>
+<tr>
+<td>Directory Entry (2)</td>
+<td>12</td>
+<td>——</td>
+<td>……</td>
+<td>……</td>
+</tr>
+<tr>
+<td>……</td>
+<td>……</td>
+<td>……</td>
+<td>……</td>
+<td>……</td>
+</tr>
+<tr>
+<td>Directory Entry (n)</td>
+<td>12</td>
+<td>——</td>
+<td>……</td>
+<td>……</td>
+</tr>
+<tr>
+<td>Offset to next IFD</td>
+<td>4</td>
+<td>int</td>
+<td>距离下一个 IFD 的偏移量</td>
+<td>类似于链表中的下一指针</td>
+</tr>
+</tbody></table>
+<h4 id="DE"><a href="#DE" class="headerlink" title="DE"></a>DE</h4><p>DE 的 TagID 代表此项的含义，valueOffset是此项实际值在文件中的偏移量（即此 TagID 项的内容并未保存在 DE 中，必须通过 DE 中的偏移量在文件中寻找）</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>字节数</th>
+<th>数据类型</th>
+<th>含义</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>TagID</td>
+<td>2</td>
+<td>short</td>
+<td>本属性的标签编号</td>
+<td>按照升序排列的（但不一定是连续的）<br/>详见 [TagID 说明](#TagID 说明)</td>
+</tr>
+<tr>
+<td>type</td>
+<td>2</td>
+<td>short</td>
+<td>本属性值的数据类型</td>
+<td>官方指定的有5种数据类型<br/>( 但也有说12种数据类型的 )<br/>详见 [type 说明](#type 说明)</td>
+</tr>
+<tr>
+<td>length</td>
+<td>4</td>
+<td>int</td>
+<td>该类型数据的数量</td>
+<td>注意数量<strong>不是长度</strong></td>
+</tr>
+<tr>
+<td>valueOffset</td>
+<td>4</td>
+<td>int</td>
+<td>属性值的存放偏移量</td>
+<td>tagID 代表的变量值相对文件开始处的偏移量</td>
+</tr>
+</tbody></table>
+<h5 id="TagID-说明"><a href="#TagID-说明" class="headerlink" title="TagID 说明"></a>TagID 说明</h5><table>
+<thead>
+<tr>
+<th>TagID</th>
+<th>属性名称</th>
+<th>type</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0100</td>
+<td>图像宽</td>
+<td>0003</td>
+<td>——</td>
+</tr>
+<tr>
+<td>0101</td>
+<td>图像高</td>
+<td>0003</td>
+<td>——</td>
+</tr>
+<tr>
+<td>0102</td>
+<td>颜色深度</td>
+<td>0003</td>
+<td>值＝1为单色、＝4为16色、＝8为256色<br/>如果该类型数据个数＞2个，说明是真彩图像</td>
+</tr>
+<tr>
+<td>0103</td>
+<td>是否压缩</td>
+<td>0003</td>
+<td>值＝05表示压缩</td>
+</tr>
+<tr>
+<td>0106</td>
+<td>是否采用反色显示</td>
+<td>0003</td>
+<td>值＝01表示反色，否则表示不反色</td>
+</tr>
+<tr>
+<td>0111</td>
+<td>图像扫描线偏移量</td>
+<td>0004</td>
+<td>图像数据起始字节相对于文件开始处的位置</td>
+</tr>
+<tr>
+<td>0116</td>
+<td>图像扫描线的数量</td>
+<td>0004</td>
+<td>表示图像有几行扫描线，实际上等于图像高度</td>
+</tr>
+<tr>
+<td>0117</td>
+<td>图像数据字节总数</td>
+<td>0003</td>
+<td>如果不是偶数，那么实际存放时会在后面加0</td>
+</tr>
+<tr>
+<td>011A</td>
+<td>水平分辩率偏移量</td>
+<td>0005</td>
+<td>常用计量单位是：像素/英寸</td>
+</tr>
+<tr>
+<td>011B</td>
+<td>垂直分辩率偏移量</td>
+<td>0005</td>
+<td>常用计量单位是：像素/英寸</td>
+</tr>
+<tr>
+<td>0131</td>
+<td>生成该图像的软件名</td>
+<td>0002</td>
+<td>文本类型</td>
+</tr>
+<tr>
+<td>0132</td>
+<td>生成该图像的时间</td>
+<td>0002</td>
+<td>文本类型</td>
+</tr>
+<tr>
+<td>0140</td>
+<td>调色板偏移量</td>
+<td>0003</td>
+<td>256色和16色图像才有此属性，而且有连续2个<br/>调色板，但属性的length值只表示出1个调色板</td>
+</tr>
+</tbody></table>
+<p>完整说明见：<a target="_blank" rel="noopener" href="https://www.awaresystems.be/imaging/tiff/tifftags/baseline.html">Baseline TIFF Tags</a></p>
+<h5 id="type-说明"><a href="#type-说明" class="headerlink" title="type 说明"></a>type 说明</h5><table>
+<thead>
+<tr>
+<th>type值</th>
+<th>数据类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0001</td>
+<td>Byte</td>
+<td>——</td>
+</tr>
+<tr>
+<td>0002</td>
+<td>Ascii</td>
+<td>文本类型，7位Ascii码加1位二进制0</td>
+</tr>
+<tr>
+<td>0003</td>
+<td>Integer</td>
+<td>——</td>
+</tr>
+<tr>
+<td>0004</td>
+<td>Long</td>
+<td>——</td>
+</tr>
+<tr>
+<td>0005</td>
+<td>RATIONAL</td>
+<td>分数类型，由两个Long组成，第1个是分子，第2个是分母</td>
+</tr>
+</tbody></table>
+<h3 id="示例-2"><a href="#示例-2" class="headerlink" title="示例"></a>示例</h3><p>用 NotePad++ 的Hex插件打开 tif 图片：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220226161825.png" alt="image-20220226161825837" style="zoom: 35%;" />
+
+<center>温迪.tif</center>
+
+<p>截取部分数据如下：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220226162145.png" alt="image-20220226162145096" style="zoom:40%;" />
+
+<h4 id="IFH-1"><a href="#IFH-1" class="headerlink" title="IFH"></a>IFH</h4><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220226162352.png" alt="image-20220226162352057" style="zoom:50%;" />
+
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>数值</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Byteorder</td>
+<td>0x4949</td>
+<td>存储方式为小字节序</td>
+</tr>
+<tr>
+<td>Version</td>
+<td>0x002a</td>
+<td>版本号</td>
+</tr>
+<tr>
+<td>Offset to first IFD</td>
+<td>0x0006f4d0 =</td>
+<td>第一个IFD的偏移量为455888</td>
+</tr>
+</tbody></table>
+<h4 id="IFD-1"><a href="#IFD-1" class="headerlink" title="IFD"></a>IFD</h4><p>第一个 IFD：（0006f4d0开始）</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220226164530.png" alt="image-20220226164530189" style="zoom:50%;" />
+
+<p>从第一位可知，此 IFD 包含 0x10 = 16 个DE，而每个 DE 长度为 12，故一共长 12×16=172。加上Directory Entry Count占用的2字节，再加上Offset to next IFD占用的4字节，此 IFD一共长为 1+172+2+4=179</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>数值</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Directory Entry Count</td>
+<td>0x10 = 16</td>
+<td>此IFD含16个DE</td>
+</tr>
+<tr>
+<td>Directory Entry (1)</td>
+<td>——</td>
+<td>——</td>
+</tr>
+<tr>
+<td>Directory Entry (2)</td>
+<td>——</td>
+<td>——</td>
+</tr>
+<tr>
+<td>……</td>
+<td>……</td>
+<td>……</td>
+</tr>
+<tr>
+<td>Directory Entry (16)</td>
+<td>——</td>
+<td>——</td>
+</tr>
+<tr>
+<td>Offset to next IFD0</td>
+<td>00000000</td>
+<td>此图像文件只有1个IFD</td>
+</tr>
+</tbody></table>
+<h4 id="DE-1"><a href="#DE-1" class="headerlink" title="DE"></a>DE</h4><table>
+<thead>
+<tr>
+<th>序号</th>
+<th>偏移量</th>
+<th>取值</th>
+<th>TagID</th>
+<th>Type</th>
+<th>length</th>
+<th>valueOffset</th>
+<th>按偏移量查询为：</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>0006f4d2</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220226170611.png" alt="image-20220226170611614"></td>
+<td>0x00fe<br/>(NewSubfileType)</td>
+<td>long</td>
+<td>0x1</td>
+<td>0</td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td>0006f4de</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220226170702.png" alt="image-20220226170702215"></td>
+<td>0x0100<br/>(图像宽)</td>
+<td>long</td>
+<td>0x1</td>
+<td>0x01dd</td>
+<td>224</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0006f4ea</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220226170720.png" alt="image-20220226170720041"></td>
+<td>0x0101<br/>(图像高)</td>
+<td>long</td>
+<td>0x1</td>
+<td>0x01d7</td>
+<td>184</td>
+</tr>
+<tr>
+<td>4</td>
+<td>0006f4f6</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220226170735.png" alt="image-20220226170735417"></td>
+<td>0x0102<br/>(颜色深度)</td>
+<td>int</td>
+<td>0x4</td>
+<td>0x6f596</td>
+<td>下略</td>
+</tr>
+<tr>
+<td>5</td>
+<td>0006f502</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220226170752.png" alt="image-20220226170752786"></td>
+<td>0x0103<br/>(是否压缩)</td>
+<td>int</td>
+<td>0x1</td>
+<td>0x5</td>
+<td></td>
+</tr>
+<tr>
+<td>6</td>
+<td>0006f50e</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220226170900.png" alt="image-20220226170900430"></td>
+<td>0x0106<br/>(是否采用反色)</td>
+<td>int</td>
+<td>0x1</td>
+<td>0x2</td>
+<td></td>
+</tr>
+<tr>
+<td>7</td>
+<td>0006f51a</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220226171830.png" alt="image-20220226171830444"></td>
+<td>0x0111<br/>(扫描线偏移量)</td>
+<td>long</td>
+<td>0x4f</td>
+<td>0x159e</td>
+<td></td>
+</tr>
+<tr>
+<td>8</td>
+<td>0006f526</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220226171843.png" alt="image-20220226171843586"></td>
+<td>0x0115<br/>(每像素样本数)</td>
+<td>int</td>
+<td>0x1</td>
+<td>0x4</td>
+<td></td>
+</tr>
+<tr>
+<td>9</td>
+<td>0006f532</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220226171855.png" alt="image-20220226171855427"></td>
+<td>0x0116<br/>(扫描线数量)</td>
+<td>long</td>
+<td>0x1</td>
+<td>0x6</td>
+<td></td>
+</tr>
+<tr>
+<td>10</td>
+<td>0006f53e</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220226171907.png" alt="image-20220226171907173"></td>
+<td>0x0117<br/>(图像数据字节数)</td>
+<td>long</td>
+<td>0x4f</td>
+<td>0x6f6da</td>
+<td></td>
+</tr>
+<tr>
+<td>11</td>
+<td>0006f54a</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220226171920.png" alt="image-20220226171920413"></td>
+<td>0x011a<br/>(水平分辨率偏移量)</td>
+<td>RATIONAL</td>
+<td>0x1</td>
+<td>0x6f816</td>
+<td></td>
+</tr>
+<tr>
+<td>12</td>
+<td>0006f556</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220226171939.png" alt="image-20220226171939044"></td>
+<td>0x011b<br/>(垂直分辨率偏移量)</td>
+<td>RATIONAL</td>
+<td>0x1</td>
+<td>0x6f81e</td>
+<td></td>
+</tr>
+<tr>
+<td>13</td>
+<td>0006f562</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220226171954.png" alt="image-20220226171954724"></td>
+<td>0x011c<br/>(平面配置)</td>
+<td>int</td>
+<td>0x1</td>
+<td>0x1</td>
+<td></td>
+</tr>
+<tr>
+<td>14</td>
+<td>0006f56e</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220226172005.png" alt="image-20220226172005765"></td>
+<td>0x0128<br/>(分辨率单位)</td>
+<td>int</td>
+<td>0x1</td>
+<td>0x2</td>
+<td></td>
+</tr>
+<tr>
+<td>15</td>
+<td>0006f57a</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220226172016.png" alt="image-20220226172016469"></td>
+<td>0x013d<br/>(不知道)</td>
+<td>int</td>
+<td>0x1</td>
+<td>0x2</td>
+<td></td>
+</tr>
+<tr>
+<td>16</td>
+<td>0006f586</td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220226172027.png" alt="image-20220226172027469"></td>
+<td>0x0152<br/>(额外成分)</td>
+<td>int</td>
+<td>0x1</td>
+<td>0x2</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>&nbsp;</p>
 <h2 id="RAW格式"><a href="#RAW格式" class="headerlink" title="RAW格式"></a>RAW格式</h2><p>&nbsp;</p>
 <h2 id="PNG格式"><a href="#PNG格式" class="headerlink" title="PNG格式"></a>PNG格式</h2>
     </div>
@@ -882,7 +1404,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JPEG%E6%A0%BC%E5%BC%8F"><span class="nav-text">JPEG格式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%8B%E7%BC%A9%E6%A0%87%E5%87%86"><span class="nav-text">压缩标准</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%A7%E8%83%BD"><span class="nav-text">性能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8"><span class="nav-text">应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Matlab%E8%A7%82%E5%AF%9F%E5%83%8F%E7%B4%A0%E7%9F%A9%E9%98%B5"><span class="nav-text">Matlab观察像素矩阵</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BMP%E6%A0%BC%E5%BC%8F"><span class="nav-text">BMP格式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B-1"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B4%E4%BD%93%E4%BF%A1%E6%81%AF"><span class="nav-text">整体信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-text">示例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%A4%B4"><span class="nav-text">文件头</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E5%A4%B4"><span class="nav-text">信息头</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B0%83%E8%89%B2%E6%9D%BF"><span class="nav-text">调色板</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%BE%E5%83%8F%E6%95%B0%E6%8D%AE"><span class="nav-text">图像数据</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E8%A7%A3%E6%9E%90BMP%E4%BD%8D%E5%9B%BE%E4%BF%A1%E6%81%AF"><span class="nav-text">代码解析BMP位图信息</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GIF%E6%A0%BC%E5%BC%8F"><span class="nav-text">GIF格式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B-2"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B4%E4%BD%93%E4%BF%A1%E6%81%AF-1"><span class="nav-text">整体信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-1"><span class="nav-text">示例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Header"><span class="nav-text">Header</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Logical-Screen-Descriptor"><span class="nav-text">Logical Screen Descriptor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Global-Color-Table"><span class="nav-text">Global Color Table</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Graphic-Control-Extension"><span class="nav-text">Graphic Control Extension</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Image-Descriptor"><span class="nav-text">Image Descriptor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Local-Color-Table"><span class="nav-text">Local Color Table</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Image-Data"><span class="nav-text">Image Data</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Trailer"><span class="nav-text">Trailer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GIF-%E5%8E%8B%E7%BC%A9"><span class="nav-text">GIF 压缩</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TIF%E6%A0%BC%E5%BC%8F"><span class="nav-text">TIF格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RAW%E6%A0%BC%E5%BC%8F"><span class="nav-text">RAW格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PNG%E6%A0%BC%E5%BC%8F"><span class="nav-text">PNG格式</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JPEG%E6%A0%BC%E5%BC%8F"><span class="nav-text">JPEG格式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%8B%E7%BC%A9%E6%A0%87%E5%87%86"><span class="nav-text">压缩标准</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%A7%E8%83%BD"><span class="nav-text">性能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8"><span class="nav-text">应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Matlab%E8%A7%82%E5%AF%9F%E5%83%8F%E7%B4%A0%E7%9F%A9%E9%98%B5"><span class="nav-text">Matlab观察像素矩阵</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BMP%E6%A0%BC%E5%BC%8F"><span class="nav-text">BMP格式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B-1"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B4%E4%BD%93%E4%BF%A1%E6%81%AF"><span class="nav-text">整体信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-text">示例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%A4%B4"><span class="nav-text">文件头</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E5%A4%B4"><span class="nav-text">信息头</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B0%83%E8%89%B2%E6%9D%BF"><span class="nav-text">调色板</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%BE%E5%83%8F%E6%95%B0%E6%8D%AE"><span class="nav-text">图像数据</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E8%A7%A3%E6%9E%90BMP%E4%BD%8D%E5%9B%BE%E4%BF%A1%E6%81%AF"><span class="nav-text">代码解析BMP位图信息</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GIF%E6%A0%BC%E5%BC%8F"><span class="nav-text">GIF格式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B-2"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B4%E4%BD%93%E4%BF%A1%E6%81%AF-1"><span class="nav-text">整体信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-1"><span class="nav-text">示例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Header"><span class="nav-text">Header</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Logical-Screen-Descriptor"><span class="nav-text">Logical Screen Descriptor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Global-Color-Table"><span class="nav-text">Global Color Table</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Graphic-Control-Extension"><span class="nav-text">Graphic Control Extension</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Image-Descriptor"><span class="nav-text">Image Descriptor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Local-Color-Table"><span class="nav-text">Local Color Table</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Image-Data"><span class="nav-text">Image Data</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Trailer"><span class="nav-text">Trailer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GIF-%E5%8E%8B%E7%BC%A9"><span class="nav-text">GIF 压缩</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TIFF%E6%A0%BC%E5%BC%8F"><span class="nav-text">TIFF格式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B-3"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B4%E4%BD%93%E4%BF%A1%E6%81%AF-2"><span class="nav-text">整体信息</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#IFH"><span class="nav-text">IFH</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IFD"><span class="nav-text">IFD</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DE"><span class="nav-text">DE</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#TagID-%E8%AF%B4%E6%98%8E"><span class="nav-text">TagID 说明</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#type-%E8%AF%B4%E6%98%8E"><span class="nav-text">type 说明</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-2"><span class="nav-text">示例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#IFH-1"><span class="nav-text">IFH</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IFD-1"><span class="nav-text">IFD</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DE-1"><span class="nav-text">DE</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RAW%E6%A0%BC%E5%BC%8F"><span class="nav-text">RAW格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PNG%E6%A0%BC%E5%BC%8F"><span class="nav-text">PNG格式</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
