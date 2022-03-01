@@ -88,8 +88,14 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220226172005.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220226172016.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220226172027.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220301135042.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220301135026.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220301135153.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220301135623.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220301140002.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220301142345.png">
 <meta property="article:published_time" content="2022-02-23T07:28:49.640Z">
-<meta property="article:modified_time" content="2022-02-27T06:45:39.651Z">
+<meta property="article:modified_time" content="2022-03-01T06:26:11.847Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="数字图像处理">
 <meta name="twitter:card" content="summary">
@@ -412,7 +418,7 @@
 <p>BMP文件的图像深度可选：1bit、4bit、8bit、24bit</p>
 <p>BMP图像的扫描方式是按从左到右、从下到上的顺序</p>
 <p>由于BMP文件格式是Windows环境中交换与图有关的数据的一种标准，因此在Windows环境中运行的图形图像软件都支持BMP图像格式</p>
-<h3 id="整体信息"><a href="#整体信息" class="headerlink" title="整体信息"></a>整体信息</h3><p>BMP格式文件从头到尾依次是：</p>
+<h3 id="文件结构"><a href="#文件结构" class="headerlink" title="文件结构"></a>文件结构</h3><p>BMP格式文件从头到尾依次是：</p>
 <ul>
 <li>位图文件头（bmp file header）：14 bytes</li>
 <li>位图信息头（bitmap information）：40 bytes</li>
@@ -607,7 +613,7 @@
 <p>GIF采用Lempel-Zev-Welch（LZW）压缩算法，最高支持256种颜色，因此适用于色彩较少的图片，比如卡通造型、公司标志等。如果碰到需要用真彩色的场合，那么GIF的表现力就有限了。</p>
 <p>GIF通常会自带一个调色板，里面存放需要用到的各种颜色。在Web运用中，图像的文件量的大小将会明显地影响到下载的速度，因此可以根据GIF带调色板的特性来优化调色板，减少图像使用的颜色数（有些图像用不到的颜色可以舍去）而不影响图片质量。</p>
 <p>GIF格式和其他图像格式的最大区别在于，它完全是作为一种公用标准而设计的，由于Compu Serve网络的流行，许多平台都支持GIF格式。</p>
-<h3 id="整体信息-1"><a href="#整体信息-1" class="headerlink" title="整体信息"></a>整体信息</h3><p><a target="_blank" rel="noopener" href="https://link.jianshu.com/?t=http://giflib.sourceforge.net/index.html">http://giflib.sourceforge.net/index.html</a>（科学.上网）是一个比较完整详细的GIF格式参考资料，其中有一张介绍GIF文件内部组成的图：</p>
+<h3 id="文件结构-1"><a href="#文件结构-1" class="headerlink" title="文件结构"></a>文件结构</h3><p><a target="_blank" rel="noopener" href="https://link.jianshu.com/?t=http://giflib.sourceforge.net/index.html">http://giflib.sourceforge.net/index.html</a>（科学.上网）是一个比较完整详细的GIF格式参考资料，其中有一张介绍GIF文件内部组成的图：</p>
 <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220224081432.png" alt="image-20220224081425494" style="zoom: 30%;" />
 
 <p>其中共有11个模块，有8块是GIF图像必备的：</p>
@@ -800,7 +806,7 @@
 
 <p>&nbsp;</p>
 <h2 id="TIFF格式"><a href="#TIFF格式" class="headerlink" title="TIFF格式"></a>TIFF格式</h2><h3 id="简介-3"><a href="#简介-3" class="headerlink" title="简介"></a>简介</h3><p>TIFF （Tagged Image File Format）一种灵活的位图格式，主要用来存储包括照片和艺术图在内的图像。TIFF 与其他文件格式最大的不同在于，除了图像数据，它还可以记录图像的很多其他信息。理论上，任何其他格式的图像都能为 TIFF 所用，嵌入到 TIFF 中。</p>
-<h3 id="整体信息-2"><a href="#整体信息-2" class="headerlink" title="整体信息"></a>整体信息</h3><p>TIFF 文件由4部分组成：图像文件头Image File Header（IFH）、图像文件目录Image File Directory（IFD）、目录项Directory Entry（DE）、图像数据Image Data。</p>
+<h3 id="文件结构-2"><a href="#文件结构-2" class="headerlink" title="文件结构"></a>文件结构</h3><p>TIFF 文件由4部分组成：图像文件头Image File Header（IFH）、图像文件目录Image File Directory（IFD）、目录项Directory Entry（DE）、图像数据Image Data。</p>
 <p>每一幅图像都是以8字节的 IFH 开始的，IFH 指向第一个 IFD，IFD 包含了图像的各种信息，同时也包含了一个指向实际图像数据的指针。</p>
 <h4 id="IFH"><a href="#IFH" class="headerlink" title="IFH"></a>IFH</h4><table>
 <thead>
@@ -1384,7 +1390,299 @@
 </tr>
 </tbody></table>
 <p>&nbsp;</p>
-<h2 id="PNG格式"><a href="#PNG格式" class="headerlink" title="PNG格式"></a>PNG格式</h2>
+<h2 id="PNG格式"><a href="#PNG格式" class="headerlink" title="PNG格式"></a>PNG格式</h2><h3 id="简介-5"><a href="#简介-5" class="headerlink" title="简介"></a>简介</h3><p>PNG 是20世纪90年代中期开始开发的图像文件存储格式，其目的是替代 GIF 和 TIFF 文件格式，同时增加一些 GIF 文件格式所不具备的特性。流式网络图形格式 (Portable Network Graphic Format，PNG) 名称来源于非官方的“PNG’s Not GIF”，是一种位图文件 (bitmap file) 存储格式，读成“ping”。PNG用来存储灰度图像时，灰度图像的深度可多到16位，存储彩色图像时，彩色图像的深度可多到48位，并且还可存储多到16位的 α 通道数据。PNG 使用从 LZ77 派生的<strong>无损</strong>数据压缩算法。（说白了这就是一种方便的、适于网络传播的轻便图片文件格式）</p>
+<p><strong>特性</strong></p>
+<ol>
+<li>使用调色板技术可支持256种颜色的彩色图像（必须的）</li>
+<li>流式读/写性(streamability)：图像文件格式允许连续读出和写入图像数据（因此适于网络传播）</li>
+<li>逐次逼近显示(progressive display)：这种特性可使在通信链路上传输图像文件的同时就在终端上显示图像，把整个轮廓显示出来之后逐步显示图像的细节，也就是先用低分辨率显示图像，然后逐步提高它的分辨率（类似马赛克逐渐消除的过程）</li>
+<li>透明性(transparency)：这个性能可使图像中某些部分不显示出来，用来创建一些有特色的图像</li>
+<li>辅助信息(ancillary information)：这个特性可用来在图像文件中存储一些文本注释信息（就是可以说一些废话）</li>
+<li>独立于计算机软硬件环境</li>
+<li>使用无损压缩（无损！）</li>
+<li>可在一个文件中存储多幅图像</li>
+</ol>
+<h3 id="文件结构-3"><a href="#文件结构-3" class="headerlink" title="文件结构"></a>文件结构</h3><p>PNG 文件由文件署名域（8字节）和最少3个数据块（Chunk）按照特定的顺序排列而成</p>
+<p>数据块分为两类：</p>
+<ul>
+<li>关键数据块（Critical Chunk）：必须包含的数据块。一个有效的PNG文件必须包含一个IHDR块、至少一个IDAT块和一个IEND块</li>
+<li>辅助数据块（Ancillary Chunk）：可选的数据块。也就是说，编码器并不必须写入辅助数据块，解码器也可以选择忽略它们，但鼓励编码器在有相关数据时写入标准的辅助数据块、解码器在可行的条件下对这些内容进行解码</li>
+</ul>
+<p>数据快组成如下：</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>字节数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Length</td>
+<td>4</td>
+<td>指定数据块中数据域的长度，其长度不超过(231−1)(231−1)字节</td>
+</tr>
+<tr>
+<td>Chunk Type Code（类型码）</td>
+<td>4</td>
+<td>数据块类型码由ASCII字母(A-Z和a-z)组成</td>
+</tr>
+<tr>
+<td>Chunk Data（数据块实际内容）</td>
+<td>可变</td>
+<td>存储按照Chunk Type Code指定的数据</td>
+</tr>
+<tr>
+<td>CRC（循环冗余校验）</td>
+<td>4</td>
+<td>存储用来检测是否有错误的循环冗余码</td>
+</tr>
+</tbody></table>
+<h4 id="文件署名域"><a href="#文件署名域" class="headerlink" title="文件署名域"></a>文件署名域</h4><p>PNG 文件开头8个字节是其署名域，代表其文件类型，通常是：<code>89 50 4E 47 0D 0A 1A 0A</code></p>
+<p>事实上，大部分格式的文件都是通过头部的文件头标识（十六进制）来识别的，靠拓展名有时未必可靠，常见文件头有：</p>
+<table>
+<thead>
+<tr>
+<th>拓展名</th>
+<th>文件头标识</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>7z</td>
+<td>37 7A BC AF 27 1C</td>
+</tr>
+<tr>
+<td>avi</td>
+<td>41 56 49 20</td>
+</tr>
+<tr>
+<td>bmp</td>
+<td>42 4D</td>
+</tr>
+<tr>
+<td>doc</td>
+<td>0D 44 4F 43 (doc的文件头标识不唯一)</td>
+</tr>
+<tr>
+<td>gif</td>
+<td>47 49 46 38 37 61</td>
+</tr>
+<tr>
+<td>html</td>
+<td>68 74 6D 6C 3E</td>
+</tr>
+<tr>
+<td>img</td>
+<td>00 01 00 08 00 01 00 01 01</td>
+</tr>
+<tr>
+<td>jpg</td>
+<td>FF D8 FF</td>
+</tr>
+<tr>
+<td>……</td>
+<td>……</td>
+</tr>
+</tbody></table>
+<h4 id="关键数据块"><a href="#关键数据块" class="headerlink" title="关键数据块"></a>关键数据块</h4><p>关键数据块中包含4个标准数据块：IHDR、PLTE、IDAT、IEND</p>
+<p><strong>文件头数据块 IHDR chunk</strong></p>
+<p>包含 PNG 文件中存储的图像数据的基本信息，并要作为第一个数据块出现在 PNG 数据流中，一个 PNG 数据流中只能有一个文件头数据块。Chunk Data部分共13字节，组成结构如下：</p>
+<table>
+<thead>
+<tr>
+<th>域的名称</th>
+<th>字节数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Width</td>
+<td>4</td>
+<td>图像宽度，以像素为单位</td>
+</tr>
+<tr>
+<td>Height</td>
+<td>4</td>
+<td>图像高度，以像素为单位</td>
+</tr>
+<tr>
+<td>Bit depth</td>
+<td>1</td>
+<td>图像深度：表示每个采样点占用的bit数<br/>索引彩色图像：1，2，4，8<br/>灰度图像：1，2，4，8，16 <br/>真彩色图像：8，16</td>
+</tr>
+<tr>
+<td>ColorType</td>
+<td>1</td>
+<td>颜色类型：<br/>0：灰度图像，深度为：1，2，4，8，16<br/>2：真彩色图像，深度为：8，16<br/>3：索引彩色图像，深度为：1，2，4，8<br/>4：带α通道数据的灰度图像，深度为：8，16<br/>6：带α通道数据的真彩色图像，深度为：8，16</td>
+</tr>
+<tr>
+<td>Compression method</td>
+<td>1</td>
+<td>压缩方法：<br/>0：LZ77派生算法（目前仅定义了0）<br/>其他值：无效；为未来扩展的压缩方法预留</td>
+</tr>
+<tr>
+<td>Filter method</td>
+<td>1</td>
+<td>滤波器方法：<br/>0（目前仅定义了0）<br/>其他值：无效</td>
+</tr>
+<tr>
+<td>Interlace method</td>
+<td>1</td>
+<td>隔行扫描方法：<br/>0——非隔行扫描<br/>1——Adam7 (由Adam M. Costello开发的7遍隔行扫描方法)</td>
+</tr>
+</tbody></table>
+<p>带上Length、Chunk Type Code和最后的CRC部分，文件头数据块长度为：4+4+13+4 = 25 bytes</p>
+<p><strong>调色板数据块 PLTE chunk</strong></p>
+<p>调色板包含有与索引彩色图像 (indexed-color image) 相关的彩色变换数据，仅与索引彩色图像有关。位置在图像数据块 (image data chunk) 之前。真彩色的 PNG 数据流也可以有调色板数据块，目的是便于非真彩色显示程序用它来量化图像数据，从而显示该图像。结构如下：</p>
+<table>
+<thead>
+<tr>
+<th>颜色</th>
+<th>字节数</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Red</td>
+<td>1</td>
+<td>0——黑，255——红</td>
+</tr>
+<tr>
+<td>Green</td>
+<td>1</td>
+<td>0——黑，255——绿</td>
+</tr>
+<tr>
+<td>Blue</td>
+<td>1</td>
+<td>0——黑，255——蓝</td>
+</tr>
+</tbody></table>
+<p>调色板的作用在于，使得图像深度较小的图像，可以使用索引号来正确表示颜色</p>
+<p>PLTE块还必需满足以下限制条件，否则会被判定为不合法：</p>
+<ul>
+<li><p>调色板的长度应为3的倍数，即PLTE块最大字节数为256 × 3 = 768 B</p>
+</li>
+<li><p>调色板信息的数量不能超过图像深度可以表示的范围（如对于4 bit深度的图像，最多有16条调色板信息，但允许少于16条）</p>
+</li>
+<li><p>对于Colour type 3的PNG图像（索引图像），PLTE块是必需的，此时调色板的颜色索引从0开始编号，然后是1，2……</p>
+</li>
+<li><p>对于Colour type为2和6的图像，PLTE块是可选的，此时调色板将提供一个1—256的建议颜色集，以便软件或屏幕不支持显示真彩色时量化真彩色图像</p>
+</li>
+<li><p>Colour type为0和4的图像中不能出现PLTE块</p>
+</li>
+</ul>
+<p><strong>图像数据块 IDAT chunk</strong></p>
+<p>IDAT块包含实际的图像数据。此外：</p>
+<ul>
+<li>允许编码器根据需要将压缩的数据流分为多个IDAT块，但它们必须连续出现</li>
+<li>并不限定IDAT块的大小，但过短的IDAT块会浪费更多空间</li>
+<li>IDAT块可以出现在压缩数据流的任何位置</li>
+</ul>
+<p><strong>图像结束数据 IEND chunk</strong></p>
+<p>IEND块必需出现在文件的末尾，用来标志PNG数据流的结束，通常是：<code>00 00 00 00 49 45 4E 44 AE 42 60 82</code></p>
+<h4 id="辅助数据块"><a href="#辅助数据块" class="headerlink" title="辅助数据块"></a>辅助数据块</h4><p>辅助数据块主要包含以下4类、14种：</p>
+<ul>
+<li><p>表示透明信息（Transparency information）的数据块：</p>
+<ul>
+<li>tRNS chunk（Transparency chunk，透明信息数据块）</li>
+</ul>
+</li>
+<li><p>表示色彩空间信息（Colour space information）的数据块：</p>
+<ul>
+<li><p>gAMA chunk（Image gamma chunk，图像γ数据块）</p>
+</li>
+<li><p>cHRM chunk（Primary chromaticities chunk，基色和白色度数据块）</p>
+</li>
+<li><p>sRGB chunk（Standard RGB colour space chunk，标准RGB色彩空间数据块）</p>
+</li>
+<li><p>iCCP chunk（Embedded ICC profile chunk）</p>
+</li>
+</ul>
+</li>
+<li><p>表示文本信息（Textual information）的数据块：</p>
+<ul>
+<li>tEXt chunk（Textual data chunk，文本信息数据块）</li>
+</ul>
+</li>
+</ul>
+<pre><code>- zTXt chunk（Compressed textual data chunk，压缩文本数据块）
+
+- iTXt chunk（International textual data chunk）
+</code></pre>
+<ul>
+<li><p>表示其他信息（Miscellaneous information）的数据块：</p>
+<ul>
+<li><p>bKGD chunk（Background colour chunk，背景颜色数据块）</p>
+</li>
+<li><p>pHYs chunk（Physical pixel dimensions chunk，物理像素尺寸数据块）</p>
+</li>
+<li><p>sBIT chunk（Significant bits chunk，样本有效位数据块）</p>
+</li>
+<li><p>sPLT chunk（Suggested palette chunk）</p>
+</li>
+<li><p>hIST chunk（Palette histogram chunk，图像直方图数据块）</p>
+</li>
+<li><p>tIME chunk（Image last-modification time chunk，图像最后修改时间数据块）</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="示例-3"><a href="#示例-3" class="headerlink" title="示例"></a>示例</h3><p>用 NotePad++ 的Hex插件打开 tif 图片：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220301135042.png" alt="刻晴" style="zoom: 33%;" />
+
+<center>刻晴.png</center>
+
+<p>截取部分数据如下：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220301135026.png" alt="image-20220301135026697" style="zoom:40%;" />
+
+<h4 id="文件署名域-1"><a href="#文件署名域-1" class="headerlink" title="文件署名域"></a>文件署名域</h4><p>可以看见，就是 <code>89 50 4E 47 0D 0A 1A 0A</code></p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220301135153.png" alt="image-20220301135153394" style="zoom:50%;" />
+
+
+
+<h4 id="关键数据块-1"><a href="#关键数据块-1" class="headerlink" title="关键数据块"></a>关键数据块</h4><p><strong>IHDR</strong></p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220301135623.png" alt="image-20220301135623598" style="zoom:50%;" />
+
+<ul>
+<li>Length：0x0000000d = 13</li>
+<li>Chunk type code：0x49484452（ASCII码：“IHDR”）</li>
+<li>Chunk data<ul>
+<li>Width：0x000001f2 = 498（像素）</li>
+<li>Height：0x0000021a = 538（像素）</li>
+<li>Bit depth：0x8，8bit色深</li>
+<li>Color type：0x6，表示带α通道数据的真彩色图像</li>
+<li>Compression method：0，LZ77派生算法</li>
+<li>Filter method：0</li>
+<li>Interlace method：0，非隔行扫描</li>
+</ul>
+</li>
+<li>CRC：<code>db 6e cf a2</code></li>
+</ul>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220301140002.png" alt="image-20220301140002869" style="zoom:50%;" />
+
+
+
+<p><strong>PLTE</strong></p>
+<p>PLTE chunk 的 type code 是 <code>0x50 4C 54 45</code>，因为本例是 Color type=0x6 （真彩色图像，调色板可有可没有），这里没有PLTE</p>
+<p><strong>IDAT</strong></p>
+<p>略</p>
+<p><strong>IEND</strong></p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220301142345.png" alt="image-20220301142345205" style="zoom:50%;" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </div>
 
     
@@ -1485,7 +1783,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JPEG%E6%A0%BC%E5%BC%8F"><span class="nav-text">JPEG格式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%8B%E7%BC%A9%E6%A0%87%E5%87%86"><span class="nav-text">压缩标准</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%A7%E8%83%BD"><span class="nav-text">性能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8"><span class="nav-text">应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Matlab%E8%A7%82%E5%AF%9F%E5%83%8F%E7%B4%A0%E7%9F%A9%E9%98%B5"><span class="nav-text">Matlab观察像素矩阵</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BMP%E6%A0%BC%E5%BC%8F"><span class="nav-text">BMP格式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B-1"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B4%E4%BD%93%E4%BF%A1%E6%81%AF"><span class="nav-text">整体信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-text">示例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%A4%B4"><span class="nav-text">文件头</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E5%A4%B4"><span class="nav-text">信息头</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B0%83%E8%89%B2%E6%9D%BF"><span class="nav-text">调色板</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%BE%E5%83%8F%E6%95%B0%E6%8D%AE"><span class="nav-text">图像数据</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E8%A7%A3%E6%9E%90BMP%E4%BD%8D%E5%9B%BE%E4%BF%A1%E6%81%AF"><span class="nav-text">代码解析BMP位图信息</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GIF%E6%A0%BC%E5%BC%8F"><span class="nav-text">GIF格式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B-2"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B4%E4%BD%93%E4%BF%A1%E6%81%AF-1"><span class="nav-text">整体信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-1"><span class="nav-text">示例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Header"><span class="nav-text">Header</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Logical-Screen-Descriptor"><span class="nav-text">Logical Screen Descriptor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Global-Color-Table"><span class="nav-text">Global Color Table</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Graphic-Control-Extension"><span class="nav-text">Graphic Control Extension</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Image-Descriptor"><span class="nav-text">Image Descriptor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Local-Color-Table"><span class="nav-text">Local Color Table</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Image-Data"><span class="nav-text">Image Data</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Trailer"><span class="nav-text">Trailer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GIF-%E5%8E%8B%E7%BC%A9"><span class="nav-text">GIF 压缩</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TIFF%E6%A0%BC%E5%BC%8F"><span class="nav-text">TIFF格式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B-3"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B4%E4%BD%93%E4%BF%A1%E6%81%AF-2"><span class="nav-text">整体信息</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#IFH"><span class="nav-text">IFH</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IFD"><span class="nav-text">IFD</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DE"><span class="nav-text">DE</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#TagID-%E8%AF%B4%E6%98%8E"><span class="nav-text">TagID 说明</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#type-%E8%AF%B4%E6%98%8E"><span class="nav-text">type 说明</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-2"><span class="nav-text">示例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#IFH-1"><span class="nav-text">IFH</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IFD-1"><span class="nav-text">IFD</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DE-1"><span class="nav-text">DE</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RAW%E6%A0%BC%E5%BC%8F"><span class="nav-text">RAW格式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B-4"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E5%8A%BF"><span class="nav-text">优势</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%BC%E5%BC%8F%E8%A7%A3%E6%9E%90"><span class="nav-text">格式解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E5%90%8C%E7%9B%B8%E6%9C%BA%E7%9A%84RAW%E6%A0%BC%E5%BC%8F%E6%8B%93%E5%B1%95%E5%90%8D"><span class="nav-text">不同相机的RAW格式拓展名</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PNG%E6%A0%BC%E5%BC%8F"><span class="nav-text">PNG格式</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JPEG%E6%A0%BC%E5%BC%8F"><span class="nav-text">JPEG格式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%8B%E7%BC%A9%E6%A0%87%E5%87%86"><span class="nav-text">压缩标准</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%A7%E8%83%BD"><span class="nav-text">性能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8"><span class="nav-text">应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Matlab%E8%A7%82%E5%AF%9F%E5%83%8F%E7%B4%A0%E7%9F%A9%E9%98%B5"><span class="nav-text">Matlab观察像素矩阵</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BMP%E6%A0%BC%E5%BC%8F"><span class="nav-text">BMP格式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B-1"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84"><span class="nav-text">文件结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-text">示例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%A4%B4"><span class="nav-text">文件头</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E5%A4%B4"><span class="nav-text">信息头</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B0%83%E8%89%B2%E6%9D%BF"><span class="nav-text">调色板</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%BE%E5%83%8F%E6%95%B0%E6%8D%AE"><span class="nav-text">图像数据</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E8%A7%A3%E6%9E%90BMP%E4%BD%8D%E5%9B%BE%E4%BF%A1%E6%81%AF"><span class="nav-text">代码解析BMP位图信息</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GIF%E6%A0%BC%E5%BC%8F"><span class="nav-text">GIF格式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B-2"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84-1"><span class="nav-text">文件结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-1"><span class="nav-text">示例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Header"><span class="nav-text">Header</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Logical-Screen-Descriptor"><span class="nav-text">Logical Screen Descriptor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Global-Color-Table"><span class="nav-text">Global Color Table</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Graphic-Control-Extension"><span class="nav-text">Graphic Control Extension</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Image-Descriptor"><span class="nav-text">Image Descriptor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Local-Color-Table"><span class="nav-text">Local Color Table</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Image-Data"><span class="nav-text">Image Data</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Trailer"><span class="nav-text">Trailer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GIF-%E5%8E%8B%E7%BC%A9"><span class="nav-text">GIF 压缩</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TIFF%E6%A0%BC%E5%BC%8F"><span class="nav-text">TIFF格式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B-3"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84-2"><span class="nav-text">文件结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#IFH"><span class="nav-text">IFH</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IFD"><span class="nav-text">IFD</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DE"><span class="nav-text">DE</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#TagID-%E8%AF%B4%E6%98%8E"><span class="nav-text">TagID 说明</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#type-%E8%AF%B4%E6%98%8E"><span class="nav-text">type 说明</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-2"><span class="nav-text">示例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#IFH-1"><span class="nav-text">IFH</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IFD-1"><span class="nav-text">IFD</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DE-1"><span class="nav-text">DE</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RAW%E6%A0%BC%E5%BC%8F"><span class="nav-text">RAW格式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B-4"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E5%8A%BF"><span class="nav-text">优势</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%BC%E5%BC%8F%E8%A7%A3%E6%9E%90"><span class="nav-text">格式解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E5%90%8C%E7%9B%B8%E6%9C%BA%E7%9A%84RAW%E6%A0%BC%E5%BC%8F%E6%8B%93%E5%B1%95%E5%90%8D"><span class="nav-text">不同相机的RAW格式拓展名</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PNG%E6%A0%BC%E5%BC%8F"><span class="nav-text">PNG格式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B-5"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84-3"><span class="nav-text">文件结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%BD%B2%E5%90%8D%E5%9F%9F"><span class="nav-text">文件署名域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E6%95%B0%E6%8D%AE%E5%9D%97"><span class="nav-text">关键数据块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BE%85%E5%8A%A9%E6%95%B0%E6%8D%AE%E5%9D%97"><span class="nav-text">辅助数据块</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-3"><span class="nav-text">示例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%BD%B2%E5%90%8D%E5%9F%9F-1"><span class="nav-text">文件署名域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E6%95%B0%E6%8D%AE%E5%9D%97-1"><span class="nav-text">关键数据块</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
