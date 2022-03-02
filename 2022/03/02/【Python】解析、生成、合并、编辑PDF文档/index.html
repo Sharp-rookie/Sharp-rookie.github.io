@@ -39,15 +39,16 @@
 <meta property="og:site_name" content="最忆是江南">
 <meta property="og:description" content="&amp;emsp;&amp;emsp;事情是这样的，本来我在调研一个东西，总结成了一个PDF文档，打算加上水印（很强的版权意识），但是上网搜免费PDF加水印工具时发现，这些“免费”工具要么得注册会员、要么说我免费时长不够，一个个挂羊头卖狗肉。。。 &amp;emsp;&amp;emsp;不过我想了想，给PDF加水印不就相当于用一个有内容的PDF和一个只有水印的空白PDF合成吗，干脆用Python来做算了，正好学用一下PyPDF">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220302105123.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220302100022.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220302090815.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220302094813.png">
 <meta property="article:published_time" content="2022-03-02T02:44:43.126Z">
-<meta property="article:modified_time" content="2022-03-02T02:44:22.958Z">
+<meta property="article:modified_time" content="2022-03-02T02:52:19.976Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="高效工具">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220302100022.png">
+<meta name="twitter:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220302105123.png">
 
 <link rel="canonical" href="https://sharp-rookie.github.io/2022/03/02/%E3%80%90Python%E3%80%91%E8%A7%A3%E6%9E%90%E3%80%81%E7%94%9F%E6%88%90%E3%80%81%E5%90%88%E5%B9%B6%E3%80%81%E7%BC%96%E8%BE%91PDF%E6%96%87%E6%A1%A3/">
 
@@ -295,7 +296,9 @@
 
       
         <p>&emsp;&emsp;事情是这样的，本来我在调研一个东西，总结成了一个PDF文档，打算加上水印（很强的版权意识），但是上网搜免费PDF加水印工具时发现，这些“免费”工具要么得注册会员、要么说我免费时长不够，一个个挂羊头卖狗肉。。。</p>
-<p>&emsp;&emsp;不过我想了想，给PDF加水印不就相当于用一个有内容的PDF和一个只有水印的空白PDF合成吗，干脆用Python来做算了，正好学用一下PyPDF2库。</p>
+<p>&emsp;&emsp;不过我想了想，给PDF加水印不就相当于用一个有内容的PDF和一个只有水印的空白PDF合成吗，干脆用Python来做算了，正好学用一下PyPDF2库</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220302105123.png" alt="image-20220302105123069" style="zoom:60%;" />
+
 <span id="more"></span>
 
 <p>&nbsp;</p>
@@ -547,28 +550,9 @@
 
 <h3 id="加密"><a href="#加密" class="headerlink" title="加密"></a>加密</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add_encryption</span>(<span class="params">PDFpath, OUTpath, password=<span class="string">&#x27;123456&#x27;</span></span>):</span></span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    Function: 加密pdf文件</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    PDFpath: 源文件路径</span></span><br><span class="line"><span class="string">    OUTpath: 目标路径</span></span><br><span class="line"><span class="string">    password: 密码</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">    pdf_writer = PdfFileWriter()</span><br><span class="line">    pdf_reader = PdfFileReader(PDFpath)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> page <span class="keyword">in</span> <span class="built_in">range</span>(pdf_reader.getNumPages()):</span><br><span class="line">        pdf_writer.addPage(pdf_reader.getPage(page))</span><br><span class="line"></span><br><span class="line">    pdf_writer.encrypt(user_pwd=password, owner_pwd=<span class="literal">None</span>,</span><br><span class="line">                       use_128bit=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(OUTpath, <span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> fh:</span><br><span class="line">        pdf_writer.write(fh)</span><br></pre></td></tr></table></figure>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>除了 <code>PyPDF</code> 以外，Python处理 PDF 的库还有 <code>Pdfplumber</code>、<code>PDFminer</code>，以后用到了再学</p>
 
     </div>
 
