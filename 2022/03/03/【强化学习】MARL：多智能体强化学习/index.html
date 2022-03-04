@@ -32,13 +32,14 @@
           }
       })();
   </script>
-  <meta name="description" content="基础知识与博弈论引言在多智能体（Mutli-Agent）系统中，每个智能体通过与环境进行交互获得奖励值来学习改善自己的策略，从而获得该环境下最优策略的过程，就是多智能体强化学习 单智能体强化学习中，智能体所在的环境是稳定不变的，但是如果用单智能体来学习多个体的策略，将会产生许多困难：  维度爆炸   如果用单智能体强化学习来解决多个体问题，那么多个个体的联结动作空间（A&#x3D;[a1, a2, a3,…">
+  <meta name="description" content="1234567title: 【强化学习】MARL: 多智能体强化学习categories: 知识分享tags:   - AI  - Reinforcement Learning  - Algorithmcomments: true  &amp;emsp;&amp;emsp;因为项目中遇到了多个体共同决策的场景，不同个体的离散动作空间和评价指标都不同，在使用DQN时发现随着个体数量的增加，动作空间会指数式扩张，同时">
 <meta property="og:type" content="article">
 <meta property="og:title" content="最忆是江南">
 <meta property="og:url" content="https://sharp-rookie.github.io/2022/03/03/%E3%80%90%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E3%80%91MARL%EF%BC%9A%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/index.html">
 <meta property="og:site_name" content="最忆是江南">
-<meta property="og:description" content="基础知识与博弈论引言在多智能体（Mutli-Agent）系统中，每个智能体通过与环境进行交互获得奖励值来学习改善自己的策略，从而获得该环境下最优策略的过程，就是多智能体强化学习 单智能体强化学习中，智能体所在的环境是稳定不变的，但是如果用单智能体来学习多个体的策略，将会产生许多困难：  维度爆炸   如果用单智能体强化学习来解决多个体问题，那么多个个体的联结动作空间（A&#x3D;[a1, a2, a3,…">
+<meta property="og:description" content="1234567title: 【强化学习】MARL: 多智能体强化学习categories: 知识分享tags:   - AI  - Reinforcement Learning  - Algorithmcomments: true  &amp;emsp;&amp;emsp;因为项目中遇到了多个体共同决策的场景，不同个体的离散动作空间和评价指标都不同，在使用DQN时发现随着个体数量的增加，动作空间会指数式扩张，同时">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220303221852.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220303193953.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220303195023.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220303200139.png">
@@ -62,10 +63,10 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220303215135.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220303215312.png">
 <meta property="article:published_time" content="2022-03-03T14:23:42.444Z">
-<meta property="article:modified_time" content="2022-03-04T00:52:15.073Z">
+<meta property="article:modified_time" content="2022-03-04T00:53:35.798Z">
 <meta property="article:author" content="Lrk612">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220303193953.png">
+<meta name="twitter:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220303221852.png">
 
 <link rel="canonical" href="https://sharp-rookie.github.io/2022/03/03/%E3%80%90%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E3%80%91MARL%EF%BC%9A%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/">
 
@@ -303,7 +304,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="基础知识与博弈论"><a href="#基础知识与博弈论" class="headerlink" title="基础知识与博弈论"></a>基础知识与博弈论</h1><h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>在多智能体（Mutli-Agent）系统中，每个智能体通过与环境进行交互获得奖励值来学习改善自己的策略，从而获得该环境下最优策略的过程，就是多智能体强化学习</p>
+        <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">title: 【强化学习】MARL: 多智能体强化学习</span><br><span class="line">categories: 知识分享</span><br><span class="line">tags: </span><br><span class="line">  - AI</span><br><span class="line">  - Reinforcement Learning</span><br><span class="line">  - Algorithm</span><br><span class="line">comments: true</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;因为项目中遇到了多个体共同决策的场景，不同个体的离散动作空间和评价指标都不同，在使用DQN时发现随着个体数量的增加，动作空间会指数式扩张，同时奖励值的设计也很难兼顾所有需求。所以一方面尝试使用策略优化的DRL算法解决离散动作空间维度爆炸问题，另一方面考虑使用多智能体强化学习的算法。</p>
+<p>&emsp;&emsp;单智能体强化学习算法有Sutton的神作《Reinforcement Learning: An introduction》，但是多智能体强化学习方面就没什么系统的网课或者书籍，因此算是比较前沿的研究领域。多智能体强化学习专注于实现具有多个智能体的自主、自学习系统的领域，其中涉及大量博弈论概念，值得一学。</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220303221852.png" alt="image-20220303221852425" style="zoom:28%;" />
+
+<span id="more"></span>
+
+<p>&nbsp;</p>
+<h1 id="基础知识与博弈论"><a href="#基础知识与博弈论" class="headerlink" title="基础知识与博弈论"></a>基础知识与博弈论</h1><h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>在多智能体（Mutli-Agent）系统中，每个智能体通过与环境进行交互获得奖励值来学习改善自己的策略，从而获得该环境下最优策略的过程，就是多智能体强化学习</p>
 <p>单智能体强化学习中，智能体所在的环境是稳定不变的，但是如果用单智能体来学习多个体的策略，将会产生许多困难：</p>
 <ul>
 <li><p>维度爆炸</p>
