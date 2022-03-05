@@ -63,9 +63,14 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220303215135.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220303215312.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220304104127.png">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220304112624.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220304142823.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220304142844.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220304140123.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220304151241.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220304151327.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220304154558.png">
 <meta property="article:published_time" content="2022-03-03T14:23:42.444Z">
-<meta property="article:modified_time" content="2022-03-04T03:32:02.740Z">
+<meta property="article:modified_time" content="2022-03-04T11:28:35.190Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="AI">
 <meta property="article:tag" content="Algorithm">
@@ -482,17 +487,18 @@
 <p>针对应用来分，多智能体强化学习算法可分为<strong>零和博弈算法</strong>与<strong>一般和博弈算法</strong></p>
 <h2 id="MiniMax-Q"><a href="#MiniMax-Q" class="headerlink" title="MiniMax-Q"></a>MiniMax-Q</h2><blockquote>
 <p>用于<strong>零和随机博弈</strong>，即两个智能体为完全竞争对抗关系 <code>R1=-R2</code> </p>
-</blockquote>
 <ul>
 <li><strong>Q</strong> 即指利用 Q-Learning 中的TD方法来迭代学习状态值函数或动作-状态值函数</li>
 <li><strong>MiniMax</strong> 即指上一节中利用线性规划求解每个特定状态 s 的阶段博弈的纳什均衡策略</li>
 </ul>
+</blockquote>
 <p><strong>算法思路</strong></p>
 <p>在两玩家零和随机博弈中，给定状态 s，则定义第 i 个智能体的状态值函数为：</p>
 <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220304104127.png" alt="image-20220304104127171" style="zoom:65%;" />
 
-<p><code>Qi*(s,a_i,a_-i)</code> 是联结动作状态价值函数，若已知，则可以直接用线性规划求解出状态 s 处的纳什均衡策略。但是实际上它一开始肯定是未知的，所以需要用 Q-Learning 或其他方法来更新推算<code>Qi*(s,a_i,a_-i)</code> ，类似于单智能体强化学习中的基于价值的求解思想，一方面评估价值要准确，另一方面根据评估得到的价值矩阵推算纳什均衡策略：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220304112624.png" alt="image-20220304112554105" style="zoom:42%;" />
+<p><code>Qi*(s,a_i,a_-i)</code> 是联结动作状态价值函数，若已知，则可以直接用线性规划求解出状态 s 处的纳什均衡策略。但是实际上它一开始肯定是未知的，所以需要用 Q-Learning 或其他方法来更新推算<code>Qi*(s,a_i,a_-i)</code> ，类似于单智能体强化学习中的基于价值的求解思想，一方面评估价值要准确，另一方面根据评估得到的价值矩阵推算纳什均衡策略</p>
+<p><strong>算法流程</strong></p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220304142823.png" alt="image-20220304142823181" style="zoom:45%;" />
 
 <p>理想情况，如果算法能够对每一个状态-动作对访问无限次，那么该算法能够收敛到纳什均衡策略</p>
 <p><strong>算法缺点</strong></p>
@@ -508,10 +514,63 @@
 <p>&nbsp;</p>
 <h2 id="Nash-Q"><a href="#Nash-Q" class="headerlink" title="Nash Q"></a>Nash Q</h2><blockquote>
 <p>将Minimax-Q算法从零和博弈扩展到了<strong>多人一般和博弈</strong></p>
+<ul>
+<li><strong>Q</strong> 即指利用 Q-Learning 中的TD方法来迭代学习状态值函数或动作-状态值函数</li>
+<li><strong>Nash</strong> 没有特殊含义，Nash Q 使用二次规划求解纳什均衡点</li>
+</ul>
 </blockquote>
+<p>Nash Q-Learning 算法在合作性均衡或对抗性均衡的环境中能够收敛到纳什均衡点，其收敛性条件是，在每一个状态s的阶段博弈中，都能够找到一个全局最优点或者鞍点，只有满足这个条件，Nash Q-Learning 算法才能够收敛。但同样因为每轮都要求解二次规划，非常耗时，降低了算法的学习速度</p>
+<p><strong>算法流程</strong></p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220304142844.png" alt="image-20220304142844901" style="zoom:45%;" />
+
+
+
+<p>有一种利用 Minimax-Q 算法进行多人博弈方法为：两队零和博弈，将所有智能体分成两个小组进行零和博弈。两队零和博弈中每一组只有一个 leader 才控制这一队智能体的所有策略，获取的奖励值也是这一个小组的整体奖励值</p>
+<p>FFQ 算法没有 team learder，每个人选择自己动作学习自己的策略获得自己的奖励值，但是为了更新 Q 值，每个智能体需要在每一步观测其他所有 friend 与 foe 的执行动作</p>
+<p>FFQ 与 Minimax-Q 算法一样都需要利用线性规划，因此算法整体学习速度会变慢</p>
 <p>&nbsp;</p>
-<h2 id="FFQ"><a href="#FFQ" class="headerlink" title="FFQ"></a>FFQ</h2><p>&nbsp;</p>
-<h2 id="WoLF-PHC"><a href="#WoLF-PHC" class="headerlink" title="WoLF-PHC"></a>WoLF-PHC</h2>
+<h2 id="Friend-or-Foe-Q"><a href="#Friend-or-Foe-Q" class="headerlink" title="Friend-or-Foe Q"></a>Friend-or-Foe Q</h2><blockquote>
+<p>Friend-or-Foe Q-Learning（FFQ）算法也是从Minimax-Q算法拓展而来，巧妙地将<strong>n智能体的一般和博弈</strong>转化为两智能体的零和博弈</p>
+</blockquote>
+<p>FFQ 算法对一个智能体 i，将其他所有智能体分为两组，一组为 i 的 friend，帮助 i 一起最大化其奖励回报；另一组为 i 的 foe ，对抗 i 并降低 i 的奖励回报。因此对每个智能体而言都有两组。这样一个<strong>n智能体的一般和博弈</strong>就转化为了一个两智能体的零和博弈</p>
+<p>其纳什均衡策略求解方法为：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220304140123.png" alt="image-20220304140123497" style="zoom:65%;" />
+
+<p><strong>算法流程</strong></p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220304151241.png" alt="image-20220304151241784" style="zoom:45%;" />
+
+<p>&nbsp;</p>
+<h2 id="WoLF-PHC"><a href="#WoLF-PHC" class="headerlink" title="WoLF-PHC"></a>WoLF-PHC</h2><blockquote>
+<p>上述的三种方法都需要在学习过程中维护Q函数，假设动作空间 Ai 与状态空间 S 都是离散，假设每个智能体的动作空间相同，则对于每一个智能体都需要有一个 S×An 大小的空间来存储Q值，因此上述三种方法所需空间非常大</p>
+<p>为了解决上述问题，我们期望每个智能体只用知道自己的动作来维护Q值函数，这样空间就降到了 S×A WoLF-PHC 就是这样的算法，每个智能体只用保存自己的动作来完成学习任务</p>
+</blockquote>
+<p><strong>WoLF</strong></p>
+<p>Win or Learn Fast，当智能体做的比期望值好的时候小心缓慢的调整参数，当智能体做的比期望值差的时候，加快步伐调整参数</p>
+<p><strong>PHC</strong></p>
+<p>一种单智能体在稳定环境下的学习算法，其核心是强化学习的通常思想，增大能够得到最大累积期望的动作的选取概率。具有合理性，能够收敛到最优策略，流程如下：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220304151327.png" alt="image-20220304151327291" style="zoom:45%;" />
+
+<center>最后一行 δ 选取 δl 还是 δw 由实际情况决定</center>
+
+
+
+<p><strong>WoLF-PHC</strong></p>
+<ul>
+<li>为了将 PHC 应用于动态环境中，将WoLF与PHC算法结合，使得智能体获得的奖励在比预期差时能够快速调整适应其他智能体策略变化；当比预期好时谨慎学习，给其他智能体适应策略变化的时间</li>
+<li>WoLF-PHC 算法能够收敛到纳什均衡策略，并具备合理性，当其他智能体采用某个固定策略时，其也能收敛到一个目前状况下的最优策略，而不是不管效果好坏无脑收敛到一个纳什均衡策略处</li>
+<li>在 WoLF-PHC 算法中，使用一个可变的学习速率 <code>δ</code> 来实现WoLF效果，当策略效果较差时使用 <code>δl</code> ，策略效果较好时使用 <code>δw</code> ，并且满足 <code>δl</code> &gt; <code>δw</code> 。</li>
+<li>WoLF-PHC 算法还有一个优势是不用观测其他智能体的策略、动作及奖励值，需要更少的空间去记录Q值</li>
+<li>WoLF-PHC 算法是通过 PHC 算法进行学习改进策略的，所以不需要使用线性规划或者二次规划求解纳什均衡，算法速度得到了提高</li>
+<li>虽然 WoLF-PHC 算法在实际应用中取得了非常好的效果，并且能够收敛到最优策略，但是其收敛性一直没有理论证明</li>
+</ul>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220304154558.png" alt="image-20220304154558146" style="zoom:45%;" />
+
+<p>&nbsp;</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p><code>MiniMax-Q</code>、<code>Nash Q</code>、<code>Friend-or-Foe Q</code> 算法的本质是通过训练更新Q表从而准确评估得到状态价值矩阵，然后对每个状态的价值矩阵进行博弈，求出每个状态的纳什均衡策略作为最佳策略</p>
+<p><code>WoLF-HPC</code> 比较像单智能体的Q-Learning</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h1 id="MMDDPG"><a href="#MMDDPG" class="headerlink" title="MMDDPG"></a>MMDDPG</h1>
     </div>
 
     
@@ -551,7 +610,10 @@
     <a href="/2022/03/03/%E3%80%90%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E3%80%91%E8%B7%9D%E7%A6%BB%20&%20%E7%9B%B8%E4%BC%BC%E5%BA%A6/" rel="prev" title="【机器学习】距离 & 相似度">
       <i class="fa fa-chevron-left"></i> 【机器学习】距离 & 相似度
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2022/03/05/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91MATLAB%20%E5%9B%BE%E5%83%8F%E8%BF%90%E7%AE%97/" rel="next" title="【数字图像处理】Matlab：图像的运算">
+      【数字图像处理】Matlab：图像的运算 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -611,7 +673,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E4%B8%8E%E5%8D%9A%E5%BC%88%E8%AE%BA"><span class="nav-text">基础知识与博弈论</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E8%A8%80"><span class="nav-text">引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%9A%E5%BC%88%E8%AE%BA%E5%9F%BA%E7%A1%80"><span class="nav-text">博弈论基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9F%A9%E9%98%B5%E5%8D%9A%E5%BC%88"><span class="nav-text">矩阵博弈</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BA%B3%E4%BB%80%E5%9D%87%E8%A1%A1"><span class="nav-text">纳什均衡</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%A5%E6%A0%BC%E7%BA%B3%E4%BB%80%E5%9D%87%E8%A1%A1"><span class="nav-text">严格纳什均衡</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%8C%E5%85%A8%E6%B7%B7%E5%90%88%E7%AD%96%E7%95%A5"><span class="nav-text">完全混合策略</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BA%AF%E7%AD%96%E7%95%A5"><span class="nav-text">纯策略</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%A4%E4%B8%AA%E6%99%BA%E8%83%BD%E4%BD%93%E7%9A%84%E7%BA%B3%E4%BB%80%E5%9D%87%E8%A1%A1"><span class="nav-text">两个智能体的纳什均衡</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9B%B6%E5%92%8C%E5%8D%9A%E5%BC%88"><span class="nav-text">零和博弈</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E8%88%AC%E5%92%8C%E5%8D%9A%E5%BC%88"><span class="nav-text">一般和博弈</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E6%80%A7%E8%A7%84%E5%88%92%E6%B1%82%E8%A7%A3%E5%8F%8C%E6%99%BA%E8%83%BD%E4%BD%93%E7%9A%84%E9%9B%B6%E5%92%8C%E5%8D%9A%E5%BC%88"><span class="nav-text">线性规划求解双智能体的零和博弈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%A0%E4%B8%AA%E5%8D%9A%E5%BC%88%E6%A6%82%E5%BF%B5"><span class="nav-text">几个博弈概念</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0"><span class="nav-text">多智能体强化学习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BB%BA%E6%A8%A1"><span class="nav-text">建模</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E8%BF%87%E7%A8%8B"><span class="nav-text">学习过程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95"><span class="nav-text">基础算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MiniMax-Q"><span class="nav-text">MiniMax-Q</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nash-Q"><span class="nav-text">Nash Q</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FFQ"><span class="nav-text">FFQ</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WoLF-PHC"><span class="nav-text">WoLF-PHC</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E4%B8%8E%E5%8D%9A%E5%BC%88%E8%AE%BA"><span class="nav-text">基础知识与博弈论</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E8%A8%80"><span class="nav-text">引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%9A%E5%BC%88%E8%AE%BA%E5%9F%BA%E7%A1%80"><span class="nav-text">博弈论基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9F%A9%E9%98%B5%E5%8D%9A%E5%BC%88"><span class="nav-text">矩阵博弈</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BA%B3%E4%BB%80%E5%9D%87%E8%A1%A1"><span class="nav-text">纳什均衡</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%A5%E6%A0%BC%E7%BA%B3%E4%BB%80%E5%9D%87%E8%A1%A1"><span class="nav-text">严格纳什均衡</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%8C%E5%85%A8%E6%B7%B7%E5%90%88%E7%AD%96%E7%95%A5"><span class="nav-text">完全混合策略</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BA%AF%E7%AD%96%E7%95%A5"><span class="nav-text">纯策略</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%A4%E4%B8%AA%E6%99%BA%E8%83%BD%E4%BD%93%E7%9A%84%E7%BA%B3%E4%BB%80%E5%9D%87%E8%A1%A1"><span class="nav-text">两个智能体的纳什均衡</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9B%B6%E5%92%8C%E5%8D%9A%E5%BC%88"><span class="nav-text">零和博弈</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E8%88%AC%E5%92%8C%E5%8D%9A%E5%BC%88"><span class="nav-text">一般和博弈</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E6%80%A7%E8%A7%84%E5%88%92%E6%B1%82%E8%A7%A3%E5%8F%8C%E6%99%BA%E8%83%BD%E4%BD%93%E7%9A%84%E9%9B%B6%E5%92%8C%E5%8D%9A%E5%BC%88"><span class="nav-text">线性规划求解双智能体的零和博弈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%A0%E4%B8%AA%E5%8D%9A%E5%BC%88%E6%A6%82%E5%BF%B5"><span class="nav-text">几个博弈概念</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0"><span class="nav-text">多智能体强化学习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BB%BA%E6%A8%A1"><span class="nav-text">建模</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E8%BF%87%E7%A8%8B"><span class="nav-text">学习过程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95"><span class="nav-text">基础算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MiniMax-Q"><span class="nav-text">MiniMax-Q</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nash-Q"><span class="nav-text">Nash Q</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Friend-or-Foe-Q"><span class="nav-text">Friend-or-Foe Q</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WoLF-PHC"><span class="nav-text">WoLF-PHC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MMDDPG"><span class="nav-text">MMDDPG</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -627,7 +689,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">39</span>
+          <span class="site-state-item-count">41</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
