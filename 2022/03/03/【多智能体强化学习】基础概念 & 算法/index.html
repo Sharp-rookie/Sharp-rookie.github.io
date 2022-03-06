@@ -78,12 +78,26 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220306170816.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220306171046.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220306171521.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220306205629.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220306205844.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220306205936.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220306210928.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220306211805.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220306211823.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220306211941.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220306212139.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220306212411.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220306213205.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220306213321.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220306213930.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220306214020.png">
 <meta property="article:published_time" content="2022-03-03T14:23:42.444Z">
-<meta property="article:modified_time" content="2022-03-06T11:55:04.010Z">
+<meta property="article:modified_time" content="2022-03-06T13:41:03.683Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="AI">
 <meta property="article:tag" content="Algorithm">
 <meta property="article:tag" content="Reinforcement Learning">
+<meta property="article:tag" content="Mutli-Agent RL">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220303221852.png">
 
@@ -651,7 +665,90 @@
 <h3 id="小结-1"><a href="#小结-1" class="headerlink" title="小结"></a>小结</h3><p><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220306171521.png" alt="image-20220306171521785"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<h1 id="MADDPG"><a href="#MADDPG" class="headerlink" title="MADDPG"></a>MADDPG</h1><p>MADDPG 是 OpenAI 2017发表在 NIPS 上的一篇文章 Multi-Agent Actor-Critic for Mixed Cooperative-Competitive Environments </p>
+<h1 id="MADDPG"><a href="#MADDPG" class="headerlink" title="MADDPG"></a>MADDPG</h1><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>MADDPG 是 OpenAI 2017发表在 NIPS 上的一篇文章 <a href="">Multi-Agent Actor-Critic for Mixed Cooperative-Competitive Environments </a> 中提出的，主要是将AC算法进行了一系列改进，使其能够适用于传统RL算法无法处理的复杂多智能体场景</p>
+<p>传统RL算法在多智能体场景下面临的问题有：</p>
+<ul>
+<li>由于每个智能体都是在不断学习改进其策略，因此从每一个智能体的角度看，环境是一个动态不稳定的，不符合传统RL收敛条件</li>
+<li>在一定程度上，无法通过仅仅改变智能体自身的策略来适应动态不稳定的环境</li>
+<li>由于环境的不稳定，将无法直接使用之前的经验回放等DQN的关键技巧</li>
+<li>policy gradient 算法会由于智能体数量的变多使得本就有的方差大的问题加剧</li>
+</ul>
+<p>MADDPG 的三点技巧：</p>
+<ol>
+<li><p>集中式训练，分布式执行</p>
+<p> 训练时采用集中式学习训练 critic 与 actor，使用时 actor 只用知道局部信息就能运行。critic 需要其他智能体的策略信息，文章给了一种估计其他智能体策略的方法，能够只用知道其他智能体的观测与动作</p>
+</li>
+<li><p>改进了经验回放记录的数据</p>
+<p> 为了能够适用于动态环境，每一条信息由 <code>(x,x&#39;,aq,…,an,r1,…,rn)</code> 组成，<code>x=(o1,…,on)</code> 表示每个智能体的观测</p>
+</li>
+<li><p>利用策略集合效果优化（policy ensemble）</p>
+<p> 对每个智能体学习多个策略，改进时利用所有策略的整体效果进行优化，以提高算法的稳定性以及鲁棒性</p>
+</li>
+</ol>
+<p>MADDPG 本质上还是一个 DPG 算法，针对每个智能体训练一个需要全局信息的 Critic 以及一个需要局部信息的 Actor，并且允许每个智能体有自己的奖励函数（reward function），因此可以用于合作任务或对抗任务，并且由于脱胎于 DPG 算法，其动作空间可以是连续的</p>
+<h3 id="传统-DRL-思路"><a href="#传统-DRL-思路" class="headerlink" title="传统 DRL 思路"></a>传统 DRL 思路</h3><h4 id="DQN"><a href="#DQN" class="headerlink" title="DQN"></a>DQN</h4><p>DQN的思想就是设计一个 <code>Q(s,a|θ)</code> 不断逼近真实的 <code>Q(s,a)</code> 函数。其中主要用到了两个技巧：</p>
+<ol>
+<li>经验回放</li>
+<li>目标网络</li>
+</ol>
+<p>该技巧主要用来打破数据之间联系，因为神经网络对数据的假设是独立同分布，而MDP过程的数据前后有关联。打破数据的联系可以更好地拟合 <code>Q(s,a)</code> 函数。其代价函数为：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220306205629.png" alt="image-20220306205629582" style="zoom:75%;" />
+
+<p>其中计算y时使用的网络是目标Q网络，其参数更新与当前Q网络不同步（滞后）</p>
+<h4 id="SPG"><a href="#SPG" class="headerlink" title="SPG"></a>SPG</h4><p>stochastic policy gradient 算法不采用拟合Q函数的方式，而是直接优化累积回报来获得使回报最大的策略。假定参数化的策略为 <code>Πθ(a|s)</code>，累积回报为：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220306205844.png" alt="image-20220306205844149" style="zoom:75%;" />
+
+<p>为了使 <code>J(θ)</code> 最大化，直接对策略参数求导得到策略更新梯度：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220306205936.png" alt="image-20220306205936394" style="zoom:75%;" />
+
+<p>Actor-Critic 算法也可由 SPG + DQN 共同推出，按照DQN的方法拟合一个 <code>Q(s,a|θ)</code> 函数，则这个参数化的 <code>Q(s,a|θ)</code> 函数被称为 Critic，<code>Πθ(a|s)</code>  被称为 Actor</p>
+<h4 id="DPG"><a href="#DPG" class="headerlink" title="DPG"></a>DPG</h4><p>DQN、SPG 都是针对随机策略的，<code>Πθ(a|s)</code>  是一个在状态 s 对于各个动作 a 的条件概率分布。而 DPG 是针对确定性策略的，<code>μ(a|θ): S——&gt;A</code> 是一个状态空间到动作空间的映射。其思想与 SPG 相同，策略梯度公式为：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220306210928.png" alt="image-20220306210927967" style="zoom:75%;" />
+
+<p>DPG 可以使用 AC 的方法来估计一个Q函数，DDPG 就是借用了 DQN 经验回放与目标网络的技巧</p>
+<p>&nbsp;</p>
+<h3 id="MADDPG-1"><a href="#MADDPG-1" class="headerlink" title="MADDPG"></a>MADDPG</h3><h4 id="多智能体-Actor-Critic-设计"><a href="#多智能体-Actor-Critic-设计" class="headerlink" title="多智能体 Actor-Critic 设计"></a>多智能体 Actor-Critic 设计</h4><p>MADDPG是集中式的学习，分布式的应用，允许使用一些额外的信息（全局信息）进行学习，只要在应用的时候使用局部信息进行决策就行。这点就是Q-learning的一个不足之处，Q-learning在学习与应用时必须采用相同的信息。</p>
+<p>MADDPG对传统的AC算法进行了一个改进，Critic扩展为可以利用其他智能体的策略进行学习，这点的进一步改进就是每个智能体对其他智能体的策略进行一个函数逼近</p>
+<hr>
+<p>用 <code>θ=[θ1,…,θn]</code> 表示 n 个智能体策略的参数，<code>Π=[Π1,…,Πn]</code> 表示 n 个智能体的策略。第 i 个智能体的累计期望奖励为：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220306211805.png" alt="image-20220306211805156" style="zoom:70%;" />
+
+<p>求导的策略梯度：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220306211823.png" alt="image-20220306211823813" style="zoom:75%;" />
+
+<p>其中，<code>oi</code> 表示第 i 个智能体的观测，<code>x=[o1,……,on]</code> 表示观测向量，即总状态；第 i 个智能体集中式的状态-动作函数为：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220306211941.png" alt="image-20220306211940984" style="zoom:70%;" />
+
+<p>由于是每个智能体独立学习自己的状态-动作函数，所以每个智能体可以有不同的奖励函数，完成合作或竞争任务</p>
+<hr>
+<p>上述为随机策略梯度算法，下面拓展到确定性策略 <code>μθ</code>，梯度公式为：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220306212139.png" alt="image-20220306212139199" style="zoom:75%;" />
+
+<p>由以上两个梯度公式可以看出该算法与SPG与DPG十分类似，就像是将单体直接扩展到多体。但其实 <code>Qμ</code> 是一个非常厉害的技巧，针对每个智能体建立值函数，极大的解决了传统 RL 算法在 Multi-agent 领域的不足。D 是一个经验池（experience replay buffer），元素组成为 <code>(x,x&#39;,a1,…,an,r1,…,rn)</code> </p>
+<p>集中式的 critic 的更新方法借鉴了DQN中TD与目标网络思想：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220306212411.png" alt="image-20220306212411756" style="zoom:90%;" />
+
+<center>式 1</center>
+
+<p>其中，y 的计算使用目标Q网络，<code>μ’=[μ’1,…,μ’n]</code> 就是目标策略滞后更新的参数 <code>θ’</code>，其他智能体的策略可以采用拟合逼近的方式得到，不需要通信交互</p>
+<p>如上可以看出 critic 借用了全局信息学习，actor 只是用了局部观测信息。MADDPG 的一个启发就是，如果知道所有的智能体的动作，那么环境就是稳定的，就算策略在不断更新环境也是恒定的</p>
+<h4 id="估计其他智能体策略"><a href="#估计其他智能体策略" class="headerlink" title="估计其他智能体策略"></a>估计其他智能体策略</h4><p>在 (1) 式中用到了其他智能体的策略，这本需要不断的通信来获取，但是也可以放宽这个条件，通过对其他智能体的策略进行估计来实现</p>
+<p>每个智能体维护 n-1 个策略逼近函数 <code>μ^iΦj</code> 表示第 i 个智能体对第j个智能体策略 <code>μj</code> 的函数逼近。其逼近代价为 对数代价函数 加上 策略的熵，可写为：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220306213205.png" alt="image-20220306213205761" style="zoom:75%;" />
+
+<p>只要最小化上述代价函数，就能得到其他智能体策略的逼近，从而 (1) 式中的 y 可计算为：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220306213321.png" alt="image-20220306213321401" style="zoom:78%;" />
+
+<p>所以 MADDPG 在更新Critic网络 <code>Qμ</code> 之前，先利用经验回放的一个采样batch更新其他智能体策略预测网络 <code>μ^iΦj</code></p>
+<h4 id="策略集合优化（policies-ensemble）"><a href="#策略集合优化（policies-ensemble）" class="headerlink" title="策略集合优化（policies ensemble）"></a>策略集合优化（policies ensemble）</h4><p>这个技巧也是文章的一个亮点，多智能体强化学习一个顽固的问题是由于每个智能体的策略都在更新迭代导致环境针对一个特定的智能体是动态不稳定的。这种情况在竞争任务下尤其严重，经常会出现一个智能体针对其竞争对手过拟合出一个强策略。但是这个强策略是非常脆弱的，因为随着竞争对手策略的更新改变，这个强策略很难去适应新的对手策略</p>
+<p>为了能更好的应对上述情况，MADDPG提出了一种策略集合的思想，第i个智能体的策略 <code>μi</code> 由一个具有 <code>K</code> 个子策略的集合构成，在每一个训练 episode 中只是用一个子策略 <code>μi(k)</code> 。对每一个智能体，最大化其策略集合的整体奖励：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220306213930.png" alt="image-20220306213930276" style="zoom:75%;" />
+
+<p>并且为每一个子策略k构建一个记忆存储 <code>Di(k)</code> ，优化策略集合的整体效果，由此针对每一个子策略的更新梯度为：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220306214020.png" alt="image-20220306214020321" style="zoom:70%;" />
+
+<p>&nbsp;</p>
+<h3 id="仿真效果"><a href="#仿真效果" class="headerlink" title="仿真效果"></a>仿真效果</h3><p>// TODO</p>
 
     </div>
 
@@ -681,6 +778,7 @@
               <a href="/tags/AI/" rel="tag"># AI</a>
               <a href="/tags/Algorithm/" rel="tag"># Algorithm</a>
               <a href="/tags/Reinforcement-Learning/" rel="tag"># Reinforcement Learning</a>
+              <a href="/tags/Mutli-Agent-RL/" rel="tag"># Mutli-Agent RL</a>
           </div>
 
         
@@ -755,7 +853,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E4%B8%8E%E5%8D%9A%E5%BC%88%E8%AE%BA"><span class="nav-text">基础知识与博弈论</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E8%A8%80"><span class="nav-text">引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%9A%E5%BC%88%E8%AE%BA%E5%9F%BA%E7%A1%80"><span class="nav-text">博弈论基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9F%A9%E9%98%B5%E5%8D%9A%E5%BC%88"><span class="nav-text">矩阵博弈</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BA%B3%E4%BB%80%E5%9D%87%E8%A1%A1"><span class="nav-text">纳什均衡</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%A5%E6%A0%BC%E7%BA%B3%E4%BB%80%E5%9D%87%E8%A1%A1"><span class="nav-text">严格纳什均衡</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%8C%E5%85%A8%E6%B7%B7%E5%90%88%E7%AD%96%E7%95%A5"><span class="nav-text">完全混合策略</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BA%AF%E7%AD%96%E7%95%A5"><span class="nav-text">纯策略</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%A4%E4%B8%AA%E6%99%BA%E8%83%BD%E4%BD%93%E7%9A%84%E7%BA%B3%E4%BB%80%E5%9D%87%E8%A1%A1"><span class="nav-text">两个智能体的纳什均衡</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9B%B6%E5%92%8C%E5%8D%9A%E5%BC%88"><span class="nav-text">零和博弈</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E8%88%AC%E5%92%8C%E5%8D%9A%E5%BC%88"><span class="nav-text">一般和博弈</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E6%80%A7%E8%A7%84%E5%88%92%E6%B1%82%E8%A7%A3%E5%8F%8C%E6%99%BA%E8%83%BD%E4%BD%93%E7%9A%84%E9%9B%B6%E5%92%8C%E5%8D%9A%E5%BC%88"><span class="nav-text">线性规划求解双智能体的零和博弈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%A0%E4%B8%AA%E5%8D%9A%E5%BC%88%E6%A6%82%E5%BF%B5"><span class="nav-text">几个博弈概念</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0"><span class="nav-text">多智能体强化学习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BB%BA%E6%A8%A1"><span class="nav-text">建模</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E8%BF%87%E7%A8%8B"><span class="nav-text">学习过程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95"><span class="nav-text">基础算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MiniMax-Q"><span class="nav-text">MiniMax-Q</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nash-Q"><span class="nav-text">Nash Q</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Friend-or-Foe-Q"><span class="nav-text">Friend-or-Foe Q</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WoLF-PHC"><span class="nav-text">WoLF-PHC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9F%A9%E9%98%B5%E5%8D%9A%E5%BC%88%E4%B8%AD%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95"><span class="nav-text">矩阵博弈中的分布式学习算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E8%87%AA%E5%8A%A8%E6%9C%BA"><span class="nav-text">学习自动机</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#linear-reward-inaction"><span class="nav-text">linear reward-inaction</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#linear-reward-penalty"><span class="nav-text">linear reward-penalty</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A2%AF%E5%BA%A6%E6%8F%90%E5%8D%87"><span class="nav-text">梯度提升</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#WoLF-IGA"><span class="nav-text">WoLF-IGA</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Lagging-Anchor"><span class="nav-text">Lagging Anchor</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-1"><span class="nav-text">小结</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MADDPG"><span class="nav-text">MADDPG</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E4%B8%8E%E5%8D%9A%E5%BC%88%E8%AE%BA"><span class="nav-text">基础知识与博弈论</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E8%A8%80"><span class="nav-text">引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%9A%E5%BC%88%E8%AE%BA%E5%9F%BA%E7%A1%80"><span class="nav-text">博弈论基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9F%A9%E9%98%B5%E5%8D%9A%E5%BC%88"><span class="nav-text">矩阵博弈</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BA%B3%E4%BB%80%E5%9D%87%E8%A1%A1"><span class="nav-text">纳什均衡</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%A5%E6%A0%BC%E7%BA%B3%E4%BB%80%E5%9D%87%E8%A1%A1"><span class="nav-text">严格纳什均衡</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%8C%E5%85%A8%E6%B7%B7%E5%90%88%E7%AD%96%E7%95%A5"><span class="nav-text">完全混合策略</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BA%AF%E7%AD%96%E7%95%A5"><span class="nav-text">纯策略</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%A4%E4%B8%AA%E6%99%BA%E8%83%BD%E4%BD%93%E7%9A%84%E7%BA%B3%E4%BB%80%E5%9D%87%E8%A1%A1"><span class="nav-text">两个智能体的纳什均衡</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9B%B6%E5%92%8C%E5%8D%9A%E5%BC%88"><span class="nav-text">零和博弈</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E8%88%AC%E5%92%8C%E5%8D%9A%E5%BC%88"><span class="nav-text">一般和博弈</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E6%80%A7%E8%A7%84%E5%88%92%E6%B1%82%E8%A7%A3%E5%8F%8C%E6%99%BA%E8%83%BD%E4%BD%93%E7%9A%84%E9%9B%B6%E5%92%8C%E5%8D%9A%E5%BC%88"><span class="nav-text">线性规划求解双智能体的零和博弈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%A0%E4%B8%AA%E5%8D%9A%E5%BC%88%E6%A6%82%E5%BF%B5"><span class="nav-text">几个博弈概念</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0"><span class="nav-text">多智能体强化学习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BB%BA%E6%A8%A1"><span class="nav-text">建模</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E8%BF%87%E7%A8%8B"><span class="nav-text">学习过程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95"><span class="nav-text">基础算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MiniMax-Q"><span class="nav-text">MiniMax-Q</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nash-Q"><span class="nav-text">Nash Q</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Friend-or-Foe-Q"><span class="nav-text">Friend-or-Foe Q</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WoLF-PHC"><span class="nav-text">WoLF-PHC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9F%A9%E9%98%B5%E5%8D%9A%E5%BC%88%E4%B8%AD%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95"><span class="nav-text">矩阵博弈中的分布式学习算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E8%87%AA%E5%8A%A8%E6%9C%BA"><span class="nav-text">学习自动机</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#linear-reward-inaction"><span class="nav-text">linear reward-inaction</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#linear-reward-penalty"><span class="nav-text">linear reward-penalty</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A2%AF%E5%BA%A6%E6%8F%90%E5%8D%87"><span class="nav-text">梯度提升</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#WoLF-IGA"><span class="nav-text">WoLF-IGA</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Lagging-Anchor"><span class="nav-text">Lagging Anchor</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-1"><span class="nav-text">小结</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MADDPG"><span class="nav-text">MADDPG</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%A0%E7%BB%9F-DRL-%E6%80%9D%E8%B7%AF"><span class="nav-text">传统 DRL 思路</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#DQN"><span class="nav-text">DQN</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SPG"><span class="nav-text">SPG</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DPG"><span class="nav-text">DPG</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MADDPG-1"><span class="nav-text">MADDPG</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93-Actor-Critic-%E8%AE%BE%E8%AE%A1"><span class="nav-text">多智能体 Actor-Critic 设计</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%B0%E8%AE%A1%E5%85%B6%E4%BB%96%E6%99%BA%E8%83%BD%E4%BD%93%E7%AD%96%E7%95%A5"><span class="nav-text">估计其他智能体策略</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AD%96%E7%95%A5%E9%9B%86%E5%90%88%E4%BC%98%E5%8C%96%EF%BC%88policies-ensemble%EF%BC%89"><span class="nav-text">策略集合优化（policies ensemble）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%BF%E7%9C%9F%E6%95%88%E6%9E%9C"><span class="nav-text">仿真效果</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -784,7 +882,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
