@@ -1191,7 +1191,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #e3ff8c;
+  background: #ff65f5;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2717,4 +2717,26 @@ body {
   .pagination {
     margin: 8px 0 0;
   }
+}
+.vcopy.txt-right {
+  display: none;
+}
+body {
+  background: url("https://gitee.com/lrk612/md_picture/raw/master/img/20220310221757.JPG");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: 50% 50%;
+}
+.content-wrap {
+  opacity: 0.9;
+}
+.sidebar {
+  opacity: 0.9;
+}
+.header-inner {
+  background: rgba(255,255,255,0.9);
+}
+.popup {
+  opacity: 0.9;
 }
