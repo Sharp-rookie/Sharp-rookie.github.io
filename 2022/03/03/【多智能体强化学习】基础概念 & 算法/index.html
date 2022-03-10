@@ -65,6 +65,7 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220303214618.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220303215135.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220303215312.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220310144235.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220304104127.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220304142823.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220310135446.png">
@@ -90,6 +91,15 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220306213321.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220306213930.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220306214020.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220310142724.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220310142821.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220310143411.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220310143539.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220307193534.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220307193631.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220307194034.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220307194618.png">
+<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220307194709.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220306162943.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220306162849.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220306163818.png">
@@ -99,14 +109,8 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220306170816.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220306171046.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220306171521.png">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220307192839.png">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220307193534.png">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220307193631.png">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220307194034.png">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220307194618.png">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220307194709.png">
 <meta property="article:published_time" content="2022-03-03T14:23:42.444Z">
-<meta property="article:modified_time" content="2022-03-10T06:22:50.280Z">
+<meta property="article:modified_time" content="2022-03-10T06:44:24.146Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="AI">
 <meta property="article:tag" content="Algorithm">
@@ -545,7 +549,11 @@
 </blockquote>
 </li>
 </ul>
-<p>由于完全竞争、完全合作、半竞争半合作这3种不同场景的建模不同，求解方法也有所不同，需要分类求解</p>
+<p>由于完全竞争、完全合作、半竞争半合作这3种不同场景的建模不同，求解方法也有所不同，需要分类求解，常用算法如下：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220310144235.png" alt="image-20220310144235073" style="zoom:70%;" />
+
+
+
 <h2 id="直观思路"><a href="#直观思路" class="headerlink" title="直观思路"></a>直观思路</h2><p>对于多智能体强化学习问题，一种直接的解决思路：将单智能体强化学习方法直接套用在多智能体系统中，即每个智能体把其他智能体都当做环境中的因素，仍然按照单智能体学习的方式、通过与环境的交互来更新策略；这是 <strong>independent Q-learning</strong> 方法的思想。这种学习方式固然简单也很容易实现，但忽略了其他智能体也具备决策的能力、所有个体的动作共同影响环境的状态，使得它很难稳定地学习并达到良好的效果</p>
 <p>另一种直观的思路则是，把其他智能体的状态或动作作为观测值用于自身智能体进行决策动作，即在单体强化学习的基础上，把其他智能体的信息作为观测内容</p>
 <p>&nbsp;</p>
@@ -751,8 +759,84 @@
 
 
 
-<h3 id="COMA"><a href="#COMA" class="headerlink" title="COMA"></a>COMA</h3><p>&nbsp;</p>
-<h2 id="Value-based-方法"><a href="#Value-based-方法" class="headerlink" title="Value-based 方法"></a>Value-based 方法</h2><p>&nbsp;</p>
+<h3 id="COMA"><a href="#COMA" class="headerlink" title="COMA"></a>COMA</h3><p>在合作式的多智能体学习问题中，每个智能体共享奖励（即在同一个时刻获得相同的奖励），此时会存在一个<strong>置信分配</strong>问题（credit assignment）：如何去评估每个智能体对这个共享奖励的贡献？</p>
+<p>反事实多智能体策略梯度法方法是牛津大学学者在论文 <a target="_blank" rel="noopener" href="https://lrk612.com/resources/Counterfactual%20Multi-Agent%20Policy%20Gradients.pdf">Counterfactual Multi-Agent Policy Gradients</a> 中提出的，其在置信分配中利用了一种反事实基线：将智能体当前的动作和默认的动作进行比较，如果当前动作能够获得的回报高于默认动作，则说明当前动作提供了好的贡献，反之则说明当前动作提供了坏的贡献；默认动作的回报，则通过当前策略的平均效果来提供（即为反事实基线）</p>
+<p>在对某个智能体和基线进行比较的时，需要固定其他智能体的动作。当前策略的平均效果和优势函数的定义如下：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220310142724.png" alt="image-20220310142724924" style="zoom:65%;" />
+
+<p>COMA 方法结合了集中式训练、分布式执行的思想：分布式的个体策略以局部观测值为输入、输出个体的动作；中心化的 critic 使用特殊的网络结构来输出优势函数值</p>
+<p>具体地，critic 网络的输入包括了全局状态信息 s、个体的局部观测信息 o、个体的编号 a 以及其他智能体的动作，首先输出当前智能体不同动作所对应的联合 Q 值。然后， 再经过 COMA 模块，使用输入其中的智能体当前策略和动作，计算反事实基线以及输出最终的优势函数</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220310142821.png" alt="image-20220310142821585" style="zoom:70%;" />
+
+<center>(a) actor-critic框架   (b)actor网络结构   (c)critic网络结构，其中COMA模块提供优势函数值</center>
+
+<p>&nbsp;</p>
+<h2 id="Value-based-方法"><a href="#Value-based-方法" class="headerlink" title="Value-based 方法"></a>Value-based 方法</h2><p>policy-based 方法中，中心化的值函数是直接使用全局信息进行建模，没有考虑个体的特点。在多智能体系统是由大规模的多个个体构成时，这样的值函数是难以学习或者是训练到收敛的，很难推导出理想的策略。并且仅依靠局部观测值，无法判断当前奖励是由于自身的行为还是环境中其他队友的行为而获得的</p>
+<h3 id="VDN"><a href="#VDN" class="headerlink" title="VDN"></a>VDN</h3><p>值分解网络（value decomposition networks, VDN）由 DeepMind 团队在 2018 年的论文 <a href="">Value-Decomposition Networks For Cooperative Multi-Agent Learning</a> 中提出，其核心是将全局的 Q(s,a)值分解为各个局部 Qi(si,ai)的加权和，每个智能体拥有各自的局部值函数</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220310143411.png" alt="image-20220310143411785" style="zoom:70%;" />
+
+<p>这样的分解方式，在联合动作 Q 值的结构组成方面考虑了个体行为的特性，使得该 Q 值更易于学习</p>
+<p>另一方面，它也能够适配集中式的训练方式，在一定程度上能够克服多智能体系统中环境不稳定的问题</p>
+<p>在训练过程中，通过联合动作 Q 值来指导策略的优化，同时个体从全局 Q 值中提取局部的 Qi 值来完成各自的决策（如贪心策略 ai=argmax Qi），实现多智能体系统的分布式控制</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220310143539.png" alt="image-20220310143539248" style="zoom:60%;" />
+
+<center>左图是完全分布式的局部Q网络结构，右图是VDN联合动作Q值网络结构</center>
+
+<p>每个智能体在学习时根据联合 Q 值进行更新，而在选择动作时根据各自的 Qi 值来选择动作 ai</p>
+<p>VDN 对于智能体之间的关系有较强的假设，但是，这样的假设并不一定适合所有合作式多智能体问题。在 2018 年的 ICML 会议上，有研究者提出了改进的方法 QMIX</p>
+<h3 id="QMIX"><a href="#QMIX" class="headerlink" title="QMIX"></a>QMIX</h3><h4 id="简介-1"><a href="#简介-1" class="headerlink" title="简介"></a>简介</h4><ul>
+<li>采用集中式学习，分布式执行应用的框架。通过集中式的信息学习，得到每个智能体的分布式策略</li>
+<li>本质是一个值函数逼近算法</li>
+<li>由于对一个联合动作-状态只有一个总奖励值，而不是每个智能体得到一个自己的奖励值，因此只能用于合作环境，而不能用于竞争对抗环境</li>
+<li>训练时借用全局状态信息来提高算法效果。是后文提到的VDN方法的改进</li>
+<li>QMIX 设计一个神经网络来整合每个智能体的局部值函数而得到联合动作值函数，而 VDN 则是直接求和</li>
+<li>每个智能体的局部值函数只需要自己的局部观测，因此整个系统在执行时是一个分布式的，通过局部值函数，选出累积期望奖励最大的动作执行</li>
+<li>算法使联合动作值函数与每个局部值函数的单调性相同，因此对局部值函数取最大动作也就是使联合动作值函数最大</li>
+<li>算法针对的模型是一个分布式多智能体部分可观马尔可夫决策过程（Dec-POMDP）</li>
+</ul>
+<h4 id="预备知识"><a href="#预备知识" class="headerlink" title="预备知识"></a>预备知识</h4><p><strong>核心问题</strong></p>
+<p>在多智能体强化学习中一个关键的问题就是如何学习<strong>联合动作值函数</strong>，因为该函数的参数会随着智能体数量的增多而成指数增长，如果动作值函数的输入空间过大，则很难拟合出一个合适函数来表示真实的联合动作值函数。</p>
+<p>另一个问题就是学得了联合动作值函数后，如何通过联合值函数提取出一个优秀的分布式的策略，这其实是单智能体强化学习拓展到MARL的<strong>核心问题</strong></p>
+<p><strong>Dec-POMDP</strong></p>
+<p>非中心部分可观马尔可夫决策过程（Dec-POMDP）是一种处理多智能体序列化决策问题的模型，是将POMDP拓展到多智能体系统。其中定义如下：</p>
+<ul>
+<li>每个智能体的局部观测信息 <code>o_i,t</code> 、动作 <code>a_i,t</code> 、系统状态为 <code>s_t</code> </li>
+<li>每个智能体的动作-观测历史为 <code>τi=(ai_0,oi_1,ai_1,oi_2,……,ai_t-1,oi_t)</code>，表示从初始状态开始，该智能体的时序动作-观测记录</li>
+<li>联合动作-观测历史 <code>τ=(τ1,τ2,……,τn)</code>，表示从初始状态开始，所有智能体的时序动作-观测记录</li>
+<li>每个智能体的分布式策略为 <code>Πi(τi)</code>，其值函数（局部动作值函数）为 <code>Qi(τi,ai;θi)</code>，都与动作-观测历史 <code>τi</code> 有关而不和状态有关</li>
+</ul>
+<p><strong>IQL</strong></p>
+<p>IQL（independent Q-learning）就是非常暴力的给每个智能体执行一个Q-learning算法，因为共享环境，并且环境随着每个智能体策略、状态发生改变，对每个智能体来说，环境是动态不稳定的，因此这个算法也无法收敛，但是在部分应用中也具有较好的效果</p>
+<p><strong>DRQN</strong></p>
+<p>DRQN是一个用来处理POMDP（部分可观马尔可夫决策过程）的一个算法，其采用LSTM替换DQN卷基层后的一个全连接层，来达到能够记忆历史状态的作用，因此可以在部分可观的情况下提高算法性能</p>
+<p>由于QMIX解决的是多智能体的POMDP问题，因此每个智能体采用的是DRQN算法</p>
+<h4 id="QMIX-1"><a href="#QMIX-1" class="headerlink" title="QMIX"></a>QMIX</h4><p>VDN 只是将每个智能体的局部动作值函数求和相加得到联合动作值函数，虽然满足联合值函数与局部值函数单调性相同的可以进行分布化策略的条件，但是其没有在学习时利用状态信息以及没有采用非线性方式对单智能体局部值函数进行整合，使得 VDN 算法还有很大的提升空间</p>
+<p>QMIX就是采用一个混合网络对单智能体局部值函数进行合并，并在训练学习过程中加入全局状态信息辅助，来提高算法性能</p>
+<p>因为对联合动作值函数取 <code>argmax</code> 等价于对每个局部动作值函数取 <code>argmax</code> ，其单调性相同：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220307193534.png" alt="image-20220307193534011" style="zoom:70%;" />
+
+<center>公式 1</center>
+
+<p>因此分布式策略就是贪心的通过局部 <code>Qi</code> 获取最优动作。QMIX 将上式转化为一种单调性约束：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220307193631.png" alt="image-20220307193631239" style="zoom:70%;" />
+
+<center>公式 2</center>
+
+<hr>
+<p>若满足公式2，则公式1自然成立，为了实现上述约束，QMIX 采用混合网络（mixing network）来实现，其具体结构为：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220307194034.png" alt="image-20220307194034120" style="zoom:70%;" />
+
+<p>图（c）表示表示每个智能体采用一个 DRQN 来拟合自身的Q值函数的到 <code>Qi(τi,ai;θi)</code> ，DRQN 循环输入当前的观测 <code>o_i,t</code> 以及上一时刻的动作 <code>a_i,t-1</code> 来得到 Q 值</p>
+<p>图（b）表示混合网络的结构，其输入为每个DRQN网络的输出。为了满足上述的单调性约束，混合网络的所有权值都是非负数，对偏移量不做限制，这样就可以确保满足单调性约束</p>
+<p>为了能够更多的利用到系统的状态信息 <code>st</code> ，采用一种超网络（hypernetwork），将状态 <code>st</code> 作为输入，输出为混合网络的权值及偏移量。为了保证权值的非负性，采用一个线性网络以及绝对值激活函数保证输出不为负数。对偏移量采用同样方式但没有非负性的约束，混合网络最后一层的偏移量通过两层网络以及 ReLU 激活函数得到非线性映射网络。状态信息 <code>st</code> 是通过超网络混合到 <code>Qtot</code> 中，而不是仅仅作为混合网络的输入项</p>
+<p>QMIX最终的代价函数为:</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220307194618.png" alt="image-20220307194618371" style="zoom:70%;" />
+
+<p>更新用到了 DQN 经验回放的思想，其中 b 表示从经验记忆中采样的样本数量：</p>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220307194709.png" alt="image-20220307194709736" style="zoom:70%;" />
+
+<p>由于满足上文的单调性约束，对 <code>Qtot</code> 进行 <code>argmax</code> 操作的计算量就不在是随智能体数量呈指数增长了，而是随智能体数量线性增长，极大的提高了算法效率</p>
+<p>&nbsp;</p>
 <p>&nbsp;</p>
 <h1 id="矩阵博弈中的分布式学习算法"><a href="#矩阵博弈中的分布式学习算法" class="headerlink" title="矩阵博弈中的分布式学习算法"></a>矩阵博弈中的分布式学习算法</h1><blockquote>
 <p>多智能体系统一直是学术界和工业界的热点，其核心领域是关于如何将系统采用分布式的算法控制。在分布式算法中，没有进行总体控制的中心节点。每个智能体通过与环境交互自己学习自己的最优策略，在不知道全局信息的情况下将策略收敛到纳什均衡点。</p>
@@ -825,62 +909,9 @@
 <p>&nbsp;</p>
 <h3 id="小结-1"><a href="#小结-1" class="headerlink" title="小结"></a>小结</h3><p><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220306171521.png" alt="image-20220306171521785"></p>
 <p>&nbsp;</p>
-<p>&nbsp;</p>
-<h1 id="QMIX"><a href="#QMIX" class="headerlink" title="QMIX"></a>QMIX</h1><h2 id="简介-1"><a href="#简介-1" class="headerlink" title="简介"></a>简介</h2><ul>
-<li>采用集中式学习，分布式执行应用的框架。通过集中式的信息学习，得到每个智能体的分布式策略</li>
-<li>本质是一个值函数逼近算法</li>
-<li>由于对一个联合动作-状态只有一个总奖励值，而不是每个智能体得到一个自己的奖励值，因此只能用于合作环境，而不能用于竞争对抗环境</li>
-<li>训练时借用全局状态信息来提高算法效果。是后文提到的VDN方法的改进</li>
-<li>QMIX 设计一个神经网络来整合每个智能体的局部值函数而得到联合动作值函数，而 VDN 则是直接求和</li>
-<li>每个智能体的局部值函数只需要自己的局部观测，因此整个系统在执行时是一个分布式的，通过局部值函数，选出累积期望奖励最大的动作执行</li>
-<li>算法使联合动作值函数与每个局部值函数的单调性相同，因此对局部值函数取最大动作也就是使联合动作值函数最大</li>
-<li>算法针对的模型是一个分布式多智能体部分可观马尔可夫决策过程（Dec-POMDP）</li>
-</ul>
-<p>&nbsp;</p>
-<h2 id="预备知识"><a href="#预备知识" class="headerlink" title="预备知识"></a>预备知识</h2><h3 id="核心问题"><a href="#核心问题" class="headerlink" title="核心问题"></a>核心问题</h3><p>在多智能体强化学习中一个关键的问题就是如何学习<strong>联合动作值函数</strong>，因为该函数的参数会随着智能体数量的增多而成指数增长，如果动作值函数的输入空间过大，则很难拟合出一个合适函数来表示真实的联合动作值函数。</p>
-<p>另一个问题就是学得了联合动作值函数后，如何通过联合值函数提取出一个优秀的分布式的策略，这其实是单智能体强化学习拓展到MARL的<strong>核心问题</strong></p>
-<h3 id="Dec-POMDP"><a href="#Dec-POMDP" class="headerlink" title="Dec-POMDP"></a>Dec-POMDP</h3><p>非中心部分可观马尔可夫决策过程（Dec-POMDP）是一种处理多智能体序列化决策问题的模型，是将POMDP拓展到多智能体系统。其中定义如下：</p>
-<ul>
-<li>每个智能体的局部观测信息 <code>o_i,t</code> 、动作 <code>a_i,t</code> 、系统状态为 <code>s_t</code> </li>
-<li>每个智能体的动作-观测历史为 <code>τi=(ai_0,oi_1,ai_1,oi_2,……,ai_t-1,oi_t)</code>，表示从初始状态开始，该智能体的时序动作-观测记录</li>
-<li>联合动作-观测历史 <code>τ=(τ1,τ2,……,τn)</code>，表示从初始状态开始，所有智能体的时序动作-观测记录</li>
-<li>每个智能体的分布式策略为 <code>Πi(τi)</code>，其值函数（局部动作值函数）为 <code>Qi(τi,ai;θi)</code>，都与动作-观测历史 <code>τi</code> 有关而不和状态有关</li>
-</ul>
-<h3 id="IQL"><a href="#IQL" class="headerlink" title="IQL"></a>IQL</h3><p>IQL（independent Q-learning）就是非常暴力的给每个智能体执行一个Q-learning算法，因为共享环境，并且环境随着每个智能体策略、状态发生改变，对每个智能体来说，环境是动态不稳定的，因此这个算法也无法收敛，但是在部分应用中也具有较好的效果</p>
-<h3 id="VDN"><a href="#VDN" class="headerlink" title="VDN"></a>VDN</h3><p>VDN（value decomposition networks）采用对每个智能体的值函数直接相加求和的策略，得到联合动作值函数：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220307192839.png" alt="image-20220307192839330" style="zoom:70%;" />
-
-<p><code>Qtot</code> 为联合动作值函数，右边为各智能体的局部动作值函数。虽然 <code>Qi(τi,ai;θi)</code> 不是用来估计累积期望回报的，但是这里依然叫它为值函数</p>
-<p>分布式的策略可以通过对每个 <code>Qi(τi,ai;θi)</code> 取max得到</p>
-<h3 id="DRQN"><a href="#DRQN" class="headerlink" title="DRQN"></a>DRQN</h3><p>DRQN是一个用来处理POMDP（部分可观马尔可夫决策过程）的一个算法，其采用LSTM替换DQN卷基层后的一个全连接层，来达到能够记忆历史状态的作用，因此可以在部分可观的情况下提高算法性能</p>
-<p>由于QMIX解决的是多智能体的POMDP问题，因此每个智能体采用的是DRQN算法</p>
-<p>&nbsp;</p>
-<h2 id="QMIX-1"><a href="#QMIX-1" class="headerlink" title="QMIX"></a>QMIX</h2><p>VDN 只是将每个智能体的局部动作值函数求和相加得到联合动作值函数，虽然满足联合值函数与局部值函数单调性相同的可以进行分布化策略的条件，但是其没有在学习时利用状态信息以及没有采用非线性方式对单智能体局部值函数进行整合，使得 VDN 算法还有很大的提升空间</p>
-<p>QMIX就是采用一个混合网络对单智能体局部值函数进行合并，并在训练学习过程中加入全局状态信息辅助，来提高算法性能</p>
-<p>因为对联合动作值函数取 <code>argmax</code> 等价于对每个局部动作值函数取 <code>argmax</code> ，其单调性相同：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220307193534.png" alt="image-20220307193534011" style="zoom:70%;" />
-
-<center>公式 1</center>
-
-<p>因此分布式策略就是贪心的通过局部 <code>Qi</code> 获取最优动作。QMIX 将上式转化为一种单调性约束：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220307193631.png" alt="image-20220307193631239" style="zoom:70%;" />
-
-<center>公式 2</center>
-
-<hr>
-<p>若满足公式2，则公式1自然成立，为了实现上述约束，QMIX 采用混合网络（mixing network）来实现，其具体结构为：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220307194034.png" alt="image-20220307194034120" style="zoom:70%;" />
-
-<p>图（c）表示表示每个智能体采用一个 DRQN 来拟合自身的Q值函数的到 <code>Qi(τi,ai;θi)</code> ，DRQN 循环输入当前的观测 <code>o_i,t</code> 以及上一时刻的动作 <code>a_i,t-1</code> 来得到 Q 值</p>
-<p>图（b）表示混合网络的结构，其输入为每个DRQN网络的输出。为了满足上述的单调性约束，混合网络的所有权值都是非负数，对偏移量不做限制，这样就可以确保满足单调性约束</p>
-<p>为了能够更多的利用到系统的状态信息 <code>st</code> ，采用一种超网络（hypernetwork），将状态 <code>st</code> 作为输入，输出为混合网络的权值及偏移量。为了保证权值的非负性，采用一个线性网络以及绝对值激活函数保证输出不为负数。对偏移量采用同样方式但没有非负性的约束，混合网络最后一层的偏移量通过两层网络以及 ReLU 激活函数得到非线性映射网络。状态信息 <code>st</code> 是通过超网络混合到 <code>Qtot</code> 中，而不是仅仅作为混合网络的输入项</p>
-<p>QMIX最终的代价函数为:</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220307194618.png" alt="image-20220307194618371" style="zoom:70%;" />
-
-<p>更新用到了 DQN 经验回放的思想，其中 b 表示从经验记忆中采样的样本数量：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220307194709.png" alt="image-20220307194709736" style="zoom:70%;" />
-
-<p>由于满足上文的单调性约束，对 <code>Qtot</code> 进行 <code>argmax</code> 操作的计算量就不在是随智能体数量呈指数增长了，而是随智能体数量线性增长，极大的提高了算法效率</p>
+<p>参考：</p>
+<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/column/c_1061939147282915328">MARL多智能体强化学习分享</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/272735656">详解多智能体强化学习的基础和应用</a></p>
 
     </div>
 
@@ -985,7 +1016,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E4%B8%8E%E5%8D%9A%E5%BC%88%E8%AE%BA"><span class="nav-text">基础知识与博弈论</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E7%B3%BB%E7%BB%9F"><span class="nav-text">强化学习与多智能体系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%9A%E5%BC%88%E8%AE%BA%E5%9F%BA%E7%A1%80"><span class="nav-text">博弈论基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9F%A9%E9%98%B5%E5%8D%9A%E5%BC%88"><span class="nav-text">矩阵博弈</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BA%B3%E4%BB%80%E5%9D%87%E8%A1%A1"><span class="nav-text">纳什均衡</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%A5%E6%A0%BC%E7%BA%B3%E4%BB%80%E5%9D%87%E8%A1%A1"><span class="nav-text">严格纳什均衡</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%8C%E5%85%A8%E6%B7%B7%E5%90%88%E7%AD%96%E7%95%A5"><span class="nav-text">完全混合策略</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BA%AF%E7%AD%96%E7%95%A5"><span class="nav-text">纯策略</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%A4%E6%99%BA%E8%83%BD%E4%BD%93%E7%9A%84%E7%BA%B3%E4%BB%80%E5%9D%87%E8%A1%A1"><span class="nav-text">两智能体的纳什均衡</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9B%B6%E5%92%8C%E5%8D%9A%E5%BC%88"><span class="nav-text">零和博弈</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E8%88%AC%E5%92%8C%E5%8D%9A%E5%BC%88"><span class="nav-text">一般和博弈</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E6%80%A7%E8%A7%84%E5%88%92%E6%B1%82%E8%A7%A3%E5%8F%8C%E6%99%BA%E8%83%BD%E4%BD%93%E7%9A%84%E9%9B%B6%E5%92%8C%E5%8D%9A%E5%BC%88"><span class="nav-text">线性规划求解双智能体的零和博弈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%A0%E4%B8%AA%E5%8D%9A%E5%BC%88%E6%A6%82%E5%BF%B5"><span class="nav-text">几个博弈概念</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%EF%BC%88MARL%EF%BC%89"><span class="nav-text">多智能体强化学习（MARL）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1"><span class="nav-text">数学建模</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E8%BF%87%E7%A8%8B"><span class="nav-text">学习过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E6%AF%94%E5%8D%95%E4%BD%93%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0"><span class="nav-text">对比单体强化学习</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E6%B1%82%E8%A7%A3%E7%AE%97%E6%B3%95"><span class="nav-text">基础求解算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B4%E8%A7%82%E6%80%9D%E8%B7%AF"><span class="nav-text">直观思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%8C%E5%85%A8%E7%AB%9E%E4%BA%89%E5%85%B3%E7%B3%BB"><span class="nav-text">完全竞争关系</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MiniMax-Q"><span class="nav-text">MiniMax-Q</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%8A%E7%AB%9E%E4%BA%89%E5%8D%8A%E5%90%88%E4%BD%9C"><span class="nav-text">半竞争半合作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Nash-Q"><span class="nav-text">Nash Q</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Friend-or-Foe-Q"><span class="nav-text">Friend-or-Foe Q</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WoLF-PHC"><span class="nav-text">WoLF-PHC</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%8C%E5%85%A8%E5%90%88%E4%BD%9C%E5%85%B3%E7%B3%BB"><span class="nav-text">完全合作关系</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E9%9C%80%E8%A6%81%E5%8D%8F%E4%BD%9C%E6%9C%BA%E5%88%B6"><span class="nav-text">不需要协作机制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Team-Q-Learning%E3%80%81"><span class="nav-text">Team Q-Learning、</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Distribute-Q-Learning"><span class="nav-text">Distribute Q-Learning</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9C%80%E8%A6%81%E5%8D%8F%E4%BD%9C%E6%9C%BA%E5%88%B6"><span class="nav-text">需要协作机制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#JAL"><span class="nav-text">JAL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FMQ"><span class="nav-text">FMQ</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MFMARL"><span class="nav-text">MFMARL</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%B1%82%E8%A7%A3%E7%AE%97%E6%B3%95%EF%BC%88%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%EF%BC%89"><span class="nav-text">深度学习求解算法（多智能体深度强化学习）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Policy-based-%E6%96%B9%E6%B3%95"><span class="nav-text">Policy-based 方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MADDPG"><span class="nav-text">MADDPG</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%A0%E7%BB%9F-DRL-%E6%80%9D%E8%B7%AF"><span class="nav-text">传统 DRL 思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MADDPG-1"><span class="nav-text">MADDPG</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93-Actor-Critic-%E8%AE%BE%E8%AE%A1"><span class="nav-text">多智能体 Actor-Critic 设计</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BC%B0%E8%AE%A1%E5%85%B6%E4%BB%96%E6%99%BA%E8%83%BD%E4%BD%93%E7%AD%96%E7%95%A5"><span class="nav-text">估计其他智能体策略</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AD%96%E7%95%A5%E9%9B%86%E5%90%88%E4%BC%98%E5%8C%96%EF%BC%88policies-ensemble%EF%BC%89"><span class="nav-text">策略集合优化（policies ensemble）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#COMA"><span class="nav-text">COMA</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Value-based-%E6%96%B9%E6%B3%95"><span class="nav-text">Value-based 方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9F%A9%E9%98%B5%E5%8D%9A%E5%BC%88%E4%B8%AD%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95"><span class="nav-text">矩阵博弈中的分布式学习算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E8%87%AA%E5%8A%A8%E6%9C%BA"><span class="nav-text">学习自动机</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#linear-reward-inaction"><span class="nav-text">linear reward-inaction</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#linear-reward-penalty"><span class="nav-text">linear reward-penalty</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A2%AF%E5%BA%A6%E6%8F%90%E5%8D%87"><span class="nav-text">梯度提升</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#WoLF-IGA"><span class="nav-text">WoLF-IGA</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Lagging-Anchor"><span class="nav-text">Lagging Anchor</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-1"><span class="nav-text">小结</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#QMIX"><span class="nav-text">QMIX</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B-1"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86"><span class="nav-text">预备知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E9%97%AE%E9%A2%98"><span class="nav-text">核心问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dec-POMDP"><span class="nav-text">Dec-POMDP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IQL"><span class="nav-text">IQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VDN"><span class="nav-text">VDN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DRQN"><span class="nav-text">DRQN</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#QMIX-1"><span class="nav-text">QMIX</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E4%B8%8E%E5%8D%9A%E5%BC%88%E8%AE%BA"><span class="nav-text">基础知识与博弈论</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E7%B3%BB%E7%BB%9F"><span class="nav-text">强化学习与多智能体系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%9A%E5%BC%88%E8%AE%BA%E5%9F%BA%E7%A1%80"><span class="nav-text">博弈论基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9F%A9%E9%98%B5%E5%8D%9A%E5%BC%88"><span class="nav-text">矩阵博弈</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BA%B3%E4%BB%80%E5%9D%87%E8%A1%A1"><span class="nav-text">纳什均衡</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%A5%E6%A0%BC%E7%BA%B3%E4%BB%80%E5%9D%87%E8%A1%A1"><span class="nav-text">严格纳什均衡</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%8C%E5%85%A8%E6%B7%B7%E5%90%88%E7%AD%96%E7%95%A5"><span class="nav-text">完全混合策略</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BA%AF%E7%AD%96%E7%95%A5"><span class="nav-text">纯策略</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%A4%E6%99%BA%E8%83%BD%E4%BD%93%E7%9A%84%E7%BA%B3%E4%BB%80%E5%9D%87%E8%A1%A1"><span class="nav-text">两智能体的纳什均衡</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9B%B6%E5%92%8C%E5%8D%9A%E5%BC%88"><span class="nav-text">零和博弈</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E8%88%AC%E5%92%8C%E5%8D%9A%E5%BC%88"><span class="nav-text">一般和博弈</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E6%80%A7%E8%A7%84%E5%88%92%E6%B1%82%E8%A7%A3%E5%8F%8C%E6%99%BA%E8%83%BD%E4%BD%93%E7%9A%84%E9%9B%B6%E5%92%8C%E5%8D%9A%E5%BC%88"><span class="nav-text">线性规划求解双智能体的零和博弈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%A0%E4%B8%AA%E5%8D%9A%E5%BC%88%E6%A6%82%E5%BF%B5"><span class="nav-text">几个博弈概念</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%EF%BC%88MARL%EF%BC%89"><span class="nav-text">多智能体强化学习（MARL）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1"><span class="nav-text">数学建模</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E8%BF%87%E7%A8%8B"><span class="nav-text">学习过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E6%AF%94%E5%8D%95%E4%BD%93%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0"><span class="nav-text">对比单体强化学习</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E6%B1%82%E8%A7%A3%E7%AE%97%E6%B3%95"><span class="nav-text">基础求解算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B4%E8%A7%82%E6%80%9D%E8%B7%AF"><span class="nav-text">直观思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%8C%E5%85%A8%E7%AB%9E%E4%BA%89%E5%85%B3%E7%B3%BB"><span class="nav-text">完全竞争关系</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MiniMax-Q"><span class="nav-text">MiniMax-Q</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%8A%E7%AB%9E%E4%BA%89%E5%8D%8A%E5%90%88%E4%BD%9C"><span class="nav-text">半竞争半合作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Nash-Q"><span class="nav-text">Nash Q</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Friend-or-Foe-Q"><span class="nav-text">Friend-or-Foe Q</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WoLF-PHC"><span class="nav-text">WoLF-PHC</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%8C%E5%85%A8%E5%90%88%E4%BD%9C%E5%85%B3%E7%B3%BB"><span class="nav-text">完全合作关系</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E9%9C%80%E8%A6%81%E5%8D%8F%E4%BD%9C%E6%9C%BA%E5%88%B6"><span class="nav-text">不需要协作机制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Team-Q-Learning%E3%80%81"><span class="nav-text">Team Q-Learning、</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Distribute-Q-Learning"><span class="nav-text">Distribute Q-Learning</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9C%80%E8%A6%81%E5%8D%8F%E4%BD%9C%E6%9C%BA%E5%88%B6"><span class="nav-text">需要协作机制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#JAL"><span class="nav-text">JAL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FMQ"><span class="nav-text">FMQ</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MFMARL"><span class="nav-text">MFMARL</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%B1%82%E8%A7%A3%E7%AE%97%E6%B3%95%EF%BC%88%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%EF%BC%89"><span class="nav-text">深度学习求解算法（多智能体深度强化学习）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Policy-based-%E6%96%B9%E6%B3%95"><span class="nav-text">Policy-based 方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MADDPG"><span class="nav-text">MADDPG</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%A0%E7%BB%9F-DRL-%E6%80%9D%E8%B7%AF"><span class="nav-text">传统 DRL 思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MADDPG-1"><span class="nav-text">MADDPG</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93-Actor-Critic-%E8%AE%BE%E8%AE%A1"><span class="nav-text">多智能体 Actor-Critic 设计</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BC%B0%E8%AE%A1%E5%85%B6%E4%BB%96%E6%99%BA%E8%83%BD%E4%BD%93%E7%AD%96%E7%95%A5"><span class="nav-text">估计其他智能体策略</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AD%96%E7%95%A5%E9%9B%86%E5%90%88%E4%BC%98%E5%8C%96%EF%BC%88policies-ensemble%EF%BC%89"><span class="nav-text">策略集合优化（policies ensemble）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#COMA"><span class="nav-text">COMA</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Value-based-%E6%96%B9%E6%B3%95"><span class="nav-text">Value-based 方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#VDN"><span class="nav-text">VDN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#QMIX"><span class="nav-text">QMIX</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B-1"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86"><span class="nav-text">预备知识</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#QMIX-1"><span class="nav-text">QMIX</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9F%A9%E9%98%B5%E5%8D%9A%E5%BC%88%E4%B8%AD%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95"><span class="nav-text">矩阵博弈中的分布式学习算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E8%87%AA%E5%8A%A8%E6%9C%BA"><span class="nav-text">学习自动机</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#linear-reward-inaction"><span class="nav-text">linear reward-inaction</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#linear-reward-penalty"><span class="nav-text">linear reward-penalty</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A2%AF%E5%BA%A6%E6%8F%90%E5%8D%87"><span class="nav-text">梯度提升</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#WoLF-IGA"><span class="nav-text">WoLF-IGA</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Lagging-Anchor"><span class="nav-text">Lagging Anchor</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-1"><span class="nav-text">小结</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
