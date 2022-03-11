@@ -211,6 +211,106 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://sharp-rookie.github.io/2022/02/22/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91%E4%B8%80%E7%A7%8D%E5%9F%BA%E4%BA%8E%E5%8A%A8%E6%80%81%E4%BB%A4%E7%89%8C%E6%A1%B6%E7%9A%84%E5%AE%9E%E6%97%B6%E5%BA%94%E7%94%A8%E5%87%86%E5%85%A5%E6%8E%A7%E5%88%B6%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Lrk612">
+      <meta itemprop="description" content="Lrk's blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="最忆是江南">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/02/22/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91%E4%B8%80%E7%A7%8D%E5%9F%BA%E4%BA%8E%E5%8A%A8%E6%80%81%E4%BB%A4%E7%89%8C%E6%A1%B6%E7%9A%84%E5%AE%9E%E6%97%B6%E5%BA%94%E7%94%A8%E5%87%86%E5%85%A5%E6%8E%A7%E5%88%B6%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">一种基于动态令牌桶的实时应用准入控制算法</a>
+        </h2>
+
+        <div class="post-meta">
+         
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-02-22 17:12:35" itemprop="dateCreated datePublished" datetime="2022-02-22T17:12:35+08:00">2022-02-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">论文阅读</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2022/02/22/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91%E4%B8%80%E7%A7%8D%E5%9F%BA%E4%BA%8E%E5%8A%A8%E6%80%81%E4%BB%A4%E7%89%8C%E6%A1%B6%E7%9A%84%E5%AE%9E%E6%97%B6%E5%BA%94%E7%94%A8%E5%87%86%E5%85%A5%E6%8E%A7%E5%88%B6%E7%AE%97%E6%B3%95/" class="post-meta-item leancloud_visitors" data-flag-title="一种基于动态令牌桶的实时应用准入控制算法" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/02/22/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91%E4%B8%80%E7%A7%8D%E5%9F%BA%E4%BA%8E%E5%8A%A8%E6%80%81%E4%BB%A4%E7%89%8C%E6%A1%B6%E7%9A%84%E5%AE%9E%E6%97%B6%E5%BA%94%E7%94%A8%E5%87%86%E5%85%A5%E6%8E%A7%E5%88%B6%E7%AE%97%E6%B3%95/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/02/22/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91%E4%B8%80%E7%A7%8D%E5%9F%BA%E4%BA%8E%E5%8A%A8%E6%80%81%E4%BB%A4%E7%89%8C%E6%A1%B6%E7%9A%84%E5%AE%9E%E6%97%B6%E5%BA%94%E7%94%A8%E5%87%86%E5%85%A5%E6%8E%A7%E5%88%B6%E7%AE%97%E6%B3%95/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>&emsp;&emsp;现有分组交换网络（例如 Internet）的“尽力而为”服务质量（QoS）不能很好地支持来自交互式实时网络应用程序的数据连续传输。为了提供 QoS 支持，准入控制机制必须确保一个新的数据流能获得其请求的 QoS，同时不会影响其他已经存在于网络中的数据流的 QoS。</p>
+<p>&emsp;&emsp;当前的准入控制方法通常是基于参数或基于测量的 [1]。基于参数的方法取决于先验的交通特征，缺点是无法预先准确地表征大量突发流量。基于测量的方法 [1-4] 侧重于为可以容忍某些 QoS 恶化的实时应用程序实现更高的资源利用率，基于实际交通量的测量值。因此，基于测量的准入控制过程能够更好地利用可用于实时流量的带宽。</p>
+<p>&emsp;&emsp;文章提出了基于测量的准入控制方案，根据观察到的实时流量源的QoS 要求和其他性能指标的不同组合，调整 r 和 b 来处理网络条件的变化。</p>
+<p><strong>原文</strong></p>
+<p><a target="_blank" rel="noopener" href="https://lrk612.com/resources/Adaptive%20resource%20negotiation%20based%20control%20for%20real%20time%20applications.pdf">Adaptive resource negotiation based control for real time applications</a></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/02/22/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91%E4%B8%80%E7%A7%8D%E5%9F%BA%E4%BA%8E%E5%8A%A8%E6%80%81%E4%BB%A4%E7%89%8C%E6%A1%B6%E7%9A%84%E5%AE%9E%E6%97%B6%E5%BA%94%E7%94%A8%E5%87%86%E5%85%A5%E6%8E%A7%E5%88%B6%E7%AE%97%E6%B3%95/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://sharp-rookie.github.io/2022/02/20/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91Token%20bucket%20based%20CAC%20and%20packet%20scheduling%20for%20IEEE%20802.16%20broadband%20wireless%20access%20networks/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1094,104 +1194,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://sharp-rookie.github.io/2022/02/06/%E3%80%90%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E3%80%91%E5%86%B3%E7%AD%96%E6%A0%91&%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97%E2%80%94%E2%80%94%E5%9B%9E%E5%BD%92%E9%97%AE%E9%A2%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Lrk612">
-      <meta itemprop="description" content="Lrk's blog">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="最忆是江南">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/02/06/%E3%80%90%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E3%80%91%E5%86%B3%E7%AD%96%E6%A0%91&%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97%E2%80%94%E2%80%94%E5%9B%9E%E5%BD%92%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">【机器学习】决策树&随机森林——回归问题</a>
-        </h2>
-
-        <div class="post-meta">
-         
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-02-06 11:35:58" itemprop="dateCreated datePublished" datetime="2022-02-06T11:35:58+08:00">2022-02-06</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/" itemprop="url" rel="index"><span itemprop="name">知识分享</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2022/02/06/%E3%80%90%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E3%80%91%E5%86%B3%E7%AD%96%E6%A0%91&%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97%E2%80%94%E2%80%94%E5%9B%9E%E5%BD%92%E9%97%AE%E9%A2%98/" class="post-meta-item leancloud_visitors" data-flag-title="【机器学习】决策树&随机森林——回归问题" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/02/06/%E3%80%90%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E3%80%91%E5%86%B3%E7%AD%96%E6%A0%91&%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97%E2%80%94%E2%80%94%E5%9B%9E%E5%BD%92%E9%97%AE%E9%A2%98/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/02/06/%E3%80%90%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E3%80%91%E5%86%B3%E7%AD%96%E6%A0%91&%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97%E2%80%94%E2%80%94%E5%9B%9E%E5%BD%92%E9%97%AE%E9%A2%98/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>&emsp;&emsp;在监督学习中，分类问题通常是指预测离散类的标签，而回归问题则是预测连续类的值。分类并没有逼近的概念，最终正确结果只有一个，错误的就是错误的，不会有相近的概念；而回归则是使预测值不断逼近理论值，会存在误差。</p>
-<p>&emsp;&emsp;本文记录如何使用决策树和随机森林求解回归问题。</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220206110710.png" alt="image-20220206110710194" style="zoom:40%;" />
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/02/06/%E3%80%90%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E3%80%91%E5%86%B3%E7%AD%96%E6%A0%91&%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97%E2%80%94%E2%80%94%E5%9B%9E%E5%BD%92%E9%97%AE%E9%A2%98/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1263,7 +1265,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1276,7 +1278,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-count">24</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
