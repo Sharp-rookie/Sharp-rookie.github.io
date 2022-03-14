@@ -113,7 +113,7 @@
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220306171046.png">
 <meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220306171521.png">
 <meta property="article:published_time" content="2022-03-03T14:23:42.444Z">
-<meta property="article:modified_time" content="2022-03-14T03:21:12.056Z">
+<meta property="article:modified_time" content="2022-03-14T05:06:40.793Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="AI">
 <meta property="article:tag" content="Algorithm">
@@ -817,8 +817,7 @@
 <h4 id="核心思想-1"><a href="#核心思想-1" class="headerlink" title="核心思想"></a>核心思想</h4><p>假设 <code>Q((h1,…,hd),(a1,…,ad))</code> 是多智能体团队的整体Q函数，<code>d</code> 是智能体个数， <code>h_i</code> 是智能体 <code>i</code> 的历史序列信息， <code>a_i</code> 是其动作。该Q函数的输入集中了所有智能体的观测和动作，可通过团队奖励 <code>r</code> 来迭代拟合。文章取各个智能体的子值函数的<strong>直接求和</strong>做为整体Q函数：</p>
 <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220314100438.png" alt="image-20220314100438050" style="zoom:70%;" />
 
-<p>每个子Q函数的输入为该对应智能体的局部观测序列和动作，互相不受影响。这样的分解方式</p>
-<p>在联合动作 Q 值的结构组成方面考虑了个体行为的特性，使得该 Q 值更易于学习</p>
+<p>每个子Q函数的输入为该对应智能体的局部观测序列和动作，互相不受影响。这样的分解方式在联合动作 Q 值的结构组成方面考虑了个体行为的特性，使得该 Q 值更易于学习</p>
 <p>另一方面，它也能够适配集中式的训练方式，在一定程度上能够克服多智能体系统中环境不稳定的问题</p>
 <hr>
 <p>在训练过程中，通过联合动作 Q 值来指导策略的优化，同时每个智能体用对应的子值函数来完成其决策（如贪心策略：</p>
