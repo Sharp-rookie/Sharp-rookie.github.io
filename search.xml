@@ -196,9 +196,9 @@
       
         <tags>
             
-            <tag> AI </tag>
-            
             <tag> Algorithm </tag>
+            
+            <tag> AI </tag>
             
             <tag> Reinforcement Learning </tag>
             
@@ -387,11 +387,11 @@
       
         <tags>
             
+            <tag> Algorithm </tag>
+            
             <tag> AI </tag>
             
             <tag> Deep Learning </tag>
-            
-            <tag> Algorithm </tag>
             
         </tags>
       
@@ -416,9 +416,9 @@
       
         <tags>
             
-            <tag> Algorithm </tag>
-            
             <tag> 优化问题 </tag>
+            
+            <tag> Algorithm </tag>
             
         </tags>
       
@@ -480,11 +480,11 @@
       
         <tags>
             
+            <tag> Algorithm </tag>
+            
             <tag> AI </tag>
             
             <tag> Deep Learning </tag>
-            
-            <tag> Algorithm </tag>
             
             <tag> Reinforcement Learning </tag>
             
@@ -573,9 +573,9 @@
       
         <tags>
             
-            <tag> AI </tag>
-            
             <tag> Algorithm </tag>
+            
+            <tag> AI </tag>
             
             <tag> Reinforcement Learning </tag>
             
@@ -849,11 +849,11 @@
       
         <tags>
             
+            <tag> Algorithm </tag>
+            
             <tag> AI </tag>
             
             <tag> Deep Learning </tag>
-            
-            <tag> Algorithm </tag>
             
             <tag> Reinforcement Learning </tag>
             
@@ -880,11 +880,11 @@
       
         <tags>
             
+            <tag> Algorithm </tag>
+            
             <tag> AI </tag>
             
             <tag> Deep Learning </tag>
-            
-            <tag> Algorithm </tag>
             
             <tag> Reinforcement Learning </tag>
             
@@ -1021,9 +1021,9 @@
       
         <tags>
             
-            <tag> AI </tag>
-            
             <tag> Algorithm </tag>
+            
+            <tag> AI </tag>
             
             <tag> Reinforcement Learning </tag>
             
@@ -1050,9 +1050,9 @@
       
         <tags>
             
-            <tag> AI </tag>
-            
             <tag> Algorithm </tag>
+            
+            <tag> AI </tag>
             
             <tag> Reinforcement Learning </tag>
             
@@ -1110,9 +1110,9 @@
       
         <tags>
             
-            <tag> Algorithm </tag>
-            
             <tag> 优化问题 </tag>
+            
+            <tag> Algorithm </tag>
             
         </tags>
       
@@ -1154,7 +1154,7 @@
       <link href="/2021/12/09/test/"/>
       <url>/2021/12/09/test/</url>
       
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>分享每月歌单</p><span id="more"></span><h5 id="2021-12"><a href="#2021-12" class="headerlink" title="2021-12"></a>2021-12</h5><p># 歌曲模板</p>    <div id="aplayer-EraawqKK" class="aplayer aplayer-tag-marker meting-tag-marker"         data-id="3986040" data-server="netease" data-type="song" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"    ></div><p># 歌单模板</p>    <div id="aplayer-DqrQDOfr" class="aplayer aplayer-tag-marker meting-tag-marker"         data-id="627070825" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"    ></div>]]></content>
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>分享每月歌单</p><span id="more"></span><h5 id="2021-12"><a href="#2021-12" class="headerlink" title="2021-12"></a>2021-12</h5><p># 歌曲模板</p>    <div id="aplayer-ruBiPqvz" class="aplayer aplayer-tag-marker meting-tag-marker"         data-id="3986040" data-server="netease" data-type="song" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"    ></div><p># 歌单模板</p>    <div id="aplayer-AZvNnpcS" class="aplayer aplayer-tag-marker meting-tag-marker"         data-id="627070825" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"    ></div>]]></content>
       
       
       <categories>
