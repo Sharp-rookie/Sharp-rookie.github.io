@@ -358,7 +358,7 @@
 <p>对比论文：<a target="_blank" rel="noopener" href="https://lrk612.com/resources/Correlated%20token%20bucket%20shapers%20for%20multiple%20traffic%20classes.pdf">Correlated token bucket shapers for multiple traffic classes</a></p>
 </blockquote>
 <h3 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h3><p>&emsp;&emsp;文中使用的方法基于对每个流量类别使用多个独立令牌桶整形器。这种令牌桶整形器的优点是与多个相关的令牌桶整形器相比，其实现要简单得多。每个令牌桶整形器都有自己的流量生成器、令牌桶和数据包队列。用户能够改变桶大小、队列长度和令牌生成率的值。从用户端发送的MPEG4视频和真实音频信号数据由各自的令牌桶整形器独立整形。仅当令牌桶中存在足够的令牌时，数据才会发送到网络。一个桶中存在令牌不会对另一个流量类别的性能产生任何影响。</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213101527.png" alt="image-20220211163734069" style="zoom: 67%;">
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213101527.png" alt="image-20220211163734069" style="zoom: 67%;" />
 
 <p>&nbsp;</p>
 <hr>
@@ -380,40 +380,40 @@
 <li>requestBwPref ∈ [0, 1]，节点v的相对首选带宽</li>
 </ul>
 <p>假设每个节点上的应用程序都有可以派生对以上值的要求。比如，应用程序可能必须每秒发送大小在 <code>base</code> 和 <code>preferred</code> 帧之间的帧。若数据速率为 <code>rate</code>，则有：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213101528.png" alt="image-20220213085320943" style="zoom:60%;">
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213101528.png" alt="image-20220213085320943" style="zoom:60%;" />
 
 <p>假设所有节点都使用其基本带宽进行传输是可能的。在单跳网络中，这意味着所有节点 V 的相对请求带宽之和不得超过 1：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213085610.png" alt="image-20220213085610396" style="zoom:60%;">
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213085610.png" alt="image-20220213085610396" style="zoom:60%;" />
 
 <p>缩放应该发生在基本和首选带宽的范围内，即：动态带宽控制将带宽 <code>asignedBw</code> 分配给下面范围内的每个节点 v：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213085703.png" alt="image-20220213085703255" style="zoom:60%;">
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213085703.png" alt="image-20220213085703255" style="zoom:60%;" />
 
 <p>定义带宽的相对分配比例 <code>extraBw</code> 如下：：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213085730.png" alt="image-20220213085730345" style="zoom:60%;">
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213085730.png" alt="image-20220213085730345" style="zoom:60%;" />
 
 <p>由此可知，分配了基本带宽的节点的 <code>extraBw</code> = 0，而分配了首选带宽的节点的 <code>extraBw</code> = 1</p>
 <p>接下来根据 [15] 中的公平指数概念，定义节点 v 之间带宽分配的 QoS 公平性。由于节点之间的绝对带宽相等并不是公平，分配比例<code>extraBwv</code> 的相等才是，所以公平指数通过 <code>extraBwv</code> 计算，而不是 <code>assignBw</code>：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213085802.png" alt="image-20220213085802475" style="zoom:60%;">
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213085802.png" alt="image-20220213085802475" style="zoom:60%;" />
 
 <p>如果所有节点具有相同的 <code>extraBw</code>，则此公平指数为 1。特别地，如果所有节点都只分配了它们的基本带宽，则公平指数也为 1。但是这意味着所有节点的 <code>extraBw</code> = 0，此时分母为0。公平指数概念有一个缺点，即：可能发生所有节点的 <code>assignBw</code> = 0的情况，例如连接断开时。因此，文章假设 ∑|V | v=1 extraBwv2 = 0 的情况为完全公平，即公平指数为 1。不希望将更多带宽分配给没有完全使用它们已经分配的节点。因此认为这些节点是公平对待的，并且仅在分配时会使用更多带宽的节点之间计算公平指数。</p>
 <h4 id="时间-Token-Bucket-算法"><a href="#时间-Token-Bucket-算法" class="headerlink" title="时间 Token Bucket 算法"></a>时间 Token Bucket 算法</h4><p>使用时间令牌桶算法 [14] 进行流量整形，即将节点 v 可以使用的带宽限制为 <code>assignmentBw</code>。如果节点 v 尝试使用超过 <code>assignmentBw</code>，令牌桶机制会延迟（或丢弃）帧。</p>
 <p>文章中的时间令牌桶机制与标准令牌桶机制的工作原理类似：固定大小的令牌不断落入桶中，如下图所示。桶具有最大容量，如果桶满则令牌溢出。发送帧时，节点需要桶中有足够的令牌。这意味着帧可能会在帧到达队列中延迟，直到有足够的令牌放入桶中。</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213091947.png" alt="image-20220213091947148" style="zoom:60%;">
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213091947.png" alt="image-20220213091947148" style="zoom:60%;" />
 
 <p>时间令牌桶与标准令牌桶算法的区别在于令牌代表什么的定义：在标准令牌桶算法中，令牌代表发送一定大小数据的权利。例如：令牌大小为 100 B，发送 1000 B 的帧将需要 10 个令牌。由于 IEEE 802.11 规定了不同的数据速率，发送 1000 B 可能需要 以 1 MB/s 发送 8 ms ，或 600 MB/s 发送 13 μs。因此如果使用标准令牌桶算法反而会导致允许慢速节点比快速节点使用介质更长的时间。而本场景希望以公平的方式共享介质使用时间，而不是传输数据，因此本文时间令牌桶中的一个令牌代表了在一个小时间片内使用介质的权利。发送帧时，必须收集足够的令牌才能以选定的数据速率传输帧。此外，MAC 层开销的时间，例如 IEEE 802.11 中所需的帧间空间，将被视为传输帧所需的时间。如果该帧是单播帧，并且很可能随后传输确认帧，则单播帧的发送者还必须收集发送确认帧所需的令牌。这意味着可以无延迟地发送确认帧，并且会消耗分配给发送方而不是接收方的带宽。</p>
 <p>正如 [14] 中所解释的，令牌桶机制还允许派生一个称为 <em>不可用浪费带宽比</em> 的度量。它本质上测量节点尝试使用但由于介质繁忙而无法使用的带宽。在介质繁忙的情况下，帧被卡在帧发送队列中，而令牌桶慢慢填满并溢出。在这种情况下计算溢出的令牌，可以计算出不可用的浪费带宽。此外，如果存储桶溢出但队列为空，则会发生可用带宽浪费。通过计算溢出令牌的数量，可以计算分配但未使用的带宽量。</p>
 <h4 id="带宽缩放"><a href="#带宽缩放" class="headerlink" title="带宽缩放"></a>带宽缩放</h4><p>为了在基本带宽和首选带宽之间进行缩放，分配的带宽 <code>assignmentBw</code> 会动态变化。在时间令牌桶中，通过相应地更改重新填充间隔来实现这一点。</p>
 <p>首先将 <code>requestBwBase</code> 和 <code>requestBwPref</code> 之间的间隔拆分为等距离的级别。每个节点 v 根据其当前级别 <code>levelv</code> 计算其分配的带宽，如下所示：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213093357.png" alt="image-20220213093357846" style="zoom:60%;">
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213093357.png" alt="image-20220213093357846" style="zoom:60%;" />
 
 <p>将 <code>extraBw</code> 表达式带入得：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213093515.png" alt="image-20220213093515180" style="zoom:60%;">
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213093515.png" alt="image-20220213093515180" style="zoom:60%;" />
 
 <center>levels 代表level的最大值</center>
 
 <p>很明显，随着 <code>levelv</code> 的增加 <code>extraBw</code> 会线性扩展。从 <code>levelv</code> = 0 开始，节点获得分配的基本带宽，即 extraBwv = 0；<code>levelv</code> 达到最大值时，节点分配得到其首选带宽，即extraBwv = 1。根据公平性定义，这意味着当所有节点处于同一级别时，相当于实现了完美的公平性。</p>
 <p>为了使用时间令牌桶机制调整带宽使用，重新填充间隔是动态更改的。可以使用上面公式中的 <code>assignedBw</code> 推导出来，配置 <code>tokenSize</code> 如下：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213093853.png" alt="image-20220213093853483" style="zoom:60%;">
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213093853.png" alt="image-20220213093853483" style="zoom:60%;" />
 
 
 
@@ -489,22 +489,22 @@
 </blockquote>
 <h3 id="模型-2"><a href="#模型-2" class="headerlink" title="模型"></a>模型</h3><h4 id="带宽预留"><a href="#带宽预留" class="headerlink" title="带宽预留"></a>带宽预留</h4><p>带宽预留由集中式带宽管理器 (CBM) 动态执行。除了分散式方法之外，该解决方案还可以精确控制分配的带宽。文章中，术语带宽表示允许节点使用介质进行传输的最大时间量或最大介质占用持续时间。为了有效地运行网络，文章只使用了无线网络 G 的总带宽的一定比例 <code>bwr_G_assgn</code> ∈ [0,1]，例如20%。选择该比率一是为了使介质争用保持足够小，二是取决于外部流量的影响。类似地，<code>bwr_v_avail</code> ∈ [0,1] 表示节点 v 的可用本地带宽。</p>
 <p>假设每个节点 v ∈ Vi 有一个相对带宽要求 <code>bwr_v_required</code> ∈ [0,1]，从 CBM 请求。基于 <code>bwr_G_avail</code> 和当前分配的相对带宽 <code>bwr_G_assgn</code>，CBM 决定是否可以批准请求。如果批准，CBM 将 <code>bwr_v_required</code> 作为 <code>bwr_v_assgn</code> 返回，否则返回 0。更具体地说，CBM 必须强制执行以下约束：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213104328.png" alt="image-20220213104328033" style="zoom:40%;">
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213104328.png" alt="image-20220213104328033" style="zoom:40%;" />
 
 <p>在多跳网络中，带宽预留建立在用于自动链路检测的协议之上，提供用于路由目的的拓扑信息。</p>
 <h4 id="流量整形"><a href="#流量整形" class="headerlink" title="流量整形"></a>流量整形</h4><p>流量整形的目的是监控节点v的本地带宽使用 <code>bwr_v_used</code> 是否符合分配的相对带宽 <code>bwr_v_assgn</code>，延迟或丢弃超过它的帧，并均匀分配流量以避免全局峰值和高争用情况</p>
 <p>文章为流量整形设计了一种改进的令牌桶算法（图1）。与原始令牌桶算法一样，令牌以恒定的重新填充间隔放入桶中。在原始令牌桶算法中，每个令牌代表发送一定字节数的权利。在 WLAN 上，可以以许多不同的传输速率发送帧，因此传输一定数量字节的时间可能会有很大差异。考虑到这一点，文章使用等长的时间片作为标记。每个时间片代表对介质的短期访问权。为了调度帧进行传输，必须在桶中收集足以覆盖帧传输时间（包括开销）的令牌。当帧从到达队列移动到发送队列时，这些令牌会从存储桶中删除。当桶已经被填满时，进一步的重新填充尝试会导致溢出，即令牌丢失。</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213105742.png" alt="image-20220213105742432" style="zoom:40%;">
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213105742.png" alt="image-20220213105742432" style="zoom:40%;" />
 
 <center>图 1</center>
 
 <p>节点 v ∈ V i 的令牌桶由带宽配置文件 bpv 表征。要确定 bpv，除了 <code>bwr_v_required</code> 之外，CBM 还需要最大有效负载大小。节点 v 的带宽配置文件是一个元组 bpv：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213105138.png" alt="image-20220213105138694" style="zoom:40%;">
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213105138.png" alt="image-20220213105138694" style="zoom:40%;" />
 
 <p>其中：</p>
 <ul>
 <li><p><code>d_v_txMax</code> ∈ N0 [μs] 是节点 v 的最大介质占用持续时间或最大突发大小。为了最小化可能的突发并保证可以发送所有帧，文章将其设置为以最低传输速率传输最大可能帧所需的持续时间：</p>
-  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213105224.png" alt="image-20220213105224270" style="zoom:40%;">
+  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213105224.png" alt="image-20220213105224270" style="zoom:40%;" />
 
 <p>  其中，<code>bMLO</code> 表示 MAC 层开销（以字节为单位），dPLO 是 PHY 层开销的平均值（以微秒为单位），包括帧间距、平均退避间隔和 PHY 前导码。</p>
 </li>
@@ -516,14 +516,14 @@
 <p>与通用令牌桶 [4] 相比，<code>d_v_txMax</code> 和 <code>d_v_refill</code> 分别表示桶大小和令牌重新填充间隔。从 bpv 可以确定节点 v 的进一步桶参数如下：</p>
 <ul>
 <li><p><code>d_v_token</code> [μs] 表示令牌的大小：</p>
-  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213110008.png" alt="image-20220213110008829" style="zoom:40%;"></li>
+  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213110008.png" alt="image-20220213110008829" style="zoom:40%;" /></li>
 <li><p><code>n_v_fillings</code> 表示完全填充桶所需的令牌总数：</p>
-  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213110106.png" alt="image-20220213110106057" style="zoom:40%;"></li>
+  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213110106.png" alt="image-20220213110106057" style="zoom:40%;" /></li>
 <li><p><code>d_v_bucket</code> [μs] 表示完全填满空桶所需的最短时间：</p>
-  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213110118.png" alt="image-20220213110118919" style="zoom:40%;"></li>
+  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213110118.png" alt="image-20220213110118919" style="zoom:40%;" /></li>
 </ul>
 <p>接下来，文章讨论了一个根据应用需求计算桶参数的例子。考虑在节点 v 上运行的周期性应用程序 appX，其值如下：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213110300.png" alt="image-20220213110300487" style="zoom:40%;">
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213110300.png" alt="image-20220213110300487" style="zoom:40%;" />
 
 <p>其中：</p>
 <ul>
@@ -532,11 +532,11 @@
 <li>n_appX_msg ∈ N0 是周期性应用程序在一个周期内发送的消息数</li>
 </ul>
 <p>代入上面公式可得：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213110642.png" style="zoom:40%;">
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213110642.png" style="zoom:40%;" />
 
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213110736.png" alt="image-20220213110736058" style="zoom:40%;">
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213110736.png" alt="image-20220213110736058" style="zoom:40%;" />
 
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213110720.png" alt="image-20220213110720737" style="zoom:40%;">
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213110720.png" alt="image-20220213110720737" style="zoom:40%;" />
 
 <p>图 1 说明了改进的令牌桶算法的操作。要发送的帧被放入帧到达队列中。如果桶已满且帧发送队列为空，则可以安排下一帧进行传输，方法是将其放入发送队列并从桶中消耗所需数量的令牌。如果桶中没有足够的令牌或者帧发送队列仍然包含一个帧，那么下一帧会被延迟，直到两个条件都成立。令牌被放入存储桶中，由重新填充间隔确定。</p>
 <p>请注意，通过将帧发送队列的大小限制为 1 并通过保持桶大小保持较小，可以限制传输突发。当一个帧被调度传输时，下一帧被延迟。因此，节点v的使用带宽比 <code>bwr_v_used</code> 被限制为 <code>bwr_v_assgn</code>。</p>
@@ -560,49 +560,49 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213142952.png" alt="image-20220213142952535" style="zoom:50%;"></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213142952.png" alt="image-20220213142952535" style="zoom:50%;" /></td>
 <td>从实验开始到时间 t，节点 v 使用介质传输帧的总时间</td>
-<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143016.png" alt="image-20220213143016580" style="zoom:40%;"></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143016.png" alt="image-20220213143016580" style="zoom:40%;" /></td>
 </tr>
 <tr>
-<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143321.png" alt="image-20220213143321820" style="zoom:50%;"></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143321.png" alt="image-20220213143321820" style="zoom:50%;" /></td>
 <td>从节点开始时间到时间 t，节点 v 使用的分配带宽的比率。</td>
-<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143346.png" alt="image-20220213143346594" style="zoom:40%;"></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143346.png" alt="image-20220213143346594" style="zoom:40%;" /></td>
 </tr>
 <tr>
-<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143403.png" alt="image-20220213143403387" style="zoom:50%;"></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143403.png" alt="image-20220213143403387" style="zoom:50%;" /></td>
 <td>自开始以来，节点 v 在时间 t 的不可用浪费分配带宽的比率</td>
-<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143426.png" alt="image-20220213143426615" style="zoom:40%;"></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143426.png" alt="image-20220213143426615" style="zoom:40%;" /></td>
 </tr>
 <tr>
-<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143444.png" alt="image-20220213143444428" style="zoom:50%;"></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143444.png" alt="image-20220213143444428" style="zoom:50%;" /></td>
 <td>自开始以来节点 v 在时间 t 的可用浪费分配带宽的比率</td>
-<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143507.png" alt="image-20220213143507229" style="zoom:40%;"></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143507.png" alt="image-20220213143507229" style="zoom:40%;" /></td>
 </tr>
 <tr>
-<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143526.png" alt="image-20220213143526909" style="zoom:50%;"></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143526.png" alt="image-20220213143526909" style="zoom:50%;" /></td>
 <td>自开始以来，节点 v 在时间 t 浪费的分配带宽的比率</td>
-<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143546.png" alt="image-20220213143546280" style="zoom:40%;"></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143546.png" alt="image-20220213143546280" style="zoom:40%;" /></td>
 </tr>
 <tr>
-<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143602.png" alt="image-20220213143602603" style="zoom:50%;"></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143602.png" alt="image-20220213143602603" style="zoom:50%;" /></td>
 <td>在时间 t 来自节点 v 的硬件寄存器的值 Channel Busy Time (CBT)</td>
 <td></td>
 </tr>
 <tr>
-<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143628.png" alt="image-20220213143628603" style="zoom:50%;"></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143628.png" alt="image-20220213143628603" style="zoom:50%;" /></td>
 <td>从开始到时间 t，节点 v 观察到介质繁忙的时间比率</td>
-<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143649.png" alt="image-20220213143649739" style="zoom:40%;"></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143649.png" alt="image-20220213143649739" style="zoom:40%;" /></td>
 </tr>
 <tr>
-<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143717.png" alt="image-20220213143717099" style="zoom:50%;"></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143717.png" alt="image-20220213143717099" style="zoom:50%;" /></td>
 <td>节点v感知介质能量的时间量，不包括从开始到时间 t 的传输持续时间</td>
-<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143801.png" alt="image-20220213143801843" style="zoom:40%;"></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143801.png" alt="image-20220213143801843" style="zoom:40%;" /></td>
 </tr>
 <tr>
-<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143818.png" alt="image-20220213143818871" style="zoom:50%;"></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143818.png" alt="image-20220213143818871" style="zoom:50%;" /></td>
 <td>从开始到时间 t，节点感知介质能量（不包括其传输持续时间）的时间比率</td>
-<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143835.png" alt="image-20220213143835843" style="zoom: 40%;"></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213143835.png" alt="image-20220213143835843" style="zoom: 40%;" /></td>
 </tr>
 </tbody></table>
 <p>注：第一行 Fv(t) 表示节点 v 在时间 t 之前发送的帧，b_f_payload 表示单个帧的有效载荷大小，r_f_tx 表示发送它的速率</p>
@@ -620,7 +620,7 @@
 </blockquote>
 <h3 id="模型-3"><a href="#模型-3" class="headerlink" title="模型"></a>模型</h3><p>&emsp;&emsp;令牌桶流量整形是通过维护一个计数器来计算令牌和一个计时器来确定何时向计数器添加新令牌来实施的。当长度为 1（字节）的数据包到达缓冲区并且计数器中至少有 1 个令牌时，发送数据包并从计数器中删除 1 个令牌。如果令牌桶中的令牌少于 1，则数据包必须等待令牌滴入桶中，直到至少有 1 个令牌，此时才发送。令牌桶以每 T 秒 RT 个令牌的有效速率补充。令牌桶的优点是它的简单性和对典型的数据流量有限突发性的适应能力。T 的选择有一个权衡，较高的 T 值允许更好的突发性能，而较小的 T 值有助于防止流在非常小的时间间隔内发送大突发。每 T 秒重置一次的计时器会触发令牌桶的重新初始化。</p>
 <p>&emsp;&emsp;本文 DTB 模型基于令牌桶算法并进行了一些修改。在 DTB 中，每个活动流都分配有一个令牌桶。令牌桶的容量等于瞬时公平率 F(t)。公平率取决于活动流的数量 N(t) 和链路容量 C：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213200743.png" alt="image-20220213200743183" style="zoom:40%;">
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213200743.png" alt="image-20220213200743183" style="zoom:40%;" />
 
 <p>对于以 <code>fi</code> 为索引的每个流，DTB 在路由器中维护以下变量：</p>
 <ol>
@@ -630,14 +630,14 @@
 </ol>
 <p>当一个流在定时器复位后发送它的第一个数据包时，它就被声明为活动的。如果在两次连续定时器重置之间的时间间隔内没有发送数据包，则活动流被声明为非活动流。</p>
 <p>&emsp;&emsp;作为上述每个流状态变量的一部分，DTB 还维护了全局变量 <code>F(t)</code> 和 <code>N(t)</code>。将 MAXFLOWS 定义为一个常数，等于任何链路上支持的最大流数。对于 <code>fi</code> 的所有值，将 <code>active_i</code> 设置为零。当来自 <code>fi</code> 流的第一个数据包到达链路时，<code>active_i</code> 设置为 1 以指示该流处于活动状态。初始重置的 <code>N(t)</code> 增加 1，并计算并存储公平利率 <code>F(t)</code> 的相应值。此时，<code>arrivals_i</code> 和 <code>admitted_i</code> 设置为零，即初始化 <code>fi</code> 流的令牌桶。在初始化之后，每当属于 <code>fi</code> 流的数据包被允许进入缓冲区时，<code>admitted_i</code> 就会增加数据包的长度 <code>li</code> 。但是在时间 t 时，数据包被允许进入缓冲区的前提条件是：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213200814.png" alt="image-20220213200814745" style="zoom:40%;">
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213200814.png" alt="image-20220213200814745" style="zoom:40%;" />
 
 <p>如果上式不成立，数据包立即被丢弃，不像基本的令牌桶方法，将它保存在缓冲区中，直到桶中有 <code>li</code> 个令牌后调度。这样做是为了避免按流缓冲开销，有利于简单的 FIFO 调度。就像在基本的令牌桶实现中一样，定时器每 T 秒关闭一次，此时所有活动流的 <code>admitted_i</code> 和 <code>arrivals_i</code> 都被清除。</p>
 <p>在仿真实验中观察到单靠上面不等式无法实现公平：当多个流以不同的速率发送数据包时，可以观察到具有低传输速率的流实现了非常低的吞吐量（归一化为公平速率）。为了处理这个问题，文章为每个活动流定义了变量<code>arrivals_i</code>，在非活动流的第一个数据包到达缓冲区时初始化，并按相应流的每个到达数据包的长度递增。根据该变量值估计流的到达率，当一个属于 <code>fi</code> 流的数据包到达缓冲区并且有足够的令牌和缓冲区空间可用时，依概率决定是否接纳该数据包，如果（在时间 r）缓冲区级别高于预定义的阈值 <code>Cthresh</code> 并且有：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213200853.png" alt="image-20220213200853664" style="zoom:40%;">
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213200853.png" alt="image-20220213200853664" style="zoom:40%;" />
 
 <p>其中 F(t) 是上面定义的瞬时公平率，Ri(t) 是到达率：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213200907.png" alt="image-20220213200907013" style="zoom:40%;">
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220213200907.png" alt="image-20220213200907013" style="zoom:40%;" />
 
 <center>这里还可以使用滑动平均、加权平均</center>
 

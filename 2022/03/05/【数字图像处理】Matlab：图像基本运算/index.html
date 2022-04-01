@@ -342,7 +342,7 @@
 
 
 <p><strong>效果</strong></p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305111339.jpg" alt="胡桃" style="zoom:40%;">
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305111339.jpg" alt="胡桃" style="zoom:40%;" />
 
 <center>可以明显看出放大后的轮廓边界处有锯齿感，过度不够自然</center>
 
@@ -360,7 +360,7 @@
 <p>根据上述的算法思想，通过映射点周围的4个点来进行计算，使得新像素点的灰度比最近邻插值算法多出了过度的效果。<br>不过，双线性插值算法仍然具有其短板，简单线性变化会带来边缘模糊化，在颜色变化程度大的边缘处，会明显发现插值的数据在边缘显得不符。另</p>
 <p>外由于增加了线性权重与像素值相乘，会存在一定的低通滤波性，高频分量会被削弱，在颜色变化程度大的地方可能无法得到正确的像素值。</p>
 <p><strong>原理</strong></p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305134516.png" alt="image-20220305134516480" style="zoom:40%;">
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305134516.png" alt="image-20220305134516480" style="zoom:40%;" />
 
 <p>内插点P处的灰度是周围4个点（Q11~Q22）处灰度按距离的加权平均值，具体计算公式如下：</p>
 <p><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305135011.png" alt="image-20220305135011896"></p>
@@ -370,7 +370,7 @@
 
 
 <p><strong>效果</strong></p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305144623.jpg" alt="心海" style="zoom:40%;">
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305144623.jpg" alt="心海" style="zoom:40%;" />
 
 <center>轮廓边界处不再是锯齿感而是微微的模糊感，过度更加自然</center>
 
@@ -399,7 +399,7 @@
 
 
 <p><strong>效果</strong></p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305160334.jpg" alt="莫娜" style="zoom:40%;">
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305160334.jpg" alt="莫娜" style="zoom:40%;" />
 
 <center>可以看见，随着量化阶数降低，灰度直方图变得稀疏</center>
 
@@ -407,7 +407,7 @@
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <h2 id="图像常规运算"><a href="#图像常规运算" class="headerlink" title="图像常规运算"></a>图像常规运算</h2><h3 id="单点运算"><a href="#单点运算" class="headerlink" title="单点运算"></a>单点运算</h3><p><strong>原图</strong></p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305205837.jpg" alt="优菈" style="zoom: 25%;">
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305205837.jpg" alt="优菈" style="zoom: 25%;" />
 
 <center>优菈</center>
 
@@ -425,58 +425,58 @@
 </thead>
 <tbody><tr>
 <td>甄别</td>
-<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305090932.png" alt="image-20220305090931999" style="zoom:60%;"></td>
-<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305205930.png" alt="image-20220305205930598" style="zoom:50%;"></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305090932.png" alt="image-20220305090931999" style="zoom:60%;" /></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305205930.png" alt="image-20220305205930598" style="zoom:50%;" /></td>
 </tr>
 <tr>
 <td>多阈值甄别</td>
-<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305090947.png" alt="image-20220305090947665" style="zoom:60%;"></td>
-<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305205947.png" alt="image-20220305205947051" style="zoom:50%;"></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305090947.png" alt="image-20220305090947665" style="zoom:60%;" /></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305205947.png" alt="image-20220305205947051" style="zoom:50%;" /></td>
 </tr>
 <tr>
 <td>下截断</td>
-<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305090941.png" alt="image-20220305090941145" style="zoom:60%;"></td>
-<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305205959.png" alt="image-20220305205958805" style="zoom:50%;"></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305090941.png" alt="image-20220305090941145" style="zoom:60%;" /></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305205959.png" alt="image-20220305205958805" style="zoom:50%;" /></td>
 </tr>
 <tr>
 <td>上截断</td>
-<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305090955.png" alt="image-20220305090955008" style="zoom:60%;"></td>
-<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305210014.png" alt="image-20220305210013884" style="zoom:50%;"></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305090955.png" alt="image-20220305090955008" style="zoom:60%;" /></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305210014.png" alt="image-20220305210013884" style="zoom:50%;" /></td>
 </tr>
 <tr>
 <td>上下截断</td>
-<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305091052.png" alt="image-20220305091052514" style="zoom:60%;"></td>
-<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305210049.png" alt="image-20220305210048839" style="zoom:50%;"></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305091052.png" alt="image-20220305091052514" style="zoom:60%;" /></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305210049.png" alt="image-20220305210048839" style="zoom:50%;" /></td>
 </tr>
 <tr>
 <td>补偿</td>
-<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305091059.png" alt="image-20220305091059355" style="zoom:60%;"></td>
-<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305210059.png" alt="image-20220305210058983" style="zoom:50%;"></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305091059.png" alt="image-20220305091059355" style="zoom:60%;" /></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305210059.png" alt="image-20220305210058983" style="zoom:50%;" /></td>
 </tr>
 <tr>
 <td>平方</td>
-<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305091118.png" alt="image-20220305091118004" style="zoom:60%;"></td>
-<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305210110.png" alt="image-20220305210110418" style="zoom:50%;"></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305091118.png" alt="image-20220305091118004" style="zoom:60%;" /></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305210110.png" alt="image-20220305210110418" style="zoom:50%;" /></td>
 </tr>
 <tr>
 <td>求反</td>
-<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305091141.png" alt="image-20220305091141734" style="zoom:60%;"></td>
-<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305210123.png" alt="image-20220305210123209" style="zoom:50%;"></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305091141.png" alt="image-20220305091141734" style="zoom:60%;" /></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305210123.png" alt="image-20220305210123209" style="zoom:50%;" /></td>
 </tr>
 <tr>
 <td>放缩</td>
-<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305091148.png" alt="image-20220305091148518" style="zoom:60%;"></td>
-<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305210134.png" alt="image-20220305210134681" style="zoom:50%;"></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305091148.png" alt="image-20220305091148518" style="zoom:60%;" /></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305210134.png" alt="image-20220305210134681" style="zoom:50%;" /></td>
 </tr>
 <tr>
 <td>规范化</td>
-<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220308213558.png" alt="image-20220308213558649" style="zoom:50%;"></td>
-<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220308214647.png" alt="image-20220308214647648" style="zoom:63%;"></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220308213558.png" alt="image-20220308213558649" style="zoom:50%;" /></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220308214647.png" alt="image-20220308214647648" style="zoom:63%;" /></td>
 </tr>
 <tr>
 <td>灰度分割</td>
-<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220308213631.png" alt="image-20220308213631218" style="zoom:50%;"></td>
-<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220308214704.png" alt="image-20220308214704226" style="zoom:63%;"></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220308213631.png" alt="image-20220308213631218" style="zoom:50%;" /></td>
+<td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220308214704.png" alt="image-20220308214704226" style="zoom:63%;" /></td>
 </tr>
 </tbody></table>
 <p>&nbsp;</p>
@@ -492,7 +492,7 @@
 
 
 <p><strong>效果</strong></p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305213256.jpg" alt="香菱" style="zoom:40%;">
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220305213256.jpg" alt="香菱" style="zoom:40%;" />
 
 <p>&nbsp;</p>
 

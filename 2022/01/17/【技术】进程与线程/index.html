@@ -328,7 +328,7 @@
 
       
         <p>&emsp;&emsp;作为Unix操作系统的重要概念，进程和线程相关知识在程序设计中关键且重要。</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117234703.png" alt="image-20220117233440701" style="zoom: 27%;">
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117234703.png" alt="image-20220117233440701" style="zoom: 27%;" />
 
 <span id="more"></span>
 
@@ -387,13 +387,13 @@
 </tr>
 </tbody></table>
 <p>再细分的话，可以分为7种状态：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117233202.png" alt="image-20220117233202038" style="zoom: 45%;">
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117233202.png" alt="image-20220117233202038" style="zoom: 45%;" />
 
 
 
 <h3 id="进程相关指令"><a href="#进程相关指令" class="headerlink" title="进程相关指令"></a>进程相关指令</h3><p>使用 <code>ps</code> 命令查看当前终端的进程：</p>
 <blockquote>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117195333.png" alt="image-20220117195333110" style="zoom:50%;">
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117195333.png" alt="image-20220117195333110" style="zoom:50%;" />
 </blockquote>
 <p>使用 <code>ps -ef</code> 命令查看系统全部进程：</p>
 <blockquote>
@@ -405,23 +405,23 @@
 <p>TTY：进程所属的终端</p>
 <p>TIME：使用掉的CPU时间</p>
 <p>CMD：进程所执行的指令</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117195450.png" alt="image-20220117195450631" style="zoom:50%;">
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117195450.png" alt="image-20220117195450631" style="zoom:50%;" />
 </blockquote>
 <p>如果进程太多，可以使用 <code>ps -ef | more</code> 命令使结果分页显示。</p>
 <p>使用 <code>top</code> 查看进程</p>
 <blockquote>
 <p>例：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220118112901.png" alt="image-20220118112901440" style="zoom:45%;">
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220118112901.png" alt="image-20220118112901440" style="zoom:45%;" />
 </blockquote>
 <p>使用 <code>kill</code> 中止进程：</p>
 <blockquote>
 <p>killall &lt;进程名&gt;</p>
 <p>例：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117215326.png" alt="image-20220117215326524" style="zoom:50%;">
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117215326.png" alt="image-20220117215326524" style="zoom:50%;" />
 
 <p>kill &lt;进程编号&gt;</p>
 <p>例：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117215406.png" alt="image-20220117215406374" style="zoom:50%;">
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117215406.png" alt="image-20220117215406374" style="zoom:50%;" />
 </blockquote>
 <p>获取本程序运行时的进程编号</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pid_t getpid()</span><br><span class="line">// 返回值即为进程编号</span><br></pre></td></tr></table></figure>
@@ -643,17 +643,17 @@
 
 <p><strong>效果</strong></p>
 <p>使用<code>Ctrl+C</code> 尝试关掉进程：</p>
-<img src="https://gitee.com/Lrk612/md_picture2/raw/master/img/image-20211023215258482.png" alt="image-20211023215258482" style="zoom: 67%;">
+<img src="https://gitee.com/Lrk612/md_picture2/raw/master/img/image-20211023215258482.png" alt="image-20211023215258482" style="zoom: 67%;" />
 
 <p>用 <code>ps -ef | grep signal</code> 找到其进程号，尝试用 kill 直接干掉：</p>
-<img src="https://gitee.com/Lrk612/md_picture2/raw/master/img/image-20211023215522014.png" alt="image-20211023215522014" style="zoom: 50%;">
+<img src="https://gitee.com/Lrk612/md_picture2/raw/master/img/image-20211023215522014.png" alt="image-20211023215522014" style="zoom: 50%;" />
 
-<img src="https://gitee.com/Lrk612/md_picture2/raw/master/img/image-20211023215427407.png" alt="image-20211023215427407" style="zoom:67%;">
+<img src="https://gitee.com/Lrk612/md_picture2/raw/master/img/image-20211023215427407.png" alt="image-20211023215427407" style="zoom:67%;" />
 
 <p>可以看见，<code>kill + 进程号</code> 或 <code>killall + 进程名</code> 对它都无效，那改怎么杀死这个进程呢？如图，用 <code>kill -9 进程号</code>：</p>
-<img src="https://gitee.com/Lrk612/md_picture2/raw/master/img/image-20211023215647601.png" alt="image-20211023215647601" style="zoom:50%;">
+<img src="https://gitee.com/Lrk612/md_picture2/raw/master/img/image-20211023215647601.png" alt="image-20211023215647601" style="zoom:50%;" />
 
-<img src="https://gitee.com/Lrk612/md_picture2/raw/master/img/image-20211023215658471.png" alt="image-20211023215658471" style="zoom: 67%;">
+<img src="https://gitee.com/Lrk612/md_picture2/raw/master/img/image-20211023215658471.png" alt="image-20211023215658471" style="zoom: 67%;" />
 
 <p>因为<code>kill -9 进程号</code> 发送的信号是 <strong>SIGKILL</strong>，这个信号无法被捕获或忽略，能够快准狠杀掉进程</p>
 <h5 id="使系统休眠"><a href="#使系统休眠" class="headerlink" title="使系统休眠"></a>使系统休眠</h5><p>&emsp;&emsp;这个是我尝试用 kill() 函数向系统所有进程发送 SIGKILL 信号后发现的，当然是在虚拟机上，我可不敢在主机上这样搞：</p>
@@ -671,12 +671,12 @@
 <p>perms：权限</p>
 <p>bytes：大小</p>
 <p>例：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117224820.png" alt="image-20220117224820387" style="zoom:60%;">
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117224820.png" alt="image-20220117224820387" style="zoom:60%;" />
 </blockquote>
 <p>使用 <code>ipcrm -m &lt;&gt;</code> 查看系统的共享内存：</p>
 <blockquote>
 <p>例：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117224912.png" alt="image-20220117224912685" style="zoom:60%;">
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117224912.png" alt="image-20220117224912685" style="zoom:60%;" />
 </blockquote>
 <h4 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h4><h5 id="C-封装函数"><a href="#C-封装函数" class="headerlink" title="C++封装函数"></a>C++封装函数</h5><p>Linux在c++头文件中提供了封装的函数用于操作共享内存：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/ipc.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/shm.h&gt;</span></span></span><br></pre></td></tr></table></figure>
@@ -694,9 +694,9 @@
 <p><strong>效果</strong></p>
 <ul>
 <li><p>写入端</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117224620.png" alt="image-20220117224620056" style="zoom:60%;"></li>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117224620.png" alt="image-20220117224620056" style="zoom:60%;" /></li>
 <li><p>读取端</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117224639.png" alt="image-20220117224639270" style="zoom:60%;"></li>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117224639.png" alt="image-20220117224639270" style="zoom:60%;" /></li>
 </ul>
 <p>&nbsp;</p>
 <h3 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h3><p>&emsp;&emsp;信号量又称为信号灯，本质是一个计数器，用于协调多个进程或线程对共享数据对象的读写，防止冲突发生。它与信号（signal）一样不以传输数据为目的，而是向进程传到某个事件的发生。进程根据收到的信号量来判断是否对共享数据进行读写。从而保护共享资源（共享内存、消息队列、socket连接池等），保证同一时间只有一个进程占用。</p>
@@ -709,12 +709,12 @@
 <p>perms：权限</p>
 <p>nsems：信号量数</p>
 <p>例：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117221648.png" alt="image-20220117221648853" style="zoom: 60%;">
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117221648.png" alt="image-20220117221648853" style="zoom: 60%;" />
 </blockquote>
 <p>使用 <code>ipcrm sem &lt;semid&gt;</code>手动删除信号量</p>
 <blockquote>
 <p> 例：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117221918.png" alt="image-20220117221918899" style="zoom:60%;">
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117221918.png" alt="image-20220117221918899" style="zoom:60%;" />
 </blockquote>
 <h4 id="共享资源调度"><a href="#共享资源调度" class="headerlink" title="共享资源调度"></a>共享资源调度</h4><p>&emsp;&emsp;<strong>临界区</strong>是指一个访问公共资源的程序代码段，而这些公共资源无法同时被多个进程或线程访问。</p>
 <p>程序进入临界区的调度原则：</p>
@@ -740,23 +740,23 @@
 <p>依次开3个进程访问同一个共享内存，可以看见后来的进程等待前面进程释放锁后才能访问：</p>
 <ul>
 <li><p>进程1</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117222609.png" alt="image-20220117222609226" style="zoom: 60%;"></li>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117222609.png" alt="image-20220117222609226" style="zoom: 60%;" /></li>
 <li><p>进程2</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117222630.png" alt="image-20220117222630209" style="zoom:60%;"></li>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117222630.png" alt="image-20220117222630209" style="zoom:60%;" /></li>
 <li><p>进程3</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117222642.png" alt="image-20220117222642482" style="zoom:60%;"></li>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117222642.png" alt="image-20220117222642482" style="zoom:60%;" /></li>
 </ul>
 <p>&nbsp;</p>
 <h3 id="套接字"><a href="#套接字" class="headerlink" title="套接字"></a>套接字</h3><h4 id="网络通信-Socket"><a href="#网络通信-Socket" class="headerlink" title="网络通信 Socket"></a>网络通信 Socket</h4><p>&emsp;&emsp;实现网络应用时要先从网络提供的接口开始，几乎所有计算机系统都将网络协议的软件实现作为操作系统的一部分，因此网络应用程序编程接口（API）一般都是操作系统提供的。套接字接口Socket是大部分操作系统都支持的一种流行接口，为计算机本地应用提供接入网络的功能。</p>
 <p>&emsp;&emsp;Socket(套接字)可以看成是两个网络应用程序进行通信时，各自通信连接中的端点，这是一个逻辑上的概念。它是网络环境中进程间通信的API，使用中的每一个套接字都有其类型和一个与之相连进程。通信时其中一个网络应用程序将要传输的一段信息写入它所在主机的 Socket中，该 Socket通过与网卡(NIC)相连的传输介质将这段信息送到另外一台主机的 Socket中，使对方能够接收到这段信息。 Socket是由IP地址和端口结合的，提供向应用层进程传送数据包的机制。socket把复杂的TCP/IP协议封装了起来，只要用好socket相关的函数即可完成网络通信。</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20210826191343.png" alt="image-20210826190452059" width="30%">
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20210826191343.png" alt="image-20210826190452059" width="30%" />
 
 <p><strong>Socket 类型</strong></p>
 <p>&emsp;&emsp;socket主要提供了流（stream）和数据报（datagram）两种通信机制，即流socket和数据报socket。</p>
 <p>&emsp;&emsp;流socket基于TCP协议，是一个有序、可靠、双向字节流的通道，传输数据不会丢失、不会重复、顺序也不会错乱。</p>
 <p>&emsp;&emsp;数据报socket基于UDP协议，不需要建立和维持连接，可能会丢失或错乱。UDP不是一个可靠的协议，对数据的长度有限制，但是它的速度比较高。</p>
 <h4 id="流Socket-工作流程"><a href="#流Socket-工作流程" class="headerlink" title="流Socket 工作流程"></a>流Socket 工作流程</h4><p>&emsp;&emsp;Socket在工作中分为客户端（Client）和服务端（Server）两部分：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20210826191344.png" alt="image-20210826190900700" width="60%">
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20210826191344.png" alt="image-20210826190900700" width="60%" />
 
 <p>&nbsp;</p>
 <p><strong>服务端工作流程</strong></p>
@@ -816,15 +816,15 @@
 <p><strong>效果</strong></p>
 <ul>
 <li><p>服务端</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117205918.png" alt="image-20220117205918084" style="zoom:55%;"></li>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117205918.png" alt="image-20220117205918084" style="zoom:55%;" /></li>
 <li><p>客户端1</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117204949.png" alt="image-20220117204949140" style="zoom: 55%;"></li>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117204949.png" alt="image-20220117204949140" style="zoom: 55%;" /></li>
 <li><p>客户端2</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117205002.png" alt="image-20220117205002282" style="zoom: 55%;"></li>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117205002.png" alt="image-20220117205002282" style="zoom: 55%;" /></li>
 </ul>
 <p>&emsp;&emsp;但是程序现在有一个问题，就是同一个窗口下开启多个进程时，多个进程都等待用户输入消息然后发送，但是如果两个进程同时申请在终端打印输入请求时，谁先打印并接收，谁后打印接收，这是个冲突，目前操作系统的处理看来是把二者排位一个队列，先后顺序执行，但其实应该由用户自己决定要把消息发给谁，以后再填这个坑。</p>
 <h3 id="僵尸进程"><a href="#僵尸进程" class="headerlink" title="僵尸进程"></a>僵尸进程</h3><p>&emsp;&emsp;一个子进程在调用 <code>return</code> 或 <code>exit(0)</code> 结束生命时，其实并没有被真正销毁，而是留下一个僵尸进程。比如上面并发服务端在子进程使用 <code>return</code> 结束后，父进程并未回收子进程占用的资源，子进程成为僵尸进程，使用 <code>ps -ef</code> 查看可以看见僵尸进程被标记为 <code>&lt;defunct&gt;</code>：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117211135.png" alt="1" style="zoom:50%;">
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117211135.png" alt="1" style="zoom:50%;" />
 
 <p>&emsp;&emsp;若父进程先结束，子进程会被系统接管，此后子进程结束后系统会自动回收资源，不会形成僵尸进程。</p>
 <p><strong>解决方法</strong></p>
@@ -842,7 +842,7 @@
 <p>使用 <code>top -H</code> 查看线程</p>
 <blockquote>
 <p>例：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220118130206.png" alt="image-20220118113211331" style="zoom:45%;">
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220118130206.png" alt="image-20220118113211331" style="zoom:45%;" />
 </blockquote>
 <h3 id="线程和进程"><a href="#线程和进程" class="headerlink" title="线程和进程"></a>线程和进程</h3><p>&emsp;&emsp;一个程序就是一个进程，而一个程序中的多个任务则被称为线程。进程是表示资源分配的基本单位，又是调度运行的基本单位，亦即执行处理机调度的基本单位。</p>
 <ul>
@@ -919,11 +919,11 @@
 <p><strong>效果</strong></p>
 <ul>
 <li><p>服务端</p>
-  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220118145222.png" alt="image-20220118145222454" style="zoom:50%;"></li>
+  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220118145222.png" alt="image-20220118145222454" style="zoom:50%;" /></li>
 <li><p>客户端1</p>
-  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220118145241.png" alt="image-20220118145241350" style="zoom:50%;"></li>
+  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220118145241.png" alt="image-20220118145241350" style="zoom:50%;" /></li>
 <li><p>客户端2</p>
-  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220118145255.png" alt="image-20220118145255493" style="zoom:50%;"></li>
+  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220118145255.png" alt="image-20220118145255493" style="zoom:50%;" /></li>
 </ul>
 <p>&emsp;&emsp;注意到，这里的程序并没有同前面多进程示例中一样，在子进程内又采用了多进程实现服务端、客户端收发同步进行的功能。因为开一个进程占用的资源远多于线程，子进程其实可以开两个线程分别负责收/发，但这又涉及线程间对共享资源的使用冲突问题，解决方法之一就是下面的线程锁。</p>
 <h3 id="线程同步与互斥锁"><a href="#线程同步与互斥锁" class="headerlink" title="线程同步与互斥锁"></a>线程同步与互斥锁</h3><p>&emsp;&emsp;多线程可以共享进程的资源（变量和对象），对编程带来了方便，但是某些对象虽然可以共享，但在同一个时间只能由一个线程使用，多个线程同时使用会产生冲突，例如socket连接，数据库连接池。互斥锁机制是同一时刻只允许一个线程占有共享的资源。</p>
