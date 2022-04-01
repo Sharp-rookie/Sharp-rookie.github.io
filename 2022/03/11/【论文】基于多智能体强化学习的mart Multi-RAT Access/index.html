@@ -317,7 +317,7 @@
         <p>这篇文章提出了一种智能聚合 RAT 接入 (SARA) 策略，旨在最大限度地提高长期网络吞吐量，同时满足各种流量服务质量 (QoS) 要求</p>
 <p>模型中考虑了具有不同 QoS 要求的用户访问具有共存蜂窝 WiFi 的异构网络的场景。为了在如此复杂和动态的环境中<strong>满足各种流量 QoS 要求的同时最大化系统吞吐量</strong>，文章利用<strong>多智能体强化学习</strong>通过<strong>感知动态信道状态</strong>和<strong>流量QoS 要求</strong>来执行 <strong>RAT 选择</strong>以及针对单个用户访问请求的<strong>资源分配</strong>。</p>
 <p>在 SARA（文章算法）中，先使用了 Nash Q-learning 提供一组可行的 RAT 选择策略，同时减少学习过程中的策略空间，然后使用基于蒙特卡洛树搜索 (MCTS) 的 Q-learning 进行资源分配。数值结果表明，通过使用 SARA 算法，网络吞吐量可以最大化，同时满足各种流量 QoS 要求，搜索次数有限。对于批量到达访问请求，可以获得次优解决方案，因为为了实现全局最优会产生高计算复杂度</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220311092754.png" alt="image-20220311092753981" style="zoom:55%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220311092754.png" alt="image-20220311092753981" style="zoom:55%;">
 
 <p><strong>原文</strong></p>
 <p><a target="_blank" rel="noopener" href="https://lrk612.com/resources/Smart%20Multi-RAT%20Access%20Based%20on%20MultiagentReinforcement%20Learning.pdf">Smart Multi-RAT Access Based on Multiagent Reinforcement Learning</a></p>
@@ -352,7 +352,7 @@
 <p>在[18]和[20]中，网络选择问题被建模为一个 SMDP，通过使用Q-learning算法来解决。结果表明其可以显着提高网络性能，并且 RL 在随机环境中表现良好。然而，每个代理的动作空间都很大，因此需要很长的搜索时间才能获得全局优化结果。因此，在使用 RL 算法时，降低计算复杂度至关重要，尤其是在时变动态场景中</p>
 <p>&nbsp;</p>
 <h2 id="Part-2：-LTE-WIFI-聚合——系统模型"><a href="#Part-2：-LTE-WIFI-聚合——系统模型" class="headerlink" title="Part 2： LTE-WIFI 聚合——系统模型"></a>Part 2： LTE-WIFI 聚合——系统模型</h2><h3 id="场景描述"><a href="#场景描述" class="headerlink" title="场景描述"></a>场景描述</h3><p>文章关注蜂窝小基站（SBS）和 WiFi 接入点（AP）共存的场景，如图1所示。假设相邻的 SBS 和 WiFi AP 使用固定和正交的信道资源来避免干扰。 UE 配备了蜂窝和 WiFi 接口，可以从任一 RAT请求数据 [21]。如图 1(a) 所示，Legacy HetNet 用于比较目的，其中 SBS 与 WiFi AP 没有合作，这意味着数据传输是从蜂窝或 WiFi 接口请求的。在图 1(b) 中，下一代网络基站 (xGBS) 通过标准化的 LTE-WLAN 连接（由 Rel-13 中的 3GPP 标准化）[22] 聚合蜂窝 SBS 和 WiFi AP。xGBS 充当数据平面和控制平面的锚节点，并通过常规 S1 接口连接到核心网络。</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220311092754.png" alt="image-20220311092753981" style="zoom:70%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220311092754.png" alt="image-20220311092753981" style="zoom:70%;">
 
 <center>图 1</center>
 
@@ -363,16 +363,16 @@
 <p>&nbsp;</p>
 <h2 id="Part3：问题建模与分析"><a href="#Part3：问题建模与分析" class="headerlink" title="Part3：问题建模与分析"></a>Part3：问题建模与分析</h2><p>在多 RAT 接入问题中，网络运营商追求最大化系<strong>统吞吐量</strong>，而 UE 则倾向于最大化其<strong>传输速率</strong>并满足其 <strong>QoS 要求</strong>。因此，文章分别从网络运营商和 UE 的角度制定了最优的多 RAT 接入问题</p>
 <h3 id="运营商角度"><a href="#运营商角度" class="headerlink" title="运营商角度"></a>运营商角度</h3><p>从网络运营商的角度来看，网络吞吐量可以通过增加每个 DTF 中所有 UE 的授权和非授权频段的下行链路吞吐量总和来提高。考虑分别具有 <code>N1、···、Nm</code> 个信道（或子信道）的 m RAT。第 <code>i</code> 个 RAT 的第 <code>j</code> 个信道的带宽记为 <code>Bij</code>，其能提供 <code>Uij</code> 的吞吐量。现在的问题是从每个 RAT 中准确地选择一个信道，以便在带宽总容量 <code>^Bi</code> 的情况下使吞吐量最大化。可以将第 <code>k</code> 个 DTF 中的长期系统平均吞吐量 <code>U</code> 最大化问题表述为</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220311095402.png" alt="image-20220311095402027" style="zoom:75%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220311095402.png" alt="image-20220311095402027" style="zoom:75%;">
 
 <p>其中 <code>cij</code> 是一个二进制变量，表示是否在传输中使用第 <code>i</code> 个 RAT 的第 <code>j</code> 个信道。 <code>m</code> 值固定等于 2，分别对应许可和非许可频段上运行的 LTE 和 WiFi 的 RAT。约束（1.1）规定分配的带宽不能超过许可和非许可频段分别可以提供的备用带宽。约束 (1.2) 表明将选择至少一个通道（或子通道）来服务于交通流</p>
 <h3 id="UE角度"><a href="#UE角度" class="headerlink" title="UE角度"></a>UE角度</h3><p>从UE的角度来看，多 RAT 接入问题确实是一个资源分配问题，随着网络资源的稀缺，各个UE之间存在潜在的博弈。由于网络环境随时间变化，动态灵活的资源分配机制是必不可少的。因此，从 UE 角度来看，最优多 RAT 接入问题可以表述为在保证 QoS 约束的情况下最大化 UE 的平均传输速率：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220311095555.png" alt="image-20220311095555006" style="zoom:75%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220311095555.png" alt="image-20220311095555006" style="zoom:75%;">
 
 <p>其中 <code>N</code> 是当前 DTF 中的 UE 数量，<code>Kn</code> 是系统操作中 UE <code>n</code> 的特定应用的 DTF 总数，并且 <code>Rn (k) = (1 -Ln (k))*Sn (k)/ Tn (k)</code> 是 UE <code>n</code> 在第 <code>k</code> 个 DTF 中特定应用的传输速率，其中 <code>Sn (k)</code> 是流的大小，<code>Tn (k)</code> 是流的传输时间（包括排队延迟），<code>Ln (k )</code> 是丢包概率</p>
 <p>文章使用 <code>Hn (k)</code> 来表示由第 <code>k</code> 个 DTF 中的流的子流选择的 LTE 子信道集合，并使用二进制值 <code>ω(k)</code> 来表示 WiFi 信道是否参与了第 <code>k</code> 个 DTF 中的传输过程。<code>Hn (k)</code> 等于空集意味着 LTE 子信道不是参与第 <code>k</code> 个 DTF 中流的传输过程</p>
 <p>由此，<code>Sn(k)</code> 可表示为：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220311100004.png" alt="image-20220311100004325" style="zoom:95%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220311100004.png" alt="image-20220311100004325" style="zoom:95%;">
 
 <p>其中，<code>sLh</code> 和 <code>sw</code> 分别是分配给 LTE 的子信道 <code>h</code> 和WiFI信道的子流大小</p>
 <blockquote>
@@ -384,7 +384,7 @@
 <p>&nbsp;</p>
 <h2 id="Part4：多RAT访问控制的半马尔可夫决策过程"><a href="#Part4：多RAT访问控制的半马尔可夫决策过程" class="headerlink" title="Part4：多RAT访问控制的半马尔可夫决策过程"></a>Part4：多RAT访问控制的半马尔可夫决策过程</h2><h3 id="基于-SMDP-的分层决策框架"><a href="#基于-SMDP-的分层决策框架" class="headerlink" title="基于 SMDP 的分层决策框架"></a>基于 SMDP 的分层决策框架</h3><p>由于多 RAT 访问中的 RAT 选择和资源分配可以被视为两个连续的过程，文章提出了一种基于 SMDP 的分层决策框架（HDF）来解决联合 RAT 选择和资源分配问题</p>
 <p>图 2 显示了 HDF 的框图。在 HDF 中，一旦代理（UE）做出决定（包括 RAT 选择和相应的资源分配），网络状态可能会发生变化，更新后的状态和评估函数给出的奖励是对控制器的反馈。这种反复试验的过程会直到奖励收敛或时间结束，从而推动决策朝着网络预期的方向发展</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220311103737.png" alt="image-20220311103737096" style="zoom:60%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220311103737.png" alt="image-20220311103737096" style="zoom:60%;">
 
 <center>图 2</center>
 
@@ -400,16 +400,16 @@
 <p>考虑一个流级的数据包重排序过程，终端子流的频繁重排序将导致不可忽略的时间延迟。文章设计的多RAT访问控制算法需要应对这些问题</p>
 <p>如前所述，在 RSP 过程中可以将一个数据流拆分为多个子流。让 UE <code>n</code> 的子流 <code>(1, 2, ..., γn)</code> 在模型中定义为 <strong>agent</strong>，它们在 RSP 中做出同时选择 RAT 和信道的决策。将 <code>πn = (a1, ..., aγn)</code> 定义为这些子流的联合通道选择策略，其中 <code>aj</code> 表示代理 <code>j</code> 选择的通道的序号。使用函数 <code>coll_j(s, πn)</code> 和 <code>dis_j(s, πn)</code> 来评估智能体 <code>j</code> 在状态 <code>s</code> 的策略集 <code>πn</code>，目的是分别避免碰撞和混乱</p>
 <p>然后定义代理 <code>j</code> 的 RSP 评估函数，用 <code>RSP_j (s, πn)</code> 表示：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220311112301.png" alt="image-20220311112301764" style="zoom:90%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220311112301.png" alt="image-20220311112301764" style="zoom:90%;">
 
 <p>其中</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220311112322.png" alt="image-20220311112322220" style="zoom:80%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220311112322.png" alt="image-20220311112322220" style="zoom:80%;">
 
 <p>其中 <code>σ</code> 和 <code>δ</code> 是两个大于零的常数</p>
 <p>一方面，对于 <code>coll_j(s, πn)</code>，假设代理 <code>j</code> 和 <code>k</code> 分别采用通道选择策略 <code>aj</code> 和 <code>ak</code>。如果 <code>aj</code> = <code>ak</code> 则发生冲突，访问失败，将 <code>-σ</code> 反馈给代理 <code>j</code> 作为该合作策略的评估值</p>
 <p>另一方面，对于 <code>dis_j(s, πn)</code>，当每次在选择通道之前按排队时间对这些通道进行排序时，如果代理 <code>j</code> 和 <code>l</code> (j &lt; l ) 分别采取动作 <code>aj</code> 和 <code>al</code> (aj &gt; al )，子流的到达可能是无序的，从而在终端重新排序会产生一些费用，因此将 <code>-δ</code> 反馈给代理 <code>j</code> 作为该合作策略的评估值</p>
 <h3 id="资源分配的过程的评估函数"><a href="#资源分配的过程的评估函数" class="headerlink" title="资源分配的过程的评估函数"></a>资源分配的过程的评估函数</h3><p>设计目标是在用户 QoS 要求的约束下最大化长期网络吞吐量，指导代理选择网络期望的策略。从检查特定 DTF 中流量 <code>n</code> 的瞬时传输率开始。将 <code>^Tn</code> 定义为流 <code>n</code> 的传输延迟，因此 (2) 中的 Sn /Tn 可以表示为 <code>(Sn / ^Tn ) ·( ^Tn /Tn )</code>。使用 <code>Bn</code> 来表示 <code>Sn / ^Tn</code> ，它是流 <code>n</code> 所需的带宽。此外，我们在(2)两边取自然对数：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220311104903.png" alt="image-20220311104903556" style="zoom:95%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220311104903.png" alt="image-20220311104903556" style="zoom:95%;">
 
 <p>可以看到，UE 传输速率的对数被转换为三个不同的度量。接下来分析这三个指标，分别找出它们与服务的<strong>带宽</strong>、<strong>延迟</strong>和<strong>丢包率</strong>的 QoS 要求的关系</p>
 <hr>
@@ -422,17 +422,17 @@
 <p>然后文章分析了 <code>^Tn /Tn</code> 与包平均时延的关系。图 3 描述了到达 UE 子流在选定的 LTE 子信道上的传输过程，其中定义 <code>t′0</code> 为请求的开始时间，<code>tm</code> 和 <code>t′m (1&lt;m&lt;γn )</code> 分别作为子流 <code>m</code> 的传输时间的开始和结束。令 <code>dm</code> = <code>t_m -t′_m-1</code> 为两个连续子流之间的时间间隔。则两个子流之间的间隔之和由 <code>Dn = ∑dm</code> 表示。因此，很明显，<code>Tn</code> 随着 <code>Dn</code> 的值增加</p>
 <p>此外，在分析平均时延和丢包率时，会考虑过去 DTF 的结果，以获得长期的性能优化。在过去的 KDTF 中，将 <code>x_n (k)</code> 定义为第 <code>k</code> 个过去 DTF 中流 <code>n</code> 的数据包数，因此长期平均时延 <code>Tn</code> 为 <code>∑Tn(k) / ∑x_n(k)</code></p>
 <p>通过在当前 DTF 中编排两个连续子流之间的时间间隔来获得可用的长期平均时间延迟</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220311105658.png" alt="image-20220311105658051" style="zoom:60%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220311105658.png" alt="image-20220311105658051" style="zoom:60%;">
 
 <center>图 3</center>
 
 <p>SARA 的数据传输过程中采用了拥塞控制机制。由于数据包应该在拥塞中排队等待传输，子流的数据包可能会被阻塞甚至丢弃，因为排队延迟超过了阈值时间，用 <code>η</code> 表示。定义在第 <code>k</code> 个过去的 DTF 中，由于排队时间超过 <code>η</code> 而被丢弃的数据包数量为 <code>ρi (k)</code>。可以得到长期丢包率 <code>Ln</code> 为 <code>∑ρn (k ) / ∑x_n (k ) </code>，用 <code>Pn = 1 - Ln</code> 来表示数据包传输的成功率</p>
 <hr>
 <p>用 <code>Bn</code>、<code>Tn</code> 和 <code>Pn</code> 表示流 <code>n</code> 向 xGBS 发送信号的带宽、包平均时延和丢包率的 QoS 要求。为了保证流的 QoS 要求，使用一个阶跃函数：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220311110418.png" alt="image-20220311110418359" style="zoom:90%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220311110418.png" alt="image-20220311110418359" style="zoom:90%;">
 
 <p>在评估函数设计中，其中 <code>ε</code> 接近 0+，令 <code>B∗n = ε(Bn −Bn th) ·Bn</code>、<code>T ∗n = ε(Tn th −Tn ) ·^Tn /Tn</code>、<code>P ∗n = ε (Pn -Pn th) ·(1 -Ln )</code>。由此，RAP 的评估函数定义为</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220311110624.png" alt="image-20220311110623994" style="zoom:90%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220311110624.png" alt="image-20220311110623994" style="zoom:90%;">
 
 <p>这里 <code>wB</code> 、 <code>wT</code> 和 <code>wP</code> 作为权重系数参与进来，以优化期望的折扣奖励的长期总和，为各个 QoS 指标赋予指定的权重。设置权重系数的方法是最大化偏好度量与其他度量之间的权重区别，这样可以粗略地引导算法向权重系数较大的 QoS 度量方向发展。如果去除权重系数（或让 wB = wT = wP ），SARA 的策略输出将朝着最大化系统平均吞吐量的方向改进。通过在 RAP 中使用评估函数 (5)，在基本 QoS 要求约束的情况下动态协调流之间的资源分配策略是可行的</p>
 <p>&nbsp;</p>
@@ -442,7 +442,7 @@
 
 <p>基于提出的 n-agent 随机博弈 G，在 HDF 中，RSP和RAP中的agent之间分别存在<strong>同时博弈</strong>和<strong>顺序博弈</strong>。基于 SMDP 模型，采用 <strong>Nash Q-Learning 算法</strong>、<strong>Policy&amp;Value MCTS 算法（P&amp;V-MCTS）</strong>[11]、<strong>Q-Learning</strong> 算法的变体，分别解决这两个博弈</p>
 <h3 id="Q-Learning"><a href="#Q-Learning" class="headerlink" title="Q-Learning"></a>Q-Learning</h3><p>Q-learning 算法使用 <code>&lt;s, a, r, s&#39;&gt;</code> 形式的转换经验来改进最优状态-动作价值函数的估计 <code>^Q</code>。当采用策略集 <code>π</code> 时，Q 值被定义为状态 <code>s</code> 的预期长期折扣奖励。估计 <code>^Q</code> 更新为：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220311134521.png" alt="image-20220311134521060" style="zoom:90%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220311134521.png" alt="image-20220311134521060" style="zoom:90%;">
 
 <p>其中 <code>β ∈[0, 1]</code> 是折扣因子，<code>R</code> 是智能体采取动作 <code>a</code> 时收到的即时奖励，<code>α</code> 是学习率 (0 &lt; α &lt; 1)。在 [27] 中已经证明，如果学习率以适当的速率衰减，<code>^Q(s,a)</code> 最终会收敛到 <code>^Q∗(s,a)</code>。在 Q-Learning 算法的目标是通过迭代找到最优策略 <code>π∗(s) = argmaxa∈A (s) Q(s, a), ∀s, π</code></p>
 <h3 id="Nash-Q-Learning-Algorithm-for-RSP"><a href="#Nash-Q-Learning-Algorithm-for-RSP" class="headerlink" title="Nash Q-Learning Algorithm for RSP"></a>Nash Q-Learning Algorithm for RSP</h3><p>在 Nash Q-Learning 算法中，同一决策回合中的智能体尝试从任意猜测开始学习它们的均衡 Q 值。为此，一个智能体需要维护其他智能体的 Q 值，这些值用于通过在每个状态下对其他智能体的动作采取最佳响应动作来更新自己的 Q 值，最终达到<strong>纳什均衡（NE）</strong></p>
@@ -454,7 +454,7 @@
 <p>文章中，RSP 的过程仅限于静态策略。在 DTF 中，策略和代理的数量是有限的。 Fink (1964) 证明，n 个玩家的随机博弈过程的平稳策略中至少存在一个纳什均衡点[13]</p>
 <p>为了模拟真实场景，首先随机初始化网络状态，代理的 Q 值首先设置为零。在状态 <code>s</code>，网络随机选择动作集 <code>(a1, a 2, ..., aγn )</code>，其中 <code>γn</code> 是 UE <code>n</code> 的子流数。当网络状态变为 <code>s&#39;</code> 时，根据纳什Q函数更新UE <code>n</code> 的子流Q值。直到达到 <code>γn</code> 个代理之间的纳什均衡，并向每个代理输出一组可行的 RAT/通道选择策略后，学习过程结束，然后网络为下一个 UE 执行另一轮学习过程。</p>
 <p>下面算法 1 中详细阐述了 RSP 的 Nash Q-Learning：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220311141515.png" alt="image-20220311141514997" style="zoom:70%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220311141515.png" alt="image-20220311141514997" style="zoom:70%;">
 
 <center>算法 1</center>
 
@@ -462,12 +462,12 @@
 
 <h3 id="Policy-amp-Value-MCTS-Algorithm-for-RAP"><a href="#Policy-amp-Value-MCTS-Algorithm-for-RAP" class="headerlink" title="Policy&amp;Value MCTS Algorithm for RAP"></a>Policy&amp;Value MCTS Algorithm for RAP</h3><p>在 RAP 中，采用 P&amp;V-MCTS 算法解决了多个智能体之间的顺序博弈。每个智能体采取的行动是 RSP 中 Nash Q-Learning 算法输出的可行策略 <code>∏_I_n ∈N</code> 的子集。 P&amp;V-MCTS 在 MCTS 算法中结合了策略和价值网络。对于特定的 UE，策略网络用于采样动作，价值网络用于评估选择的策略。假设在 Monte-Carlo 搜索树中，每个节点 s 包含树的所有动作的边 <code>(s, a)</code>，每个边存储一组统计参数为 <code>&#123;r(s, a), N(s, a), Q(s, a)&#125;</code>，其中 <code>r(s, a)</code> 是即时奖励，<code>N (s, a)</code> 是访问次数，<code>Q(s, a)</code> 是来自价值网络的动作价值，由 Q-learning 算法更新</p>
 <p>具体来说，P&amp;V-MCTS 包括三个策略步骤，即策略选择、模拟和反向传播，如图 4 所示：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220311142248.png" alt="image-20220311142248482" style="zoom:60%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220311142248.png" alt="image-20220311142248482" style="zoom:60%;">
 
 <center>图 4</center>
 
 <h4 id="Selection"><a href="#Selection" class="headerlink" title="Selection"></a>Selection</h4><p>在每个步骤中，对于 UE，根据动作选择策略： <code>a = argmaxa (Q(s, a) + u(s, a))</code> 选择一组 LTE 子信道或 WiFi 信道，通过使用变体树（UCT）算法中的上置信区间[28]，其中</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220311142838.png" alt="image-20220311142838566" style="zoom:95%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220311142838.png" alt="image-20220311142838566" style="zoom:95%;">
 
 <p>是鼓励探索和开发的奖励，其中 <code>c</code> 决定了探索的程度，<code>P(s,a)</code> 是先验概率</p>
 <p>在策略网络中，让 WiFi 信道以高先验概率被选择，而其他 LTE 子信道以相等概率被选择。 UCT 算法利用上置信键 (UCB) 算法在树中的每个点智能地分配搜索资源。这种搜索策略最初偏爱具有高 Q 值和低访问次数的动作，但会逐渐偏爱具有高动作值的动作</p>
@@ -475,7 +475,7 @@
 <h4 id="Backpropagation"><a href="#Backpropagation" class="headerlink" title="Backpropagation"></a>Backpropagation</h4><p>当模拟到达叶节点时，会启动一个单独的反向传递来更新遍历边的统计参数，其中每个节点的 <code>Q(s, a)</code> 由 Q-learning 算法更新，每个访问节点的访问次数为增加 1</p>
 <p>搜索过程可以随时终止并输出一组当前的最佳策略，以满足[11]中的实时要求。换言之，学习时间或试验次数应动态调整，从而避免违反 UE 的 QoS 要求</p>
 <p>算法 2 描述了 RAP 的 P&amp;V-MCTS 算法，旨在为每个交通流找到理想的资源分配策略。正如算法 2 中总结的那样，每个节点上的 Q 值和访问次数首先被初始化为零。网络状态是随机初始化的。代理 <code>n</code> 根据 UCT 算法选择一个动作。当网络状态变为 <code>s&#39;</code> 时，代理 <code>n</code> 的 Q 值根据初步 Q 函数更新，访问节点的访问次数增加 1。直到算法收敛或时间到达后，学习过程结束，然后将相应的资源分配策略输出给每个代理</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220311143323.png" alt="image-20220311143323121" style="zoom:75%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220311143323.png" alt="image-20220311143323121" style="zoom:75%;">
 
 <center>算法 2</center>
 

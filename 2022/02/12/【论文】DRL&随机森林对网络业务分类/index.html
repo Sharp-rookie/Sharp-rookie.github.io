@@ -309,7 +309,7 @@
 
       
         <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>&emsp;&emsp;蜂窝通信和5G 移动网络需要满足高可靠性标准、极低延迟、更高容量、更高安全性和高速用户连接。文中通过实施深度学习 (DL) 神经网络，利用网络内深度学习和预测来管理网络负载效率和网络可用性，开发了一个“DeepSlice”模型。用网络关键性能指标 (KPI) 训练模型以分析传入流量并预测未知设备类型的网络切片。智能资源分配保证有效地使用现有网络切片上的可用资源并提供负载平衡。DeepSlice 模型能够做出明智的决策并为数据包选择最合适的网络切片，包括网络故障的情况。</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220212152159.png" alt="image-20220212152136937" style="zoom:60%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220212152159.png" alt="image-20220212152136937" style="zoom:60%;">
 
 <p><strong>原文</strong></p>
 <p><a target="_blank" rel="noopener" href="https://lrk612.com/resources/DeepSlice%20A%20Deep%20Learning%20Approach%20towards%20an%20Efficient%20and%20Reliable%20Network%20Slicing%20in%205G%20Networks.pdf">DeepSlice: A Deep Learning Approach towards an Efficient and Reliable Network Slicing in 5G Networks</a></p>
@@ -381,50 +381,50 @@
 <h2 id="系统模型：DeepSlice"><a href="#系统模型：DeepSlice" class="headerlink" title="系统模型：DeepSlice"></a>系统模型：DeepSlice</h2><p>&emsp;&emsp;文章先创建了一个随机森林和神经网络，用来对输入数据包的切片类型进行判断。切片类型分为4中：eMBB、mMTC、URLLC和Master Slice，其中Master Slice具有属于其他每个切片的网络功能的切片，始终可以作为备用切片，处于热备用状态，并将根据其他切片上的负载状态使用。然后提出“DeepSlice”模型用于管理网络负载、切片故障条件并为连接到网络的任何新的未知设备类型检测最合适的切片。其中随机森林和神经网络使用相同的数据集，包含超过 65,000 个独特的输入组合。</p>
 <p>&emsp;&emsp;数据集包括来自网络和设备的最相关 KPI，包括用于连接的设备类型（智能手机、物联网设备、URLLC 设备等）、用户设备 (UE) 类别、QoS 类标识符 (QCI)、数据包延迟预算、最大丢包率、时间和星期几等。在 5G 中，数据包延迟预算和数据包丢失率是 5QI（5G QoS 标识符）的组成部分，这也包含在数据集中。 </p>
 <p>&emsp;&emsp;模型考虑了多种不同类型的输入设备，包括智能手机、通用 IoT 设备、AR-VR 设备、工业 4.0 流量、e911 或公共安全通信、医疗保健、智慧城市或智能家居流量等，甚至是请求访问的未知设备或多项服务。每种输入设备都有定义的 UE 类别值和预定义的 QCI 值。上述所有信息都用于神经网络训练，以便在当前做出明智的决策并有效地预测未来的网络资源预留。</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220212152159.png" alt="image-20220212152136937" style="zoom:60%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220212152159.png" alt="image-20220212152136937" style="zoom:60%;">
 
 <center>总架构</center>
 
 <p>&emsp;&emsp;文章模型根据传入连接的先前信息预测每个网络切片上的网络负载，并跟踪哪个输出“网络切片”被使用最多。然后根据需要在所有切片之间有效地分配传入流量来将传入流量分配给网络。因为对于如何处理每种传入设备类型没有明确的规则集，所以用神经网络来处理非常合适。对于每一个新场景，与传统算法相比，智能网络都可以非常快速地学习和适应变化或新要求。下表展示了仿真模型的特点：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220212164055.png" alt="image-20220212164055405" style="zoom:70%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220212164055.png" alt="image-20220212164055405" style="zoom:70%;">
 
 
 
 <h4 id="PartⅠ-随机森林分类器"><a href="#PartⅠ-随机森林分类器" class="headerlink" title="PartⅠ 随机森林分类器"></a>PartⅠ 随机森林分类器</h4><p>&emsp;&emsp;当拥有具有多个属性结构的数据集时，推荐使用随机森林 (RF)。 RF 是一种监督学习模型，主要用于为分类和回归问题建立预测模型。文章的模型选择 RF 而不是 k-Nearest Neighbor、朴素贝叶斯或决策树的主要原因是因为数据集中有大约 65,000 个独特的输入，并且所有这些数据都结构良好，因此 RF 通过使用多个子树来降低过度拟合的风险。RF 有助于将输入数据快速分类为任何预定义的类别。 RF 在大型数据库上高效运行并产生准确的预测。最重要的是，它可以估计任何丢失的数据，即使在某些输入数据丢失的情况下也能保持准确性</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220212164428.png" alt="image-20220212164428903" style="zoom: 60%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220212164428.png" alt="image-20220212164428903" style="zoom: 60%;">
 
 <p>&emsp;&emsp;下图是随机森林投票分类模型。输入数据集有大约 8 个不同的输入字符串，它们共同有助于模型做出决策。在现实世界的场景中很可能会发生 8 个输入中的一个或多个可能没有被接收到，而模型仍然必须预测一个输出的情况。在数据训练期间，RF 根据输入构建多个决策树，树的每个分支代表一个可能的事件或响应。文章使用 60% 的输入数据集来训练我们的模型，剩下的 40% 用于预测分类器的准确性。</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220212164443.png" alt="image-20220212164443517" style="zoom:55%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220212164443.png" alt="image-20220212164443517" style="zoom:55%;">
 
 
 
 <h4 id="PartⅡ-神经网络分类器"><a href="#PartⅡ-神经网络分类器" class="headerlink" title="PartⅡ 神经网络分类器"></a>PartⅡ 神经网络分类器</h4><p>&emsp;&emsp;当数据非结构化且庞大的时，神经网络会比随机森林分类的效果更好。文章使用相同的数据集来训练神经网络的多个神经元，并根据来自 UE 信息的任何输入预测正确的网络切片。文章利用神经网络模型为未知设备类型选择正确的切片类型。在下图所示的DeepSlice 模型中，根据传入连接预测每个网络切片的网络负载，并跟踪哪个输出“网络切片”被使用最多，然后根据模型预测的负载和输出，通过在 eMBB、URLLC、mMTC 或主切片之间有效分配来将传入设备分配给切片。</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220212165139.png" alt="image-20220212165139106" style="zoom:55%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220212165139.png" alt="image-20220212165139106" style="zoom:55%;">
 
 <p>&emsp;&emsp;在 24 小时模拟中产生了大约 25 万用户连接请求，其中 40% 是 eMBB、25% mMTC 和 35% URLLC。下图显示了运行 24 小时的模拟神经网络模型运行效果，给出了在一个实例中服务的用户数量。因为所有传入流量都有一个预定义的生存时间 (TTL)，因此每秒只有一小部分仍然有效。例如，在任何给定实例中，eMBB 活跃用户平均数为 275。与 eMBB 相比，为 URLLC 和 mMTC 用户分配了较短的 TTL，这就是为什么图中有更多用户使用宽带服务的原因。</p>
 <p>&emsp;&emsp;DeepSlice 最终将学习和了解什么样的设备会进入哪个切片，并且随着时间的推移，它将能够预测未来需要特定服务或网络切片的连接。它可以通过提前适当分配资源来帮助网络为任何新连接做好准备；这将节省以后的任何延误。数据集中包括任何连接的日期和时间，这也可以帮助网络在任何给定时间预测未来的连接数量，并根据从过去的信息中学习了解这些连接需要或请求哪些网络切片。</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220212165445.png" alt="image-20220212165445873" style="zoom:55%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220212165445.png" alt="image-20220212165445873" style="zoom:55%;">
 
 <p>&nbsp;</p>
 <h2 id="仿真结果"><a href="#仿真结果" class="headerlink" title="仿真结果"></a>仿真结果</h2><p>在本节中，我们评估 DeepSlice 并验证它如何用于提供切片预测、负载平衡和网络可用性。在我们的第一个用例中，我们通过演示如何为请求连接到系统的任何未知设备类型准确选择切片来验证我们的方法。我们的第二个负载平衡用例涉及有效利用每个可用的网络切片。如果任何单个切片利用率超过其总可用资源的某个阈值，我们的模型将引导任何新连接到主切片，否则当切片利用率超过预定义阈值时需要承载设备。我们的第三个用例描述了一个切片故障场景，其中所有流量都将路由到主切片，并防止在切片故障期间出现任何服务丢失。 DeepSlice 将捕获任何连接失败的时间以及失败周围的一些属性；下次它可以尝试隔离问题并提前做好准备。</p>
 <h4 id="实验一-Unknown-Device-Type"><a href="#实验一-Unknown-Device-Type" class="headerlink" title="实验一 Unknown Device Type"></a>实验一 Unknown Device Type</h4><p>使用DeepSlice 模型对未知设备类型进行切片分类，交叉验证准确率超过 90.62%，其中包括新输入场景的整个测试数据集，以及训练时未使用的那些。</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220212214537.png" alt="image-20220212214537501" style="zoom:55%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220212214537.png" alt="image-20220212214537501" style="zoom:55%;">
 
 <p>下表显示了一些未知数以及如何仅使用一部分输入信息来正确确定要使用的网络切片。</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220212214714.png" alt="image-20220212214714302" style="zoom:55%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220212214714.png" alt="image-20220212214714302" style="zoom:55%;">
 
 <h4 id="实验二-Load-Balancing-Scenario"><a href="#实验二-Load-Balancing-Scenario" class="headerlink" title="实验二 Load Balancing Scenario"></a>实验二 Load Balancing Scenario</h4><p>假设使用率阈值为90%，如果连接数超过阈值，则该切片定义为过度使用。下图显示了一个 eMBB 切片被检测到具有超过 90% 的利用率，其流量超过了设置的阈值时，Master切片充当任何新 eMBB 连接的备份：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220212215050.png" alt="image-20220212215050386" style="zoom:55%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220212215050.png" alt="image-20220212215050386" style="zoom:55%;">
 
 <p>DeepSlice 模型可以实现这种过载，并且准备下次重定向流量，从而不会导致特定切片过载。主切片接管多余的流量效果如图所示：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220212215159.png" alt="image-20220212215159502" style="zoom:55%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220212215159.png" alt="image-20220212215159502" style="zoom:55%;">
 
 <h4 id="实验三-Network-Slicing-Failure-Scenario"><a href="#实验三-Network-Slicing-Failure-Scenario" class="headerlink" title="实验三 Network Slicing Failure Scenario"></a>实验三 Network Slicing Failure Scenario</h4><p>假设指定切片完全失效，例如是 eMBB，如图所示。此时 DeepSlice 模型会将所有新的 eMBB 相关流量引导到Master切片，避免网络中的流量传输丢失：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220212215347.png" alt="image-20220212215347359" style="zoom:55%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220212215347.png" alt="image-20220212215347359" style="zoom:55%;">
 
 <p>但是，该切片上的任何正在进行的通信都会受到影响，并且所有现有连接都会由于切片突然故障而丢失。这由系统记录，例如日期和时间，并且下次将注意避免丢失所有正在进行的连接。</p>
 <p>下图显示，模拟模型在 mMTC 切片上出现故障，从 3 小时到 5 小时，持续两个小时，在 eMBB 切片上，在 16 小时到 18 小时的另外两个小时内出现故障。Master切片被标识为备份，并用于在这些切片故障期间重定向此流量。就容量和处理速度而言，Master切片中为每个网络切片保留了大量资源。</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220212215437.png" alt="image-20220212215437268" style="zoom:55%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220212215437.png" alt="image-20220212215437268" style="zoom:55%;">
 
 <p>&nbsp;</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>&emsp;&emsp;我觉得这篇论文思路比较简单，就是用随机森林和一个简单的神经网络对数据包做了分类，然后加上了一些简单的切片资源调度策略，但是好在文章作者开源了代码和数据集。</p>

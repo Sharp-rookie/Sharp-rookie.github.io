@@ -326,25 +326,25 @@
 
       
         <p>&emsp;&emsp;动态规划DP、蒙特卡罗MC、时序差分TD这些求解MDP问题的算法，使用的状态都是有限个离散状态，问题规模小时易求解。而当问题规模庞大，或者状态是连续的且离散化后依然规模庞大时，无法将Q表存在有限的内存中。因此用价值函数的近似表示来修改模型。</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117234446.png" alt="image-20220117234446365" style="zoom:67%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117234446.png" alt="image-20220117234446365" style="zoom:67%;">
 
 <span id="more"></span>
 
 <p>&nbsp;</p>
-<h2 id="价值函数的近似表示"><a href="#价值函数的近似表示" class="headerlink" title="价值函数的近似表示"></a>价值函数的近似表示</h2><h4 id="状态价值函数"><a href="#状态价值函数" class="headerlink" title="状态价值函数"></a>状态价值函数</h4><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220116162045.png" alt="image-20220116162045244" style="zoom: 67%;" />
+<h2 id="价值函数的近似表示"><a href="#价值函数的近似表示" class="headerlink" title="价值函数的近似表示"></a>价值函数的近似表示</h2><h4 id="状态价值函数"><a href="#状态价值函数" class="headerlink" title="状态价值函数"></a>状态价值函数</h4><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220116162045.png" alt="image-20220116162045244" style="zoom: 67%;">
 
-<h4 id="动作价值函数"><a href="#动作价值函数" class="headerlink" title="动作价值函数"></a>动作价值函数</h4><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220109095934.png" alt="image-20220109095934523" style="zoom: 33%;" />
+<h4 id="动作价值函数"><a href="#动作价值函数" class="headerlink" title="动作价值函数"></a>动作价值函数</h4><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220109095934.png" alt="image-20220109095934523" style="zoom: 33%;">
 
 <p>&emsp;&emsp;具体的近似方法有很多，比如：线性表示法、决策树、最近邻、傅里叶变换等，但是最常用的是神经网络（DNN、CNN、RNN）</p>
 <p>&emsp;&emsp;对于状态价值函数，神经网络的输入是状态s的特征向量，输出是状态价值v(s,w)。</p>
 <p>&emsp;&emsp;对于动作价值函数，有两种方法，一种是输入状态s的特征向量和动作a，输出对应的动作价值q(s,a,w)，另一种是只输入状态s的特征向量，动作集合有多少个动作就有多少个输出q(s,a,w)（这里隐示了动作是有限个的离散动作）</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220109100417.png" alt="image-20220109100417543" style="zoom: 33%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220109100417.png" alt="image-20220109100417543" style="zoom: 33%;">
 
 <p>&nbsp;</p>
 <h2 id="NIPS-DQN算法"><a href="#NIPS-DQN算法" class="headerlink" title="NIPS DQN算法"></a>NIPS DQN算法</h2><p>&emsp;&emsp;NIPS DQN是2013年由 DeepMind 在NIPS上发表的一篇论文中提出的，也是DQN算法族的第一位成员，是最原始的DQN算法。论文：<a target="_blank" rel="noopener" href="https://lrk612.com/resources/Playing%20Atari%20with%20Deep%20Reinforcement%20Learning.pdf">Playing Atari with Deep Reinforcement Learning</a></p>
 <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>&emsp;&emsp;基本思路来源于Q-Learning，但是和Q-Learning不同的地方在于，它Q值不是直接通过状态值S和动作A来计算，而是通过上面讲到的Q网络来计算，这个Q网络是一个神经网络。</p>
 <h3 id="经验回放（experience-replay）"><a href="#经验回放（experience-replay）" class="headerlink" title="经验回放（experience replay）"></a><strong>经验回放（experience replay）</strong></h3><p>&emsp;&emsp;将每次和环境交互得到的奖励与状态更新情况都保存在经验池中，用于后面目标Q值的更新。Q-Learning有一张Q表来保存所有的Q值的当前结果的，而DQN在做动作价值函数更新时靠的就是经验回放。从通过经验回放得到的目标Q值和通过Q网络直接计算得到的Q估计值肯定是不等的，二者的差别构成神经网络的损失函数Loss Function，然后通过梯度的反向传播来更新神经网络的参数w，当w收敛后就得到的近似的Q值计算方法，进而贪婪策略也就求出来了。</p>
-<h3 id="算法流程"><a href="#算法流程" class="headerlink" title="算法流程"></a>算法流程</h3><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220207145830.png" alt="image-20220207145830293" style="zoom:60%;" />
+<h3 id="算法流程"><a href="#算法流程" class="headerlink" title="算法流程"></a>算法流程</h3><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220207145830.png" alt="image-20220207145830293" style="zoom:60%;">
 
 <p>输入：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">迭代轮数T、状态特征维度n、动作集A、步长α、衰减因子γ、探索率ϵ、Q网络结构、批量梯度下降的样本数m</span><br></pre></td></tr></table></figure>
@@ -369,9 +369,9 @@
 <li><p>前进一步：S = S’</p>
 </li>
 <li><p>从经验池中采集m个样本 <code>&#123; ϕ(Sj)，Aj，Rj，ϕ(Sj‘)，is_endj &#125;，j = 1,2,3.....,m</code>，把S‘  和A’ 输入神经网络结合贪婪策略计算目标Q值 yj：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220109102614.png" alt="image-20220109102614326" style="zoom: 33%;" /></li>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220109102614.png" alt="image-20220109102614326" style="zoom: 33%;"></li>
 <li><p>把S  和A 输入Q网络直接求Q估计值，由上一步从经验池回放得到的 yj 和此步得到的Q估计值，求出损失函数 Loss Function，梯度反向传播更新Q网络参数w。这里使用的是均方损失函数：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220109103107.png" alt="image-20220109103107567" style="zoom: 33%;" /></li>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220109103107.png" alt="image-20220109103107567" style="zoom: 33%;"></li>
 <li><p>if  S’是终止状态，break；else 跳回步骤2.2</p>
 </li>
 </ol>
@@ -385,22 +385,22 @@
 
 <p><strong>效果</strong></p>
 <p>&emsp;&emsp;800轮左右收敛，但是并不稳定，平均Reward在200附近浮动</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117151404.png" alt="image-20220117151357691" style="zoom:50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117151404.png" alt="image-20220117151357691" style="zoom:50%;">
 
 <h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>&emsp;&emsp;DQN由于对价值函数Q做了近似表示，因此有了解决大规模强化学习问题的能力。但是DQN有个问题，就是它并不一定能保证Q网络的收敛，也就是说不一定可以得到收敛后的Q网络参数。这会导致训练出的模型效果很差。针对这个问题衍生出了DQN的很多变种，比如Nature DQN(NIPS 2015)、Double DQN、Dueling DQN等。</p>
 <p>&nbsp;</p>
 <h2 id="Nature-DQN算法"><a href="#Nature-DQN算法" class="headerlink" title="Nature DQN算法"></a>Nature DQN算法</h2><h3 id="概述-1"><a href="#概述-1" class="headerlink" title="概述"></a>概述</h3><p>&emsp;&emsp;2015年，DeepMind对NIPS DQN进行了一次重大改造，并在Nature上披露了这个模型，即：Nature DQN。论文：<a target="_blank" rel="noopener" href="https://lrk612.com/resources/Human-level%20control%20through%20deep%20reinforcement%20learning.pdf">Human-level control through deep reinforcement learning</a></p>
 <h4 id="针对问题"><a href="#针对问题" class="headerlink" title="针对问题"></a>针对问题</h4><p>&emsp;&emsp;注意到上面DQN算法其实在实际应用时存在一些问题，其中一个就是目标Q值的计算：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220109102614.png" alt="image-20220109102614326" style="zoom: 33%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220109102614.png" alt="image-20220109102614326" style="zoom: 33%;">
 
 <p>&emsp;&emsp;使用到了当前待训练网络的参数，而计算的结果 yj 又被用于反向传播更新网络的参数，二者循环依赖，相关性太强不利于算法收敛。</p>
 <h4 id="优化：双网络结构"><a href="#优化：双网络结构" class="headerlink" title="优化：双网络结构"></a>优化：双网络结构</h4><p>&emsp;&emsp;Nature DQN尝试用两个Q网络来减少 <code>目标Q值的计算 </code>和 <code>待更新Q网络参数 </code>之间的依赖关系。</p>
 <p>&emsp;&emsp;<strong>当前Q网络</strong>计算Q估计值用于选择动作，更新模型参数，<strong>目标Q网络</strong>用于计算目标Q值。目标Q网络的网络参数不需要迭代更新，而是每隔一段时间从当前Q网络复制过来，即延时更新，这样可以减少目标Q值和当前Q值的相关性。二者其余部分基本是完全相同的。（要注意的是，两个Q网络的结构是一模一样的。这样才可以复制网络参数 ）</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220210140232.png" alt="image-20220210140117411" style="zoom:30%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220210140232.png" alt="image-20220210140117411" style="zoom:30%;">
 
 <center>图片 via 18级种子班 zyh</center>
 
-<h3 id="算法流程-1"><a href="#算法流程-1" class="headerlink" title="算法流程"></a>算法流程</h3><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220207145618.png" alt="image-20220207145618398" style="zoom:60%;" />
+<h3 id="算法流程-1"><a href="#算法流程-1" class="headerlink" title="算法流程"></a>算法流程</h3><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220207145618.png" alt="image-20220207145618398" style="zoom:60%;">
 
 <p>输入：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">迭代轮数T、状态特征维度n、动作集A、步长α、衰减因子γ、探索率ϵ、当前Q网络Q、目标Q网络Q′、批量梯度下降的样本数m、目标Q网络参数更新频率C</span><br></pre></td></tr></table></figure>
@@ -425,12 +425,12 @@
 <li><p>前进一步：S = S’</p>
 </li>
 <li><p>从经验池中采集m个样本 <code>&#123; ϕ(Sj)，Aj，Rj，ϕ(Sj‘)，is_endj &#125;，j = 1,2,3.....,m</code>，把S‘  和A’ 输入<strong>目标Q网络</strong>结合贪婪策略计算目标Q值 yj：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220116162500.png" alt="image-20220116162500661" style="zoom: 67%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220116162500.png" alt="image-20220116162500661" style="zoom: 67%;">
 
 <p>（注意：公式里的是Q’ 不是Q )</p>
 </li>
 <li><p>把S‘  和A’ 输入<strong>当前Q网络</strong>求Q估计值，由目标Q值和Q估计值求损失函数Loss Function，然后梯度反向传播更新<strong>当前Q网络</strong>参数w。这里使用的仍是均方损失函数：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220109103107.png" alt="image-20220109103107567" style="zoom: 33%;" /></li>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220109103107.png" alt="image-20220109103107567" style="zoom: 33%;"></li>
 <li><p>if i%C == 0：更新<strong>目标Q网络</strong>参数w’ = w</p>
 </li>
 <li><p>if  S’是终止状态，break；else 跳回步骤2.2</p>
@@ -447,7 +447,7 @@
 
 <p><strong>效果</strong></p>
 <p>&emsp;&emsp;1000轮左右收敛，比DQN更稳定，平均Reward基本固定在200</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117151545.png" alt="image-20220117151545443" style="zoom:50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117151545.png" alt="image-20220117151545443" style="zoom:50%;">
 
 <h3 id="小结-1"><a href="#小结-1" class="headerlink" title="小结"></a>小结</h3><p>&emsp;&emsp;Nature DQN 对 普通DQN 做了相关性方面的改进，这个改进虽然不错，但是仍然没有解决DQN的 很多问题，比如：</p>
 <ul>
@@ -459,21 +459,21 @@
 <p>&nbsp;</p>
 <h2 id="Double-DQN算法"><a href="#Double-DQN算法" class="headerlink" title="Double DQN算法"></a>Double DQN算法</h2><h3 id="概述-2"><a href="#概述-2" class="headerlink" title="概述"></a>概述</h3><p>&emsp;&emsp;Double DQN 是由DeepMind团队在2015年提出来的，由Double Q-Learning迁移而来，是传统机器学习的思路，即不一定非要有神经网络结构才能训练，只要有两个一模一样的Q-Learning或DQN网络就可以构成Double模型。论文：<a target="_blank" rel="noopener" href="https://lrk612.com/resources/Deep%20Reinforcement%20Learning%20with%20Double%20Q-learning.pdf">Deep Reinforcement Learning with Double Q-learning</a></p>
 <h4 id="针对问题-1"><a href="#针对问题-1" class="headerlink" title="针对问题"></a>针对问题</h4><p>&emsp;&emsp;在DDQN之前，基本上所有的目标Q值都是通过贪婪法直接得到的，无论是Q-Learning、普通DQN 还是 Nature DQN。比如对于Nature DQN，虽然用了两个Q网络并使用目标Q网络计算目标Q值，其第 j 个样本的目标Q值的计算还是贪婪法得到的：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220116162500.png" alt="image-20220116162500661" style="zoom: 67%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220116162500.png" alt="image-20220116162500661" style="zoom: 67%;">
 
 <p>&emsp;&emsp;使用max虽然可以快速让Q值向可能的优化目标靠拢，但是很容易过犹不及，导致过度估计(Over Estimation)。所谓过度估计就是最终得到的算法模型有很大的偏差(bias)。而DDQN通过解耦 <code>目标Q值动作的选择</code> 和 <code>目标Q值的估计</code> 这两步，来达到消除过度估计的问题。</p>
 <h4 id="优化：Q值与动作解耦"><a href="#优化：Q值与动作解耦" class="headerlink" title="优化：Q值与动作解耦"></a>优化：Q值与动作解耦</h4><p>Nature DQN对于非终止状态，其目标Q值的计算式子是：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220116162949.png" alt="image-20220116162627124" style="zoom: 67%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220116162949.png" alt="image-20220116162627124" style="zoom: 67%;">
 
 <hr>
 <p>但是在DDQN里，不再是直接把S‘ 输入目标Q网络然后按贪婪策略找最大Q值，而是先把S‘ 输入当前Q网络（用于估计Q值，需要被更新的那个网络）中找出最大Q值对应的动作amax(S′,j,w)，即：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220110192104.png" alt="image-20220110192104796" style="zoom:33%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220110192104.png" alt="image-20220110192104796" style="zoom:33%;">
 
 <p>然后利用这个选择出来的动作amax(S′j,w)在目标网络里面去计算目标Q值。即：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220110192330.png" alt="image-20220110192330730" style="zoom:33%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220110192330.png" alt="image-20220110192330730" style="zoom:33%;">
 
 <p>综合起来写就是：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220110192450.png" alt="image-20220110192450277" style="zoom:33%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220110192450.png" alt="image-20220110192450277" style="zoom:33%;">
 
 <h3 id="算法流程-2"><a href="#算法流程-2" class="headerlink" title="算法流程"></a>算法流程</h3><p>输入：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">迭代轮数T、状态特征维度n、动作集A、步长α、衰减因子γ、探索率ϵ、当前Q网络、目标Q网络、批量梯度下降的样本数m、目标Q网络参数更新频率C</span><br></pre></td></tr></table></figure>
@@ -498,7 +498,7 @@
 <li><p>前进一步：S = S’</p>
 </li>
 <li><p>从经验池中采集m个样本 <code>&#123; ϕ(Sj)，Aj，Rj，ϕ(Sj‘)，is_endj &#125;，j = 1,2,3.....,m</code>，用<strong>Q值与动作解耦的思想</strong>计算目标Q值 yj：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220110193225.png" alt="image-20220110193225013" style="zoom:33%;" /></li>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220110193225.png" alt="image-20220110193225013" style="zoom:33%;"></li>
 <li><p>用<strong>当前Q网络</strong>求Q估计值，由目标Q值和Q估计值求损失函数 Loss Function，然后梯度反向传播更新<strong>当前Q网络</strong>参数 w</p>
 </li>
 <li><p>if i%C == 0：更新<strong>目标Q网络</strong>参数 w’ = w</p>
@@ -517,21 +517,21 @@
 
 <p><strong>效果</strong></p>
 <p>&emsp;&emsp;1000轮左右收敛，比较稳定，但是平均Reward后期有抖动</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117151914.png" alt="image-20220117151914056" style="zoom:50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117151914.png" alt="image-20220117151914056" style="zoom:50%;">
 
 <h3 id="小结-2"><a href="#小结-2" class="headerlink" title="小结"></a>小结</h3><p>&emsp;&emsp;过估计问题是Q-Learning算法与生俱来的，并遗传给了后代”DQN“。从统计学的角度来看，如果在输出端对每个动作的估值Q的过估计幅度都一样，那么和没有过估计效果是一样的。但是如果过估计是不均匀的，那么这样学到的策略未必是最优解，此时Double DQN就派上用场了。</p>
 <p>&nbsp;</p>
 <h2 id="Prioritized-Replay-DQN算法"><a href="#Prioritized-Replay-DQN算法" class="headerlink" title="Prioritized Replay DQN算法"></a>Prioritized Replay DQN算法</h2><h3 id="概述-3"><a href="#概述-3" class="headerlink" title="概述"></a>概述</h3><p>&emsp;&emsp;优先回放的概念最早在2016年由发表于ICLR的论文：<a target="_blank" rel="noopener" href="https://lrk612.com/resources/Prioritized%20experience%20%20replay.pdf">Prioritized experience  replay</a></p>
 <h4 id="针对问题-2"><a href="#针对问题-2" class="headerlink" title="针对问题"></a>针对问题</h4><p>&emsp;&emsp;普通DQN、Nature DQN、DDQN等都是通过经验回放来采样，进而做目标Q值的计算的。在采样时经验池里的所有样本都有相同的被采样概率。但是注意到在经验池里面的不同的样本由于TD误差的不同，对反向传播的作用是不一样的。TD误差越大，对反向传播的作用越大。而TD误差小的样本对反向梯度的计算影响不大。在Q网络中，TD误差就是目标Q网络计算的目标Q值和当前Q网络计算的Q值之间的差距。这样如果TD误差的绝对值|δ(t)|较大的样本更容易被采样，则算法会比较容易收敛。</p>
 <h4 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h4><h5 id="经验池优化"><a href="#经验池优化" class="headerlink" title="经验池优化"></a>经验池优化</h5><p>&emsp;&emsp;Prioritized Replay DQN的经验池中每个样本的优先级正比于TD误差绝对值|δ(t)|。由于引入了经验回放的优先级，Prioritized Replay DQN的经验池和之前的其他DQN算法的经验池不一样，因为这个优先级大小会影响它被采样的概率。在实际使用中，通常使用SumTree这样的二叉树结构来做带优先级的经验回放池样本的存储：</p>
-<p>​                                                                    <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20210718214249.png" alt="image-20210717092213437" style="zoom: 33%;" /></p>
+<p>​                                                                    <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20210718214249.png" alt="image-20210717092213437" style="zoom: 33%;"></p>
 <p>&emsp;&emsp;所有的经验回放样本只保存在最下面的叶子节点上面，一个节点一个样本，内部节点不保存样本数据。叶子节点除了保存数据以外，还要保存该样本的优先级数值（TD误差）。对于内部节点每个节点只保存自己的儿子节点的优先级值之和。以上面的树结构为例，根节点是42，如果要采样一个样本，可以在[0, 42]之间做均匀采样，采样到哪个区间，就是哪个样本。</p>
 <p>（注意：当Q网络参数进行了梯度更新后，需要重新计算TD误差，并将TD误差更新到SunTree上面）</p>
 <h5 id="Loss-Function优化"><a href="#Loss-Function优化" class="headerlink" title="Loss Function优化"></a>Loss Function优化</h5><p>&emsp;&emsp;上面使用的损失函数都是均方损失函数：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220109103107.png" alt="image-20220109103107567" style="zoom: 33%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220109103107.png" alt="image-20220109103107567" style="zoom: 33%;">
 
 <p>&emsp;&emsp;考虑了样本优先级的损失函数要加上优先权重因子：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220116162911.png" alt="image-20220116162911599" style="zoom:67%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220116162911.png" alt="image-20220116162911599" style="zoom:67%;">
 
 <p>&emsp;&emsp;( 其中wj是第j个样本的优先级权重，由TD误差|δ(t)|归一化得到 )</p>
 <h3 id="算法流程（集成了DDQN）"><a href="#算法流程（集成了DDQN）" class="headerlink" title="算法流程（集成了DDQN）"></a>算法流程（集成了DDQN）</h3><p>输入：</p>
@@ -559,13 +559,13 @@
 <li><p>前进一步：S = S’</p>
 </li>
 <li><p>从SumTree中<strong>依概率</strong> <code>P(j) = pj / ∑(pi)</code> 采集m个样本 <code>&#123; ϕ(Sj)，Aj，Rj，ϕ(Sj‘)，is_endj &#125;，j = 1,2,3.....,m</code>，用<strong>Q值与动作解耦的思想</strong>计算目标Q值 yj：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220110193225.png" alt="image-20220110193225013" style="zoom:33%;" /></li>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220110193225.png" alt="image-20220110193225013" style="zoom:33%;"></li>
 <li><p>用<strong>当前Q网络</strong>求Q估计值，由目标Q值和Q估计值求<strong>带优先权重因子wj的</strong>损失函数 Loss Function，然后梯度反向传播更新<strong>当前Q网络</strong>参数 w</p>
 <p>优先权重因子：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220111145825.png" alt="image-20220111145825168" style="zoom:33%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220111145825.png" alt="image-20220111145825168" style="zoom:33%;">
 
 <p>损失函数：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220116162911.png" alt="image-20220116162911599" style="zoom:67%;" /></li>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220116162911.png" alt="image-20220116162911599" style="zoom:67%;"></li>
 <li><p>用更新参数后的当前Q网络重新计算经验池中每个样本的Q估计值，然后用目标Q值和新的Q估计值算出新的TD误差作为优先级更新SumTree</p>
 </li>
 <li><p>if i%C == 0：更新目标Q网络参数w’ = w</p>
@@ -583,16 +583,16 @@
 
 <p><strong>效果</strong></p>
 <p>&emsp;&emsp;因为经验池使用SumTree结构导致计算量较大，训练起来很慢，不过600轮左右就收敛了，但后期同样有抖动</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117154635.png" alt="image-20220117154635353" style="zoom:50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117154635.png" alt="image-20220117154635353" style="zoom:50%;">
 
 <p>&nbsp;</p>
 <h2 id="Dueling-DQN算法"><a href="#Dueling-DQN算法" class="headerlink" title="Dueling DQN算法"></a>Dueling DQN算法</h2><h3 id="概述-4"><a href="#概述-4" class="headerlink" title="概述"></a>概述</h3><p>&emsp;&emsp;Dueling DQN 也是DeepMind的大作之一。论文：<a target="_blank" rel="noopener" href="https://lrk612.com/resources/Dueling%20Network%20Architectures%20for%20Deep%20Reinforcement%20Learning.pdf">Dueling Network Architectures for Deep Reinforcement Learning</a></p>
 <h4 id="优化：从网络结构下手"><a href="#优化：从网络结构下手" class="headerlink" title="优化：从网络结构下手"></a>优化：从网络结构下手</h4><p>&emsp;&emsp;DDQN中通过优化目标Q值的计算来优化算法，Prioritized Replay DQN中通过优化经验回放池按权重采样来优化算法，而在Dueling DQN中通过优化神经网络的结构来优化算法。</p>
 <p>&emsp;&emsp;Dueling DQN将Q网络增加了两部分：第一部分仅与状态S有关，与具体要采用的动作A无关，叫做价值函数部分，记做 <code>V(S,w,α)</code> ；第二部分同时与状态状态S和动作A有关，这部分叫做优势函数(Advantage Function)部分，记为 <code>A(S,A,w,β)</code>。</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20210718214253.png" alt="image-20210717102817738" style="zoom: 50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20210718214253.png" alt="image-20210717102817738" style="zoom: 50%;">
 
 <p>&emsp;&emsp;最终价值函数重新表示为：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220111151330.png" alt="image-20220111151330160" style="zoom:33%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220111151330.png" alt="image-20220111151330160" style="zoom:33%;">
 
 <p>（其中，w是公共部分的网络参数，而α是价值函数部分独有的网络参数，β是优势函数部分独有的网络参数 。注意最右边减去均值的操作是在对优势函数部分做中心化的处理 ）</p>
 <h3 id="示例-4"><a href="#示例-4" class="headerlink" title="示例"></a>示例</h3><p><strong>问题</strong></p>
@@ -603,7 +603,7 @@
 
 <p><strong>效果</strong></p>
 <p>&emsp;&emsp;3000轮了都没收敛……</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117152314.png" alt="image-20220117152314892" style="zoom:50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220117152314.png" alt="image-20220117152314892" style="zoom:50%;">
 
 <h3 id="小结-3"><a href="#小结-3" class="headerlink" title="小结"></a>小结</h3><p>&emsp;&emsp;Dueling DQN使用了比较巧妙的方法，对状态的估值和独立于状态的动作优势估值进行解耦，从而使得网络能够学到更为准确的状态价值估值和动作优势估值。</p>
 <p>&nbsp;</p>

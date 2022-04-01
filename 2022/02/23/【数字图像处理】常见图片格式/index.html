@@ -348,7 +348,7 @@
       
         <p>&emsp;&emsp;图像格式即图像文件存放的格式，通常有JPEG、BMP、GIF、TIFF、RAW、PNG等。由于数码相机拍下的图像文件很大，储存容量却有限，因此图像通常都会经过压缩再储存。不同格式的图片文件对像素信息的存储方式和处理方法都有所不同，所以各有特点和使用场景，在进行机器学习数据预处理时也需要格外关注图像的格式后缀。</p>
 <p>&emsp;&emsp;近些年随着二次元文化的发展，越来越多人开始称呼纸片人为老婆，那么今天就让我来看看这些纸片人老婆”真实“的样子~😆</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220227110526.png" alt="image-20220227110526189" style="zoom:60%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220227110526.png" alt="image-20220227110526189" style="zoom:60%;">
 
 <span id="more"></span>
 
@@ -399,7 +399,7 @@
 </ul>
 <h3 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h3><p>  JPEG格式的压缩率是目前各种图像文件格式中最高的，压缩的主要是高频信息，对色彩的信息保留较好，适合应用于互联网；它可减少图像的传输时间，支持24位真彩色；也普遍应用于需要连续色调的图像中。</p>
 <h3 id="Matlab观察像素矩阵"><a href="#Matlab观察像素矩阵" class="headerlink" title="Matlab观察像素矩阵"></a>Matlab观察像素矩阵</h3><p><strong>原图像</strong></p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220224112020.jpg" alt="芭芭拉" style="zoom: 25%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220224112020.jpg" alt="芭芭拉" style="zoom: 25%;">
 
 <center>芭芭拉.jpg</center>
 
@@ -407,10 +407,10 @@
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">clear all;clc;</span><br><span class="line"></span><br><span class="line"><span class="comment">%读取一张图片，并显示</span></span><br><span class="line">original_picture=imread(<span class="string">&#x27;派蒙.jpg&#x27;</span>);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">1</span>);</span><br><span class="line">imshow(original_picture);</span><br><span class="line">title(<span class="string">&#x27;Original Picture&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">%分别读取R、G、B的值，1代表R，2代表G，3代表B</span></span><br><span class="line">image_r=original_picture(:,:,<span class="number">1</span>);</span><br><span class="line">image_g=original_picture(:,:,<span class="number">2</span>);</span><br><span class="line">image_b=original_picture(:,:,<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">subplot(<span class="number">222</span>)</span><br><span class="line">imshow(image_r);</span><br><span class="line">title(<span class="string">&#x27;R  Part&#x27;</span>);</span><br><span class="line"></span><br><span class="line">subplot(<span class="number">223</span>)</span><br><span class="line">imshow(image_g);</span><br><span class="line">title(<span class="string">&#x27;G  Part&#x27;</span>);</span><br><span class="line"></span><br><span class="line">subplot(<span class="number">224</span>)</span><br><span class="line">imshow(image_b);</span><br><span class="line">title(<span class="string">&#x27;B  Part&#x27;</span>);</span><br></pre></td></tr></table></figure>
 
 <p><strong>R、G、B灰度图</strong></p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220224111952.png" alt="image-20220224111945350" style="zoom:60%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220224111952.png" alt="image-20220224111945350" style="zoom:60%;">
 
 <p><strong>像素矩阵</strong>（以G通道为例）</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220224112227.png" alt="image-20220224112227515" style="zoom:50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220224112227.png" alt="image-20220224112227515" style="zoom:50%;">
 
 <p>&nbsp;</p>
 <h2 id="BMP格式"><a href="#BMP格式" class="headerlink" title="BMP格式"></a>BMP格式</h2><h3 id="简介-1"><a href="#简介-1" class="headerlink" title="简介"></a>简介</h3><p>BMP（全称Bitmap）是Window操作系统中的标准图像文件格式，能够被多种Windows应用程序所支持</p>
@@ -427,15 +427,15 @@
 </ul>
 <p>最常见的就是24位图，即一个像素的颜色信息用24位来表示，对于三原色BRG，每一个颜色都用以字节（8）位来表示。除了24位图，还有1位（单色），2位（4色，CGA），4位（16色，VGA），8位（256色），16位（增强色），24位（真彩色）和32位等。</p>
 <h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>用 NotePad++ 的Hex插件打开bmp图片：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220223150236.bmp" alt="派蒙" style="zoom:50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220223150236.bmp" alt="派蒙" style="zoom:50%;">
 
 <center>派蒙.bmp</center>
 
 <p>截取部分数据如下：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220223105608.png" alt="image-20220223105608563" style="zoom:40%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220223105608.png" alt="image-20220223105608563" style="zoom:40%;">
 
 <h4 id="文件头"><a href="#文件头" class="headerlink" title="文件头"></a>文件头</h4><p>文件头包含文件格式、大小等信息</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220223105932.png" alt="image-20220223105932926" style="zoom:50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220223105932.png" alt="image-20220223105932926" style="zoom:50%;">
 
 <p>前14字节为bmp图像的文件头信息，其中：</p>
 <table>
@@ -486,7 +486,7 @@
 </tbody></table>
 <p>（注意，数据存储采用<strong>小字节序</strong>，高位值存在高位地址）</p>
 <h4 id="信息头"><a href="#信息头" class="headerlink" title="信息头"></a>信息头</h4><p>信息头包含图像数据尺寸、位平面数、压缩方式、颜色索引等信息</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220223131502.png" alt="1" style="zoom:50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220223131502.png" alt="1" style="zoom:50%;">
 
 <p>第14~53字节为bmp图像的信息头分析，其中：</p>
 <table>
@@ -580,7 +580,7 @@
 <h4 id="调色板"><a href="#调色板" class="headerlink" title="调色板"></a>调色板</h4><p>本例中，biBitCount=24、biClrUsed = 0，说明是24位真彩图，无调色板也无需调色板（4、8bit色深的才需要），位图信息头后面接的就是图像数据了；文件头14bytes、信息头40bytes，恰对应bfOddBites=54</p>
 <hr>
 <p>如果色深不是24bit而是4bit、8bit，无论4bit还是8bit都不能反映R、G、B共8bits×3=24bits的颜色信息，因此必须使用调色板。调色板中的数据每4bytes一组代表一种颜色，分别表示蓝、绿、红、保留值Alpha（表示透明度，在24位RGB位图中恒定为0），例如：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220223134558.png" alt="image-20220223134558279" style="zoom:35%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220223134558.png" alt="image-20220223134558279" style="zoom:35%;">
 
 <p>而每个像素具体使用调色板中哪个颜色，取决于颜色位值（以颜色位值作为调色板的数组索引来选择颜色）</p>
 <ul>
@@ -597,7 +597,7 @@
 </li>
 </ul>
 <h4 id="图像数据"><a href="#图像数据" class="headerlink" title="图像数据"></a>图像数据</h4><p>由于此图像是24位真彩图，没有调色板，所以信息头后直接就是图像数据</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220223135634.png" alt="2" style="zoom:50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220223135634.png" alt="2" style="zoom:50%;">
 
 <p>真彩图片每个像素都有24bits，即3bytes（R、G、B各1byte）；由于图片宽度为359像素，故每行有 359×3=1077bytes</p>
 <p>但是要注意，Windows默认的扫描的最小单位是4字节，如果数据对齐满足这个值的话对于数据的获取速度等都是有很大的增益的。因此，BMP图像顺应了这个要求，要求每行的数据的长度必须是4的倍数，如果不够需要进行比特填充（以0填充），这样可以达到按行的快速存取。这样的话，位图数据的大小就不一定是宽x高x每像素字节数了，因为每行还可能有0填充</p>
@@ -614,7 +614,7 @@
 <p>GIF通常会自带一个调色板，里面存放需要用到的各种颜色。在Web运用中，图像的文件量的大小将会明显地影响到下载的速度，因此可以根据GIF带调色板的特性来优化调色板，减少图像使用的颜色数（有些图像用不到的颜色可以舍去）而不影响图片质量。</p>
 <p>GIF格式和其他图像格式的最大区别在于，它完全是作为一种公用标准而设计的，由于Compu Serve网络的流行，许多平台都支持GIF格式。</p>
 <h3 id="文件结构-1"><a href="#文件结构-1" class="headerlink" title="文件结构"></a>文件结构</h3><p><a target="_blank" rel="noopener" href="https://link.jianshu.com/?t=http://giflib.sourceforge.net/index.html">http://giflib.sourceforge.net/index.html</a>（科学.上网）是一个比较完整详细的GIF格式参考资料，其中有一张介绍GIF文件内部组成的图：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220224081432.png" alt="image-20220224081425494" style="zoom: 30%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220224081432.png" alt="image-20220224081425494" style="zoom: 30%;">
 
 <p>其中共有11个模块，有8块是GIF图像必备的：</p>
 <ul>
@@ -635,15 +635,15 @@
 </ul>
 <p>传统GIF解码器正是通过上述模块来对GIF文件进行解析的</p>
 <h3 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h3><p>用 NotePad++ 的Hex插件打开 gif 图片：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220224134302.gif" alt="小亮_zip" style="zoom:55%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220224134302.gif" alt="小亮_zip" style="zoom:55%;">
 
 <center>小亮.gif</center>
 
 <p>截取部分数据如下：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220224091520.png" alt="image-20220224091520240" style="zoom:40%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220224091520.png" alt="image-20220224091520240" style="zoom:40%;">
 
 <h4 id="Header"><a href="#Header" class="headerlink" title="Header"></a>Header</h4><p>GIF文件以Header开头，共包含6字节：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220224092309.png" alt="image-20220224092309600" style="zoom: 50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220224092309.png" alt="image-20220224092309600" style="zoom: 50%;">
 
 <ul>
 <li>前三字节对应ASCII码中的：GIF 字符</li>
@@ -651,11 +651,11 @@
 </ul>
 <hr>
 <p>上例中为：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220224094909.png" alt="image-20220224094909721" style="zoom:50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220224094909.png" alt="image-20220224094909721" style="zoom:50%;">
 
 <p>对应 GIF_89a 版本</p>
 <h4 id="Logical-Screen-Descriptor"><a href="#Logical-Screen-Descriptor" class="headerlink" title="Logical Screen Descriptor"></a>Logical Screen Descriptor</h4><p>逻辑描述符通常跟在Header后面，告知解码器此GIF图像的分辨率、背景色和Global Color Table等信息，组成如下：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220224092753.png" alt="image-20220224092753640" style="zoom: 50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220224092753.png" alt="image-20220224092753640" style="zoom: 50%;">
 
 <ul>
 <li><code>Canvas Width</code>：GIF 图像的宽度（单位：像素）</li>
@@ -672,7 +672,7 @@
 </ul>
 <hr>
 <p>上例中为：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220224095014.png" alt="image-20220224095014732" style="zoom:50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220224095014.png" alt="image-20220224095014732" style="zoom:50%;">
 
 <p><code>Canvas Width</code> = 0x01b0 = 432 像素</p>
 <p><code>Canvas Height</code> = 0x01b0 = 432 像素</p>
@@ -685,23 +685,23 @@
 </ul>
 <p><code>Background Color Index</code> = 0，说明此 GIF 的背景色为 Global Color Table 中的第一个颜色</p>
 <p><code>Pixel Aspect Ratio</code> = 0，忽略</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220224100219.png" alt="image-20220224100219822" style="zoom:60%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220224100219.png" alt="image-20220224100219822" style="zoom:60%;">
 
 
 
 <h4 id="Global-Color-Table"><a href="#Global-Color-Table" class="headerlink" title="Global Color Table"></a>Global Color Table</h4><p>如果 Global Color Table 存在，则会跟在 Logical Screen Descriptor 块后面。其块中的字节格式如下：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220224102424.png" alt="image-20220224102424444" style="zoom: 50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220224102424.png" alt="image-20220224102424444" style="zoom: 50%;">
 
 <p>RGB三通道色彩的表示中，一种颜色由R、G、B三个部分组成，每个通道1byte，所以描述一个颜色需要 3×1=3 bytes。</p>
 <p>上例中，由上面 <strong>Logical Screen Descriptor</strong> 中的信息可知有128种颜色，所以 <strong>Global Color Table</strong> 部分的长度为 128×3 = 384 bytes，对应下图：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220224105225.png" alt="image-20220224105225478" style="zoom:50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220224105225.png" alt="image-20220224105225478" style="zoom:50%;">
 
 
 
 <h4 id="Graphic-Control-Extension"><a href="#Graphic-Control-Extension" class="headerlink" title="Graphic Control Extension"></a>Graphic Control Extension</h4><p>看见 <strong>Global Color Table</strong> 后面紧跟的那个字节，从示例中可以看到的<code>21</code>，<code>21</code> 在 GIF 格式中是有特殊意义的，它表示 Extension Introducer（扩展入口），即接下来的一段数据为某一种扩展</p>
 <p><code>21</code> 后的下一个字节是 <code>f9</code>，这也是一个标识符，代表这个拓展是 <strong>Graphics Control Extension</strong></p>
 <p><strong>Graphics Control Extension</strong> 算上 <code>21</code> 和 <code>F9</code> 一共有8个字节，其结构如下图：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220224103752.png" alt="image-20220224103752657" style="zoom:45%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220224103752.png" alt="image-20220224103752657" style="zoom:45%;">
 
 <ul>
 <li><code>Byte Size</code>：表示接下来的有效数据字节数（不带结束位）</li>
@@ -728,7 +728,7 @@
 </ul>
 <hr>
 <p>上例中为：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220224105155.png" alt="image-20220224105155048" style="zoom:50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220224105155.png" alt="image-20220224105155048" style="zoom:50%;">
 
 <ul>
 <li><code>21 f9</code> 表示这是一个 Graphic Control Extension 模块</li>
@@ -745,7 +745,7 @@
 <li><code>Block Terminator</code> = 00，结束位</li>
 </ul>
 <h4 id="Image-Descriptor"><a href="#Image-Descriptor" class="headerlink" title="Image Descriptor"></a>Image Descriptor</h4><p><strong>Image Descriptor</strong> 的标识符（Image Seperator）是 <code>2c</code>，内部字节结构为：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220224110217.png" alt="image-20220224110217363" style="zoom:45%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220224110217.png" alt="image-20220224110217363" style="zoom:45%;">
 
 <ul>
 <li><code>Image Left</code>：下一帧图像渲染位置离画布左边的距离（从 0 开始）</li>
@@ -763,7 +763,7 @@
 </ul>
 <hr>
 <p>上例中为：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220224140502.png" alt="image-20220224140502887" style="zoom:50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220224140502.png" alt="image-20220224140502887" style="zoom:50%;">
 
 <ul>
 <li><code>2c</code> 为标志位，表示这是一个 Image Descriptor 模块</li>
@@ -774,13 +774,13 @@
 <li><code>Packed Field</code> = 0b0000_0000</li>
 </ul>
 <p>以上参数说明渲染的一帧大小为 432*432 像素，正好与 GIF 图的分辨率一致。打包字段都为零，表示下一帧不需要 Local Color Table，也不需要进行隔行扫描</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220224100219.png" alt="image-20220224100219822" style="zoom:60%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220224100219.png" alt="image-20220224100219822" style="zoom:60%;">
 
 
 
 <h4 id="Local-Color-Table"><a href="#Local-Color-Table" class="headerlink" title="Local Color Table"></a>Local Color Table</h4><p>同 Global Color Table 处理类似，上例中未使用</p>
 <h4 id="Image-Data"><a href="#Image-Data" class="headerlink" title="Image Data"></a>Image Data</h4><p>如果存在 <strong>Local Color Table</strong>，<strong>Image Data</strong> 就紧跟其后。如若不存在，则紧跟在 <strong>Image Descriptor</strong> 后。<strong>Image Data</strong> 的内部字节组成如下：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220224141058.png" alt="image-20220224141058449" style="zoom:50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220224141058.png" alt="image-20220224141058449" style="zoom:50%;">
 
 <ul>
 <li><code>LZW Minimum Code Size</code>：GIF 在对每一帧的像素颜色在 Color Table 所对应的索引进行 LZW 压缩，这里的 LZW Minimum Code Size 是 LZW 压缩中很关键的一个值</li>
@@ -790,14 +790,14 @@
 </ul>
 <hr>
 <p>上例中为：（部分截图）</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220224142409.png" alt="image-20220224142409004" style="zoom:50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220224142409.png" alt="image-20220224142409004" style="zoom:50%;">
 
 <ul>
 <li><code>LZW Minimum Code Size</code> = 0x07</li>
 <li><code>Number of bytes of data in sun-blocks</code> = 0xff，显然这里数据量很大</li>
 </ul>
 <h3 id="Trailer"><a href="#Trailer" class="headerlink" title="Trailer"></a>Trailer</h3><p>GIF图像的结束符是 <code>3b</code></p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220224143410.png" alt="image-20220224143410679" style="zoom:50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220224143410.png" alt="image-20220224143410679" style="zoom:50%;">
 
 <p>后面就是 <strong>Plain Text Extension</strong>、<strong>Application Extension</strong> 和 <strong>Comment Extension</strong> 可选三种拓展</p>
 <h3 id="GIF-压缩"><a href="#GIF-压缩" class="headerlink" title="GIF 压缩"></a>GIF 压缩</h3><p>方法一：在线工具 <a target="_blank" rel="noopener" href="https://docsmall.com/gif-compress">docsmall</a></p>
@@ -823,7 +823,7 @@
 <td>2</td>
 <td>short</td>
 <td>TIF 标记</td>
-<td>4D4D—大字节序<br/>4949—小字节序</td>
+<td>4D4D—大字节序<br>4949—小字节序</td>
 </tr>
 <tr>
 <td>Version</td>
@@ -837,7 +837,7 @@
 <td>4</td>
 <td>int</td>
 <td>第一个 IFD 的偏移量</td>
-<td>IFD常位于图像数据的后面，<br/>所以需要记录IFH到第一个IFD的偏移量<br/>但必须在一个word的边界，即4的整数倍</td>
+<td>IFD常位于图像数据的后面，<br>所以需要记录IFH到第一个IFD的偏移量<br>但必须在一个word的边界，即4的整数倍</td>
 </tr>
 </tbody></table>
 <h4 id="IFD"><a href="#IFD" class="headerlink" title="IFD"></a>IFD</h4><table>
@@ -909,14 +909,14 @@
 <td>2</td>
 <td>short</td>
 <td>本属性的标签编号</td>
-<td>按照升序排列的（但不一定是连续的）<br/>详见 [TagID 说明](#TagID 说明)</td>
+<td>按照升序排列的（但不一定是连续的）<br>详见 [TagID 说明](#TagID 说明)</td>
 </tr>
 <tr>
 <td>type</td>
 <td>2</td>
 <td>short</td>
 <td>本属性值的数据类型</td>
-<td>官方指定的有5种数据类型<br/>( 但也有说12种数据类型的 )<br/>详见 [type 说明](#type 说明)</td>
+<td>官方指定的有5种数据类型<br>( 但也有说12种数据类型的 )<br>详见 [type 说明](#type 说明)</td>
 </tr>
 <tr>
 <td>length</td>
@@ -958,7 +958,7 @@
 <td>0102</td>
 <td>颜色深度</td>
 <td>0003</td>
-<td>值＝1为单色、＝4为16色、＝8为256色<br/>如果该类型数据个数＞2个，说明是真彩图像</td>
+<td>值＝1为单色、＝4为16色、＝8为256色<br>如果该类型数据个数＞2个，说明是真彩图像</td>
 </tr>
 <tr>
 <td>0103</td>
@@ -1018,7 +1018,7 @@
 <td>0140</td>
 <td>调色板偏移量</td>
 <td>0003</td>
-<td>256色和16色图像才有此属性，而且有连续2个<br/>调色板，但属性的length值只表示出1个调色板</td>
+<td>256色和16色图像才有此属性，而且有连续2个<br>调色板，但属性的length值只表示出1个调色板</td>
 </tr>
 </tbody></table>
 <p>完整说明见：<a target="_blank" rel="noopener" href="https://www.awaresystems.be/imaging/tiff/tifftags/baseline.html">Baseline TIFF Tags</a></p>
@@ -1057,14 +1057,14 @@
 </tr>
 </tbody></table>
 <h3 id="示例-2"><a href="#示例-2" class="headerlink" title="示例"></a>示例</h3><p>用 NotePad++ 的Hex插件打开 tif 图片：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220226161825.png" alt="image-20220226161825837" style="zoom: 35%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220226161825.png" alt="image-20220226161825837" style="zoom: 35%;">
 
 <center>温迪.tif</center>
 
 <p>截取部分数据如下：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220226162145.png" alt="image-20220226162145096" style="zoom:40%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220226162145.png" alt="image-20220226162145096" style="zoom:40%;">
 
-<h4 id="IFH-1"><a href="#IFH-1" class="headerlink" title="IFH"></a>IFH</h4><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220226162352.png" alt="image-20220226162352057" style="zoom:50%;" />
+<h4 id="IFH-1"><a href="#IFH-1" class="headerlink" title="IFH"></a>IFH</h4><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220226162352.png" alt="image-20220226162352057" style="zoom:50%;">
 
 <table>
 <thead>
@@ -1091,7 +1091,7 @@
 </tr>
 </tbody></table>
 <h4 id="IFD-1"><a href="#IFD-1" class="headerlink" title="IFD"></a>IFD</h4><p>第一个 IFD：（0006f4d0开始）</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220226164530.png" alt="image-20220226164530189" style="zoom:50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220226164530.png" alt="image-20220226164530189" style="zoom:50%;">
 
 <p>从第一位可知，此 IFD 包含 0x10 = 16 个DE，而每个 DE 长度为 12，故一共长 12×16=172。加上Directory Entry Count占用的2字节，再加上Offset to next IFD占用的4字节，此 IFD一共长为 1+172+2+4=179</p>
 <table>
@@ -1150,7 +1150,7 @@
 <td>1</td>
 <td>0006f4d2</td>
 <td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220226170611.png" alt="image-20220226170611614"></td>
-<td>0x00fe<br/>(NewSubfileType)</td>
+<td>0x00fe<br>(NewSubfileType)</td>
 <td>long</td>
 <td>0x1</td>
 <td>0</td>
@@ -1160,7 +1160,7 @@
 <td>2</td>
 <td>0006f4de</td>
 <td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220226170702.png" alt="image-20220226170702215"></td>
-<td>0x0100<br/>(图像宽)</td>
+<td>0x0100<br>(图像宽)</td>
 <td>long</td>
 <td>0x1</td>
 <td>0x01dd</td>
@@ -1170,7 +1170,7 @@
 <td>3</td>
 <td>0006f4ea</td>
 <td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220226170720.png" alt="image-20220226170720041"></td>
-<td>0x0101<br/>(图像高)</td>
+<td>0x0101<br>(图像高)</td>
 <td>long</td>
 <td>0x1</td>
 <td>0x01d7</td>
@@ -1180,7 +1180,7 @@
 <td>4</td>
 <td>0006f4f6</td>
 <td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220226170735.png" alt="image-20220226170735417"></td>
-<td>0x0102<br/>(颜色深度)</td>
+<td>0x0102<br>(颜色深度)</td>
 <td>int</td>
 <td>0x4</td>
 <td>0x6f596</td>
@@ -1190,7 +1190,7 @@
 <td>5</td>
 <td>0006f502</td>
 <td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220226170752.png" alt="image-20220226170752786"></td>
-<td>0x0103<br/>(是否压缩)</td>
+<td>0x0103<br>(是否压缩)</td>
 <td>int</td>
 <td>0x1</td>
 <td>0x5</td>
@@ -1200,7 +1200,7 @@
 <td>6</td>
 <td>0006f50e</td>
 <td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220226170900.png" alt="image-20220226170900430"></td>
-<td>0x0106<br/>(是否采用反色)</td>
+<td>0x0106<br>(是否采用反色)</td>
 <td>int</td>
 <td>0x1</td>
 <td>0x2</td>
@@ -1210,7 +1210,7 @@
 <td>7</td>
 <td>0006f51a</td>
 <td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220226171830.png" alt="image-20220226171830444"></td>
-<td>0x0111<br/>(扫描线偏移量)</td>
+<td>0x0111<br>(扫描线偏移量)</td>
 <td>long</td>
 <td>0x4f</td>
 <td>0x159e</td>
@@ -1220,7 +1220,7 @@
 <td>8</td>
 <td>0006f526</td>
 <td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220226171843.png" alt="image-20220226171843586"></td>
-<td>0x0115<br/>(每像素样本数)</td>
+<td>0x0115<br>(每像素样本数)</td>
 <td>int</td>
 <td>0x1</td>
 <td>0x4</td>
@@ -1230,7 +1230,7 @@
 <td>9</td>
 <td>0006f532</td>
 <td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220226171855.png" alt="image-20220226171855427"></td>
-<td>0x0116<br/>(扫描线数量)</td>
+<td>0x0116<br>(扫描线数量)</td>
 <td>long</td>
 <td>0x1</td>
 <td>0x6</td>
@@ -1240,7 +1240,7 @@
 <td>10</td>
 <td>0006f53e</td>
 <td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220226171907.png" alt="image-20220226171907173"></td>
-<td>0x0117<br/>(图像数据字节数)</td>
+<td>0x0117<br>(图像数据字节数)</td>
 <td>long</td>
 <td>0x4f</td>
 <td>0x6f6da</td>
@@ -1250,7 +1250,7 @@
 <td>11</td>
 <td>0006f54a</td>
 <td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220226171920.png" alt="image-20220226171920413"></td>
-<td>0x011a<br/>(水平分辨率偏移量)</td>
+<td>0x011a<br>(水平分辨率偏移量)</td>
 <td>RATIONAL</td>
 <td>0x1</td>
 <td>0x6f816</td>
@@ -1260,7 +1260,7 @@
 <td>12</td>
 <td>0006f556</td>
 <td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220226171939.png" alt="image-20220226171939044"></td>
-<td>0x011b<br/>(垂直分辨率偏移量)</td>
+<td>0x011b<br>(垂直分辨率偏移量)</td>
 <td>RATIONAL</td>
 <td>0x1</td>
 <td>0x6f81e</td>
@@ -1270,7 +1270,7 @@
 <td>13</td>
 <td>0006f562</td>
 <td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220226171954.png" alt="image-20220226171954724"></td>
-<td>0x011c<br/>(平面配置)</td>
+<td>0x011c<br>(平面配置)</td>
 <td>int</td>
 <td>0x1</td>
 <td>0x1</td>
@@ -1280,7 +1280,7 @@
 <td>14</td>
 <td>0006f56e</td>
 <td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220226172005.png" alt="image-20220226172005765"></td>
-<td>0x0128<br/>(分辨率单位)</td>
+<td>0x0128<br>(分辨率单位)</td>
 <td>int</td>
 <td>0x1</td>
 <td>0x2</td>
@@ -1290,7 +1290,7 @@
 <td>15</td>
 <td>0006f57a</td>
 <td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220226172016.png" alt="image-20220226172016469"></td>
-<td>0x013d<br/>(不知道)</td>
+<td>0x013d<br>(不知道)</td>
 <td>int</td>
 <td>0x1</td>
 <td>0x2</td>
@@ -1300,7 +1300,7 @@
 <td>16</td>
 <td>0006f586</td>
 <td><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220226172027.png" alt="image-20220226172027469"></td>
-<td>0x0152<br/>(额外成分)</td>
+<td>0x0152<br>(额外成分)</td>
 <td>int</td>
 <td>0x1</td>
 <td>0x2</td>
@@ -1508,27 +1508,27 @@
 <tr>
 <td>Bit depth</td>
 <td>1</td>
-<td>图像深度：表示每个采样点占用的bit数<br/>索引彩色图像：1，2，4，8<br/>灰度图像：1，2，4，8，16 <br/>真彩色图像：8，16</td>
+<td>图像深度：表示每个采样点占用的bit数<br>索引彩色图像：1，2，4，8<br>灰度图像：1，2，4，8，16 <br>真彩色图像：8，16</td>
 </tr>
 <tr>
 <td>ColorType</td>
 <td>1</td>
-<td>颜色类型：<br/>0：灰度图像，深度为：1，2，4，8，16<br/>2：真彩色图像，深度为：8，16<br/>3：索引彩色图像，深度为：1，2，4，8<br/>4：带α通道数据的灰度图像，深度为：8，16<br/>6：带α通道数据的真彩色图像，深度为：8，16</td>
+<td>颜色类型：<br>0：灰度图像，深度为：1，2，4，8，16<br>2：真彩色图像，深度为：8，16<br>3：索引彩色图像，深度为：1，2，4，8<br>4：带α通道数据的灰度图像，深度为：8，16<br>6：带α通道数据的真彩色图像，深度为：8，16</td>
 </tr>
 <tr>
 <td>Compression method</td>
 <td>1</td>
-<td>压缩方法：<br/>0：LZ77派生算法（目前仅定义了0）<br/>其他值：无效；为未来扩展的压缩方法预留</td>
+<td>压缩方法：<br>0：LZ77派生算法（目前仅定义了0）<br>其他值：无效；为未来扩展的压缩方法预留</td>
 </tr>
 <tr>
 <td>Filter method</td>
 <td>1</td>
-<td>滤波器方法：<br/>0（目前仅定义了0）<br/>其他值：无效</td>
+<td>滤波器方法：<br>0（目前仅定义了0）<br>其他值：无效</td>
 </tr>
 <tr>
 <td>Interlace method</td>
 <td>1</td>
-<td>隔行扫描方法：<br/>0——非隔行扫描<br/>1——Adam7 (由Adam M. Costello开发的7遍隔行扫描方法)</td>
+<td>隔行扫描方法：<br>0——非隔行扫描<br>1——Adam7 (由Adam M. Costello开发的7遍隔行扫描方法)</td>
 </tr>
 </tbody></table>
 <p>带上Length、Chunk Type Code和最后的CRC部分，文件头数据块长度为：4+4+13+4 = 25 bytes</p>
@@ -1629,20 +1629,20 @@
 </li>
 </ul>
 <h3 id="示例-3"><a href="#示例-3" class="headerlink" title="示例"></a>示例</h3><p>用 NotePad++ 的Hex插件打开 tif 图片：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220301135042.png" alt="刻晴" style="zoom: 33%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220301135042.png" alt="刻晴" style="zoom: 33%;">
 
 <center>刻晴.png</center>
 
 <p>截取部分数据如下：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220301135026.png" alt="image-20220301135026697" style="zoom:40%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220301135026.png" alt="image-20220301135026697" style="zoom:40%;">
 
 <h4 id="文件署名域-1"><a href="#文件署名域-1" class="headerlink" title="文件署名域"></a>文件署名域</h4><p>可以看见，就是 <code>89 50 4E 47 0D 0A 1A 0A</code></p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220301135153.png" alt="image-20220301135153394" style="zoom:50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220301135153.png" alt="image-20220301135153394" style="zoom:50%;">
 
 
 
 <h4 id="关键数据块-1"><a href="#关键数据块-1" class="headerlink" title="关键数据块"></a>关键数据块</h4><p><strong>IHDR</strong></p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220301135623.png" alt="image-20220301135623598" style="zoom:50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220301135623.png" alt="image-20220301135623598" style="zoom:50%;">
 
 <ul>
 <li>Length：0x0000000d = 13</li>
@@ -1659,7 +1659,7 @@
 </li>
 <li>CRC：<code>db 6e cf a2</code></li>
 </ul>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220301140002.png" alt="image-20220301140002869" style="zoom:50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220301140002.png" alt="image-20220301140002869" style="zoom:50%;">
 
 
 
@@ -1668,7 +1668,7 @@
 <p><strong>IDAT</strong></p>
 <p>略</p>
 <p><strong>IEND</strong></p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220301142345.png" alt="image-20220301142345205" style="zoom:50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220301142345.png" alt="image-20220301142345205" style="zoom:50%;">
 
 
 

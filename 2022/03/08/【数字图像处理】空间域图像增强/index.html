@@ -350,13 +350,13 @@
 <li>锐化空域滤波</li>
 <li>混合空间增强</li>
 </ul>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220308112320.png" alt="image-20220308112320103" style="zoom:55%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220308112320.png" alt="image-20220308112320103" style="zoom:55%;">
 
 <span id="more"></span>
 
 <p>&nbsp;</p>
 <h1 id="直方图处理"><a href="#直方图处理" class="headerlink" title="直方图处理"></a>直方图处理</h1><h3 id="灰度直方图"><a href="#灰度直方图" class="headerlink" title="灰度直方图"></a>灰度直方图</h3><p>灰度统计直方图，描述图像像素的灰度值分布情况</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220308081915.png" alt="image-20220308081915270" style="zoom:34%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220308081915.png" alt="image-20220308081915270" style="zoom:34%;">
 
 <p>一个灰度级在范围 <code>[0，L-1]</code> 的数字图像的直方图是一个离散函数 <code>h(rk)=nk</code></p>
 <ul>
@@ -364,7 +364,7 @@
 <li><code>rk</code> 是第 <code>k</code> 个灰度级，k=0,1,2,……,L-1</li>
 <li>由于 <code>rk</code> 的增量是1，直方图可表示为：<code>p(k)=nk</code> 即图像中不同灰度级像素出现的次数</li>
 </ul>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220308083132.png" alt="image-20220308083122479" style="zoom:42%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220308083132.png" alt="image-20220308083122479" style="zoom:42%;">
 
 <p><strong>意义</strong></p>
 <ul>
@@ -414,10 +414,10 @@
 </ul>
 <p><strong>均衡化</strong></p>
 <p>图像概率直方图：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220308082943.png" alt="image-20220308082943031" style="zoom:50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220308082943.png" alt="image-20220308082943031" style="zoom:50%;">
 
 <p>图像变换函数：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220308175919.png" alt="image-20220308175919041" style="zoom:50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220308175919.png" alt="image-20220308175919041" style="zoom:50%;">
 
 <center>sk 具有累积的意义</center>
 
@@ -425,19 +425,19 @@
 <p>数字图像的灰度级范围为 <code>[0,L-1]</code></p>
 <p>均衡化之前的直方图好比概率密度函数，均衡化后的累计直方图好比概率分布函数（累积的意义）</p>
 <p><strong>处理过程</strong></p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220308085909.png" alt="image-20220308085909123" style="zoom:45%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220308085909.png" alt="image-20220308085909123" style="zoom:45%;">
 
 <p><strong>效果</strong></p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220308090042.png" alt="image-20220308090042633" style="zoom:55%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220308090042.png" alt="image-20220308090042633" style="zoom:55%;">
 
 <p>&nbsp;</p>
 <h3 id="直方图规范化"><a href="#直方图规范化" class="headerlink" title="直方图规范化"></a>直方图规范化</h3><p>借助直方图变换实现规定的灰度映射</p>
 <p><strong>处理方法</strong></p>
 <ul>
 <li><p>对原始直方图计算灰度累积直方图</p>
-  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220308090916.png" alt="image-20220308090916097" style="zoom:60%;" /></li>
+  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220308090916.png" alt="image-20220308090916097" style="zoom:60%;"></li>
 <li><p>对规定化直方图，计算灰度累积直方图</p>
-  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220308090905.png" alt="image-20220308090905587" style="zoom:60%;" /></li>
+  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220308090905.png" alt="image-20220308090905587" style="zoom:60%;"></li>
 <li><p>通过累积直方图的对应关系，得到灰度映射关系</p>
 <p>  s、v 分别是对原始图像和规定化后图像的均衡化处理，得到的灰度概率密度应该相等，即 s=v，所以有</p>
 </li>
@@ -445,9 +445,9 @@
 <p><strong>映射规则</strong></p>
 <ul>
 <li><p>单映射规则</p>
-  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220308090327.png" alt="image-20220308090327291" style="zoom:50%;" /></li>
+  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220308090327.png" alt="image-20220308090327291" style="zoom:50%;"></li>
 <li><p>组映射规则</p>
-  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220308090348.png" alt="image-20220308090348090" style="zoom:50%;" /></li>
+  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220308090348.png" alt="image-20220308090348090" style="zoom:50%;"></li>
 </ul>
 <p><strong>处理过程</strong></p>
 <ol>
@@ -465,23 +465,23 @@
 </li>
 </ul>
 <p><strong>伪代码说明</strong></p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220309092807.png" alt="image-20220309092807451" style="zoom:60%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220309092807.png" alt="image-20220309092807451" style="zoom:60%;">
 
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220309092843.jpg" alt="20130808223109437" style="zoom:81%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220309092843.jpg" alt="20130808223109437" style="zoom:81%;">
 
 <p>sml：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220309092923.png" alt="image-20220309092923635" style="zoom:70%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220309092923.png" alt="image-20220309092923635" style="zoom:70%;">
 
 <p>gml：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220309092944.png" alt="image-20220309092944501" style="zoom:70%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220309092944.png" alt="image-20220309092944501" style="zoom:70%;">
 
 <p><strong>示例</strong></p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220308091107.png" alt="image-20220308091107933" style="zoom:52%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220308091107.png" alt="image-20220308091107933" style="zoom:52%;">
 
 <center>第5行的规定直方图是需要自行选定的</center>
 
 <p><strong>效果</strong></p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220308091714.png" alt="image-20220308091714435" style="zoom:60%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220308091714.png" alt="image-20220308091714435" style="zoom:60%;">
 
 <p>&nbsp;</p>
 <h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><ul>
@@ -519,18 +519,18 @@
 <li><p>用空间掩膜来对图像进行空间滤波，处理图像的高频、低频、特殊频段的分量</p>
 </li>
 <li><p>这里的“掩膜”相当于卷积神经网络中的卷积核，是一个窗口，作为像素变换的模板</p>
-  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220308110423.png" alt="image-20220308110423902" style="zoom:55%;" /></li>
+  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220308110423.png" alt="image-20220308110423902" style="zoom:55%;"></li>
 </ul>
 <p><strong>用空间掩膜实现空间滤波（类似卷积）</strong></p>
 <ul>
 <li><p>对于图象中的任何一点，将掩模放在该位置上，则该点进行变化之后将由新值R代替：</p>
-  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220308110744.png" alt="image-20220308110744595" style="zoom:70%;" /></li>
+  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220308110744.png" alt="image-20220308110744595" style="zoom:70%;"></li>
 <li><p>掩模遍历图象中的全部点后得到变换后的新图</p>
 </li>
 <li><p>由 <code>ki</code> 值的不同可以将其称为低通、高通等</p>
 </li>
 <li><p>掩模计算的过程，也就是数学上离散卷积的过程</p>
-  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220308110901.png" alt="image-20220308110900995" style="zoom:60%;" />
+  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220308110901.png" alt="image-20220308110900995" style="zoom:60%;">
 
 <p>  其中，<code>f(x,y)</code> 为原图，<code>h(x,y)</code> 为处理模板，<code>g(x,y)</code> 为滤波结果</p>
 </li>
@@ -544,7 +544,7 @@
 <li>邻域中值：多窗口中值、加权中值</li>
 </ul>
 <p>平滑处理往往用于图象分割之前，因为它可以去除噪声也可以填补图象边缘中的间隙，有利于从图象中找出目标</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220308112320.png" alt="image-20220308112320103" style="zoom:50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220308112320.png" alt="image-20220308112320103" style="zoom:50%;">
 
 
 
@@ -552,10 +552,10 @@
 <li>系数恒正（中心系数大，周围系数小）</li>
 <li>保持灰度值范围（所有系数之和为 1）</li>
 </ul>
-<h4 id="邻域平均"><a href="#邻域平均" class="headerlink" title="邻域平均"></a>邻域平均</h4><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220308112447.png" alt="image-20220308112447303" style="zoom:50%;" />
+<h4 id="邻域平均"><a href="#邻域平均" class="headerlink" title="邻域平均"></a>邻域平均</h4><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220308112447.png" alt="image-20220308112447303" style="zoom:50%;">
 
 <p><strong>效果</strong></p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220308112545.png" alt="image-20220308112545309" style="zoom:55%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220308112545.png" alt="image-20220308112545309" style="zoom:55%;">
 
 
 
@@ -567,7 +567,7 @@
 </li>
 <li><p>被处理像素的灰度与邻域均值的差别不大，认为噪声不存在，或者可以容忍，不做处理；</p>
 <p>  反之用邻域均值取代原像素灰度</p>
-  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315080600.png" alt="image-20220315080559939" style="zoom:60%;" /></li>
+  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315080600.png" alt="image-20220315080559939" style="zoom:60%;"></li>
 </ul>
 <h4 id="半邻域平均"><a href="#半邻域平均" class="headerlink" title="半邻域平均"></a>半邻域平均</h4><p><strong>思想：</strong></p>
 <p>判断邻域中有无边缘，没有边缘则可以不担心细节信息被平滑，被处理像素灰度采用全领域均值；</p>
@@ -584,14 +584,14 @@
 <li><p>计算 A 组均值 M3，B 组加 P 点均值 M6 和全领域均值 N</p>
 </li>
 <li><p>根据预设门限 T，被处理像素的新灰度为：</p>
-  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315081419.png" alt="image-20220315081405181" style="zoom:60%;" /></li>
+  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315081419.png" alt="image-20220315081405181" style="zoom:60%;"></li>
 </ul>
 <h3 id="非线性平滑滤波器（G2）"><a href="#非线性平滑滤波器（G2）" class="headerlink" title="非线性平滑滤波器（G2）"></a>非线性平滑滤波器（G2）</h3><h4 id="中值滤波"><a href="#中值滤波" class="headerlink" title="中值滤波"></a>中值滤波</h4><blockquote>
 <p>邻点平均滤波有损于图的清晰度。中值滤波器可做到只去除噪声而不使原图清晰度变坏</p>
 </blockquote>
 <p><strong>原理：</strong></p>
 <p>将一个窗置于感兴趣点之上，将窗中所有邻点灰度值排序，变换后在该感兴趣点上的灰度值将由邻点排序后的中值代替</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315081656.png" alt="image-20220315081656596" style="zoom:45%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315081656.png" alt="image-20220315081656596" style="zoom:45%;">
 
 <center>对于椒盐噪声，中值滤波优于均值滤波</center>
 
@@ -601,10 +601,10 @@
 <li>+字窗口、X字窗口、正方形窗口</li>
 </ul>
 <p><strong>中值滤波对边界的变形：</strong></p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315081920.png" alt="image-20220315081920907" style="zoom:40%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315081920.png" alt="image-20220315081920907" style="zoom:40%;">
 
 <p><strong>多窗口中值滤波：</strong></p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315082146.png" alt="image-20220315082146603" style="zoom:50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315082146.png" alt="image-20220315082146603" style="zoom:50%;">
 
 
 
@@ -613,7 +613,7 @@
 </blockquote>
 <p><strong>锐化变换：</strong></p>
 <p>取图像里的极端点，锐化作用</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315082600.png" alt="image-20220315082600741" style="zoom:50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315082600.png" alt="image-20220315082600741" style="zoom:50%;">
 
 <p><strong>光滑变换：</strong></p>
 <p>与锐化变换相反，每个像素点的灰度，离最大值近就取为最小值；离最小值近就取为最大值</p>
@@ -624,7 +624,7 @@
 </li>
 <li><p>把低通滤波器的概念用到高通中来。如果从图象中除去低频分量剩下的就是高频分量了，即</p>
 <p>  高通 = 原图 - 低通</p>
-  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315082809.png" alt="image-20220315082809229" style="zoom:50%;" /></li>
+  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315082809.png" alt="image-20220315082809229" style="zoom:50%;"></li>
 </ul>
 <h3 id="线性锐化滤波器（G3）"><a href="#线性锐化滤波器（G3）" class="headerlink" title="线性锐化滤波器（G3）"></a>线性锐化滤波器（G3）</h3><ul>
 <li><p>中心系数为正，周围系数为负</p>
@@ -634,13 +634,13 @@
 <li><p>灰度变换到 [0, L-1] 便于显示</p>
 </li>
 <li><p>最简单的锐化（高通）滤波模板：</p>
-  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315083430.png" alt="image-20220315083429977" style="zoom:50%;" />
+  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315083430.png" alt="image-20220315083429977" style="zoom:50%;">
 
   <center>全通(原图) - 低频(均值/平滑)滤波器 = 高通滤波</center></li>
 <li><p>例：</p>
 </li>
 </ul>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315083234.png" alt="image-20220315083234324" style="zoom:35%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315083234.png" alt="image-20220315083234324" style="zoom:35%;">
 
 <center>3×3高通滤波掩膜</center>
 
@@ -653,17 +653,17 @@
 <li><p>如果参数＝0，则还原成高通滤波。如果＞0，则部分低频保留而高频得到了加强</p>
 </li>
 <li><p>高频提升的方法是提高打印质量和出版业经常用到的工具</p>
-  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315084211.png" alt="image-20220315084210971" style="zoom:40%;" /></li>
+  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315084211.png" alt="image-20220315084210971" style="zoom:40%;"></li>
 </ul>
 <h3 id="非线性锐化滤波器（G4）"><a href="#非线性锐化滤波器（G4）" class="headerlink" title="非线性锐化滤波器（G4）"></a>非线性锐化滤波器（G4）</h3><blockquote>
 <p>邻点平均的滤波效果使图象模糊。它是邻点灰度值相加的结果，可类比为积分，那么可以期待求邻点差分－微分将产生正好相反的效果</p>
 </blockquote>
 <p>最常见的微分方法是求梯度，因而微商滤波器也经常就是<strong>梯度滤波器</strong>（需要2个模板分别沿 x 和 y 方向计算）</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315084048.png" alt="image-20220315084048774" style="zoom:40%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315084048.png" alt="image-20220315084048774" style="zoom:40%;">
 
 <p><strong>锐化模板</strong></p>
 <p>一阶微分和二阶微分处理的特点：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315084528.png" alt="image-20220315084528167" style="zoom:50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315084528.png" alt="image-20220315084528167" style="zoom:50%;">
 
 <ul>
 <li><p>一阶微分产生较宽的边界</p>
@@ -673,41 +673,41 @@
 <li><p>一阶微分对灰度阶梯的响应强烈</p>
 </li>
 <li><p>二阶微分对灰度阶梯产生双响应</p>
-  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315084550.png" alt="image-20220315084550614" style="zoom:50%;" /></li>
+  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315084550.png" alt="image-20220315084550614" style="zoom:50%;"></li>
 </ul>
 <p>锐化处理一般采用<strong>二阶微分</strong></p>
 <p>一阶微分在图像处理中主要用于边界提取</p>
 <p><strong>二维图像的差分</strong></p>
 <ul>
 <li><p>需要分别考虑水平和垂直两个方向：</p>
-  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315084821.png" alt="image-20220315084821491" style="zoom:55%;" /></li>
+  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315084821.png" alt="image-20220315084821491" style="zoom:55%;"></li>
 <li><p>综合得到二阶微分（<strong>拉普拉斯算子</strong>）</p>
-  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315084903.png" alt="image-20220315084903895" style="zoom:53%;" /></li>
+  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315084903.png" alt="image-20220315084903895" style="zoom:53%;"></li>
 <li><p>锐化算法：</p>
-  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315084934.png" alt="image-20220315084934947" style="zoom:53%;" /></li>
+  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315084934.png" alt="image-20220315084934947" style="zoom:53%;"></li>
 </ul>
 <h4 id="拉普拉斯算子（梯度运算）模板"><a href="#拉普拉斯算子（梯度运算）模板" class="headerlink" title="拉普拉斯算子（梯度运算）模板"></a>拉普拉斯算子（梯度运算）模板</h4><ul>
 <li><p>4领域模板</p>
-  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315085049.png" alt="image-20220315085049187" style="zoom:47%;" /></li>
+  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315085049.png" alt="image-20220315085049187" style="zoom:47%;"></li>
 <li><p>8领域扩展模板</p>
-  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315085101.png" alt="image-20220315085101884" style="zoom:47%;" />
+  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315085101.png" alt="image-20220315085101884" style="zoom:47%;">
 
   <center>四面八方，做了4次二阶偏导</center></li>
 <li><p>示例：</p>
-  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315085140.png" alt="image-20220315085140695" style="zoom:47%;" /></li>
+  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315085140.png" alt="image-20220315085140695" style="zoom:47%;"></li>
 </ul>
 <h4 id="LoG算子模板"><a href="#LoG算子模板" class="headerlink" title="LoG算子模板"></a>LoG算子模板</h4><ul>
 <li>拉普拉斯算子对噪声十分敏感（毕竟是微分运算）</li>
 <li>改进：先用高斯平滑去噪，再进行拉普拉斯运算</li>
 </ul>
 <p>考虑高斯分布：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315090241.png" alt="image-20220315090241194" style="zoom:45%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315090241.png" alt="image-20220315090241194" style="zoom:45%;">
 
 <p>LoG算子：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315090300.png" alt="image-20220315090300647" style="zoom:45%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315090300.png" alt="image-20220315090300647" style="zoom:45%;">
 
 <p>对比拉普拉斯算子：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315090406.png" alt="image-20220315090406495" style="zoom:35%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315090406.png" alt="image-20220315090406495" style="zoom:35%;">
 
 <center>左边为LoG算子，右边为拉普拉斯</center>
 
@@ -718,23 +718,23 @@
 <li><p>在邻域 Dij 有 M 个像素</p>
 </li>
 <li><p>邻域均值</p>
-  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315091152.png" alt="image-20220315091152063" style="zoom:65%;" /></li>
+  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315091152.png" alt="image-20220315091152063" style="zoom:65%;"></li>
 <li><p>邻域方差</p>
-  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315091200.png" alt="image-20220315091200377" style="zoom:65%;" /></li>
+  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315091200.png" alt="image-20220315091200377" style="zoom:65%;"></li>
 <li><p>锐化后像素的灰度</p>
-  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315091232.png" alt="image-20220315091232499" style="zoom:65%;" /></li>
+  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315091232.png" alt="image-20220315091232499" style="zoom:65%;"></li>
 </ul>
 <center>其中，md和σd表示设计的均值和标准差，A是增益系数，α控制增强图像中边缘和背景的比例</center>
 
 
 
-<h4 id="人名命名的梯度模板"><a href="#人名命名的梯度模板" class="headerlink" title="人名命名的梯度模板"></a>人名命名的梯度模板</h4><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315085237.png" alt="image-20220315085237403" style="zoom:50%;" />
+<h4 id="人名命名的梯度模板"><a href="#人名命名的梯度模板" class="headerlink" title="人名命名的梯度模板"></a>人名命名的梯度模板</h4><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315085237.png" alt="image-20220315085237403" style="zoom:50%;">
 
 <center>可以看见，Kirsch的8个模板相当于旋转了8次，彼此角度不同，效果也不同</center>
 
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<h1 id="混合空域增强"><a href="#混合空域增强" class="headerlink" title="混合空域增强"></a>混合空域增强</h1><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315091807.png" alt="image-20220315091806995" style="zoom:50%;" />
+<h1 id="混合空域增强"><a href="#混合空域增强" class="headerlink" title="混合空域增强"></a>混合空域增强</h1><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220315091807.png" alt="image-20220315091806995" style="zoom:50%;">
 
     </div>
 

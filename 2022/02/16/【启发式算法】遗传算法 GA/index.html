@@ -296,7 +296,7 @@
 
       
         <p>&emsp;&emsp;由于遗传算法的整体搜索策略和优化搜索方法在计算时不依赖于梯度信息或其它辅助知识，而只需要影响搜索方向的目标函数和相应的适应度函数，所以遗传算法提供了一种求解复杂系统问题的通用框架，不依赖于问题的具体领域，对问题的种类有很强的鲁棒性，广泛应用于许多场景。</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220216231227.png" alt="image-20220216231227178" style="zoom: 35%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220216231227.png" alt="image-20220216231227178" style="zoom: 35%;">
 
 <span id="more"></span>
 
@@ -444,11 +444,11 @@
 <p>x∈[-10, 10], y∈[-10, 10]时，求二元函数 <code>z(x,y) = y*sin(x) + x*cos(y)</code> 的最大值点，使用matlab绘制图像如下：</p>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[x,y] = <span class="built_in">meshgrid</span>(<span class="number">-10</span>:<span class="number">0.01</span>:<span class="number">10</span>);</span><br><span class="line">z = y.*<span class="built_in">sin</span>(x)+x.*<span class="built_in">cos</span>(y);</span><br><span class="line">mesh(x,y,z),xlabel(<span class="string">&#x27;x&#x27;</span>),ylabel(<span class="string">&#x27;y&#x27;</span>),zlabel(<span class="string">&#x27;z&#x27;</span>)</span><br></pre></td></tr></table></figure>
 
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220219083829.png" alt="image-20220219083829525" style="zoom: 20%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220219083829.png" alt="image-20220219083829525" style="zoom: 20%;">
 
 <p><strong>编码</strong></p>
 <p>计算机无法处理连续值，为了确保准确性和离散性，对x、y的取值精确到3位小数，以0.001为最小粒度。因此x和y从-10.000变化到10.000各自总共20001个离散取值，因为<code>2^14 &lt; 20001 &lt; 2^15</code>，所以编码为15位二进制值。同时为了保证一一映射和满射，具体编码映射方式为：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220219083445.png" alt="image-20220217110053767" style="zoom:60%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220219083445.png" alt="image-20220217110053767" style="zoom:60%;">
 
 <center>h为实际值，m为编码值</center>
 

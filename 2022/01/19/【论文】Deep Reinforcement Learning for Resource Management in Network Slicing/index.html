@@ -309,7 +309,7 @@
 
       
         <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>&emsp;&emsp;深度强化学习 (DRL) 侧重于如何通过尝试替代动作和强化产生更有益结果的倾向动作来与环境交互，是网络切片资源管理问题的一个有前途的解决方案。本文在简要回顾了 DRL 的基本概念后，研究了 DRL 在解决网络切片场景中一些典型资源管理的应用，包括<strong>无线资源切片</strong>和<strong>基于优先级的核心网络切片</strong>。最后还从一般的角度讨论了在网络切片中应用 DRL 可能面临的挑战。</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220119150855.png" alt="image-20220118210056206" style="zoom: 40%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220119150855.png" alt="image-20220118210056206" style="zoom: 40%;">
 
 <p><strong>原文</strong></p>
 <p><a target="_blank" rel="noopener" href="https://lrk612.com/resources/Deep_Reinforcement_Learning_for_Resource_Management_in_Network_Slicing.pdf">Deep Reinforcement Learning for Resource Management in Network Slicing</a></p>
@@ -403,7 +403,7 @@
 <p> &emsp;&emsp;由于频谱资源有限，无线接入的资源管理关注如何为切片分配资源块（RB）以保持可接受的频谱效率(SE)，同时兼顾通信速率和低延迟。</p>
 <p> &emsp;&emsp;核心网络中广泛采用的光传输将核心网络的优化方向转移到设计通用或专用的虚拟网络功能（VNF），以便以最小的调度延迟适当地转发来自特定切片的数据包。</p>
 <p> &emsp;&emsp;通过平衡资源利用率（如 SE）和 QoE 满意度的权重，资源管理目标可以表示为 <code>R =ζ·SE+β·QoE</code>，其中 <code>ζ</code> 和 <code>β</code> 表示 SE 和 QoE 的权重</p>
- <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220118211133.png" alt="image-20220118211133807" style="zoom:50%;" />
+ <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220118211133.png" alt="image-20220118211133807" style="zoom:50%;">
 
  <center>图2</center></li>
 <li><p><strong>平等或优先调度</strong></p>
@@ -413,16 +413,16 @@
 <p>&emsp;&emsp;基于上述讨论可以得出结论：网络切片的资源管理目标应该考虑：频谱利用率(SE)、QoE 满意度、等待时间(WT)等因素，它们的加权总和作为强化学习Agent的Reward。</p>
 <p>&nbsp;</p>
 <h3 id="接入网：无线资源分配"><a href="#接入网：无线资源分配" class="headerlink" title="接入网：无线资源分配"></a>接入网：无线资源分配</h3><h4 id="优化目标"><a href="#优化目标" class="headerlink" title="优化目标"></a>优化目标</h4><p>&emsp;&emsp;在这一部分中，我们将讨论如何将 DRL 应用于无线电资源切片。在数学上，给定现有切片列表 <code>1,···,N</code> 共享聚合带宽 <code>W</code> 并具有波动需求 <code>d = (d1,···,dN )</code>，目标是给出带宽共享解决方案 <code>w = (w1,· ·· ,wN )</code>，从而使长期回报期望 <code>E&#123;R(w,d)&#125;</code> 最大化，即：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220118225751.png" alt="image-20220118225751473" style="zoom:67%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220118225751.png" alt="image-20220118225751473" style="zoom:67%;">
 
 <p>&emsp;&emsp;求解这个优化问题的难点在于由于流量模型的波动性需求变化没有先验知识。因此，Model-Free的DQN模型正适用于此问题的求解。</p>
 <h4 id="通信场景"><a href="#通信场景" class="headerlink" title="通信场景"></a>通信场景</h4><p>&emsp;&emsp;下文通过模拟一个场景来评估采用 DQN 解决此问题的性能，该场景包含一个具有三种业务（ VoIP、视频、URLLC）的单基站(BS)。在基站周围40米半径范围内随机分布有100个注册用户。这些订阅用户生成下表中的服务模型。VoIP 和视频服务完全采用 VoLTE 和视频流模型的参数设置，而 URLLC 服务采用 FTP 2 模型 [24] 的参数设置。从表(b)可以看出，URLLC 的数据包频率较低，而 VoLTE 对其数据包的带宽要求最小。</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220118225918.png" alt="image-20220118225918334" style="zoom: 67%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220118225918.png" alt="image-20220118225918334" style="zoom: 67%;">
 
 <center>表(b)</center>
 
 <h4 id="DQN建模"><a href="#DQN建模" class="headerlink" title="DQN建模"></a>DQN建模</h4><p>&emsp;&emsp;DQN相关参数如下表所示，Reward是系统 SE 和 切片 QoE。具体而言，DQN 代理每秒更新其 Q 值神经网络，并调整每个切片的带宽分配比例。每秒内以 0.5 ms 的粒度在每个切片内执行循环调度（Round-Robin）方法来分配频域资源，即每隔 0.5 ms 将每个 slice 的带宽顺序分配给每个 slice 内的活跃用户（Active UE）。</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220118225906.png" alt="image-20220118225906764" style="zoom:67%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220118225906.png" alt="image-20220118225906764" style="zoom:67%;">
 
 <center>表(a)</center>
 
@@ -433,10 +433,10 @@
 <ul>
 <li><p><strong>DP-No</strong> </p>
 <p>  &emsp;&emsp;总带宽按各业务预测数据包数量比例分配。假设总带宽为 B，VoIP、视频、URLLC 的预测数据包数为 NVoIP、NVideo 和 NURLLC，则分配给这三个切片（即 VoIP、视频和 URLLC）的带宽分别为： </p>
-  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220118230416.png" alt="image-20220118230416930" style="zoom: 50%;" /></li>
+  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220118230416.png" alt="image-20220118230416930" style="zoom: 50%;"></li>
 <li><p><strong>DP-BW</strong> </p>
 <p>  &emsp;&emsp;总带宽按（各业务预测数据包数量×该业务最低要求速率）的比例分配。假设三个切片所需的速率为 RVoIP、RVideo 和 RURLLC，则分配给 VoIP、视频和 URLLC 的带宽分别为：</p>
-  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220118230644.png" alt="image-20220118230644957" style="zoom:0%;" /></li>
+  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220118230644.png" alt="image-20220118230644957" style="zoom:0%;"></li>
 </ul>
 <p>然后各切片内部再使用Round-Robin方式为活跃用户分配带宽资源。</p>
 <h5 id="硬切片法"><a href="#硬切片法" class="headerlink" title="硬切片法"></a>硬切片法</h5><p>总带宽平均分给三个业务的切片，然后各切片内部使用Round-Robin方式为活跃用户分配带宽资源。</p>

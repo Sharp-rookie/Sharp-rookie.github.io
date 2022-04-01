@@ -310,7 +310,7 @@
 
       
         <p>&emsp;&emsp;我们使用mininet平台作为网络拓扑仿真工具，选择TCP拥塞控制算法作为研究对象，以项目组工作技术背景：5G无线通信场景中的强化学习作为切入点，对 Linux 内核搭载的经典 TCP 拥塞控制算法：Reno、Vegas、Veno、BBR、CUBIC进行调研学习，最终决定对超参数依赖性较强的TCP_Veno算法进行强化学习调优。期间我们把算法直接集成到Linux内核的拥塞控制模块，克服了内核态进程内存空间与用户态Python程序交互的映射问题，并使用C语言构造Python模块提高算法效率。同时，我们的强化学习环境也集成到了OpenAI Gym中。</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220116104456.png" alt="image-20220116104456599" style="zoom: 80%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220116104456.png" alt="image-20220116104456599" style="zoom: 80%;">
 
 <span id="more"></span>
 
@@ -558,7 +558,7 @@
 </ul>
 </li>
 </ul>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220116114931.png" alt="image-20220116114931639" style="zoom: 40%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220116114931.png" alt="image-20220116114931639" style="zoom: 40%;">
 
 <p>&nbsp;</p>
 <h4 id="对比"><a href="#对比" class="headerlink" title="对比"></a>对比</h4><table>
@@ -606,23 +606,23 @@
 <li><p>根据拥塞窗口和往返时间估计当前队列堆积的报文个数N</p>
 <blockquote>
 <p>首先计算期望发送速率和实际速率：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220116115012.png" alt="image-20220116115012530" style="zoom: 67%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220116115012.png" alt="image-20220116115012530" style="zoom: 67%;">
 
 <p>二者差值：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220116115023.png" alt="image-20220116115023138" style="zoom: 67%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220116115023.png" alt="image-20220116115023138" style="zoom: 67%;">
 
 <p>估计堆积报文个数N：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220116115036.png" alt="image-20220116115036767" style="zoom:67%;" /></blockquote>
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220116115036.png" alt="image-20220116115036767" style="zoom:67%;"></blockquote>
 </li>
 <li><p>根据N值调整拥塞控制算法</p>
 <blockquote>
 <p>慢启动阶段：与Reno相同无变化</p>
 <p>AIMD——加性增阶段：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220116115049.png" alt="image-20220116115049018" style="zoom:67%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220116115049.png" alt="image-20220116115049018" style="zoom:67%;">
 
 <p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;beta 是一个超参数、增速1、0.5也是超参</p>
 <p>AIMD——乘性减阶段：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220116115059.png" alt="image-20220116115059582" style="zoom: 60%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220116115059.png" alt="image-20220116115059582" style="zoom: 60%;">
 
 <p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;4/5、1/2也是超参</p>
 </blockquote>
@@ -644,10 +644,10 @@
 </li>
 </ul>
 <p>注意，加性增时的”0.5“在源代码中不是通过变量表示的，而是通过标志位veno-&gt;cnt，所以需要重构代码：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220116131249.png" alt="image-20220116131249660" style="zoom:50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220116131249.png" alt="image-20220116131249660" style="zoom:50%;">
 
 <p>模型框架：(基于DQN)</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220116105019.png" alt="image-20220116105019402" style="zoom: 33%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220116105019.png" alt="image-20220116105019402" style="zoom: 33%;">
 
 <h4 id="代码仓库"><a href="#代码仓库" class="headerlink" title="代码仓库"></a>代码仓库</h4><p>github：<a target="_blank" rel="noopener" href="https://github.com/Gaopeili/lgd">Computer Network Course Design using Mininet simulator</a></p>
 <p>&nbsp;</p>
@@ -657,7 +657,7 @@
 <li>KVM搭建的Mininet虚拟机</li>
 </ul>
 <h5 id="拓扑结构"><a href="#拓扑结构" class="headerlink" title="拓扑结构"></a>拓扑结构</h5><p>&emsp;&emsp;选择搭建经典的 <code>bottleneck</code> 结构，设置传输过程中某条链路带宽较小且延迟较大，发送方以较大比特率发送数据，来构建出网络拓扑模型：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220116105214.png" alt="image-20220116105213972" style="zoom:75%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220116105214.png" alt="image-20220116105213972" style="zoom:75%;">
 
 <h5 id="拥塞场景"><a href="#拥塞场景" class="headerlink" title="拥塞场景"></a>拥塞场景</h5><p>&emsp;&emsp;创建好网络拓扑之后，调整各个client的发送速率，使用命令行工具iperf来模拟客户端与服务端。Client1，Client2以100Mbps的速率发送TCP数据包，Client3以50Mbps的速率发送UDP数据包，使用wireshark工具观察拥塞现象，发现throughput发生了明显的下降、RTT明显增加并且出现了丢包现象。</p>
 <h4 id="效果对比"><a href="#效果对比" class="headerlink" title="效果对比"></a>效果对比</h4><p>&emsp;&emsp;观察到拥塞现象后，我们使用Linux内核提供的各种算法进行拥塞控制。从iperf提供的输出观察到了cwnd慢启动、加性增乘性减的过程，并且对比了不同算法之间的异同：</p>
@@ -670,7 +670,7 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sysctl net.ipv4.tcp_available_congestion_control</span><br></pre></td></tr></table></figure>
 
 <p>如图，服务器上ubuntu下目前可使用的拥塞控制有<code>cubic</code>和<code>reno</code>：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220115224959.png" alt="image-20220115224959598" style="zoom: 67%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220115224959.png" alt="image-20220115224959598" style="zoom: 67%;">
 
 
 
@@ -678,14 +678,14 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sysctl net.ipv4.tcp_congestion_control</span><br></pre></td></tr></table></figure>
 
 <p>目前是用的是<code>cubic</code>（默认）：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220115225127.png" alt="image-20220115225127025" style="zoom:67%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220115225127.png" alt="image-20220115225127025" style="zoom:67%;">
 
 
 
 <p>设置当前使用的拥塞算法(为reno)：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo sysctl -w net.ipv4.tcp_congestion_control=reno</span><br></pre></td></tr></table></figure>
 
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220115225212.png" alt="image-20220115225212546" style="zoom:67%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220115225212.png" alt="image-20220115225212546" style="zoom:67%;">
 
 <p>&nbsp;</p>
 <h3 id="Mininet"><a href="#Mininet" class="headerlink" title="Mininet"></a>Mininet</h3><p>&emsp;&emsp;Mininet是由斯坦福大学基于Linux <a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=Container&spm=1001.2101.3001.7020">Container</a>架构开发的一个进程虚拟化网络仿真工具，可以创建一个包含主机，交换机，控制器和链路的虚拟网络，其交换机支持OpenFlow，具备高度灵活的自定义软件定义网络。</p>

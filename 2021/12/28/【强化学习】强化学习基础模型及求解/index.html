@@ -337,22 +337,22 @@
 
       
         <p>&emsp;&emsp;强化学习 (Reinforcement Learning) 是一个机器学习大家族中的分支, 由于近些年来的技术突破, 和深度学习 (Deep Learning) 的整合, 使得强化学习有了进一步的运用。比如让计算机学着玩游戏, AlphaGo 挑战世界围棋高手, 都是强化学习在行的事。强化学习让程序从对当前环境完全陌生, 成长为一个在环境中游刃有余的高手。</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126150606.png" alt="image-20220126150606364" style="zoom: 67%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126150606.png" alt="image-20220126150606364" style="zoom: 67%;">
 
 <span id="more"></span>
 
 <p>&nbsp;</p>
 <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="在机器学习中的位置"><a href="#在机器学习中的位置" class="headerlink" title="在机器学习中的位置"></a>在机器学习中的位置</h3><p>&emsp;&emsp;强化学习是和监督学习，非监督学习并列的第三种机器学习方法，是机器学习中的一个独立领域。与后两者相同，强化学习有自己一套比较完整的数据处理、建模、训练、调优的套路，成为了一种方法论或模型体系。</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220307111155.png" alt="image-20220307111148418" style="zoom:60%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220307111155.png" alt="image-20220307111148418" style="zoom:60%;">
 
 <h4 id="监督学习"><a href="#监督学习" class="headerlink" title="监督学习"></a>监督学习</h4><p>&emsp;&emsp;监督学习是比较传统的一个机器学习领域，简而言之是给定（输入，输出）对，反向推导从输入到输出这个映射中的参数值或组合，即给定映射形式：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126150457.png" alt="image-20220126110940334" style="zoom: 67%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126150457.png" alt="image-20220126110940334" style="zoom: 67%;">
 
 <p>然后根据已有数据集(x, y)键值对推导参数 <code>θ</code> ，这个过程称为训练。</p>
 <h4 id="非监督学习"><a href="#非监督学习" class="headerlink" title="非监督学习"></a>非监督学习</h4><p>&emsp;&emsp;非监督学习也是比较传统的一个机器学习领域，比较常见的是聚类模型，例如：K-Means算法，只给定输入 x，输出并没有给定目标值。</p>
 <h4 id="强化学习"><a href="#强化学习" class="headerlink" title="强化学习"></a>强化学习</h4><p>&emsp;&emsp;强化学习和监督学习最大的区别是它没有监督学习已经准备好的训练数据输出值。强化学习只有奖励值，但是这个奖励值和监督学习的输出值不一样，它不是事先给出的，而是延后给出的。同时，强化学习的每一步与时间顺序前后关系紧密。而监督学习的训练数据之间一般都是独立的，没有这种前后的依赖关系。</p>
 <p>&emsp;&emsp;强化学习和非监督学习的区别。也还是在奖励值这个地方。非监督学习是没有输出值也没有奖励值的，它只有数据特征。同时和监督学习一样，数据之间也都是独立的，没有强化学习这样的前后依赖关系。</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211229085342.png" alt="image-20211229085342314" style="zoom:50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211229085342.png" alt="image-20211229085342314" style="zoom:50%;">
 
 <p>&nbsp;</p>
 <h3 id="强化学习建模"><a href="#强化学习建模" class="headerlink" title="强化学习建模"></a>强化学习建模</h3><h4 id="建模"><a href="#建模" class="headerlink" title="建模"></a>建模</h4><table>
@@ -383,11 +383,11 @@
 <td>Environment对Agent执行Action的反馈</td>
 </tr>
 </tbody></table>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211227234235.png" alt="image-20211227234234718" style="zoom: 33%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211227234235.png" alt="image-20211227234234718" style="zoom: 33%;">
 
 <p>&emsp;&emsp;由上，强化学习模型其实就是智能体<code>Agent</code>观测环境<code>Environment</code>后得到环境当前所处的状态信息<code>State</code>，然后基于自身决策算法决定对环境执行一个动作<code>Action</code>，这个动作使环境的状态发生了变化，并由此反馈给智能体一个信息<code>Reward</code>，以告知其动作的好坏，智能体基于反馈优化自己做决策的算法。不断重复这个过程，从而让智能体形成能够带来最大价值的决策算法。</p>
 <h4 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h4><p>&emsp;&emsp;注意这里说的模型与强化学习本身数学模型并不是同一个概念，这里的模型是指环境Environment，通常用两个式子就可以描述一个模型：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126113400.png" alt="image-20220126113400549" style="zoom:67%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126113400.png" alt="image-20220126113400549" style="zoom:67%;">
 
 <p>&emsp;&emsp;第一个公式表示<code>t</code>时刻状态为<code>s</code>，执行动作<code>a</code>后转换为状态<code>s’</code>的概率；第二个公式表示<code>t</code>时刻状态为<code>s</code>，执行动作<code>a</code>的奖励的期望值（因为可能转换到不同的状态）。如果知道这两个环境的这两个公式，那么这个环境对于智能体来说就不是“黑盒子”，因为它的一切输入、输出及奖励都可以直接数学推导得出，而不再需要通过试错的方式来观察。因此，最佳策略算法的问题转化为最优化问题，不止或者不再需要用强化学习来求解，使用其他机器学习算法都可以解决。</p>
 <h5 id="Model-Based"><a href="#Model-Based" class="headerlink" title="Model-Based"></a>Model-Based</h5><p>&emsp;&emsp;顾名思义，Model-Based的强化学习算法就是必须已知环境的上述两个信息才能求解。但这时完全可以用其他更优的算法代替强化学习了。</p>
@@ -395,11 +395,11 @@
 <p>&nbsp;</p>
 <h3 id="模型求解"><a href="#模型求解" class="headerlink" title="模型求解"></a>模型求解</h3><p>&emsp;&emsp;强化学习模型求解过程本质就是智能体在不断与环境交互，产生序列：<code>S0,A0,R1,S1,A1,R2,...</code>，并在这个过程中推导出最优的决策算法，从而实现价值最大化。</p>
 <h4 id="直接法（基于策略）"><a href="#直接法（基于策略）" class="headerlink" title="直接法（基于策略）"></a>直接法（基于策略）</h4><p>&emsp;&emsp;直接法的前提是策略形式为： <code>a=π(s|θ)</code> ，即由参数 <code>θ</code> 描述策略，优化策略就是优化参数 <code>θ</code>。那么既然是要优化，就一定有优化的目标或评价函数，在这里是所有状态State下动作Action的奖励期望值：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126150458.png" alt="image-20220126115026053" style="zoom:70%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126150458.png" alt="image-20220126115026053" style="zoom:70%;">
 
 <p>&emsp;&emsp;但实际上，大多策略都不是仅靠参数<code>θ</code>就能描述的，因此强化学习的优化用的主要是下面的间接法。</p>
 <h4 id="间接法（基于价值）"><a href="#间接法（基于价值）" class="headerlink" title="间接法（基于价值）"></a>间接法（基于价值）</h4><p>&emsp;&emsp;间接法的思想就是，计算出各个状态在策略<code>π</code>下的价值，然后决策时选择能够达到最大价值的下一状态的动作，这就是最优策略。其中，状态价值公式如下：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228085646.png" alt="image-20211228085646607" style="zoom: 50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228085646.png" alt="image-20211228085646607" style="zoom: 50%;">
 
 <center>γ是折扣因子，反映价值的远见性</center>
 
@@ -427,32 +427,32 @@
 <p>无论怎样，我们的目标是最大化累积奖赏，所以我们可以通过不断地改进我们的策略，使得我们最后能够获得最大累积奖赏。</p>
 <p><strong>状态价值函数Vπ</strong></p>
 <p>定义式：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228085646.png" alt="image-20211228085646607" style="zoom: 50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228085646.png" alt="image-20211228085646607" style="zoom: 50%;">
 
 <p>递推形式：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228085858.png" alt="image-20211228085858501" style="zoom:50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228085858.png" alt="image-20211228085858501" style="zoom:50%;">
 
 <p>计算机通常使用递推式迭代地求出MDP中每个状态的价值函数，而不是用定义式硬算。</p>
 <p><strong>动作价值函数<em>Qπ</em></strong></p>
 <p>定义式：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228085745.png" alt="image-20211228085745128" style="zoom:50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228085745.png" alt="image-20211228085745128" style="zoom:50%;">
 
-<p>​                                                                              <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228085806.png" alt="image-20211228085806768" style="zoom:50%;" /></p>
+<p>​                                                                              <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228085806.png" alt="image-20211228085806768" style="zoom:50%;"></p>
 <p>递推形式：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228092413.png" alt="image-20211228092413197" style="zoom: 25%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228092413.png" alt="image-20211228092413197" style="zoom: 25%;">
 
 <p>计算机通常使用递推式迭代地求出MDP中每个状态的价值函数，而不是用定义式硬算。</p>
 <p><strong>状态价值与动作价值的递推关系</strong></p>
 <p>状态价值函数是所有动作价值函数基于策略π的期望：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228085947.png" style="zoom:50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228085947.png" style="zoom:50%;">
 
 <p>利用上递推式，也很容易从状态价值函数vπ(s)表示动作价值函数qπ(s,a)，即：</p>
-<p>​                                                                    <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228090008.png" style="zoom:50%;" /></p>
+<p>​                                                                    <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228090008.png" style="zoom:50%;"></p>
 <p>二者转化关系如图：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228090154.png" alt="image-20211228090154012" style="zoom: 33%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228090154.png" alt="image-20211228090154012" style="zoom: 33%;">
 
 <p>&emsp;&emsp;总而言之，状态 / 动作价值有两部分相加组成，第一部分是即时奖励，第二部分是环境所有可能出现的下一个状态的概率乘以该下一状态的状态价值，最后求和，并加上衰减。两式联立得：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228090245.png" alt="image-20211228090244956" style="zoom:50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228090245.png" alt="image-20211228090244956" style="zoom:50%;">
 
 <center>这两个表达式又称为贝尔曼方程</center>
 
@@ -460,12 +460,12 @@
 <h4 id="最优价值函数"><a href="#最优价值函数" class="headerlink" title="最优价值函数"></a>最优价值函数</h4><p>&emsp;&emsp;根据间接法的思想，解决强化学习问题意味着要寻找一个最优的策略让个体在与环境交互过程中获得始终比其它策略都要多的收获，这个最优策略可以用 π∗表示。一旦找到这个最优策略π∗，那么就解决了这个强化学习问题。而策略的优劣可由价值函数反映，因此最优策略问题转化为最优价值函数问题。</p>
 <ol>
 <li><p><strong>最优状态价值函数</strong>是所有策略下产生的众多状态价值函数中的最大者：</p>
- <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228090541.png" alt="image-20211228090541867" style="zoom:50%;" /></li>
+ <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228090541.png" alt="image-20211228090541867" style="zoom:50%;"></li>
 <li><p><strong>最优动作价值函数</strong>是所有策略下产生的众多动作状态价值函数中的最大者：</p>
- <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228090616.png" alt="image-20211228090616747" style="zoom: 50%;" /></li>
+ <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228090616.png" alt="image-20211228090616747" style="zoom: 50%;"></li>
 </ol>
 <p><strong>转化关系：</strong></p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228091126.png" alt="image-20211228091126423" style="zoom: 50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228091126.png" alt="image-20211228091126423" style="zoom: 50%;">
 
 <p>&nbsp;</p>
 <h3 id="策略迭代-求解强化学习"><a href="#策略迭代-求解强化学习" class="headerlink" title="策略迭代 求解强化学习"></a>策略迭代 求解强化学习</h3><p><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228140030.png" alt="image-20211228140030255"></p>
@@ -476,7 +476,7 @@
 <p>&nbsp;</p>
 <h3 id="价值迭代-求解强化学习"><a href="#价值迭代-求解强化学习" class="headerlink" title="价值迭代 求解强化学习"></a>价值迭代 求解强化学习</h3><p><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228140047.png" alt="image-20211228140046899"></p>
 <p>&emsp;&emsp;相比策略迭代，价值迭代不需要等到状态价值收敛才调整策略，而是随着状态价值的迭代及时调整策略, 这样可以大大减少迭代次数。此时的状态价值的更新方法也和策略迭代不同，此时贝尔曼方程迭代式如下：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228092413.png" alt="image-20211228092413197" style="zoom: 25%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228092413.png" alt="image-20211228092413197" style="zoom: 25%;">
 
 <p>&emsp;&emsp;可见由于策略调整，现在价值每次更新倾向于贪婪法选择的最优策略对应的后续状态价值，这样收敛更快。</p>
 <p><strong>流程</strong></p>
@@ -515,13 +515,13 @@
 <p>&emsp;&emsp;同样一个状态可能在一个完整的状态序列（episode）中重复出现，第一种应对方法是仅把状态序列中第一次出现该状态时的收获值纳入到收获平均值的计算中；另一种是针对一个状态序列中每次出现的该状态，都计算对应的收获值并纳入到收获平均值的计算中。两种方法对应的蒙特卡罗法分别称为：<strong>首次访问(first visit)</strong> 和<strong>每次访问(every visit)</strong> 蒙特卡罗法。第二种方法比第一种的计算量要大一些，但是在完整的经历样本序列少的场景下会比第一种方法适用。</p>
 <p><strong>累进更新平均值（incremental mean)</strong></p>
 <p>&emsp;&emsp;按照蒙特卡洛求平均值来代表状态价值的公式里，每个状态都需要维护一个计数器和累加器，分别保存其出现次数和价值之和用于最后求平均，这样浪费了太多的存储空间：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126150459.png" alt="image-20220126143115081" style="zoom: 67%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126150459.png" alt="image-20220126143115081" style="zoom: 67%;">
 
 <p>注意，这里的 <code>Gt</code> 不能用贝尔曼方程计算，只能由采样的奖励值序列按定义式计算：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228095500.png" alt="image-20211228095500637" style="zoom:50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228095500.png" alt="image-20211228095500637" style="zoom:50%;">
 
 <p>&emsp;&emsp;数学上的优化方法是在迭代计算收获均值，即每次保存上一轮迭代得到的收获均值与次数，当计算得到当前轮的收获时，即可计算当前轮收获均值和次数：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126143244.png" alt="image-20220126143244239" style="zoom:67%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220126143244.png" alt="image-20220126143244239" style="zoom:67%;">
 
 <p>其中，<code>k</code>采样序列episode的个数，可以证明这样计更新价值V和上面的结果是一致的，但大大节省空间。</p>
 <p>&nbsp;</p>
@@ -530,7 +530,7 @@
 <p>​        1.  状态价值的计算方法不同，动态规划用贝尔曼方程迭代，蒙特卡罗法用采样数据求平均</p>
 <p>​        2. 蒙特卡罗法一般是优化最优动作价值函数q∗，而不是状态价值函数v∗</p>
 <p>​        3. 动态规划一般基于贪婪法更新策略，而蒙特卡罗法一般采用<strong>ϵ−greedy</strong>法更新：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228141900.png" alt="image-20211228141900761" style="zoom: 18%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228141900.png" alt="image-20211228141900761" style="zoom: 18%;">
 
 <center>m是可选行动的个数</center>
 
@@ -551,7 +551,7 @@
 <p>&nbsp;</p>
 <h2 id="时序差分法TD（Model-free）"><a href="#时序差分法TD（Model-free）" class="headerlink" title="时序差分法TD（Model-free）"></a>时序差分法TD（Model-free）</h2><h3 id="时序差分法"><a href="#时序差分法" class="headerlink" title="时序差分法"></a>时序差分法</h3><p><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228135332.png" alt="image-20211228135332814"></p>
 <p>&emsp;&emsp;时序差分法和蒙特卡罗法类似，都是不基于模型的强化学习问题求解方法。蒙特卡罗法中<code>Gt</code>的计算需要完整序列，而时序差分法没有完整的状态序列，只有部分的状态序列，由贝尔曼方程：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228085858.png" alt="image-20211228085858501" style="zoom:50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228085858.png" alt="image-20211228085858501" style="zoom:50%;">
 
 <p>可知，可以用<code>Rt+1+γv(St+1)</code>来近似的代替收获Gt。</p>
 <p>一般我们把<code>Rt+1+γV(St+1)</code>称为<strong>目标值</strong>，<code>Rt+1+γV(St+1)−V(St)</code>称为<strong>TD误差</strong>，将用目标值近似代替收获G(t)的过程称为<strong>引导</strong>(bootstrapping)。这样只需要两个连续的状态与对应的奖励，就有了近似收获Gt的表达式，可以去求解时序差分的预测问题和控制问题了。</p>
@@ -561,16 +561,16 @@
 <ul>
 <li><p>收获Gt的表达式不同</p>
 <ul>
-<li>蒙特卡罗 G(t) 需要遍历完整过程才能得出：<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228102751.png" alt="image-20211228102751434" style="zoom: 50%;" /></li>
-<li>时序差分 G(t)记录连续两个状态就可得出，称为 <strong>TD Target</strong> ：<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228110419.png" alt="image-20211228110419330" style="zoom: 50%;" /></li>
+<li>蒙特卡罗 G(t) 需要遍历完整过程才能得出：<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228102751.png" alt="image-20211228102751434" style="zoom: 50%;"></li>
+<li>时序差分 G(t)记录连续两个状态就可得出，称为 <strong>TD Target</strong> ：<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228110419.png" alt="image-20211228110419330" style="zoom: 50%;"></li>
 </ul>
 </li>
 <li><p>迭代式子的系数不同，时序差分没有完整的序列，也就没有对应的次数N(St, At)，一般用一个[0,1]的系数α代替：</p>
 <ul>
 <li><p>蒙特卡罗:    </p>
-  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228110505.png" alt="image-20211228110505164" style="zoom:50%;" /></li>
+  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228110505.png" alt="image-20211228110505164" style="zoom:50%;"></li>
 <li><p>时序差分: </p>
-  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228110514.png" alt="image-20211228110514567" style="zoom:50%;" /></li>
+  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228110514.png" alt="image-20211228110514567" style="zoom:50%;"></li>
 </ul>
 </li>
 </ul>
@@ -582,33 +582,33 @@
 </ul>
 <p>&nbsp;</p>
 <h3 id="n步时序差分："><a href="#n步时序差分：" class="headerlink" title="n步时序差分："></a>n步时序差分：</h3><p>&emsp;&emsp;上面用TD Target代替收获Gt的公式中，St只向前一步到St+1，若用向前2步、n步来近似代替Gt，则为n步时序差分：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228105615.png" alt="image-20211228105615429" style="zoom: 33%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228105615.png" alt="image-20211228105615429" style="zoom: 33%;">
 
 <p>&emsp;&emsp;（当n越来越大，趋于无穷，或者说趋于使用完整的状态序列时，n步时序差分就等价于蒙特卡罗法了）</p>
 <p>&nbsp;</p>
 <h3 id="TD-λ"><a href="#TD-λ" class="headerlink" title="TD(λ)"></a>TD(λ)</h3><p><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228112323.png" alt="image-20211228112323589"></p>
 <p>&emsp;&emsp;n步时序差分选择多少步数是一个超参数调优问题(一般3~10比较好)。为了能在不增加计算复杂度的情况下综合考虑所有步数的预测，引入一个[0,1]新的参数λ，定义收获是n从1到∞所有步的收获乘以权重的和：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211229100620.png" alt="image-20211229100620726" style="zoom:50%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211229100620.png" alt="image-20211229100620726" style="zoom:50%;">
 
 <p>每一步的权重是<code>(1−λ)*λ^(n−1)</code></p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228112010.png" alt="image-20211228112009881" style="zoom: 33%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228112010.png" alt="image-20211228112009881" style="zoom: 33%;">
 
 <p>&emsp;&emsp;进而有价值函数：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228142817.png" alt="image-20211228142817279" style="zoom:25%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228142817.png" alt="image-20211228142817279" style="zoom:25%;">
 
 <p>&emsp;&emsp;从前向来看，一个状态的价值V(St)由Gt得到，而Gt又间接由所有后续状态价值计算得到，因此可以认为更新一个状态的价值需要知道所有后续状态的价值。也就是说，必须要经历完整的状态序列获得包括终止状态的每一个状态的即时奖励才能更新当前状态的价值。这和蒙特卡罗法的要求一样，因此TD(λ)有着和蒙特卡罗法一样的劣势。当λ=0 时，就是上面的普通时序差分法；当λ=1时，就是蒙特卡罗法。</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228111541.png" alt="image-20211228111540959" style="zoom:25%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228111541.png" alt="image-20211228111540959" style="zoom:25%;">
 
 <p>&emsp;&emsp;从反向来看，它可以分析我们状态对后续状态的影响。比如老鼠在依次连续接受了3 次响铃和1 次亮灯信号后遭到了电击，那么在分析遭电击的原因时，到底是响铃的因素较重要还是亮灯的因素更重要呢？如果把老鼠遭到电击的原因认为是之前接受了较多次数的响铃，则称这种归因为<strong>频率启发(frequency heuristic) 式</strong>；而把电击归因于最近少数几次状态的影响，则称为<strong>就近启发(recency heuristic) 式</strong>。</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228111604.png" alt="image-20211228111604749" style="zoom:25%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228111604.png" alt="image-20211228111604749" style="zoom:25%;">
 
 
 
 <p><strong>效用迹E</strong></p>
 <p>&emsp;&emsp;给每一个状态引入一个数值：<strong>效用值</strong> 来表示该状态对后续状态的影响，就可以同时利用到上述两个启发(同事反映二者)。而所有状态的效用值总称为**效用迹(eligibility traces, ES)**。定义为：</p>
-<p>​                        <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228135203.png" alt="image-20211228135203250" style="zoom:25%;" />    </p>
+<p>​                        <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228135203.png" alt="image-20211228135203250" style="zoom:25%;">    </p>
 <p>&emsp;&emsp;此时价值函数为：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228134525.png" alt="image-20211228134525809" style="zoom: 25%;" />
+<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211228134525.png" alt="image-20211228134525809" style="zoom: 25%;">
 
 <p>&nbsp;</p>
 <h3 id="小结-2"><a href="#小结-2" class="headerlink" title="小结"></a>小结</h3><p>&emsp;&emsp;时序差分和蒙特卡罗法比它更加灵活，学习能力更强，因此是目前主流的强化学习求解问题的方法，现在绝大部分强化学习乃至深度强化学习的求解都是以时序差分的思想为基础的。</p>
