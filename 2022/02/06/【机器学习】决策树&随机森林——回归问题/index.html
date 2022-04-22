@@ -39,25 +39,25 @@
 <meta property="og:site_name" content="最忆是江南">
 <meta property="og:description" content="&amp;emsp;&amp;emsp;在监督学习中，分类问题通常是指预测离散类的标签，而回归问题则是预测连续类的值。分类并没有逼近的概念，最终正确结果只有一个，错误的就是错误的，不会有相近的概念；而回归则是使预测值不断逼近理论值，会存在误差。 &amp;emsp;&amp;emsp;本文记录如何使用决策树和随机森林求解回归问题。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220206110710.png">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220206105908.png">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220205222452.png">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220206102520.png">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220206102747.png">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220206102838.png">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220206102520.png">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220206103448.png">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220206103610.png">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220206105253.png">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220206111245.png">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220206110710.png">
+<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220206110710.png">
+<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220206105908.png">
+<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220205222452.png">
+<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220206102520.png">
+<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220206102747.png">
+<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220206102838.png">
+<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220206102520.png">
+<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220206103448.png">
+<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220206103610.png">
+<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220206105253.png">
+<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220206111245.png">
+<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220206110710.png">
 <meta property="article:published_time" content="2022-02-06T03:35:58.646Z">
-<meta property="article:modified_time" content="2022-02-09T11:16:31.081Z">
+<meta property="article:modified_time" content="2022-04-22T12:18:26.271Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="Regression">
 <meta property="article:tag" content="Machine Learning">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220206110710.png">
+<meta name="twitter:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220206110710.png">
 
 <link rel="canonical" href="https://sharp-rookie.github.io/2022/02/06/%E3%80%90%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E3%80%91%E5%86%B3%E7%AD%96%E6%A0%91&%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97%E2%80%94%E2%80%94%E5%9B%9E%E5%BD%92%E9%97%AE%E9%A2%98/">
 
@@ -306,7 +306,7 @@
       
         <p>&emsp;&emsp;在监督学习中，分类问题通常是指预测离散类的标签，而回归问题则是预测连续类的值。分类并没有逼近的概念，最终正确结果只有一个，错误的就是错误的，不会有相近的概念；而回归则是使预测值不断逼近理论值，会存在误差。</p>
 <p>&emsp;&emsp;本文记录如何使用决策树和随机森林求解回归问题。</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220206110710.png" alt="image-20220206110710194" style="zoom:40%;" />
+<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220206110710.png" alt="image-20220206110710194" style="zoom:40%;" />
 
 <span id="more"></span>
 
@@ -314,20 +314,20 @@
 <h2 id="回归树"><a href="#回归树" class="headerlink" title="回归树"></a>回归树</h2><p>&emsp;&emsp;决策树模型既能用于解决分类问题，又能用于处理回归问题，在处理回归问题时，决策树就成为了回归树。不过要注意，回归树与分类时的决策树的不同之处在于，回归树对输入空间的划分采用一种启发式的方法，会遍历所有输入变量，找到最优的切分变量（特征）和最优的切分点（阈值）。在这一步中，回归树不使用熵或者Gini指数表示的不纯度来作为判断依据，而是改用类似损失函数的思想，对不同切分变量和切分点带来的模型误差进行定量计算，取带来最小误差损失的切分变量和切分点。</p>
 <h3 id="回归树的建立"><a href="#回归树的建立" class="headerlink" title="回归树的建立"></a>回归树的建立</h3><h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><p><strong>分叉特征的选择</strong></p>
 <p>对特征空间的划分采用启发式方法，每次划分逐一考察当前集合中所有特征的所有取值，根据平方误差最小化准则选择其中最优的一个作为切分点，平方误差表达式如下：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220206105908.png" alt="image-20220205222348334" style="zoom: 67%;" />
+<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220206105908.png" alt="image-20220205222348334" style="zoom: 67%;" />
 
 <p>其中，<code>f(xi)</code> 是每个划分单元的预测值，这个预测值是该单元内每个样本点的值的均值：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220205222452.png" alt="image-20220205222452942" style="zoom:67%;" />
+<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220205222452.png" alt="image-20220205222452942" style="zoom:67%;" />
 
 <p>（这里将输入空间划分为M个单元：R1,R2,…,Rm）</p>
 <p>也就是说，切分变量 <code>j</code> 及切分点 <code>s</code> 的选择必须满下式：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220206102520.png" alt="image-20220206102520423" style="zoom: 60%;" />
+<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220206102520.png" alt="image-20220206102520423" style="zoom: 60%;" />
 
 <p>其中，c1、c2为划分后两个区域内固定的输出值，方括号内的两个min意为使用的是最优值，而最优值对应就是两个区域内各自Y的平均值，故上式可写成：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220206102747.png" alt="image-20220206102746971" style="zoom:60%;" />
+<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220206102747.png" alt="image-20220206102746971" style="zoom:60%;" />
 
 <p>其中，c1、c2分别为：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220206102838.png" alt="image-20220206102838239" style="zoom:67%;" />
+<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220206102838.png" alt="image-20220206102838239" style="zoom:67%;" />
 
 <p>找到最优的切分点(j,s)后，依次将输入空间划分为两个区域，接着对每个区域重复上述划分过程，直到满足停止条件为止。这样就生成了一棵回归树，这样的回归树通常称为<strong>最小二乘回归树</strong>。</p>
 <p><strong>输出值</strong></p>
@@ -337,19 +337,19 @@
 <p>在训练数据集所在的输入空间中，递归地将每个区域划分为两个子区域并决定每个子区域上的输出值，构建二叉决策树：</p>
 <ol>
 <li><p>选择最优切分变量 <code>j</code> 与切分点 <code>s</code>，求解</p>
- <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220206102520.png" alt="image-20220206102520423" style="zoom: 60%;" />
+ <img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220206102520.png" alt="image-20220206102520423" style="zoom: 60%;" />
 
 <p> 遍历变量 <code>j</code>，对固定的切分变量 <code>j</code> 扫描切分点 <code>s</code>，选出使上式取最小值的对 <code>(j,s)</code></p>
 </li>
 <li><p>用选定的对 <code>(j,s)</code> 划分区域并决定相应的输出值：</p>
- <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220206103448.png" alt="image-20220206103448102" style="zoom: 67%;" />
+ <img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220206103448.png" alt="image-20220206103448102" style="zoom: 67%;" />
 
 <p> 其中，R1、R2分别表示切分出的两个区间</p>
 </li>
 <li><p>继续对两个子区域调用步骤(1),(2)，直至满足停止条件</p>
 </li>
 <li><p>将输入空间划分为M个区域：R1、R2……Rm，生成决策树：</p>
- <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220206103610.png" alt="image-20220206103610660" style="zoom:67%;" />
+ <img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220206103610.png" alt="image-20220206103610660" style="zoom:67%;" />
 
 <p> 其中 <code>I</code> 为指示函数</p>
 </li>
@@ -527,7 +527,7 @@
 </li>
 <li><p>生成回归树：</p>
 <p> 假设两次划分后即停止，则最终生成的回归树为：</p>
- <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220206105253.png" alt="image-20220206105253300" style="zoom:67%;" /></li>
+ <img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220206105253.png" alt="image-20220206105253300" style="zoom:67%;" /></li>
 </ol>
 <p>&nbsp;</p>
 <h3 id="sklearn使用"><a href="#sklearn使用" class="headerlink" title="sklearn使用"></a>sklearn使用</h3><h4 id="DecisionTreeRegressor"><a href="#DecisionTreeRegressor" class="headerlink" title="DecisionTreeRegressor"></a>DecisionTreeRegressor</h4><p>&emsp;&emsp;sklearn中已经封装好了回归树的对象<a target="_blank" rel="noopener" href="https://scikit-learn.org.cn/view/785.html">sklearn.tree.DecisionTreeRegressor</a>，使用时注意参数和接口的定义即可：</p>
@@ -539,10 +539,10 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> sklearn.tree <span class="keyword">as</span> tree</span><br><span class="line"><span class="keyword">from</span> sklearn.tree <span class="keyword">import</span> DecisionTreeRegressor</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> graphviz</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create a random dataset</span></span><br><span class="line">rng = np.random.RandomState(<span class="number">1</span>)</span><br><span class="line">X = np.sort(<span class="number">5</span> * rng.rand(<span class="number">80</span>, <span class="number">1</span>), axis=<span class="number">0</span>)</span><br><span class="line">y = np.sin(X).ravel()</span><br><span class="line">y[::<span class="number">5</span>] += <span class="number">3</span> * (<span class="number">0.5</span> - rng.rand(<span class="number">16</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Fit regression model</span></span><br><span class="line">regr = DecisionTreeRegressor(max_depth=<span class="number">2</span>)</span><br><span class="line">regr.fit(X, y)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Predict</span></span><br><span class="line">X_test = np.arange(<span class="number">0.0</span>, <span class="number">5.0</span>, <span class="number">0.01</span>)[:, np.newaxis]</span><br><span class="line">y_test = regr.predict(X_test)</span><br><span class="line"></span><br><span class="line"><span class="comment"># visualize the tree</span></span><br><span class="line">dot_data = tree.export_graphviz(</span><br><span class="line">    regr,</span><br><span class="line">    out_file=<span class="literal">None</span>,</span><br><span class="line">    filled=<span class="literal">True</span>,</span><br><span class="line">    rounded=<span class="literal">True</span>,</span><br><span class="line">    special_characters=<span class="literal">True</span></span><br><span class="line">)</span><br><span class="line">graph = graphviz.Source(dot_data)</span><br><span class="line">graph.render(<span class="string">&quot;regression&quot;</span>, view=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Plot the results</span></span><br><span class="line">plt.figure()</span><br><span class="line">plt.scatter(X, y, s=<span class="number">20</span>, edgecolor=<span class="string">&quot;black&quot;</span>,</span><br><span class="line">            c=<span class="string">&quot;darkorange&quot;</span>, label=<span class="string">&quot;original data&quot;</span>)</span><br><span class="line">plt.plot(X_test, y_test, color=<span class="string">&quot;cornflowerblue&quot;</span>,</span><br><span class="line">         label=<span class="string">&quot;regression&quot;</span>, linewidth=<span class="number">2</span>)</span><br><span class="line">plt.xlabel(<span class="string">&quot;data&quot;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&quot;target&quot;</span>)</span><br><span class="line">plt.title(<span class="string">&quot;Decision Tree Regression&quot;</span>)</span><br><span class="line">plt.legend()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
 
 <p>回归树结构：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220206111245.png" alt="image-20220206111245582" style="zoom: 45%;" />
+<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220206111245.png" alt="image-20220206111245582" style="zoom: 45%;" />
 
 <p>效果：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220206110710.png" alt="image-20220206110710194" style="zoom:40%;" />
+<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220206110710.png" alt="image-20220206110710194" style="zoom:40%;" />
 
 <p>&nbsp;</p>
 <p>&nbsp;</p>

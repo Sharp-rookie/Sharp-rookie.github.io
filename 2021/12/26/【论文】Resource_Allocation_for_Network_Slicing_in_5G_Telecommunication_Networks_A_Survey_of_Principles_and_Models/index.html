@@ -39,20 +39,20 @@
 <meta property="og:site_name" content="最忆是江南">
 <meta property="og:description" content="背景&amp;emsp;&amp;emsp;随着网络需求的快速持续增长，5G网络需要为传统网络运营商、垂直行业、OTT、第三方满足不同服务质量 (QoS)、服务水平协议 (SLA) 和关键绩效指标 (KPI)的要求，在这种情况下，第四代 (4G) 电信网络的“一刀切”和“一网通”类型不再适用。 &amp;emsp;&amp;emsp;网络切片是一种很有前途的技术，它可以建立包含专用和共享资源的定制端到端逻辑网络，通过利用 SDN">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211226105342.png">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211226123601.png">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211226135025.png">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211226135101.png">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211226161345.png">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211226161507.png">
+<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20211226105342.png">
+<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20211226123601.png">
+<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20211226135025.png">
+<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20211226135101.png">
+<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20211226161345.png">
+<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20211226161507.png">
 <meta property="article:published_time" content="2021-12-26T08:28:44.866Z">
-<meta property="article:modified_time" content="2022-01-26T09:35:38.011Z">
+<meta property="article:modified_time" content="2022-04-22T12:18:26.280Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="5G">
 <meta property="article:tag" content="Network Slice">
 <meta property="article:tag" content="Resource Management">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20211226105342.png">
+<meta name="twitter:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20211226105342.png">
 
 <link rel="canonical" href="https://sharp-rookie.github.io/2021/12/26/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91Resource_Allocation_for_Network_Slicing_in_5G_Telecommunication_Networks_A_Survey_of_Principles_and_Models/">
 
@@ -325,7 +325,7 @@
 <p>&nbsp;</p>
 <h2 id="MO架构"><a href="#MO架构" class="headerlink" title="MO架构"></a>MO架构</h2><p>&emsp;&emsp;Management and Orchestration Architecture of Network Slicing</p>
 <p>&emsp;&emsp;网络切片的基本问题包括网络切片需求的描述和网络切片的部署及其生命周期管理。为了解决这些问题，第三代合作伙伴计划 (3GPP) 提出了具有相应网络功能的基本 MO 架构，包括通信服务管理功能 (CSMF)、网络切片管理功能 (NSMF) 和网络切片子网管理功能 (NSSMF) ，每个子网都有一个 NSSMF，例如：RAN、CN。</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211226105342.png" alt="image-20211226105335500" style="zoom: 50%;" />
+<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20211226105342.png" alt="image-20211226105335500" style="zoom: 50%;" />
 
 <p>&emsp;&emsp;在这种架构下，特定网络服务的需求由CMSF转换为网络切片的需求（即网络切片需求描述），传递给NSMF。然后，NSMF 将网络切片的需求分解为不同子网的需求。不同子网中的 NSSMF 管理和编排相应子网中的网络切片。例如，CN 中的 NSSMF 可以根据从 NSMF 接收到的网络服务的需求，求解出计算、存储和网络资源（即 VM 的资源）相关联的 VNF 的数量。然后，基本的 VNF 由 NFV-MANO 初始化，如图左侧所示。资源分配依赖于带有NFV-MANO的NSSMF，可以根据网络服务的需求计算所需的资源。此外，带有 NFV-MANO 的 NSSMF 可以通过升级或扩展网络功能来动态调整资源分配，这些功能由流量波动或网络切片需求的变化触发。在网络切片的 MO 架构下，隔离级别和数学模型在资源分配中扮演着重要的角色。</p>
 <p>&nbsp;</p>
@@ -333,15 +333,15 @@
 <h2 id="Resouce-Type-and-Isolation"><a href="#Resouce-Type-and-Isolation" class="headerlink" title="Resouce Type and Isolation"></a>Resouce Type and Isolation</h2><h4 id="RAN-Slicing"><a href="#RAN-Slicing" class="headerlink" title="RAN Slicing"></a>RAN Slicing</h4><p>&emsp;&emsp;频谱是 RAN 切片的基本无线资源，在长期演进 (4G LTE) 系统中，频谱资源被提取为资源块 (RB) 或物理资源块 (PRB)。具有专用 PRB 的网络切片严格确保所需的 QoS/SLA，而公共媒体访问控制 (MAC) 调度程序可以分配和管理共享 PRB 以适应弹性流量、变化的信道条件和 QoS 要求，从而增强资源弹性和复用增益。除了频谱资源以外，其他基本物理资源还有：包括传输功率和基站（BS）的缓存空间等。</p>
 <p>&emsp;&emsp;基于 PRB 隔离，数据包调度作为一种高级隔离，负责决定使用空闲 PRB 处理数据流量的时间。最高级别的资源隔离是<strong>准入控制</strong>，它通过估计网络资源使用状态来确定是否在用户和 CN（即无线接入承载）之间建立数据传送服务。更一般地，准入控制还包括确定是否允许用户访问网络或是否接受网络切片请求。此外，<strong>用户关联</strong>是RAN切片中资源分配的重要步骤，它决定了用户是否与特定的BS相关联。用户关联发生在数据传输之前和用户准入控制之后。很难为用户关联确定不同的隔离级别，但值得注意的是它在负载平衡、无线电频谱效率和网络效率方面起着关键作用。</p>
 <p>&emsp;&emsp;与传统的RAN架构相比，Cloud-RAN（C-RAN）将基带过程和远程无线接入分离。集中式基带单元 (BBU) 池、分布式多个远程射频头 (RRH)、通过光链路连接 BBU 池和 RRH 的前传网络以及将 BBU 池连接到 CN 的回程网络是 C-RAN的四个基本部分。 BBU池用于基带处理，建立在具有虚拟化技术的高性能通用硬件上，可以运行在虚拟机或容器上，以提高物理资源（如计算、存储、网络资源）的利用率。由于部署成本低，分布式 RRH 通过天线为用户提供无线接入，以低 CAPEX 和 OPEX 覆盖大面积区域。在设计资源分配算法时，BBU 池和具有前传带宽的 RRH 的容量是重要因素。此外，用户关联和回程容量也会影响资源分配。下图左侧总结了与 RAN 切片的资源类型相关的隔离级别。</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211226123601.png" alt="image-20211226123601454" style="zoom:67%;" />
+<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20211226123601.png" alt="image-20211226123601454" style="zoom:67%;" />
 
 <h4 id="CN-Slicing"><a href="#CN-Slicing" class="headerlink" title="CN Slicing"></a>CN Slicing</h4><p>&emsp;&emsp;与4G中的EPC相比，5G核心网采用更加模块化的架构，将网络划分为更细粒度的网络功能。每个网络功能都可以以VM或容器的方式部署在虚拟平台上，由SDN和NFV进行管理和编排，提供灵活、可扩展、可编程的网络服务。CN 切片中的高级资源隔离可以是 VM 或容器，这意味着网络运营商利用 VM 或容器粒度的扩展/扩展操作来初始化或调整资源分配。</p>
 <p>&emsp;&emsp;在NFV-MANO的框架下，一个CN切片由多个VNF组成，形成一个运行在底层网络上的虚拟网络。在这种情况下，CN 切片的资源分配被转换为虚拟网络嵌入 (VNE) 问题。VNE 提出了两个问题：将虚拟节点映射到物理节点，将连接虚拟节点的虚拟链路映射到连接物理节点的路径。物理节点和路径代表计算、存储和网络资源。在我们看来，VNE 可用于对 CN 切片以及 C-RAN 切片的某些部分（例如，BBU 容量的虚拟化）中的资源分配问题进行建模。 </p>
 <p>CN 切片中的隔离级别和资源类型：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211226135025.png" alt="CN 切片中的隔离级别和资源类型" style="zoom: 67%;" />
+<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20211226135025.png" alt="CN 切片中的隔离级别和资源类型" style="zoom: 67%;" />
 
 <p>无线资源管理、VNE和网络切片的资源分配之间的关系：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211226135101.png" alt="image-20211226135101482" style="zoom:50%;" />
+<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20211226135101.png" alt="image-20211226135101482" style="zoom:50%;" />
 
 
 
@@ -414,10 +414,10 @@
 <p>优化目标是在重新映射期间最小化总带宽消耗。</p>
 <p>&nbsp;</p>
 <h3 id="4种模型对比"><a href="#4种模型对比" class="headerlink" title="4种模型对比"></a>4种模型对比</h3><p>图中说明了四种数学模型之间的关系，每个饼图中每种方法的比例代表了相应的研究潜力：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211226161345.png" alt="image-20211226161345382" style="zoom: 33%;" />
+<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20211226161345.png" alt="image-20211226161345382" style="zoom: 33%;" />
 
 <p>表中根据目标、资源类型、场景和关键描述总结了所讨论的算法：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20211226161507.png" alt="image-20211226161507843" style="zoom:50%;" />
+<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20211226161507.png" alt="image-20211226161507843" style="zoom:50%;" />
 
 <p>&nbsp;</p>
 <p>&nbsp;</p>

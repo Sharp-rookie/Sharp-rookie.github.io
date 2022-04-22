@@ -39,21 +39,21 @@
 <meta property="og:site_name" content="最忆是江南">
 <meta property="og:description" content="背景&amp;emsp;&amp;emsp;深度强化学习 (DRL) 侧重于如何通过尝试替代动作和强化产生更有益结果的倾向动作来与环境交互，是网络切片资源管理问题的一个有前途的解决方案。本文在简要回顾了 DRL 的基本概念后，研究了 DRL 在解决网络切片场景中一些典型资源管理的应用，包括无线资源切片和基于优先级的核心网络切片。最后还从一般的角度讨论了在网络切片中应用 DRL 可能面临的挑战。   原文 Deep">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220119150855.png">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220118211133.png">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220118225751.png">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220118225918.png">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220118225906.png">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220118230416.png">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220118230644.png">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220119143034.png">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220119143057.png">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220119144047.png">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220119144109.png">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220119144124.png">
-<meta property="og:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220118231408.png">
+<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220119150855.png">
+<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220118211133.png">
+<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220118225751.png">
+<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220118225918.png">
+<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220118225906.png">
+<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220118230416.png">
+<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220118230644.png">
+<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220119143034.png">
+<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220119143057.png">
+<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220119144047.png">
+<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220119144109.png">
+<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220119144124.png">
+<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220118231408.png">
 <meta property="article:published_time" content="2022-01-19T07:09:49.516Z">
-<meta property="article:modified_time" content="2022-02-21T11:26:09.897Z">
+<meta property="article:modified_time" content="2022-04-22T12:18:26.277Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="Deep Learning">
 <meta property="article:tag" content="Reinforcement Learning">
@@ -61,7 +61,7 @@
 <meta property="article:tag" content="Network Slice">
 <meta property="article:tag" content="Resource Management">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gitee.com/lrk612/md_picture/raw/master/img/20220119150855.png">
+<meta name="twitter:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220119150855.png">
 
 <link rel="canonical" href="https://sharp-rookie.github.io/2022/01/19/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91Deep%20Reinforcement%20Learning%20for%20Resource%20Management%20in%20Network%20Slicing/">
 
@@ -309,7 +309,7 @@
 
       
         <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>&emsp;&emsp;深度强化学习 (DRL) 侧重于如何通过尝试替代动作和强化产生更有益结果的倾向动作来与环境交互，是网络切片资源管理问题的一个有前途的解决方案。本文在简要回顾了 DRL 的基本概念后，研究了 DRL 在解决网络切片场景中一些典型资源管理的应用，包括<strong>无线资源切片</strong>和<strong>基于优先级的核心网络切片</strong>。最后还从一般的角度讨论了在网络切片中应用 DRL 可能面临的挑战。</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220119150855.png" alt="image-20220118210056206" style="zoom: 40%;" />
+<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220119150855.png" alt="image-20220118210056206" style="zoom: 40%;" />
 
 <p><strong>原文</strong></p>
 <p><a target="_blank" rel="noopener" href="https://lrk612.com/resources/Deep_Reinforcement_Learning_for_Resource_Management_in_Network_Slicing.pdf">Deep Reinforcement Learning for Resource Management in Network Slicing</a></p>
@@ -403,7 +403,7 @@
 <p> &emsp;&emsp;由于频谱资源有限，无线接入的资源管理关注如何为切片分配资源块（RB）以保持可接受的频谱效率(SE)，同时兼顾通信速率和低延迟。</p>
 <p> &emsp;&emsp;核心网络中广泛采用的光传输将核心网络的优化方向转移到设计通用或专用的虚拟网络功能（VNF），以便以最小的调度延迟适当地转发来自特定切片的数据包。</p>
 <p> &emsp;&emsp;通过平衡资源利用率（如 SE）和 QoE 满意度的权重，资源管理目标可以表示为 <code>R =ζ·SE+β·QoE</code>，其中 <code>ζ</code> 和 <code>β</code> 表示 SE 和 QoE 的权重</p>
- <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220118211133.png" alt="image-20220118211133807" style="zoom:50%;" />
+ <img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220118211133.png" alt="image-20220118211133807" style="zoom:50%;" />
 
  <center>图2</center></li>
 <li><p><strong>平等或优先调度</strong></p>
@@ -413,16 +413,16 @@
 <p>&emsp;&emsp;基于上述讨论可以得出结论：网络切片的资源管理目标应该考虑：频谱利用率(SE)、QoE 满意度、等待时间(WT)等因素，它们的加权总和作为强化学习Agent的Reward。</p>
 <p>&nbsp;</p>
 <h3 id="接入网：无线资源分配"><a href="#接入网：无线资源分配" class="headerlink" title="接入网：无线资源分配"></a>接入网：无线资源分配</h3><h4 id="优化目标"><a href="#优化目标" class="headerlink" title="优化目标"></a>优化目标</h4><p>&emsp;&emsp;在这一部分中，我们将讨论如何将 DRL 应用于无线电资源切片。在数学上，给定现有切片列表 <code>1,···,N</code> 共享聚合带宽 <code>W</code> 并具有波动需求 <code>d = (d1,···,dN )</code>，目标是给出带宽共享解决方案 <code>w = (w1,· ·· ,wN )</code>，从而使长期回报期望 <code>E&#123;R(w,d)&#125;</code> 最大化，即：</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220118225751.png" alt="image-20220118225751473" style="zoom:67%;" />
+<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220118225751.png" alt="image-20220118225751473" style="zoom:67%;" />
 
 <p>&emsp;&emsp;求解这个优化问题的难点在于由于流量模型的波动性需求变化没有先验知识。因此，Model-Free的DQN模型正适用于此问题的求解。</p>
 <h4 id="通信场景"><a href="#通信场景" class="headerlink" title="通信场景"></a>通信场景</h4><p>&emsp;&emsp;下文通过模拟一个场景来评估采用 DQN 解决此问题的性能，该场景包含一个具有三种业务（ VoIP、视频、URLLC）的单基站(BS)。在基站周围40米半径范围内随机分布有100个注册用户。这些订阅用户生成下表中的服务模型。VoIP 和视频服务完全采用 VoLTE 和视频流模型的参数设置，而 URLLC 服务采用 FTP 2 模型 [24] 的参数设置。从表(b)可以看出，URLLC 的数据包频率较低，而 VoLTE 对其数据包的带宽要求最小。</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220118225918.png" alt="image-20220118225918334" style="zoom: 67%;" />
+<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220118225918.png" alt="image-20220118225918334" style="zoom: 67%;" />
 
 <center>表(b)</center>
 
 <h4 id="DQN建模"><a href="#DQN建模" class="headerlink" title="DQN建模"></a>DQN建模</h4><p>&emsp;&emsp;DQN相关参数如下表所示，Reward是系统 SE 和 切片 QoE。具体而言，DQN 代理每秒更新其 Q 值神经网络，并调整每个切片的带宽分配比例。每秒内以 0.5 ms 的粒度在每个切片内执行循环调度（Round-Robin）方法来分配频域资源，即每隔 0.5 ms 将每个 slice 的带宽顺序分配给每个 slice 内的活跃用户（Active UE）。</p>
-<img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220118225906.png" alt="image-20220118225906764" style="zoom:67%;" />
+<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220118225906.png" alt="image-20220118225906764" style="zoom:67%;" />
 
 <center>表(a)</center>
 
@@ -433,10 +433,10 @@
 <ul>
 <li><p><strong>DP-No</strong> </p>
 <p>  &emsp;&emsp;总带宽按各业务预测数据包数量比例分配。假设总带宽为 B，VoIP、视频、URLLC 的预测数据包数为 NVoIP、NVideo 和 NURLLC，则分配给这三个切片（即 VoIP、视频和 URLLC）的带宽分别为： </p>
-  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220118230416.png" alt="image-20220118230416930" style="zoom: 50%;" /></li>
+  <img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220118230416.png" alt="image-20220118230416930" style="zoom: 50%;" /></li>
 <li><p><strong>DP-BW</strong> </p>
 <p>  &emsp;&emsp;总带宽按（各业务预测数据包数量×该业务最低要求速率）的比例分配。假设三个切片所需的速率为 RVoIP、RVideo 和 RURLLC，则分配给 VoIP、视频和 URLLC 的带宽分别为：</p>
-  <img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220118230644.png" alt="image-20220118230644957" style="zoom:0%;" /></li>
+  <img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220118230644.png" alt="image-20220118230644957" style="zoom:0%;" /></li>
 </ul>
 <p>然后各切片内部再使用Round-Robin方式为活跃用户分配带宽资源。</p>
 <h5 id="硬切片法"><a href="#硬切片法" class="headerlink" title="硬切片法"></a>硬切片法</h5><p>总带宽平均分给三个业务的切片，然后各切片内部使用Round-Robin方式为活跃用户分配带宽资源。</p>
@@ -450,24 +450,24 @@
 </li>
 </ul>
 <h5 id="DQN算法效果"><a href="#DQN算法效果" class="headerlink" title="DQN算法效果"></a>DQN算法效果</h5><p>&emsp;&emsp;下图展示了 DQN（γ = 0.9时）在无线资源管理中的学习过程。图 (a)∼(f) 给出了当 QoE 权重为 5000 且 SE 权重为 0.1 时 DQN 的初始性能。图 (g)∼(l) 提供了 50000 次学习更新中最后 50 次的性能。从这些子图中可以看出，DQN 一开始并不能很好地了解用户活动，分配的带宽波动很大。但是经过近 50000 次更新后，DQN 已经更加了解用户活动规律，并产生了一个状态带宽分配策略。</p>
-<p><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220119143034.png" alt="image-20220119143034248"></p>
+<p><img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220119143034.png" alt="image-20220119143034248"></p>
 <center>图3.1</center>
 
 <p>&emsp;&emsp;图 (m) 和图 (n) 显示了 SE 和 QoE 随每个学习时期的变化。从这两个子图中看出，较大的 QoE 权重会产生具有出色 QoE 性能的策略，同时会在系统 SE 性能上带来一定的损失。</p>
-<p><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220119143057.png" alt="image-20220119143057419"></p>
+<p><img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220119143057.png" alt="image-20220119143057419"></p>
 <center>图3.2</center>
 
 <h5 id="与其他算法对比"><a href="#与其他算法对比" class="headerlink" title="与其他算法对比"></a>与其他算法对比</h5><p>&emsp;&emsp;下面展示DQN与DP-No、DP-BW、硬切片和无切片4种的详细性能比较，其中 DQN 的Reward中QoE权重分次设为1、50、5000，且 DQN 的结果取 50000 次学习更新后的。</p>
 <p>&emsp;&emsp;图 4(a)∼4(f) 使用饼图给出了分配给每个切片的总带宽的百分比，并在旁边标注了了 QoE 满意度。从图 4(a)∼4(b) 可以看出，传输天线从 64 个减少到 16 个（网络能力的下降和跨切片的潜在冲突的增加）时，网络带宽的重新分配倾向于消耗带宽但活动受限的 URLLC 切片。此外，从图 4(f) 可以看出，当下行传输使用 64 根天线时，“无切片”表现最好，因为传输能力足够，调度周期为 0.5 ms，而带宽分配给每个切片的速度每秒调整一次，因此捕捉需求变化的速度较慢。</p>
-<p><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220119144047.png" alt="image-20220119144047352"></p>
+<p><img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220119144047.png" alt="image-20220119144047352"></p>
 <center>图4.1    (a)DQN    (b)DQN    (c)DQN</center>
 
 <p>&emsp;&emsp;当下行天线数量达到 32 根时，DQN 驱动方案对 URLLC 的 QoE 满意率为 81%，而“无切片”和“硬切片”方案分别仅提供 15% 和 41% 的 URLLC 满意率数据包。显然，应用 DQN 主要带来 URLLC 的 QoE 增益。原因在于，如表 (b) 所示，URLLC 的数据包大小的分布遵循截断的对数正态分布，平均值为 2 MByte，远大于 VoLTE 和视频服务。考虑到更大的传输量和严格的低延迟要求，要满足 URLLC 的 QoE 难度要大得多。在这种情况下，DQN 优于其他竞争方案，以略微降低频谱效率 (SE) 的代价提供 URLLC 的更高 QoE 增益。同时，图 4(d) 和图 4(e) 展示了基于需求预测的方案的分配结果，并显示出其明显较差的性能，因为图 3(a)∼3(c) 和图 3(g) )∼3(i) 表明视频数据包的数量在传输中占主导地位，简单的基于数据包数的预测无法捕捉需求和 QoE 之间的复杂关系。</p>
-<p><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220119144109.png" alt="image-20220119144109034"></p>
+<p><img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220119144109.png" alt="image-20220119144109034"></p>
 <center>图4.2    (d)DP-BW    (e)DP-No    (f)No Sliicing</center>
 
 <p>&emsp;&emsp;图 4(g) 说明 DQN 的这种 QoE 优势是以降低 SE 为代价的。回顾 DQN 中奖励的定义，如果我们将 QoE 权重从 5000 降低到 1，DQN 可以学习另一种带宽分配策略（图 4(c)），从而产生更大的 SE 但更低的 QoE。图 4(g) ∼ 4(j) 进一步总结了 SE 或 QoE 满意度方面的性能比较，其中垂直误差条显示标准推导。这些子图验证了 DQN 在资源有限的场景中的灵活性和优势，以确保每个用户的 QoE。</p>
-<p><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220119144124.png" alt="image-20220119144124792"></p>
+<p><img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220119144124.png" alt="image-20220119144124792"></p>
 <center>图4.3    (g)System SE    (h)VolTE QoE    (i)Video QoE    (j)URLLC QoE</center>
 
 <p>&nbsp;</p>
@@ -481,7 +481,7 @@
 <p>SFC 的流程根据到达时间具有相同的优先级。每个 SFC 最终使用的 CPU 取决于其处理流的数量。此外，SFC I、II 和 III 需要 2、1.5 和 1 个 CPU，但无论流量大小如何，都会分别产生 10、15 和 20 毫秒时延。因此，受限于 CPU 数量的限制，每种类型的流将被调度到适当的 SFC，从而产生可接受的等待时间。因此，流的调度应该匹配和学习三类流的到达顾规律，DQN正派上用场。</p>
 <h4 id="DQN建模-1"><a href="#DQN建模-1" class="headerlink" title="DQN建模"></a>DQN建模</h4><p>&emsp;&emsp;首先是DQN模型输入、输出和参数的具体设置。文章将 DQN 的State抽象为最近 5 个流的类别和到达时间以及新到达流的类别的汇总，而Reward定义为该流的处理和排队时间的加权总和，其中在这个总和中采用较大的权重来反映具有较高优先级的流的重要性。此外，文章还事先通过模拟来自三个类别用户的对数正态分布到达间隔时间的一些流来预训练其 NN。</p>
 <h4 id="效果对比"><a href="#效果对比" class="headerlink" title="效果对比"></a>效果对比</h4><p>&emsp;&emsp;下面将 DQN 方案与直观的“无优先级”解决方案（将流量分配给 SFC，从而产生最短的等待时间）进行比较。图 5 通过随机生成 10000 个流并相应地提供相关性能，其中纵轴和横轴分别表示使用的 CPU 数量和流的等待时间。二维底纹颜色反映了具体等待时间和 CPU 利用率对应的流数。颜色越深意味着数值越大。 与“无优先级”解决方案相比，基于 DQN 的切片结果提供流程具有更短的平均等待时间（即比“无优先级”低 10.5%）和更充足的 CPU 使用率。也就是说，DQN 可以支持替代解决方案，通过首先为具有更高商业价值的用户服务来利用计算资源并减少等待时间。</p>
-<p><img src="https://gitee.com/lrk612/md_picture/raw/master/img/20220118231408.png" alt="image-20220118231408140"></p>
+<p><img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220118231408.png" alt="image-20220118231408140"></p>
 <center>图5</center>
 
 
