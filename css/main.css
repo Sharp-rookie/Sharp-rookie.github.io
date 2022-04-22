@@ -1191,7 +1191,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #e38e21;
+  background: #fffa54;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2588,7 +2588,7 @@ ul.breadcrumb li + li:last-child {
   margin-top: 16px;
 }
 body {
-  background: url("https://gitee.com/lrk612/md_picture/raw/master/img/20220310221757.JPG");
+  background: url("https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220310221757.JPG");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
@@ -2722,7 +2722,7 @@ body {
   display: none;
 }
 body {
-  background: url("https://gitee.com/lrk612/md_picture/raw/master/img/20220310221757.JPG");
+  background: url("https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220310221757.JPG");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
