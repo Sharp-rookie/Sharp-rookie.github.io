@@ -211,6 +211,216 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://sharp-rookie.github.io/2022/04/22/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91Matlab%EF%BC%9A%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Lrk612">
+      <meta itemprop="description" content="Lrk's blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="最忆是江南">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/22/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91Matlab%EF%BC%9A%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B/" class="post-title-link" itemprop="url">【数字图像处理】Matlab：边缘检测</a>
+        </h2>
+
+        <div class="post-meta">
+         
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-04-22 22:33:50" itemprop="dateCreated datePublished" datetime="2022-04-22T22:33:50+08:00">2022-04-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/" itemprop="url" rel="index"><span itemprop="name">知识分享</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2022/04/22/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91Matlab%EF%BC%9A%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B/" class="post-meta-item leancloud_visitors" data-flag-title="【数字图像处理】Matlab：边缘检测" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/04/22/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91Matlab%EF%BC%9A%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/04/22/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91Matlab%EF%BC%9A%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Matlab实验：频域数字图像增强</p>
+<ul>
+<li>点检测模板</li>
+<li>线检测模板</li>
+<li>JPEG编码</li>
+<li>图像边缘检测</li>
+<li>零交叉边缘检测</li>
+<li>马尔算子检测车牌</li>
+<li>Hough变换——线检测</li>
+</ul>
+<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img2/20220421222926.jpg" alt="2" style="zoom:25%;" />
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/04/22/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91Matlab%EF%BC%9A%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://sharp-rookie.github.io/2022/04/22/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91%E5%9B%BE%E5%83%8F%E5%A4%8D%E5%8E%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Lrk612">
+      <meta itemprop="description" content="Lrk's blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="最忆是江南">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/22/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91%E5%9B%BE%E5%83%8F%E5%A4%8D%E5%8E%9F/" class="post-title-link" itemprop="url">【数字图像处理】图像复原</a>
+        </h2>
+
+        <div class="post-meta">
+         
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-04-22 21:59:17" itemprop="dateCreated datePublished" datetime="2022-04-22T21:59:17+08:00">2022-04-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/" itemprop="url" rel="index"><span itemprop="name">知识分享</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2022/04/22/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91%E5%9B%BE%E5%83%8F%E5%A4%8D%E5%8E%9F/" class="post-meta-item leancloud_visitors" data-flag-title="【数字图像处理】图像复原" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/04/22/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91%E5%9B%BE%E5%83%8F%E5%A4%8D%E5%8E%9F/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/04/22/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91%E5%9B%BE%E5%83%8F%E5%A4%8D%E5%8E%9F/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><strong>数字图像处理第五章知识总结：</strong></p>
+<ul>
+<li>图像的退化和复原</li>
+<li>含噪图像复原方法</li>
+<li>退化函数估计复原</li>
+<li>逆滤波与维纳滤波</li>
+<li>几何校正</li>
+<li>图像的投影重建</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/04/22/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91%E5%9B%BE%E5%83%8F%E5%A4%8D%E5%8E%9F/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://sharp-rookie.github.io/2022/04/22/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91Matlab%EF%BC%9A%E5%9B%BE%E5%83%8F%E5%A4%8D%E5%8E%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1040,208 +1250,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://sharp-rookie.github.io/2022/03/05/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91Matlab%EF%BC%9A%E5%9B%BE%E5%83%8F%E5%9F%BA%E6%9C%AC%E8%BF%90%E7%AE%97/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Lrk612">
-      <meta itemprop="description" content="Lrk's blog">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="最忆是江南">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/05/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91Matlab%EF%BC%9A%E5%9B%BE%E5%83%8F%E5%9F%BA%E6%9C%AC%E8%BF%90%E7%AE%97/" class="post-title-link" itemprop="url">【数字图像处理】Matlab：图像基本运算</a>
-        </h2>
-
-        <div class="post-meta">
-         
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-03-05 22:20:20" itemprop="dateCreated datePublished" datetime="2022-03-05T22:20:20+08:00">2022-03-05</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/" itemprop="url" rel="index"><span itemprop="name">知识分享</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2022/03/05/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91Matlab%EF%BC%9A%E5%9B%BE%E5%83%8F%E5%9F%BA%E6%9C%AC%E8%BF%90%E7%AE%97/" class="post-meta-item leancloud_visitors" data-flag-title="【数字图像处理】Matlab：图像基本运算" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/03/05/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91Matlab%EF%BC%9A%E5%9B%BE%E5%83%8F%E5%9F%BA%E6%9C%AC%E8%BF%90%E7%AE%97/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/03/05/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91Matlab%EF%BC%9A%E5%9B%BE%E5%83%8F%E5%9F%BA%E6%9C%AC%E8%BF%90%E7%AE%97/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Matlab实验：图像数字化 &amp; 图像的基本运算</p>
-<ul>
-<li>图像插值</li>
-<li>采样与量化</li>
-<li>图像常规运算</li>
-</ul>
-<p><img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220305221958.png" alt="image-20220305221958560"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/03/05/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91Matlab%EF%BC%9A%E5%9B%BE%E5%83%8F%E5%9F%BA%E6%9C%AC%E8%BF%90%E7%AE%97/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://sharp-rookie.github.io/2022/03/03/%E3%80%90%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E3%80%91%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5%20&%20%E7%AE%97%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Lrk612">
-      <meta itemprop="description" content="Lrk's blog">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="最忆是江南">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/03/%E3%80%90%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E3%80%91%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5%20&%20%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">【多智能体强化学习】基础概念 & 算法</a>
-        </h2>
-
-        <div class="post-meta">
-         
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-03-03 22:23:42" itemprop="dateCreated datePublished" datetime="2022-03-03T22:23:42+08:00">2022-03-03</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/" itemprop="url" rel="index"><span itemprop="name">知识分享</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2022/03/03/%E3%80%90%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E3%80%91%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5%20&%20%E7%AE%97%E6%B3%95/" class="post-meta-item leancloud_visitors" data-flag-title="【多智能体强化学习】基础概念 & 算法" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/03/03/%E3%80%90%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E3%80%91%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5%20&%20%E7%AE%97%E6%B3%95/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/03/03/%E3%80%90%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E3%80%91%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5%20&%20%E7%AE%97%E6%B3%95/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>&emsp;&emsp;因为项目中遇到了多个体共同决策的场景，不同个体的离散动作空间和评价指标都不同，在使用DQN时发现随着个体数量的增加，动作空间会指数式扩张，同时奖励值的设计也很难兼顾所有需求。所以一方面尝试使用策略优化的DRL算法解决离散动作空间维度爆炸问题，另一方面考虑使用多智能体强化学习的算法。</p>
-<p>&emsp;&emsp;单智能体强化学习算法有Sutton的神作《Reinforcement Learning: An introduction》，但是多智能体强化学习方面就没什么系统的网课或者书籍，因此算是比较前沿的研究领域。多智能体强化学习专注于实现具有多个智能体的自主、自学习系统的领域，其中涉及大量博弈论概念，值得一学。</p>
-<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303221852.png" alt="image-20220303221852425" style="zoom:28%;" />
-
-<p><strong>关键词：</strong> MiniMax-Q、Nash-Q、MADDPG、COMDA、VDN、QMIX、博弈论、纳什均衡</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/03/03/%E3%80%90%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E3%80%91%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5%20&%20%E7%AE%97%E6%B3%95/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1313,7 +1321,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-count">50</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
