@@ -39,52 +39,52 @@
 <meta property="og:site_name" content="最忆是江南">
 <meta property="og:description" content="&amp;emsp;&amp;emsp;在机器学习和数据挖掘中，经常需要知道个体间差异的大小，进而评价个体的相似性和类别。最常见的是数据分析中的相关分析，数据挖掘中的分类和聚类算法，如 K 最近邻（KNN）和 K 均值（K-Means）等等。根据数据特性的不同，可以采用不同的度量方法，一般而言，是定义一个特定的距离函数 d(x,y)，本文记录机器学习和数据挖掘中一些常见的距离公式">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303083222.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220302232158.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303081801.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303081816.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303081827.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220302232533.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303081842.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303081853.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220302232751.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303081907.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303081920.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303081937.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303082041.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303082050.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220302233935.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220302234213.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303082004.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303082012.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303082023.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303075315.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303075329.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303075347.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303075601.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303084348.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303084403.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303085133.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303091737.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303091809.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303091916.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303092025.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303082108.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303082124.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303080149.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303080236.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303080254.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303080702.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303080734.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303082309.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303082320.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303082333.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220303083222.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220302232158.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220303081801.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220303081816.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220303081827.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220302232533.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220303081842.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220303081853.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220302232751.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220303081907.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220303081920.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220303081937.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220303082041.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220303082050.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220302233935.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220302234213.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220303082004.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220303082012.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220303082023.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220303075315.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220303075329.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220303075347.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220303075601.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220303084348.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220303084403.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220303085133.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220303091737.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220303091809.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220303091916.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220303092025.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220303082108.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220303082124.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220303080149.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220303080236.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220303080254.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220303080702.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220303080734.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220303082309.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220303082320.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220303082333.png">
 <meta property="article:published_time" content="2022-03-03T01:23:22.402Z">
-<meta property="article:modified_time" content="2022-04-22T14:34:02.669Z">
+<meta property="article:modified_time" content="2022-04-25T03:39:28.346Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="Machine Learning">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303083222.png">
+<meta name="twitter:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220303083222.png">
 
 <link rel="canonical" href="https://sharp-rookie.github.io/2022/03/03/%E3%80%90%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E3%80%91%E8%B7%9D%E7%A6%BB%20&%20%E7%9B%B8%E4%BC%BC%E5%BA%A6/">
 
@@ -332,47 +332,47 @@
 
       
         <p>&emsp;&emsp;在机器学习和数据挖掘中，经常需要知道个体间差异的大小，进而评价个体的相似性和类别。最常见的是数据分析中的相关分析，数据挖掘中的分类和聚类算法，如 K 最近邻（KNN）和 K 均值（K-Means）等等。根据数据特性的不同，可以采用不同的度量方法，一般而言，是定义一个特定的距离函数 d(x,y)，本文记录机器学习和数据挖掘中一些常见的距离公式</p>
-<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303083222.png" alt="image-20220303083222508" style="zoom:45%;" />
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220303083222.png" alt="image-20220303083222508" style="zoom:45%;" />
 
 <span id="more"></span>
 
 <p>&nbsp;</p>
 <h3 id="欧式距离"><a href="#欧式距离" class="headerlink" title="欧式距离"></a>欧式距离</h3><p>欧式距离即日常生活中的空间距离</p>
-<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220302232158.png" alt="image-20220302232151083" style="zoom:70%;" />
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220302232158.png" alt="image-20220302232151083" style="zoom:70%;" />
 
 <ul>
 <li><p>二维平面上点 a(x1,y1) 与 b(x2,y2) 间的欧氏距离：</p>
-  <img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303081801.png" alt="image-20220303081801343" style="zoom: 67%;" /></li>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img/20220303081801.png" alt="image-20220303081801343" style="zoom: 67%;" /></li>
 <li><p>三维空间点 a(x1,y1,z1) 与 b(x2,y2,z2) 间的欧氏距离：</p>
-  <img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303081816.png" alt="image-20220303081816766" style="zoom:67%;" /></li>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img/20220303081816.png" alt="image-20220303081816766" style="zoom:67%;" /></li>
 <li><p>n维空间点 a(x11,x12,…,x1n) 与 b(x21,x22,…,x2n) 间的欧氏距离（两个n维向量）：</p>
-  <img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303081827.png" alt="image-20220303081827097" style="zoom:67%;" /></li>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img/20220303081827.png" alt="image-20220303081827097" style="zoom:67%;" /></li>
 </ul>
 <p>Matlab计算距离使用pdist函数。若X是一个m×n的矩阵，则pdist(X)将X矩阵每一行作为一个n维行向量，然后计算这m个向量两两间的距离：</p>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">X=[<span class="number">1</span> <span class="number">1</span>;<span class="number">2</span> <span class="number">2</span>;<span class="number">3</span> <span class="number">3</span>;<span class="number">4</span> <span class="number">4</span>];</span><br><span class="line">d=pdist(X,<span class="string">&#x27;euclidean&#x27;</span>)</span><br><span class="line">d=</span><br><span class="line">	<span class="number">1.4142</span>    <span class="number">2.8284</span>    <span class="number">4.2426</span>    <span class="number">1.4142</span>    <span class="number">2.8284</span>    <span class="number">1.4142</span></span><br></pre></td></tr></table></figure>
 
 <p>&nbsp;</p>
 <h3 id="曼哈顿距离"><a href="#曼哈顿距离" class="headerlink" title="曼哈顿距离"></a>曼哈顿距离</h3><p>顾名思义，在曼哈顿街区要从一个十字路口开车到另一个十字路口，驾驶距离显然不是两点间的直线距离。这个实际驾驶距离就是“曼哈顿距离”。曼哈顿距离也称为“城市街区距离” (City Block distance)</p>
-<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220302232533.png" alt="image-20220302232533329" style="zoom:40%;" />
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220302232533.png" alt="image-20220302232533329" style="zoom:40%;" />
 
 <ul>
 <li><p>二维平面上点 a(x1,y1) 与 b(x2,y2) 间的欧氏距离：</p>
-  <img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303081842.png" alt="image-20220303081842713" style="zoom:67%;" /></li>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img/20220303081842.png" alt="image-20220303081842713" style="zoom:67%;" /></li>
 <li><p>n维空间点 a(x11,x12,…,x1n) 与 b(x21,x22,…,x2n) 间的欧氏距离（两个n维向量）：</p>
-  <img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303081853.png" alt="image-20220303081853235" style="zoom:67%;" /></li>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img/20220303081853.png" alt="image-20220303081853235" style="zoom:67%;" /></li>
 </ul>
 <p>Matlab计算曼哈顿距离：</p>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">X=[<span class="number">1</span> <span class="number">1</span>;<span class="number">2</span> <span class="number">2</span>;<span class="number">3</span> <span class="number">3</span>;<span class="number">4</span> <span class="number">4</span>];</span><br><span class="line">d=pdist(X,<span class="string">&#x27;cityblock&#x27;</span>)</span><br><span class="line">d=</span><br><span class="line">    <span class="number">2</span>     <span class="number">4</span>     <span class="number">6</span>     <span class="number">2</span>     <span class="number">4</span>     <span class="number">2</span></span><br></pre></td></tr></table></figure>
 
 <p>&nbsp;</p>
 <h3 id="切比雪夫距离"><a href="#切比雪夫距离" class="headerlink" title="切比雪夫距离"></a>切比雪夫距离</h3><p>国际象棋中，国王可以直行、横行、斜行，所以国王走一步可以移动到相邻8个方格中的任意一个。国王从格子 (x1,y1) 走到格子 (x2,y2) 最少需要多少步？这个距离就叫切比雪夫距离</p>
-<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220302232751.png" alt="image-20220302232751660" style="zoom:23%;" />
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220302232751.png" alt="image-20220302232751660" style="zoom:23%;" />
 
 <ul>
 <li><p>二维平面上点 a(x1,y1) 与 b(x2,y2) 间的欧氏距离：</p>
-  <img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303081907.png" alt="image-20220303081907899" style="zoom:67%;" /></li>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img/20220303081907.png" alt="image-20220303081907899" style="zoom:67%;" /></li>
 <li><p>n维空间点 a(x11,x12,…,x1n) 与 b(x21,x22,…,x2n) 间的欧氏距离（两个n维向量）：</p>
-  <img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303081920.png" alt="image-20220303081920002" style="zoom:67%;" /></li>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img/20220303081920.png" alt="image-20220303081920002" style="zoom:67%;" /></li>
 </ul>
 <p>Matlab计算切比雪夫距离：</p>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">X=[<span class="number">1</span> <span class="number">1</span>;<span class="number">2</span> <span class="number">2</span>;<span class="number">3</span> <span class="number">3</span>;<span class="number">4</span> <span class="number">4</span>];</span><br><span class="line">d=pdist(X,<span class="string">&#x27;chebychev&#x27;</span>)</span><br><span class="line">d=</span><br><span class="line">    <span class="number">1</span>     <span class="number">2</span>     <span class="number">3</span>     <span class="number">1</span>     <span class="number">2</span>     <span class="number">1</span></span><br></pre></td></tr></table></figure>
@@ -380,7 +380,7 @@
 <p>&nbsp;</p>
 <h3 id="闵可夫斯基距离"><a href="#闵可夫斯基距离" class="headerlink" title="闵可夫斯基距离"></a>闵可夫斯基距离</h3><p>闵氏距离不是一种特定的距离，而是一组距离的定义，是对多个距离度量公式的概括性的表述。</p>
 <p>两个n维变量 a(x11,x12,…,x1n) 与 b(x21,x22,…,x2n) 间的闵可夫斯基距离定义为：</p>
-<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303081937.png" alt="image-20220303081937321" style="zoom:67%;" />
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220303081937.png" alt="image-20220303081937321" style="zoom:67%;" />
 
 <p>p是一个变参数：</p>
 <ul>
@@ -403,10 +403,10 @@
 <h3 id="标准化欧式距离"><a href="#标准化欧式距离" class="headerlink" title="标准化欧式距离"></a>标准化欧式距离</h3><p>标准化欧氏距离是针对欧氏距离的缺点而作的一种改进。</p>
 <p>标准欧氏距离的思路：既然数据各维分量的分布不一样，那先将各个分量都“标准化”到均值、方差相等。</p>
 <p>设样本集X的均值 (mean)为 m，标准差 (standard deviation)为 s，X的“标准化变量”表示为：</p>
-<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303082041.png" alt="image-20220303082041005" style="zoom:67%;" />
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220303082041.png" alt="image-20220303082041005" style="zoom:67%;" />
 
 <p>标准化欧式距离：</p>
-<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303082050.png" alt="image-20220303082050799" style="zoom:67%;" />
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220303082050.png" alt="image-20220303082050799" style="zoom:67%;" />
 
 <p>如果将方差的倒数看成一个权重，也可称之为加权欧氏距离 (Weighted Euclidean distance)</p>
 <p>Matlab计算标准化欧氏距离（假设两个分量的标准差分别为0.5和1）：</p>
@@ -414,23 +414,23 @@
 
 <p>&nbsp;</p>
 <h3 id="马氏距离"><a href="#马氏距离" class="headerlink" title="马氏距离"></a>马氏距离</h3><p><strong>引出</strong></p>
-<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220302233935.png" alt="image-20220302233935470" style="zoom:80%;" />
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220302233935.png" alt="image-20220302233935470" style="zoom:80%;" />
 
 <p>上图有两个正态分布的总体，它们的均值分别为 a 和 b，但方差不一样，则图中的 A 点离哪个总体更近？或者说 A 有更大的概率属于谁？显然，A 离左边的更近，A 属于左边总体的概率更大，尽管 A 与 a 的欧式距离远一些。这就是马氏距离的直观解释</p>
 <p><strong>概念</strong></p>
 <p>马氏距离是基于样本分布的一种距离，物理意义就是：在规范化的主成分空间中的欧氏距离。</p>
 <p>所谓规范化的主成分空间就是利用主成分分析对一些数据进行主成分分解，再对所有主成分分解轴做归一化，形成新的坐标轴，由这些坐标轴张成的空间就是规范化的主成分空间</p>
-<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220302234213.png" alt="image-20220302234212975" style="zoom:45%;" />
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220302234213.png" alt="image-20220302234212975" style="zoom:45%;" />
 
 <p><strong>定义</strong></p>
 <p>马氏距离（Mahalanobis Distance）是由马哈拉诺比斯（P. C. Mahalanobis）提出的，表示数据的协方差距离。它是一种有效的计算两个未知样本集的相似度的方法。与欧氏距离不同的是它考虑到各种特性之间的联系（例如：一条关于身高的信息会带来一条关于体重的信息，因为两者是有关联的）并且是尺度无关的（scale-invariant），即独立于测量尺度</p>
 <ul>
 <li><p>有 M 个样本向量 X1~Xm，协方差矩阵记为 S，均值记为向量 μ，则其中样本向量 X 到 μ 的马氏距离表示为：</p>
-  <img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303082004.png" alt="image-20220303082004123" style="zoom:67%;" /></li>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img/20220303082004.png" alt="image-20220303082004123" style="zoom:67%;" /></li>
 <li><p>向量 Xi 与 Xj 之间的马氏距离定义为：</p>
-  <img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303082012.png" alt="image-20220303082012812" style="zoom:67%;" /></li>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img/20220303082012.png" alt="image-20220303082012812" style="zoom:67%;" /></li>
 <li><p>若协方差矩阵是单位矩阵（各个样本向量之间独立同分布），则 Xi 与 Xj 之间的马氏距离等于他们的欧氏距离：</p>
-  <img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303082023.png" alt="image-20220303082023020" style="zoom:67%;" /></li>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img/20220303082023.png" alt="image-20220303082023020" style="zoom:67%;" /></li>
 <li><p>若协方差矩阵是对角矩阵，则就是标准化欧氏距离</p>
 </li>
 </ul>
@@ -448,12 +448,12 @@
 <h3 id="余弦距离——向量的间距"><a href="#余弦距离——向量的间距" class="headerlink" title="余弦距离——向量的间距"></a>余弦距离——向量的间距</h3><p>几何中，夹角余弦可用来衡量两个向量方向的差异；机器学习中，借用这一概念来衡量样本向量之间的差异</p>
 <ul>
 <li><p>二维空间中向量 A(x1,y1) 与向量 B(x2,y2) 的夹角余弦公式：</p>
-  <img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303075315.png" alt="image-20220303075315707" style="zoom:80%;" /></li>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img/20220303075315.png" alt="image-20220303075315707" style="zoom:80%;" /></li>
 <li><p>两个n维样本点 a(x11,x12,…,x1n) 和 b(x21,x22,…,x2n) 的夹角余弦为：</p>
-  <img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303075329.png" alt="image-20220303075329300" style="zoom:80%;" />
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img/20220303075329.png" alt="image-20220303075329300" style="zoom:80%;" />
 
 <p>  即：</p>
-  <img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303075347.png" alt="image-20220303075347630" style="zoom: 80%;" /></li>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img/20220303075347.png" alt="image-20220303075347630" style="zoom: 80%;" /></li>
 </ul>
 <p>夹角余弦取值范围为[-1,1]。余弦越大表示两个向量的夹角越小，余弦越小表示两向量的夹角越大。当两个向量的方向重合时余弦取最大值1，当两个向量的方向完全相反余弦取最小值-1</p>
 <p>Matlab计算夹角余弦（Matlab中的pdist(X, ‘cosine’)得到的是1减夹角余弦的值）：</p>
@@ -463,7 +463,7 @@
 <h3 id="汉明距离——分类数据点的间距"><a href="#汉明距离——分类数据点的间距" class="headerlink" title="汉明距离——分类数据点的间距"></a>汉明距离——分类数据点的间距</h3><ul>
 <li><p>定义：</p>
 <p>  两个等长字符串 s1 与 s2 的汉明距离为：将其中一个变为另外一个所需要作的最小字符替换次数。例如：</p>
-  <img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303075601.png" alt="image-20220303075601695" style="zoom:80%;" /></li>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img/20220303075601.png" alt="image-20220303075601695" style="zoom:80%;" /></li>
 <li><p>汉明重量：</p>
 <p>  是字符串相对于同样长度的零字符串的汉明距离，也就是说，它是字符串中非零的元素个数：对于二进制字符串来说，就是 1 的个数，所以 11101 的汉明重量是 4。因此，向量空间中的元素 a 和 b 之间的汉明距离等于它们汉明重量的差 a-b</p>
 </li>
@@ -483,17 +483,17 @@
 <li>替换（Substitution）</li>
 </ul>
 <p>定义函数：</p>
-<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303084348.png" alt="image-20220303084347947" style="zoom:60%;" />
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220303084348.png" alt="image-20220303084347947" style="zoom:60%;" />
 
 <center>动态规划递归求解</center>
 
 <p>则字符串 a、b 的编辑距离定义为：</p>
-<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303084403.png" alt="image-20220303084402998" style="zoom:67%;" />
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220303084403.png" alt="image-20220303084402998" style="zoom:67%;" />
 
 <p>&nbsp;</p>
 <h3 id="DTW距离——时间序列的间距"><a href="#DTW距离——时间序列的间距" class="headerlink" title="DTW距离——时间序列的间距"></a>DTW距离——时间序列的间距</h3><p><strong>引入</strong></p>
 <p>在时间序列中，需要比较相似性的两段时间序列的长度可能并不相等，在语音识别领域表现为不同人的语速不同。Dynamic Time Warping（DTW）是一种衡量两个时间序列之间的相似度的方法，通过把时间序列进行延伸和缩短，来计算两个时间序列性之间的相似性，主要应用在语音识别领域来识别两段语音是否表示同一个单词。</p>
-<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303085133.png" alt="image-20220303085133638" style="zoom:45%;" />
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220303085133.png" alt="image-20220303085133638" style="zoom:45%;" />
 
 <p>如上图所示，上下两条实线代表两个时间序列，时间序列之间的虚线代表两个时间序列之间的相似的点。DTW使用所有这些相似点之间的距离的和，称之为<strong>归整路径距离</strong>(Warp Path Distance)来衡量两个时间序列之间的相似性</p>
 <p><strong>计算</strong></p>
@@ -507,50 +507,50 @@
 <li><p>归整路径 W 必须从 w1=(1,1) 开始，到 wK=(|X|,|Y|) 结尾，以保证 X 和 Y 中的每个坐标都在 W 中出现</p>
 </li>
 <li><p>另外，W 中 w(i,j) 的 i 和 j 必须是单调增加的，以保证上图中的虚线不会相交，所谓单调增加是指：</p>
-  <img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303091737.png" alt="image-20220303091737757" style="zoom:60%;" /></li>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img/20220303091737.png" alt="image-20220303091737757" style="zoom:60%;" /></li>
 <li><p>最后得到的归整路径是距离最短的一个归整路径：</p>
-  <img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303091809.png" alt="image-20220303091809145" style="zoom:50%;" />
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img/20220303091809.png" alt="image-20220303091809145" style="zoom:50%;" />
 
   <center>动态规划递归求解</center></li>
 </ul>
 <p>&nbsp;</p>
-<h3 id="KL散度——概率分布的间距"><a href="#KL散度——概率分布的间距" class="headerlink" title="KL散度——概率分布的间距"></a>KL散度——概率分布的间距</h3><img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303091916.png" alt="image-20220303091916229" style="zoom:25%;" />
+<h3 id="KL散度——概率分布的间距"><a href="#KL散度——概率分布的间距" class="headerlink" title="KL散度——概率分布的间距"></a>KL散度——概率分布的间距</h3><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220303091916.png" alt="image-20220303091916229" style="zoom:25%;" />
 
 <p>考虑某个未知的分布 p(x)，假定用一个近似的分布 q(x) 对它进行建模。如果使用 q(x) 来建立一个编码体系，用来把 x 的值传给接收者，那么由于使用了 q(x) 而不是真实分布 p(x)，平均编码长度比用真实分布 p(x) 进行编码增加的信息量(单位是 nat )为：</p>
-<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303092025.png" alt="image-20220303092025879" style="zoom:50%;" />
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220303092025.png" alt="image-20220303092025879" style="zoom:50%;" />
 
 <p>即为：分布 p(x) 和分布 q(x) 之间的<strong>相对熵</strong>(relative entropy) 或者 <strong>KL 散度</strong>( Kullback-Leibler divergence )</p>
 <p>&nbsp;</p>
 <h3 id="杰卡德距离——集合的间距"><a href="#杰卡德距离——集合的间距" class="headerlink" title="杰卡德距离——集合的间距"></a>杰卡德距离——集合的间距</h3><ul>
 <li><p>杰卡德相似系数 (Jaccard similarity coefficient)：</p>
 <p>  两个集合A和B的交集元素在A，B的并集中所占的比例，称为两个集合的杰卡德相似系数，用符号 J(A,B) 表示：</p>
-  <img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303082108.png" alt="image-20220303082108630" style="zoom:67%;" /></li>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img/20220303082108.png" alt="image-20220303082108630" style="zoom:67%;" /></li>
 <li><p>杰卡德距离(Jaccard Distance)：</p>
 <p>  与杰卡德相似系数相反，用两个集合中不同元素占所有元素的比例来衡量两个集合的区分度：</p>
-  <img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303082124.png" alt="image-20220303082124806" style="zoom:50%;" /></li>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img/20220303082124.png" alt="image-20220303082124806" style="zoom:50%;" /></li>
 </ul>
 <p>Matlab计算杰卡德距离（Matlab中将杰卡德距离定义为不同的维度的个数占“非全零维度”的比例）：</p>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">X=[<span class="number">1</span> <span class="number">1</span> <span class="number">0</span>;<span class="number">1</span> <span class="number">-1</span> <span class="number">0</span>;<span class="number">-1</span> <span class="number">1</span> <span class="number">0</span>];</span><br><span class="line">d=pdist(X,<span class="string">&#x27;jaccard&#x27;</span>)</span><br><span class="line">d=</span><br><span class="line">    <span class="number">0.5000</span>    <span class="number">0.5000</span>    <span class="number">1.0000</span></span><br></pre></td></tr></table></figure>
 
 <p>&nbsp;</p>
-<h3 id="相关距离——散点的间距"><a href="#相关距离——散点的间距" class="headerlink" title="相关距离——散点的间距"></a>相关距离——散点的间距</h3><img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303080149.png" alt="image-20220303080149153" style="zoom:65%;" />
+<h3 id="相关距离——散点的间距"><a href="#相关距离——散点的间距" class="headerlink" title="相关距离——散点的间距"></a>相关距离——散点的间距</h3><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220303080149.png" alt="image-20220303080149153" style="zoom:65%;" />
 
 <ul>
 <li><p>相关系数：</p>
 <p>  是衡量随机变量 X 与 Y 相关程度的一种方法，相关系数的取值范围是 [-1,1]。相关系数的绝对值越大，则表明 X 与 Y 相关度越高。当 X 与 Y 线性相关时，相关系数取值为1（正线性相关）或-1（负线性相关）：</p>
-  <img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303080236.png" alt="image-20220303080236058" style="zoom:80%;" /></li>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img/20220303080236.png" alt="image-20220303080236058" style="zoom:80%;" /></li>
 <li><p>相关距离：</p>
-  <img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303080254.png" alt="image-20220303080254906" style="zoom:80%;" /></li>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img/20220303080254.png" alt="image-20220303080254906" style="zoom:80%;" /></li>
 </ul>
 <p>Matlab计算相关系数与相关距离：</p>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">X=[<span class="number">1</span> <span class="number">2</span> <span class="number">3</span> <span class="number">4</span>;<span class="number">3</span> <span class="number">8</span> <span class="number">7</span> <span class="number">6</span>];</span><br><span class="line">c=corrcoef(X&#x27;) <span class="comment">%返回相关系数矩阵</span></span><br><span class="line">d=pdist(X,<span class="string">&#x27;correlation&#x27;</span>) <span class="comment">%返回相关距离</span></span><br><span class="line">c=</span><br><span class="line">    <span class="number">1.0000</span>    <span class="number">0.4781</span></span><br><span class="line">    <span class="number">0.4781</span>    <span class="number">1.0000</span></span><br><span class="line">d=</span><br><span class="line">    <span class="number">0.5219</span></span><br></pre></td></tr></table></figure>
 
 <p>&nbsp;</p>
 <h3 id="信息熵——系统的分散度"><a href="#信息熵——系统的分散度" class="headerlink" title="信息熵——系统的分散度"></a>信息熵——系统的分散度</h3><p>以上的距离度量方法度量的皆为两个样本（向量）之间的距离，而信息熵描述的是整个系统内部样本之间的一个距离，或者称之为系统内样本分布的集中程度（一致程度）、分散程度、混乱程度（不一致程度）。系统内样本分布越分散(或者说分布越平均)，信息熵就越大。分布越有序（或者说分布越集中），信息熵就越小</p>
-<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303080702.png" alt="image-20220303080702844" style="zoom:60%;" />
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220303080702.png" alt="image-20220303080702844" style="zoom:60%;" />
 
 <p>设 n 为样本集 X 的分类数、pi 为 X 中第 i 类元素出现的概率，则样本集的信息熵为：</p>
-<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303080734.png" alt="image-20220303080734015" style="zoom:80%;" />
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220303080734.png" alt="image-20220303080734015" style="zoom:80%;" />
 
 <p>信息熵越大表明样本集S的分布越分散（分布均衡），信息熵越小则表明样本集X的分布越集中（分布不均衡）</p>
 <ul>
@@ -568,11 +568,11 @@
 </ul>
 <ul>
 <li><p>对于离散概率分布 p和q在同一域 X，巴氏距离定义为：</p>
-  <img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303082309.png" alt="image-20220303082309895" style="zoom:67%;" /></li>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img/20220303082309.png" alt="image-20220303082309895" style="zoom:67%;" /></li>
 <li><p>对于离散型概率分布，巴氏系数定义为：</p>
-  <img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303082320.png" alt="image-20220303082320863" style="zoom:67%;" /></li>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img/20220303082320.png" alt="image-20220303082320863" style="zoom:67%;" /></li>
 <li><p>对于连续型概率分布，巴氏系数定义为：</p>
-  <img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220303082333.png" alt="image-20220303082333660" style="zoom:67%;" /></li>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img/20220303082333.png" alt="image-20220303082333660" style="zoom:67%;" /></li>
 </ul>
 
     </div>
@@ -787,7 +787,7 @@ $(document).ready(function() {
 
 <!-- ICP备案 -->
   <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">ICP备案 </a>
-      <img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20211209170739.png" style="display: inline-block;"><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=2021035798" rel="noopener" target="_blank">豫ICP备2021035798号 </a>
+      <img src="https://my-picture-1311448338.file.myqcloud.com/img/20211209170739.png" style="display: inline-block;"><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=2021035798" rel="noopener" target="_blank">豫ICP备2021035798号 </a>
   </div>
 
 <!-- 不知道是什么 -->

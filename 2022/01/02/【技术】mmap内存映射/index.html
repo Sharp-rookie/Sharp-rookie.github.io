@@ -39,21 +39,21 @@
 <meta property="og:site_name" content="最忆是江南">
 <meta property="og:description" content="&amp;emsp;mmap是一种内存映射文件的方法，即将一个文件或者其它对象映射到进程的地址空间，实现文件磁盘地址和进程虚拟地址空间中一段虚拟地址的一一对映关系。实现这样的映射关系后，进程就可以采用指针的方式读写操作这一段内存，而系统会自动回写脏页面到对应的文件磁盘上，即完成了对文件的操作而不必再调用read()、write()等系统调用函数。同时，内核空间对这段区域的修改也直接反映用户空间，从而可以实">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220209123614.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220102092829.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220101235153.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220102002540.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220102093046.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220102090515.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220102092156.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220209123614.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220102092829.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220101235153.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220102002540.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220102093046.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220102090515.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220102092156.png">
 <meta property="article:published_time" content="2022-01-02T01:24:00.936Z">
-<meta property="article:modified_time" content="2022-04-22T14:34:02.651Z">
+<meta property="article:modified_time" content="2022-04-25T03:39:28.335Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="OS">
 <meta property="article:tag" content="Linux">
 <meta property="article:tag" content="C&#x2F;C++">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220209123614.png">
+<meta name="twitter:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220209123614.png">
 
 <link rel="canonical" href="https://sharp-rookie.github.io/2022/01/02/%E3%80%90%E6%8A%80%E6%9C%AF%E3%80%91mmap%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84/">
 
@@ -301,16 +301,16 @@
 
       
         <p>&emsp;<code>mmap</code>是一种内存映射文件的方法，即将一个文件或者其它对象映射到进程的地址空间，实现文件磁盘地址和进程虚拟地址空间中一段虚拟地址的一一对映关系。实现这样的映射关系后，进程就可以采用指针的方式读写操作这一段内存，而系统会自动回写脏页面到对应的文件磁盘上，即完成了对文件的操作而不必再调用<code>read()</code>、<code>write()</code>等系统调用函数。同时，内核空间对这段区域的修改也直接反映用户空间，从而可以实现不同进程间的文件共享。</p>
-<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220209123614.png" alt="image-20220209123614653" style="zoom: 30%;" />
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220209123614.png" alt="image-20220209123614653" style="zoom: 30%;" />
 
 <span id="more"></span>
 
 <p>&nbsp;</p>
 <h2 id="Linux虚拟内存"><a href="#Linux虚拟内存" class="headerlink" title="Linux虚拟内存"></a>Linux虚拟内存</h2><p>&emsp;&emsp;进程的虚拟地址空间由多个虚拟内存区域构成。虚拟内存区域是进程的虚拟地址空间中的一个同质空间，即具有同样特性的连续地址范围。下图中的text数据段（代码段）、初始数据段、BSS数据段、堆、栈和内存映射都是一个独立的虚拟内存区域，而为内存映射服务的地址空间处在堆栈之间的空余部分。</p>
-<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220102092829.png" alt="image-20220102092829331" style="zoom:33%;" />
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220102092829.png" alt="image-20220102092829331" style="zoom:33%;" />
 
 <p>&emsp;&emsp;Linux内核使用<code>vm_area_struct</code>结构来表示一个独立的虚拟内存区域，由于每个不同质的虚拟内存区域功能和内部机制都不同，因此一个进程使用多个<code>vm_area_struct</code>结构来表示不同类型的内存区域。各个<code>vm_area_struct</code>结构使用链表或者树形结构来链接，方便进程快速访问。</p>
-<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220101235153.png" alt="image-20220101235152947" style="zoom:50%;" />
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220101235153.png" alt="image-20220101235152947" style="zoom:50%;" />
 
 <p>&emsp;&emsp;<code>vm_area_struct</code>结构中包含区域起始和终止地址以及其他相关信息，同时也包含一个<code>vm_ops</code>指针，其内部可引出所有针对这个区域能使用的系统调用函数。这样，进程对某一虚拟内存区域的任何操作需要用的信息都可以从<code>vm_area_struct</code>中获得。<code>mmap</code>就是创建一个新的<code>vm_area_struct</code>结构并将其与文件的物理磁盘地址相连。</p>
 <p>&nbsp;</p>
@@ -349,7 +349,7 @@
 </li>
 </ol>
 <p>&emsp;&emsp;总结来说常规文件操作需要从磁盘到页缓存再到用户主存两次数据拷贝。而<code>mmap</code>操控文件只需要从磁盘到用户主存一次数据拷贝过程。即<code>mmap</code>实现了用户空间和内核空间的数据直接交互而省去了空间不同数据不通的繁琐过程，因此效率更高时延更小。</p>
-<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220102002540.png" alt="image-20220102002540469" style="zoom:50%;" />
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220102002540.png" alt="image-20220102002540469" style="zoom:50%;" />
 
 <p>&nbsp;</p>
 <h3 id="优点及作用"><a href="#优点及作用" class="headerlink" title="优点及作用"></a>优点及作用</h3><ol>
@@ -374,7 +374,7 @@
 <li>读5000~8191字节时，结果全是0；写5000~8191字节时，进程不报错但是所写内容不会回写到文件中</li>
 <li>读/写8192以外的磁盘部分时，返回<code>SIGSECV</code>错误</li>
 </ul>
-<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220102093046.png" alt="image-20220102093046402" style="zoom:33%;" />
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220102093046.png" alt="image-20220102093046402" style="zoom:33%;" />
 
 <p>&nbsp;</p>
 <h5 id="情形二：一个文件的大小是5000字节，mmap函数从文件的起始位置开始，映射15000字节到虚拟内存中"><a href="#情形二：一个文件的大小是5000字节，mmap函数从文件的起始位置开始，映射15000字节到虚拟内存中" class="headerlink" title="情形二：一个文件的大小是5000字节，mmap函数从文件的起始位置开始，映射15000字节到虚拟内存中"></a>情形二：一个文件的大小是5000字节，mmap函数从文件的起始位置开始，映射15000字节到虚拟内存中</h5><p><strong>分析：</strong></p>
@@ -385,7 +385,7 @@
 <li>对于8192~14999字节，进程不能对其进行读写，会报<code>SIGBUS</code>错误</li>
 <li>对于15000以外的字节，进程不能对其读写，会引发<code>SIGSEGV</code>错误</li>
 </ul>
-<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220102090515.png" alt="image-20220102090515453" style="zoom: 50%;" />
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220102090515.png" alt="image-20220102090515453" style="zoom: 50%;" />
 
 <p>&nbsp;</p>
 <h5 id="情形三：一个文件初始大小为0，使用mmap操作映射了1000-4K的大小，即1000个物理页大约4M字节空间，mmap返回指针ptr"><a href="#情形三：一个文件初始大小为0，使用mmap操作映射了1000-4K的大小，即1000个物理页大约4M字节空间，mmap返回指针ptr" class="headerlink" title="情形三：一个文件初始大小为0，使用mmap操作映射了1000*4K的大小，即1000个物理页大约4M字节空间，mmap返回指针ptr"></a>情形三：一个文件初始大小为0，使用mmap操作映射了1000*4K的大小，即1000个物理页大约4M字节空间，mmap返回指针ptr</h5><p><strong>分析：</strong></p>
@@ -398,7 +398,7 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/mman.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;error.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PAGE_SIZE 4096</span></span><br><span class="line"><span class="keyword">char</span> *context[<span class="number">6</span>] = &#123;<span class="string">&quot;hello world&quot;</span>, <span class="string">&quot;てんどう万象&quot;</span>, <span class="string">&quot;today is Thursday&quot;</span>, <span class="string">&quot;Xi Nei&quot;</span>, <span class="string">&quot;54618888&quot;</span>, <span class="string">&quot;德丽莎世界第一可爱&quot;</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> fd;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">stat</span> <span class="title">sb</span>;</span></span><br><span class="line">    <span class="keyword">char</span> *mapped;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 打开文件 */</span></span><br><span class="line">    <span class="keyword">if</span> ((fd = open(argv[<span class="number">1</span>], O_RDWR)) &lt; <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        perror(<span class="string">&quot;open&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 获取文件的属性 */</span></span><br><span class="line">    <span class="keyword">if</span> ((fstat(fd, &amp;sb)) == <span class="number">-1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        perror(<span class="string">&quot;fstat&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 私有文件映射将无法修改文件 */</span></span><br><span class="line">    <span class="keyword">if</span> ((mapped = (<span class="keyword">char</span> *)mmap(<span class="literal">NULL</span>, PAGE_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, <span class="number">0</span>)) == (<span class="keyword">void</span> *)<span class="number">-1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        perror(<span class="string">&quot;mmap&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 映射完后, 关闭文件也可以操纵内存 */</span></span><br><span class="line">    close(fd);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// printf(&quot;read[%d]:  %s\n&quot;, count++, mapped);</span></span><br><span class="line">        <span class="comment">// sleep(1);</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">6</span>; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">memset</span>(mapped, <span class="string">&#x27;0&#x27;</span>, sb.st_size);</span><br><span class="line">            <span class="built_in">strcpy</span>(mapped, context[i]);</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;wirte[%d]:  %s\n&quot;</span>, count++, context[i]);</span><br><span class="line"></span><br><span class="line">            msync(mapped, PAGE_SIZE, MS_ASYNC);</span><br><span class="line"></span><br><span class="line">            sleep(<span class="number">1</span>); <span class="comment">// 间隔一秒</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 注意，修改内容长度不能大于原文件长度</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><strong>效果：</strong></p>
-<p><img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220102092156.png" alt="image-20220102092156158"></p>
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220102092156.png" alt="image-20220102092156158"></p>
 
     </div>
 
@@ -614,7 +614,7 @@ $(document).ready(function() {
 
 <!-- ICP备案 -->
   <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">ICP备案 </a>
-      <img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20211209170739.png" style="display: inline-block;"><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=2021035798" rel="noopener" target="_blank">豫ICP备2021035798号 </a>
+      <img src="https://my-picture-1311448338.file.myqcloud.com/img/20211209170739.png" style="display: inline-block;"><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=2021035798" rel="noopener" target="_blank">豫ICP备2021035798号 </a>
   </div>
 
 <!-- 不知道是什么 -->

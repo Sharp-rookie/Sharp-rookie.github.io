@@ -39,16 +39,16 @@
 <meta property="og:site_name" content="最忆是江南">
 <meta property="og:description" content="&amp;emsp;&amp;emsp;由于遗传算法的整体搜索策略和优化搜索方法在计算时不依赖于梯度信息或其它辅助知识，而只需要影响搜索方向的目标函数和相应的适应度函数，所以遗传算法提供了一种求解复杂系统问题的通用框架，不依赖于问题的具体领域，对问题的种类有很强的鲁棒性，广泛应用于许多场景。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220216231227.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220219083829.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220219083445.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220216231227.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220219083829.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220219083445.png">
 <meta property="article:published_time" content="2022-02-16T15:10:01.107Z">
-<meta property="article:modified_time" content="2022-04-22T14:34:02.646Z">
+<meta property="article:modified_time" content="2022-04-25T03:39:28.328Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="Algorithm">
 <meta property="article:tag" content="优化问题">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220216231227.png">
+<meta name="twitter:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220216231227.png">
 
 <link rel="canonical" href="https://sharp-rookie.github.io/2022/02/16/%E3%80%90%E5%90%AF%E5%8F%91%E5%BC%8F%E7%AE%97%E6%B3%95%E3%80%91%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%20GA/">
 
@@ -296,7 +296,7 @@
 
       
         <p>&emsp;&emsp;由于遗传算法的整体搜索策略和优化搜索方法在计算时不依赖于梯度信息或其它辅助知识，而只需要影响搜索方向的目标函数和相应的适应度函数，所以遗传算法提供了一种求解复杂系统问题的通用框架，不依赖于问题的具体领域，对问题的种类有很强的鲁棒性，广泛应用于许多场景。</p>
-<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220216231227.png" alt="image-20220216231227178" style="zoom: 35%;" />
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220216231227.png" alt="image-20220216231227178" style="zoom: 35%;" />
 
 <span id="more"></span>
 
@@ -444,11 +444,11 @@
 <p>x∈[-10, 10], y∈[-10, 10]时，求二元函数 <code>z(x,y) = y*sin(x) + x*cos(y)</code> 的最大值点，使用matlab绘制图像如下：</p>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[x,y] = <span class="built_in">meshgrid</span>(<span class="number">-10</span>:<span class="number">0.01</span>:<span class="number">10</span>);</span><br><span class="line">z = y.*<span class="built_in">sin</span>(x)+x.*<span class="built_in">cos</span>(y);</span><br><span class="line">mesh(x,y,z),xlabel(<span class="string">&#x27;x&#x27;</span>),ylabel(<span class="string">&#x27;y&#x27;</span>),zlabel(<span class="string">&#x27;z&#x27;</span>)</span><br></pre></td></tr></table></figure>
 
-<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220219083829.png" alt="image-20220219083829525" style="zoom: 20%;" />
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220219083829.png" alt="image-20220219083829525" style="zoom: 20%;" />
 
 <p><strong>编码</strong></p>
 <p>计算机无法处理连续值，为了确保准确性和离散性，对x、y的取值精确到3位小数，以0.001为最小粒度。因此x和y从-10.000变化到10.000各自总共20001个离散取值，因为<code>2^14 &lt; 20001 &lt; 2^15</code>，所以编码为15位二进制值。同时为了保证一一映射和满射，具体编码映射方式为：</p>
-<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220219083445.png" alt="image-20220217110053767" style="zoom:60%;" />
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220219083445.png" alt="image-20220217110053767" style="zoom:60%;" />
 
 <center>h为实际值，m为编码值</center>
 
@@ -752,7 +752,7 @@ $(document).ready(function() {
 
 <!-- ICP备案 -->
   <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">ICP备案 </a>
-      <img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20211209170739.png" style="display: inline-block;"><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=2021035798" rel="noopener" target="_blank">豫ICP备2021035798号 </a>
+      <img src="https://my-picture-1311448338.file.myqcloud.com/img/20211209170739.png" style="display: inline-block;"><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=2021035798" rel="noopener" target="_blank">豫ICP备2021035798号 </a>
   </div>
 
 <!-- 不知道是什么 -->

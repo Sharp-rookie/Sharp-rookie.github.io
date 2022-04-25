@@ -39,26 +39,26 @@
 <meta property="og:site_name" content="最忆是江南">
 <meta property="og:description" content="背景&amp;emsp;&amp;emsp;LTE网络支持共享无线接入和核心网络资源的不同类型的服务，包括：尽力而为、延迟敏感和实时（RT）服务。每种服务在比特率、延迟和分组丢失方面都有不同的QoS要求。 &amp;emsp;&amp;emsp;基站eNB的第一个目标是为UE提供高频谱效率，使更多的活跃用户可以在网络中接收服务。第二个目标是用户对接收的服务质量（QoS）的满意度。为了实现这些目标，eNB中的资源分配必须知道信道条">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220120200737.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20211203080439.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20211201184317.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20211201184346.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20211201185426.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20211201191306.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20211201192306.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20211203080440.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20211201192359.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20211201192413.png">
-<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20211201192430.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220120200737.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211203080439.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211201184317.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211201184346.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211201185426.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211201191306.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211201192306.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211203080440.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211201192359.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211201192413.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211201192430.png">
 <meta property="article:published_time" content="2021-12-03T00:10:27.863Z">
-<meta property="article:modified_time" content="2022-04-22T14:34:02.672Z">
+<meta property="article:modified_time" content="2022-04-25T03:39:28.350Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="5G">
 <meta property="article:tag" content="Network Slice">
 <meta property="article:tag" content="Token Bucket">
 <meta property="article:tag" content="Resource Management">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220120200737.png">
+<meta name="twitter:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220120200737.png">
 
 <link rel="canonical" href="https://sharp-rookie.github.io/2021/12/03/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91DL%20Packet%20Scheduler%20by%20Token%20Bucket%20Algorithm/">
 
@@ -335,7 +335,7 @@
 <p>&emsp;&emsp;本论文提出了一种QoS感知的调度方法，包含时域和频域。先使用经典的五元组将不同的流映射到不同的载波。将VOIP和video流量分为GBR类、FTP和HTTP分为nGBR类。在GBR类中利用令牌桶算法来阻止其使用所有资源。这种不仅保证了两个类间资源分配的公平性，还提高了系统的总吞吐量。</p>
 <p>&nbsp;</p>
 <h3 id="LTE下行链路调度器"><a href="#LTE下行链路调度器" class="headerlink" title="LTE下行链路调度器"></a>LTE下行链路调度器</h3><p>&emsp;&emsp;正交频分多址（OFDMA）将分布在整个频谱中的一组子载波专用于用户。带宽被划分为180kHz的子信道，包括12个连续的子载波。时间/频率无线电资源扩展到时域中的两个时隙和频域中的一个子信道上，称为资源块（RB），是LTE中用于资源分配的最小单元。RBs的数量取决于系统带宽，例如，对于5 MHz系统，RBs数量为25，而在10 MHz系统中，RBs数量为50。</p>
-<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20220120200737.png" alt="image-20220120200737207" style="zoom:50%;" />
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220120200737.png" alt="image-20220120200737207" style="zoom:50%;" />
 
 <center>RB就是图中的小方块</center>
 
@@ -346,34 +346,34 @@
 <h5 id="时域调度"><a href="#时域调度" class="headerlink" title="时域调度"></a>时域调度</h5><p>&emsp;&emsp;TD调度器最重要的功能是根据QoS参数和信道的当前状态选择请求资源的活动用户（Activate UE）。</p>
 <p>&emsp;&emsp;在没有资源分配给用户的第一阶段，TD调度器确定不同类别的活动Bearer（activate bearers），并根据不同的需求对它们进行优先级排序。由于TD调度器没有关于分配给每个用户的RBs的信息，因此利用所有RBs上的用户cqi的平均值来比较用户的信道条件，获取最大度量值的用户具有最高优先级。TD调度器创建用户和活动Bearer，分为GBR组和nGBR组并按优先级排序，并向FD调度器发送这两个单独的列表。</p>
 <h6 id="GBR"><a href="#GBR" class="headerlink" title="GBR"></a>GBR</h6><p>&emsp;&emsp;GBR Bearer必须保证数据速率，与对延迟敏感的应用相关。本算法中GBR Bearer的QoS参数计算如下：</p>
-<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20211203080439.png" alt="image-20211201173407839" style="zoom:50%;" />
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211203080439.png" alt="image-20211201173407839" style="zoom:50%;" />
 
 <p>&emsp;&emsp;注意，在eNB缓冲区中花费更多时间的数据包具有更高的服务交付优先级。</p>
 <h6 id="nGBR"><a href="#nGBR" class="headerlink" title="nGBR"></a>nGBR</h6><p>&emsp;&emsp;nGBR Bearer通常包括尽力而为的服务，对延迟不敏感。nGBR类的不同活动Bearer根据不同的条件进行优先级排序。优先级排序使用nGBR的优先级因子完成，其行为类似于WPF算法，做了一些轻微的修改。</p>
-<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20211201184317.png" alt="image-20211201184317270" style="zoom:50%;" />
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211201184317.png" alt="image-20211201184317270" style="zoom:50%;" />
 
-<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20211201184346.png" alt="image-20211201184346056" style="zoom:50%;" />
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211201184346.png" alt="image-20211201184346056" style="zoom:50%;" />
 
 <p>&emsp;&emsp;参数 r 较大的nGBR用户在资源分配中优先于其他用户。</p>
 <p>&nbsp;</p>
 <h5 id="频域调度"><a href="#频域调度" class="headerlink" title="频域调度"></a>频域调度</h5><p>&emsp;&emsp;FD调度器负责将RBs分配给不同的Active UE。FD调度器根据TD调度器发来的候选列表来确定在特定TTI中必须服务哪些Bearer。FD调度器优先服务于GBR Bearer，然后服务于nGBR Bearer。通过令牌桶算法确定允许分配资源的GBR Bearer，然后使用改进的LWDF、M-LWDFS对这些Bearer进行调度。<strong>（这里与流程图不符，流程图是PF算法调度）</strong></p>
 <p>&emsp;&emsp;当GBR流量或相关令牌分配完后，FD调度器开始将资源分配给nGBR用户。采用了PF算法，在用户公平性和小区整体性能之间取得了较好的平衡。该算法计算用户信道的当前状态和先前接收的服务但是却不考虑QoS，因此PF适合非RT流量而不适合RT流量。</p>
-<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20211201185426.png" alt="image-20211201185425952" style="zoom:50%;" />
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211201185426.png" alt="image-20211201185425952" style="zoom:50%;" />
 
 <p>&emsp;&emsp;FD完整流程：</p>
-<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20211201191306.png" alt="image-20211201191306507" style="zoom:50%;" />
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211201191306.png" alt="image-20211201191306507" style="zoom:50%;" />
 
 <p>&nbsp;</p>
 <h3 id="仿真比较结果"><a href="#仿真比较结果" class="headerlink" title="仿真比较结果"></a>仿真比较结果</h3><p>&emsp;&emsp;为了研究提出的调度器在RT流量情况下对资源分配系统的影响，文章还模拟了TD-PF/FD-PF算法以及无令牌桶的情况。TD-PF/FD-PF算法虽然依据信道状态和服务质量，但是却并不考虑QoS，因此在RT流量业务的表现不佳。无令牌桶调度虽然考虑了QoS性能，但是由于GBR Bearer的优先级高于nGBR Bearer的优先级，而没有令牌桶对流量进行限制，因此当BGR业务需求较高时，nBGR业务无法顾及导致小区整体吞吐量降低。含令牌桶的调度是二者的折中，即维护了小区整体的吞吐量，又对RT流量业务的时延性能有所保证。</p>
-<h6 id="三种业务情景"><a href="#三种业务情景" class="headerlink" title="三种业务情景"></a>三种业务情景</h6><img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20211201192306.png" alt="image-20211201192305975" style="zoom:50%;" />
+<h6 id="三种业务情景"><a href="#三种业务情景" class="headerlink" title="三种业务情景"></a>三种业务情景</h6><img src="https://my-picture-1311448338.file.myqcloud.com/img/20211201192306.png" alt="image-20211201192305975" style="zoom:50%;" />
 
-<h6 id="性能对比"><a href="#性能对比" class="headerlink" title="性能对比"></a>性能对比</h6><img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20211203080440.png" alt="image-20211201192342289" style="zoom:50%;" />
+<h6 id="性能对比"><a href="#性能对比" class="headerlink" title="性能对比"></a>性能对比</h6><img src="https://my-picture-1311448338.file.myqcloud.com/img/20211203080440.png" alt="image-20211201192342289" style="zoom:50%;" />
 
-<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20211201192359.png" alt="image-20211201192359425" style="zoom:50%;" />
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211201192359.png" alt="image-20211201192359425" style="zoom:50%;" />
 
-<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20211201192413.png" alt="image-20211201192413873" style="zoom:50%;" />
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211201192413.png" alt="image-20211201192413873" style="zoom:50%;" />
 
-<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20211201192430.png" alt="image-20211201192430785" style="zoom:50%;" />
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211201192430.png" alt="image-20211201192430785" style="zoom:50%;" />
 
 <p>&nbsp;</p>
 <h3 id="阅读感受"><a href="#阅读感受" class="headerlink" title="阅读感受"></a>阅读感受</h3><p>&emsp;&emsp;其实这个令牌桶算法没有什么精巧的地方，无非是限制了对GBR业务资源分配，这样就能发论文，虽然是很多年前的了，但是一下让我觉得发论文也不是很难。</p>
@@ -593,7 +593,7 @@ $(document).ready(function() {
 
 <!-- ICP备案 -->
   <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">ICP备案 </a>
-      <img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/20211209170739.png" style="display: inline-block;"><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=2021035798" rel="noopener" target="_blank">豫ICP备2021035798号 </a>
+      <img src="https://my-picture-1311448338.file.myqcloud.com/img/20211209170739.png" style="display: inline-block;"><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=2021035798" rel="noopener" target="_blank">豫ICP备2021035798号 </a>
   </div>
 
 <!-- 不知道是什么 -->
