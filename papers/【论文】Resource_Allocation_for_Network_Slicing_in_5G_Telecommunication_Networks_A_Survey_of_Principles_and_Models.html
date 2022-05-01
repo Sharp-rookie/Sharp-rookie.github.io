@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"sharp-rookie.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+<script> 
+   (function(){
+          if(''){
+              if (prompt('请输入文章密码') !== ''){
+                  alert('密码错误！');
+                  history.back();
+              }
+          }
+      })();
+  </script>
+  <meta name="description" content="背景&amp;emsp;&amp;emsp;随着网络需求的快速持续增长，5G网络需要为传统网络运营商、垂直行业、OTT、第三方满足不同服务质量 (QoS)、服务水平协议 (SLA) 和关键绩效指标 (KPI)的要求，在这种情况下，第四代 (4G) 电信网络的“一刀切”和“一网通”类型不再适用。 &amp;emsp;&amp;emsp;网络切片是一种很有前途的技术，它可以建立包含专用和共享资源的定制端到端逻辑网络，通过利用 SDN">
+<meta property="og:type" content="website">
+<meta property="og:title" content="5G网络切片资源分配文献综述">
+<meta property="og:url" content="https://sharp-rookie.github.io/papers/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91Resource_Allocation_for_Network_Slicing_in_5G_Telecommunication_Networks_A_Survey_of_Principles_and_Models.html">
+<meta property="og:site_name" content="最忆是江南">
+<meta property="og:description" content="背景&amp;emsp;&amp;emsp;随着网络需求的快速持续增长，5G网络需要为传统网络运营商、垂直行业、OTT、第三方满足不同服务质量 (QoS)、服务水平协议 (SLA) 和关键绩效指标 (KPI)的要求，在这种情况下，第四代 (4G) 电信网络的“一刀切”和“一网通”类型不再适用。 &amp;emsp;&amp;emsp;网络切片是一种很有前途的技术，它可以建立包含专用和共享资源的定制端到端逻辑网络，通过利用 SDN">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211226105342.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211226123601.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211226135025.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211226135101.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211226161345.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211226161507.png">
+<meta property="article:published_time" content="2022-04-25T03:39:28.353Z">
+<meta property="article:modified_time" content="2022-04-25T03:39:28.353Z">
+<meta property="article:author" content="Lrk612">
+<meta property="article:tag" content="5G">
+<meta property="article:tag" content="Network Slice">
+<meta property="article:tag" content="Resource Management">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211226105342.png">
+
+<link rel="canonical" href="https://sharp-rookie.github.io/papers/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91Resource_Allocation_for_Network_Slicing_in_5G_Telecommunication_Networks_A_Survey_of_Principles_and_Models">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>5G网络切片资源分配文献综述 | 最忆是江南
+</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+        <a target="_blank" rel="noopener" href="https://github.com/Sharp-rookie" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">最忆是江南</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Love actually is all around</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-papers">
+
+    <a href="/papers/" rel="section"><i class="book fa-fw"></i>论文阅读</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th-list fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-friendlink">
+
+    <a href="/friendlink/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="fa fa-download fa-fw"></i>资源</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+  
+  
+
+          <div class="content page posts-expand">
+            
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">5G网络切片资源分配文献综述
+</h1>
+
+<div class="post-meta">
+  
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>&emsp;&emsp;随着网络需求的快速持续增长，5G网络需要为传统网络运营商、垂直行业、OTT、第三方满足不同服务质量 (QoS)、服务水平协议 (SLA) 和关键绩效指标 (KPI)的要求，在这种情况下，第四代 (4G) 电信网络的“一刀切”和“一网通”类型不再适用。</p>
+<p>&emsp;&emsp;网络切片是一种很有前途的技术，它可以建立包含专用和共享资源的定制端到端逻辑网络，通过利用 SDN 和 NFV，可以定制与资源相关的网络切片，以满足不同的 QoS 和 SLA。网络切片的资源分配在负载均衡、资源利用率和网络性能方面起着举足轻重的作用。</p>
+<p><strong>主要内容</strong></p>
+<ul>
+<li>SDN 和 NFV 的原理及其对网络切片的影响</li>
+<li>网络切片的基本管理和编排（MO）架构</li>
+<li>RAN和CN切片中的资源类型和相应的隔离级别</li>
+<li>5G 网络切片资源分配算法的原理和数学模型</li>
+<li>提出网络切片的几个开放问题以及潜在的解决方案</li>
+</ul>
+<p><strong>原文</strong></p>
+<p><a target="_blank" rel="noopener" href="https://lrk612.com/resources/Resource%20Allocation%20for%20Network%20Slicing%20in%205G%20Telecommunication%20Networks%20A%20Survey%20of%20Principles%20and%20Models.pdf">Resource Allocation for Network Slicing in 5G Telecommunication Networks A Survey of Principles and Models</a></p>
+<span id="more"></span>
+
+<p>&nbsp;</p>
+<h2 id="网络切片"><a href="#网络切片" class="headerlink" title="网络切片"></a>网络切片</h2><p>&emsp;&emsp;作为 5G 中很有前途的技术之一，网络切片在电信网络基础设施上创建了端到端（即从无线电接入网络 (RAN) 到核心网络 (CN)）逻辑上独立的网络。每个逻辑上独立的网络称为网络切片，是为特定需求而设计的，由从底层通信和网络资源中抽象出来的若干网络功能和资源组成。网络切片的基本思想与云计算中的基础设施（即服务 IaaS） 的基本思想密切相关。 IaaS 在不同租户之间共享计算、存储和网络资源，并提供由软件定义网络 (SDN) 和网络功能虚拟化 (NFV) 支持的全功能虚拟网络。事实上，SDN和NFV被认为是5G背景下网络切片的关键技术。 SDN依靠控制平面和数据平面的分离来增强数据转发效率和网络可编程性，NFV 使虚拟网络功能 (VNF) 能够在通用硬件上运行以降低部署成本。网络切片作为多个 VNF 的组合，不仅可以提供灵活、可扩展和可编程的网络服务，还可以通过高效编排和管理 VNF 来降低资本支出 (CAPEX) 和运营支出 (OPEX)</p>
+<p>&emsp;&emsp;作为5G电信网络的一个主要问题，网络切片的资源分配面临隔离、定制、弹性、端到端协调等诸多挑战。具体而言，在资源隔离方面，由于通信环境的变化，网络切片的共享和隔离资源并不简单。例如，无线电资源的严格隔离可能导致低复用增益。定制化实现网络切片的高效资源利用，满足特定的网络服务需求。如何将网络服务需求有效地转化为所需的网络资源，需要在不同层面进行更多的考虑，包括控制层面、数据平面层面、网络层面。例如，在时变数据流量下无法直接获得具有相应计算、存储和网络资源的虚拟机（VM）的确切数量。共享资源的动态分配可能会影响网络切片的网络性能。端到端资源分配必须跨越不同的域，例如 CN、RAN 和传输网络 (TN)。在不同网络层的异构技术之间实现新的协调并不容易。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2 id="SDN-amp-NFV"><a href="#SDN-amp-NFV" class="headerlink" title="SDN &amp; NFV"></a>SDN &amp; NFV</h2><h4 id="software-defined-networking"><a href="#software-defined-networking" class="headerlink" title="software defined networking"></a>software defined networking</h4><p>&emsp;&emsp;在SDN的框架中，控制平面与数据平面完全分离，数据平面移动到一个由SDN控制器（Controller）实现的集中位置。 SDN控制器根据手头应用的需求，在链路探索、拓扑管理、策略部署、流表下发等方面生成不同的规则并发送给数据平面。数据平面中的转发设备，例如交换机和路由器，只需应用并执行这些规则。</p>
+<h4 id="Network-Function-Virtualization"><a href="#Network-Function-Virtualization" class="headerlink" title="Network Function Virtualization"></a>Network Function Virtualization</h4><p>&emsp;&emsp;与传统电信设备中网络功能和专有硬件之间的紧密耦合不同，NFV 使网络功能能够以软件设备的形式在通用服务器上运行。为了在电信网络中高效灵活地利用虚拟资源和管理 VNF，欧洲电信标准协会 (ETSI) 提出了 NFV 管理和编排器 NFV-MANO，它由 NFV 编排 (NFVO)、VNF管理器 (VNFM) 和虚拟化基础设施管理器 (VIM)组成。 NFV-MANO 通过 VNFM 和 VIM 管理 VNF 的生命周期。 NFVO 负责编排与外部运营/业务支持系统 (BSS/OSS) 相结合的网络服务。</p>
+<p>&emsp;&emsp;由于其可编程性、可扩展性和灵活性，SDN 和 NFV 被认为是网络切片的关键推动因素。例如，受SDN启发，演进分组核心（EPC）实现了控制面和用户面的分离，从而实现了网络功能的灵活部署。此外，因为 NFV-MANO 管理 VM 或容器对网络功能的创建、更新和终止，网络切片可以以低成本进行初始化和修改。 NFVO 可以在不同的网络环境中调整 VNF 与 VNFM 和 VIM 的资源分配，例如数据流量的波动、网络切片中用户的变化等。此外，当某些 VNF 发生故障时，SDN 数据平面中的路由器和交换机可以根据 SDN 控制器配置的流表或调度策略重新路由数据流量。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2 id="MO架构"><a href="#MO架构" class="headerlink" title="MO架构"></a>MO架构</h2><p>&emsp;&emsp;Management and Orchestration Architecture of Network Slicing</p>
+<p>&emsp;&emsp;网络切片的基本问题包括网络切片需求的描述和网络切片的部署及其生命周期管理。为了解决这些问题，第三代合作伙伴计划 (3GPP) 提出了具有相应网络功能的基本 MO 架构，包括通信服务管理功能 (CSMF)、网络切片管理功能 (NSMF) 和网络切片子网管理功能 (NSSMF) ，每个子网都有一个 NSSMF，例如：RAN、CN。</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211226105342.png" alt="image-20211226105335500" style="zoom: 50%;" />
+
+<p>&emsp;&emsp;在这种架构下，特定网络服务的需求由CMSF转换为网络切片的需求（即网络切片需求描述），传递给NSMF。然后，NSMF 将网络切片的需求分解为不同子网的需求。不同子网中的 NSSMF 管理和编排相应子网中的网络切片。例如，CN 中的 NSSMF 可以根据从 NSMF 接收到的网络服务的需求，求解出计算、存储和网络资源（即 VM 的资源）相关联的 VNF 的数量。然后，基本的 VNF 由 NFV-MANO 初始化，如图左侧所示。资源分配依赖于带有NFV-MANO的NSSMF，可以根据网络服务的需求计算所需的资源。此外，带有 NFV-MANO 的 NSSMF 可以通过升级或扩展网络功能来动态调整资源分配，这些功能由流量波动或网络切片需求的变化触发。在网络切片的 MO 架构下，隔离级别和数学模型在资源分配中扮演着重要的角色。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2 id="Resouce-Type-and-Isolation"><a href="#Resouce-Type-and-Isolation" class="headerlink" title="Resouce Type and Isolation"></a>Resouce Type and Isolation</h2><h4 id="RAN-Slicing"><a href="#RAN-Slicing" class="headerlink" title="RAN Slicing"></a>RAN Slicing</h4><p>&emsp;&emsp;频谱是 RAN 切片的基本无线资源，在长期演进 (4G LTE) 系统中，频谱资源被提取为资源块 (RB) 或物理资源块 (PRB)。具有专用 PRB 的网络切片严格确保所需的 QoS/SLA，而公共媒体访问控制 (MAC) 调度程序可以分配和管理共享 PRB 以适应弹性流量、变化的信道条件和 QoS 要求，从而增强资源弹性和复用增益。除了频谱资源以外，其他基本物理资源还有：包括传输功率和基站（BS）的缓存空间等。</p>
+<p>&emsp;&emsp;基于 PRB 隔离，数据包调度作为一种高级隔离，负责决定使用空闲 PRB 处理数据流量的时间。最高级别的资源隔离是<strong>准入控制</strong>，它通过估计网络资源使用状态来确定是否在用户和 CN（即无线接入承载）之间建立数据传送服务。更一般地，准入控制还包括确定是否允许用户访问网络或是否接受网络切片请求。此外，<strong>用户关联</strong>是RAN切片中资源分配的重要步骤，它决定了用户是否与特定的BS相关联。用户关联发生在数据传输之前和用户准入控制之后。很难为用户关联确定不同的隔离级别，但值得注意的是它在负载平衡、无线电频谱效率和网络效率方面起着关键作用。</p>
+<p>&emsp;&emsp;与传统的RAN架构相比，Cloud-RAN（C-RAN）将基带过程和远程无线接入分离。集中式基带单元 (BBU) 池、分布式多个远程射频头 (RRH)、通过光链路连接 BBU 池和 RRH 的前传网络以及将 BBU 池连接到 CN 的回程网络是 C-RAN的四个基本部分。 BBU池用于基带处理，建立在具有虚拟化技术的高性能通用硬件上，可以运行在虚拟机或容器上，以提高物理资源（如计算、存储、网络资源）的利用率。由于部署成本低，分布式 RRH 通过天线为用户提供无线接入，以低 CAPEX 和 OPEX 覆盖大面积区域。在设计资源分配算法时，BBU 池和具有前传带宽的 RRH 的容量是重要因素。此外，用户关联和回程容量也会影响资源分配。下图左侧总结了与 RAN 切片的资源类型相关的隔离级别。</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211226123601.png" alt="image-20211226123601454" style="zoom:67%;" />
+
+<h4 id="CN-Slicing"><a href="#CN-Slicing" class="headerlink" title="CN Slicing"></a>CN Slicing</h4><p>&emsp;&emsp;与4G中的EPC相比，5G核心网采用更加模块化的架构，将网络划分为更细粒度的网络功能。每个网络功能都可以以VM或容器的方式部署在虚拟平台上，由SDN和NFV进行管理和编排，提供灵活、可扩展、可编程的网络服务。CN 切片中的高级资源隔离可以是 VM 或容器，这意味着网络运营商利用 VM 或容器粒度的扩展/扩展操作来初始化或调整资源分配。</p>
+<p>&emsp;&emsp;在NFV-MANO的框架下，一个CN切片由多个VNF组成，形成一个运行在底层网络上的虚拟网络。在这种情况下，CN 切片的资源分配被转换为虚拟网络嵌入 (VNE) 问题。VNE 提出了两个问题：将虚拟节点映射到物理节点，将连接虚拟节点的虚拟链路映射到连接物理节点的路径。物理节点和路径代表计算、存储和网络资源。在我们看来，VNE 可用于对 CN 切片以及 C-RAN 切片的某些部分（例如，BBU 容量的虚拟化）中的资源分配问题进行建模。 </p>
+<p>CN 切片中的隔离级别和资源类型：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211226135025.png" alt="CN 切片中的隔离级别和资源类型" style="zoom: 67%;" />
+
+<p>无线资源管理、VNE和网络切片的资源分配之间的关系：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211226135101.png" alt="image-20211226135101482" style="zoom:50%;" />
+
+
+
+<p>&nbsp;</p>
+<h2 id="资源分配模型"><a href="#资源分配模型" class="headerlink" title="资源分配模型"></a>资源分配模型</h2><h4 id="一般模型"><a href="#一般模型" class="headerlink" title="一般模型"></a>一般模型</h4><p>&emsp;&emsp;很自然地将网络切片的资源分配问题表述为线性规划 (LP) 问题或非线性规划 (NLP) 问题，优化目标包括网络切片的吞吐量、资源利用率、下一次分配的剩余物理资源等。一般的约束是基站的传输功率、基于服务合同的每个网络切片的最小PRB数量、不同网络切片之间的分配公平性等，这些可能会因网络环境的变化和网络切片的多样化需求而变得复杂。因此，一些一般的优化问题很难在<strong>多项式时间</strong>内解决。采用结合多个隔离级别的<strong>启发式方法</strong>来推导出具有低计算复杂性的近乎最优的解决方案。</p>
+<h5 id="example-1"><a href="#example-1" class="headerlink" title="example 1"></a>example 1</h5><blockquote>
+<p>Dynamic Network Slicing for Multitenant Heterogeneous Cloud Radio Access Networks</p>
+<p>“ This paper proposes a dynamic network slicing scheme for multitenant H-CRANs, which takes into account tenants’ priority, baseband resources, fronthaul and backhaul capacities, quality of service (QoS) and interference. The framework of the network slicing scheme consists of an upper-level, which manages admission control, user association and baseband resource allocation; and a lower-level, which performs radio resource allocation among users. ”</p>
+</blockquote>
+<p>如前所述，C-RAN 通过 BBU 池集中基带处理能力，BBU 池通过前传网络连接到多个 RRH，并通过回程网络连接到 CN。因此，BBU 池和前传/回传网络的容量作为新的约束，被用于 C-RAN 切片的一般优化问题的框架中。此文中的作者提出了一种分层资源分配方案，以最大化 C-RAN中所有网络切片的网络吞吐量。分层方案包括准入控制、用户关联、虚拟BBU容量分配作为上层分配，以及相应网络切片中每个用户的PRB和传输功率分配作为下层分配。当上层分配的最佳结果用于下层分配时，计算负担和大的信令开销会显着减轻。</p>
+<p>&nbsp;</p>
+<h5 id="example-2"><a href="#example-2" class="headerlink" title="example 2"></a>example 2</h5><blockquote>
+<p>A Service-Oriented Deployment Policy of End-to-End  Network  Slicing  Based  on  Complex  Network  Theory</p>
+<p>“  In this paper, a mathematical model is used to construct network slice requests and map them to the infrastructure network. The mapping process consists of two steps: the placement of virtual network functions and the selection of link paths chaining them. To efficiently utilize the limited physical resources, we pay attention to the service-oriented deployment by offering different deployment policies for three typical slices: eMBB slices, mMTC slices, and uRLLC slices. Furthermore, we adopt complex network theory to obtain the topological information of slices and infrastructure network. With the topological information, we define a node importance metric to rank the nodes in node mapping. To evaluate the performance of deployment policy we proposed, extensive simulations have been conducted.  ”</p>
+</blockquote>
+<p>此文中利用通用数学模型探索了端到端网络切片的资源分配。 RAN、传输网络(TN) 和CN 中的资源被抽象为计算和带宽资源。然后，将资源分配问题转化为VNE问题，根据不同的网络切片类型有不同的目标。例如，优化目标是最小化超可靠和低延迟通信 (uRLLC) 网络切片的数据包延迟。在为海量机器类型通信（mMTC）网络切片分配资源时，应最大化当前网络切片部署后剩余的物理链路数量。</p>
+<p>&nbsp;</p>
+<h4 id="博弈论经济模型"><a href="#博弈论经济模型" class="headerlink" title="博弈论经济模型"></a>博弈论经济模型</h4><blockquote>
+<p>价格差异化是一种基于经济和博弈模型的简单方法，它根据不同的网络切片的特点，如流量模型、资源容量、所需资源数量、网络切片优先级等，为不同的网络切片分配不同的价格。一个典型的优化目标是基础设施提供商的收入。</p>
+</blockquote>
+<p>&emsp;&emsp;网络切片为传统网络运营商、垂直行业和第三方提供了新的商业机会。在5G网络切片的场景中，典型的参与者有3个：网络运营商、网络切片的租户、网络切片的用户。网络运营商（例如基础设施提供商）提供包括物理资源和虚拟资源在内的网络基础设施，并建立网络切片以满足网络服务的要求;网络切片的租户（即网络服务提供商）向网络运营商提出网络服务需求，并为用户提供网络服务;用户（例如，用户设备UE）使用网络切片提供的网络服务。与上面讨论的一般模型相比，经济模型和博弈模型提供了复杂而有效的方法来描述这三个参与者之间的关系，可以制定优化问题，例如网络资源分配的公平性、网络的利润最大化。网络切片的运营商或租户，以及网络切片用户的成本最小化。例如，预算、成本、收入、利润和价格等经济因素对这些玩家在游戏过程中的资源分配有显着影响。经济和博弈模型可以在不牺牲资源分配公平性的前提下，为基础设施提供商的收入或利润最大化提供可行的解决方案。</p>
+<h5 id="example-3"><a href="#example-3" class="headerlink" title="example 3"></a>example 3</h5><blockquote>
+<p>Optimising 5G infrastructure markets: The business of network slicing</p>
+<p>“ In this paper, we address this issue by designing an algorithm for the admission and allocation of network slices requests that (i) maximises the infrastructure provider’s revenue and (ii) ensures that the service guarantees provided to tenants are satisfied. Our key contributions include: (i) an analytical model for the admissibility region of a network slicing-capable 5G Network, (ii) the analysis of the system (modelled as a Semi-Markov Decision Process) and the optimisation of the infrastructure provider’s revenue, and (iii) the design of an adaptive algorithm <strong>(based on Q-learning)</strong> that achieves close to optimal performance. ”</p>
+</blockquote>
+<p>网络切片根据其流量模型定价不同，包括<strong>弹性</strong>和<strong>非弹性</strong>数据流量模型 。本文进一步推导出弹性网络切片和非弹性网络切片数量之间的关系，该关系在最大接纳非弹性网络切片数量和非弹性网络切片和弹性网络切片的固定总和的限制下。基于关系和价格差异，提出了一种结合半马尔可夫决策过程（SMDP）的价值迭代算法来搜索网络切片请求的最佳准入控制，以最大化基础设施提供商的收入。</p>
+<p>&nbsp;</p>
+<h5 id="example-4"><a href="#example-4" class="headerlink" title="example 4"></a>example 4</h5><blockquote>
+<p>Network Slicing Games: Enabling Customization in Multi-Tenant Mobile Networks</p>
+<p>“ This paper provides an analysis of a well-known model for resource sharing, the share-constrained proportional allocation mechanism, to realize network slicing. This mechanism enables tenants to reap the performance benefits of sharing, while retaining the ability to customize their own users’ allocation. This results in a network slicing game in which each tenant reacts to the user allocations of the other tenants so as to maximize its own utility. We show that, for elastic traffic, the game associated with such strategic behavior converges to a Nash equilibrium. At the Nash equilibrium, a tenant always achieves the same or better performance than that of a static partitioning of resources, thus providing the same level of protection as static partitioning. We further analyze the efficiency and fairness of the resulting allocations, providing tight bounds for the price of anarchy and envy-freeness. Our analysis and extensive simulation results confirm that the mechanism provides a comprehensive practical solution to realize network slicing. Our theoretical results also fills a gap in the analysis of this resource allocation model under strategic players. ”</p>
+</blockquote>
+<p>费雪（Fisher）市场作为一种著名的经济模型，被用来研究用户和网络切片之间的公平性。 Fisher 市场中预算固定的购买者映射成共享网络资源的网络切片租户、买家的出价被映射成网络切片租户的偏好。在 5G 网络切片场景中，网络切片的租户可以根据资源拥塞情况动态调整其偏好，以最大化自身效用。在这种情况下，资源分配问题转化为如何通过<strong>非合作博弈</strong>共同考虑网络切片的偏好和用户公平性来为网络切片分配资源。</p>
+<p>&nbsp;</p>
+<h5 id="example-5"><a href="#example-5" class="headerlink" title="example 5"></a>example 5</h5><blockquote>
+<p>Coalitional Game for the Creation of Efficient Virtual Core Network Slices in 5G Mobile Systems</p>
+<p>“ Our contribution in this paper is twofold. First, we devise an algorithm that derives the optimal number of virtual instances of 4G (MME, SGW, and PGW) or 5G (AMF, SMF, and AUSF) core network elements to meet the requirements of a specific mobile traffic. Second, we propose an algorithm for the placement of these virtual instances over a federated cloud. While the first algorithm is based on mixed integer linear programming, the second is based on coalition formation game, wherein the aim is to build coalitions of cloud networks to host the virtual instances of the vEPC/5G core elements. ”</p>
+</blockquote>
+<p>与预测和分析非合作博弈中每个玩家的行为不同，<strong>合作博弈</strong>调查由单个玩家或外部强制（例如合同规则）形成的玩家之间的联盟。联盟的组成、联盟产生时的联合行动、联盟已经形成时的集体收益是合作博弈的研究兴趣。以CN切片为例。 VNF放置问题在合作博弈的框架下通过两步解决。首先，在同一个云网络中，制定了一个优化问题，旨在通过调整 VNF 的数量来最小化 VNF 的创建成本。然后讨论如何将这些 VNF 放置在不同的云网络中，以保证 QoS/SLA 并最大化每个云网络的利润。事实上，部署了 VNF 的不同云网络可以形成不同的联盟。</p>
+<p>&nbsp;</p>
+<h4 id="预测模型"><a href="#预测模型" class="headerlink" title="预测模型"></a>预测模型</h4><p>&emsp;&emsp;预测模型用于根据经验知识或历史信息预测适当或最佳的资源数量。预测对象包括:用户到达率、网络切片中的数据流量、网络切片请求等。简单的预测方法直接使用经验数据或一些众所周知的概率模型。</p>
+<h5 id="example-6"><a href="#example-6" class="headerlink" title="example 6"></a>example 6</h5><blockquote>
+<p>Conformal Mapping  for  Optimal  Network  Slice  Planning  Based  on  Canonical   Domains</p>
+<p>“ This paper addresses this issue by mapping the non-uniform distribution of signaling messages in the physical domain to a new uniform environment (i.e., canonical domain) whereby the placement of core functions is more feasible and efficient by means of Schwartz-Christoffel conformal mappings. The experimentation results, compared to some baseline approaches, have proven the efficiency of the conformal mapping based placement in allocating the virtual resources (i.e., virtual CPU and virtual storage) with regard to the optimal end-to-end delay, cost and activated virtual machines. Another interesting contribution is that all placement decisions are based on a realistic spatio-temporal user-centric model, which defines both the mobility of user equipments and the underlying service usage. “</p>
+</blockquote>
+<p>与使用合作博弈的 VNF 放置不同，VNF 的位置由会话请求到达率的<strong>概率分布</strong>决定。假设会话请求的到达率在物理域中遵循非均匀分布，通过 Schwarz-Christoffel 映射将其转换为规范域中的均匀分布。然后根据会话请求的数量和会话请求的到达率，很容易推导出规范域中 VNF 的最佳数量和位置。而VNFs在物理域中的对应位置可以通过逆空间变换函数得到。</p>
+<p>&nbsp;</p>
+<h5 id="example-7"><a href="#example-7" class="headerlink" title="example 7"></a>example 7</h5><blockquote>
+<p>Mobile Traffic Forecasting for Maximizing 5G Network Slicing Resource Utilization</p>
+<p>“ This paper focuses on the design of three key network slicing building blocks responsible for (i) traffic analysis and prediction per network slice, (ii) admission control decisions for network slice requests, and (iii) adaptive correction of the forecasted load based on measured deviations. Our results show very substantial potential gains in terms of system utilization as well as a trade-off between conservative forecasting configurations versus more aggressive ones (higher gains, SLA risk). ”</p>
+</blockquote>
+<p>基于时间序列的预测模型作为回归预测，根据过去的观察以及<strong>时间序列预测</strong>网络切片中的统计特征。与经验知识相比，基于时间序列的预测模型更实用，适用于不同的网络环境。 Holt-Winters (HW) 模型优于基本模型和双指数平滑模型，作为一种复杂的时间序列模型，不仅可以捕捉数据趋势，还可以捕捉数据季节性。在本文中，当用户数量固定时，HW模型用于分析网络切片中未来的流量请求。此外，当用户在多蜂窝环境中移动时，网络切片的流量模型也由 HW 模型预测。值得注意的是，每个被接纳的网络切片都设计了反馈机制，以提高硬件模型的预测精度。</p>
+<p>&nbsp;</p>
+<h5 id="example-8"><a href="#example-8" class="headerlink" title="example 8"></a>example 8</h5><blockquote>
+<p>Information Prediction and Dynamic Programming Based RAN Slicing for Mobile Edge Computing</p>
+<p>“ In this letter, the work is focused on the RAN slicing between MEC services and traditional services. An information prediction and dynamic programming based RAN slicing algorithm is proposed. It guarantees the inter-slice isolation and realizes the intra-slice customization. Furthermore, it can optimize the network utility with high fairness in polynomial time complexity. ”</p>
+</blockquote>
+<p>机器学习根据历史数据和决策生成最优或次优策略，适用于没有统一概率分布的场景。例如，支持向量回归（SVR）作为机器学习中的典型分类算法，用于预测时分双工(FDD)-OFDMA无线网络中网络切片的统计特征值。更具体地说，本文中的作者针对不同的上行/下行配置实现了移动边缘计算（MEC）和传统网络服务的RAN切片的资源分配。该配置被表述为具有网络切片统计特征的封闭式表达式，包括能量开销、运行时开销以及上下行链路的流量和数据速率。MEC 和传统网络服务的最佳配置是从封闭形式的表达式中导出的，其中包含 SVG 预测的统计特征值。</p>
+<p>&nbsp;</p>
+<h4 id="鲁棒性和故障恢复模型"><a href="#鲁棒性和故障恢复模型" class="headerlink" title="鲁棒性和故障恢复模型"></a>鲁棒性和故障恢复模型</h4><p>&emsp;&emsp;网络切片的资源分配算法不仅要提高资源利用效率，还要处理不可预测的网络事件，以实现电信网络的高可用性。不可预知的网络事件包括网络拥塞（由大量数据流量引起）或网络功能故障（由软件或硬件意外故障引起）。冗余资源预留和网络功能重新映射是两种有效的方法。</p>
+<h5 id="example-9"><a href="#example-9" class="headerlink" title="example 9"></a>example 9</h5><blockquote>
+<p>Optimisation  Models  for  Robust  and Survivable Network Slice Design: A Comparative Analysis</p>
+<p>“ In this work, we first outline a mathematical model for the general network slice design problem and extend it to cope with traffic uncertainties. We employ the Γ-robust uncertainty set [1], [2] to model the uncertainties in the traffic demands. Furthermore, we add survivability aspects to our model by protecting the network slice against single substrate network element (node/link) failures. Finally, both survivability and traffic robustness approaches are considered simultaneously and we present two different optimisation models. A performance evaluation is carried out comparing the different robust and survivable models with their non-robust non-survivable counterpart using network topology examples from SNDlib. ”</p>
+</blockquote>
+<p>冗余资源预留为网络切片提供额外资源，例如多个 VNF 实例，以避免网络功能故障。网络切片的不确定流量由机会约束模型 [14] 表示为对称和随机变量。该变量作为保护级别，分别加入到虚拟节点和虚拟链路的容量约束中，以保证网络切片的鲁棒性。网络功能的重新映射通过将失败的 VNF 映射到好的 VNF 并重新路由失败的虚拟链接来恢复网络服务。</p>
+<p>&nbsp;</p>
+<h5 id="example-10"><a href="#example-10" class="headerlink" title="example 10"></a>example 10</h5><blockquote>
+<p>Protocol Function Block Mapping of Software Defined Protocol for 5G Mobile Networks</p>
+<p>“ In this paper, we propose software-defined protocol (SDP) technique to facilitate flexible service-oriented protocol stack deployment for providing high-throughput, low-latency and elastic mobile services based on platform virtualization and functionality modularization. We first elaborate the principle of SDP and then address one of the most important issues in SDP, namely SDP request mapping (SDPM), where an SDP request is fulfilled by mapping a set of required SDP function blocks and virtual links onto underlying SDP servers. We formulate the SDPM problem as a mixed integer programming (MIP). To address the NP-hardness and scalability of SDPM problem, we propose a decomposition algorithm which breaks down the SDPM problem into inter-block link and block mapping problems to accomplish the upper bound (UB) and lower bound (LB) of the MIP solution, respectively. The optimality can be achieved when the UB and the LB converges by using iterations. We employ LTE Layer-2 data-plane processing as a benchmark for validating the effectiveness of the SDP technique and evaluate the performance of SDPM algorithm. Numerical results show that SDP is effective to provide elastic low-latency mobile services and the proposed SDPM algorithm significantly outperforms the benchmark in stack processing delay, mapping cost, and resource utilization. “</p>
+</blockquote>
+<p>优化目标是在重新映射期间最小化总带宽消耗。</p>
+<p>&nbsp;</p>
+<h3 id="4种模型对比"><a href="#4种模型对比" class="headerlink" title="4种模型对比"></a>4种模型对比</h3><p>图中说明了四种数学模型之间的关系，每个饼图中每种方法的比例代表了相应的研究潜力：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211226161345.png" alt="image-20211226161345382" style="zoom: 33%;" />
+
+<p>表中根据目标、资源类型、场景和关键描述总结了所讨论的算法：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211226161507.png" alt="image-20211226161507843" style="zoom:50%;" />
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3 id="网络切片潜力研究方向"><a href="#网络切片潜力研究方向" class="headerlink" title="网络切片潜力研究方向"></a>网络切片潜力研究方向</h3><h4 id="资源分配的更新周期"><a href="#资源分配的更新周期" class="headerlink" title="资源分配的更新周期"></a>资源分配的更新周期</h4><p>&emsp;&emsp;为了尽可能降低资源分配算法的计算复杂度，前面提出了启发式方法以提供具有低计算复杂度的次优解决方案。而<strong>多级资源分配</strong>则是另一种方式，包括准入控制、用户关联等。然而，很少有研究报告或出版物讨论资源分配算法的更新周期。合适的更新间隔不仅可以提高资源利用率，还可以减少信令开销和计算负担。在example1中，作者指出分配PRB的周期不能短于信道条件报告的周期。较长的更新周期在慢变通道中是可行的解决方案，但在快变通道中可能无法实现高性能。此外，在设计资源分配更新周期时，可以综合考虑用户数量的变化、数据流量的波动以及网络功能故障的平均周期。</p>
+<p>&nbsp;</p>
+<h4 id="无线电接入技术-RATs-的异质性"><a href="#无线电接入技术-RATs-的异质性" class="headerlink" title="无线电接入技术 (RATs) 的异质性"></a>无线电接入技术 (RATs) 的异质性</h4><p>&emsp;&emsp;5G 预计将跨越和聚合多种异构 RAT，例如 3G、4G、LTE 和 WiFi。 5G网络切片中不同RAT的协作变得尤为重要，应满足网络切片的多样化需求。例如，车联网 (V2X) 网络切片中的车载信息娱乐应用依赖 LTE 和 WiFi 来提高网络吞吐量。在 mMTC 网络切片上运行的窄带物联网 (NB-IoT) 应用可能需要多种 RAT 来增强网络连接。当前的算法侧重于密集的异构无线网络，并研究宏蜂窝和小蜂窝之间的合作，对于不同的网络切片，可以在无缝切换、流量隔离和网络切片公平性等方面进一步研究多制式的资源分配，以增强用户体验，提高资源利用率。</p>
+<p>&nbsp;</p>
+<h4 id="端到端网络切片的资源分配"><a href="#端到端网络切片的资源分配" class="headerlink" title="端到端网络切片的资源分配"></a>端到端网络切片的资源分配</h4><p>&emsp;&emsp;大多数当前的资源分配算法都集中在单个子网，例如 RAN 或 CN。除了example2中的解决方案，很少有研究人员考虑端到端的网络切片。无线电和虚拟机的资源分别抽象为带宽和计算资源，在为特定的网络切片类型设计资源分配方案时只考虑其中之一。事实上，SLA 分解和多子网协调是端到端网络切片资源分配的主要挑战。由于缺乏基本的通信知识，网络切片的租户可能只向 NSMF 提供端到端的 SLA，而不需要每个子网。因此，如何将端到端的 SLA 分解为各个子网的需求是资源分配的必然步骤。SLA分解不仅要考虑端到端的容量，还要考虑每个子网的容量。多个子网之间的协调也很重要，尤其是在更新资源分配时。每个子网应定期通过 NSSMF 向 NSMF 报告其剩余容量，NSMF 可以实现资源分配的适当调整，以适应不断变化的网络环境。例如，如果某些子网过载，则应向 NSMF 报告，然后允许剩余的子网获得更多资源以保证所需的端到端 SLA。潜在的数学模型应该基于多运营商核心网（MOCN）和网关核心网（GWCN）精心设计，这是不同子网之间资源共享的两种基本架构。</p>
+
+      </div>
+      
+      
+      
+    </div>
+    
+
+    
+    
+    
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E5%88%87%E7%89%87"><span class="nav-text">网络切片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SDN-amp-NFV"><span class="nav-text">SDN &amp; NFV</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#software-defined-networking"><span class="nav-text">software defined networking</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Network-Function-Virtualization"><span class="nav-text">Network Function Virtualization</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MO%E6%9E%B6%E6%9E%84"><span class="nav-text">MO架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Resouce-Type-and-Isolation"><span class="nav-text">Resouce Type and Isolation</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#RAN-Slicing"><span class="nav-text">RAN Slicing</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CN-Slicing"><span class="nav-text">CN Slicing</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E6%A8%A1%E5%9E%8B"><span class="nav-text">资源分配模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E8%88%AC%E6%A8%A1%E5%9E%8B"><span class="nav-text">一般模型</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#example-1"><span class="nav-text">example 1</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#example-2"><span class="nav-text">example 2</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8D%9A%E5%BC%88%E8%AE%BA%E7%BB%8F%E6%B5%8E%E6%A8%A1%E5%9E%8B"><span class="nav-text">博弈论经济模型</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#example-3"><span class="nav-text">example 3</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#example-4"><span class="nav-text">example 4</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#example-5"><span class="nav-text">example 5</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A2%84%E6%B5%8B%E6%A8%A1%E5%9E%8B"><span class="nav-text">预测模型</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#example-6"><span class="nav-text">example 6</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#example-7"><span class="nav-text">example 7</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#example-8"><span class="nav-text">example 8</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%B2%81%E6%A3%92%E6%80%A7%E5%92%8C%E6%95%85%E9%9A%9C%E6%81%A2%E5%A4%8D%E6%A8%A1%E5%9E%8B"><span class="nav-text">鲁棒性和故障恢复模型</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#example-9"><span class="nav-text">example 9</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#example-10"><span class="nav-text">example 10</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E7%A7%8D%E6%A8%A1%E5%9E%8B%E5%AF%B9%E6%AF%94"><span class="nav-text">4种模型对比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E5%88%87%E7%89%87%E6%BD%9C%E5%8A%9B%E7%A0%94%E7%A9%B6%E6%96%B9%E5%90%91"><span class="nav-text">网络切片潜力研究方向</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E7%9A%84%E6%9B%B4%E6%96%B0%E5%91%A8%E6%9C%9F"><span class="nav-text">资源分配的更新周期</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%97%A0%E7%BA%BF%E7%94%B5%E6%8E%A5%E5%85%A5%E6%8A%80%E6%9C%AF-RATs-%E7%9A%84%E5%BC%82%E8%B4%A8%E6%80%A7"><span class="nav-text">无线电接入技术 (RATs) 的异质性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AB%AF%E5%88%B0%E7%AB%AF%E7%BD%91%E7%BB%9C%E5%88%87%E7%89%87%E7%9A%84%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D"><span class="nav-text">端到端网络切片的资源分配</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Lrk612"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Lrk612</p>
+  <div class="site-description" itemprop="description">Lrk's blog</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.google.com/" title="https:&#x2F;&#x2F;www.google.com" rel="noopener" target="_blank">Google</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://arxiv.org/" title="https:&#x2F;&#x2F;arxiv.org&#x2F;" rel="noopener" target="_blank">arXiv</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ieeexplore.ieee.org/Xplore/home.jsp" title="https:&#x2F;&#x2F;ieeexplore.ieee.org&#x2F;Xplore&#x2F;home.jsp" rel="noopener" target="_blank">IEEE Xplore</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        <!-- 访问量 -->
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客数<span id="busuanzi_value_site_uv"></span>人</span>
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+$(document).ready(function() {
+
+    var int = setInterval(fixCount, 50);  // 50ms周期检测函数
+    var countOffset = 20000;  // 初始化首次数据
+
+    function fixCount() {            
+       if (document.getElementById("busuanzi_container_site_pv").style.display != "none")
+        {
+            $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + countOffset); 
+            clearInterval(int);
+        }                  
+        if ($("#busuanzi_container_site_pv").css("display") != "none")
+        {
+            $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + countOffset); // 加上初始数据 
+            clearInterval(int); // 停止检测
+        }  
+    }
+       	
+});
+</script> 
+
+
+<!-- 版权 -->
+<div class="copyright">
+  
+  &copy; 2021-12-1 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lrk612</span>
+</div>
+
+<!-- ICP备案 -->
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">ICP备案 </a>
+      <img src="https://my-picture-1311448338.file.myqcloud.com/img/20211209170739.png" style="display: inline-block;"><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=2021035798" rel="noopener" target="_blank">豫ICP备2021035798号 </a>
+  </div>
+
+<!-- 不知道是什么 -->
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'fH6OdGBcCG8D6jC8NeeJlX9b-gzGzoHsz',
+      appKey     : '1UoIb6vszMw6wl0n7kreb4Xz',
+      placeholder: "Just go go ^_^",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+    var infoEle = document.querySelector('#comments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0){
+      infoEle.childNodes.forEach(function(item) {
+        item.parentNode.removeChild(item);
+      });
+    }
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

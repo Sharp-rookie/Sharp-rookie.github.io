@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"sharp-rookie.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+<script> 
+   (function(){
+          if(''){
+              if (prompt('请输入文章密码') !== ''){
+                  alert('密码错误！');
+                  history.back();
+              }
+          }
+      })();
+  </script>
+  <meta name="description" content="摘要&amp;emsp;&amp;emsp;蜂窝通信和5G 移动网络需要满足高可靠性标准、极低延迟、更高容量、更高安全性和高速用户连接。文中通过实施深度学习 (DL) 神经网络，利用网络内深度学习和预测来管理网络负载效率和网络可用性，开发了一个“DeepSlice”模型。用网络关键性能指标 (KPI) 训练模型以分析传入流量并预测未知设备类型的网络切片。智能资源分配保证有效地使用现有网络切片上的可用资源并提供负载">
+<meta property="og:type" content="website">
+<meta property="og:title" content="DRL &amp; 随机森林对网络业务分类">
+<meta property="og:url" content="https://sharp-rookie.github.io/papers/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91DRL&%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97%E5%AF%B9%E7%BD%91%E7%BB%9C%E4%B8%9A%E5%8A%A1%E5%88%86%E7%B1%BB.html">
+<meta property="og:site_name" content="最忆是江南">
+<meta property="og:description" content="摘要&amp;emsp;&amp;emsp;蜂窝通信和5G 移动网络需要满足高可靠性标准、极低延迟、更高容量、更高安全性和高速用户连接。文中通过实施深度学习 (DL) 神经网络，利用网络内深度学习和预测来管理网络负载效率和网络可用性，开发了一个“DeepSlice”模型。用网络关键性能指标 (KPI) 训练模型以分析传入流量并预测未知设备类型的网络切片。智能资源分配保证有效地使用现有网络切片上的可用资源并提供负载">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220212152159.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220212152159.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220212164055.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220212164428.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220212164443.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220212165139.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220212165445.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220212214537.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220212214714.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220212215050.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220212215159.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220212215347.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220212215437.png">
+<meta property="article:published_time" content="2022-04-25T03:39:28.351Z">
+<meta property="article:modified_time" content="2022-04-25T03:39:28.351Z">
+<meta property="article:author" content="Lrk612">
+<meta property="article:tag" content="5G">
+<meta property="article:tag" content="Network Slice">
+<meta property="article:tag" content="Reinforcement Learning">
+<meta property="article:tag" content="Deep Learning">
+<meta property="article:tag" content="Resource Management">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220212152159.png">
+
+<link rel="canonical" href="https://sharp-rookie.github.io/papers/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91DRL&%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97%E5%AF%B9%E7%BD%91%E7%BB%9C%E4%B8%9A%E5%8A%A1%E5%88%86%E7%B1%BB">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>DRL & 随机森林对网络业务分类 | 最忆是江南
+</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+        <a target="_blank" rel="noopener" href="https://github.com/Sharp-rookie" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">最忆是江南</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Love actually is all around</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-papers">
+
+    <a href="/papers/" rel="section"><i class="book fa-fw"></i>论文阅读</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th-list fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-friendlink">
+
+    <a href="/friendlink/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="fa fa-download fa-fw"></i>资源</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+  
+  
+
+          <div class="content page posts-expand">
+            
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">DRL & 随机森林对网络业务分类
+</h1>
+
+<div class="post-meta">
+  
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>&emsp;&emsp;蜂窝通信和5G 移动网络需要满足高可靠性标准、极低延迟、更高容量、更高安全性和高速用户连接。文中通过实施深度学习 (DL) 神经网络，利用网络内深度学习和预测来管理网络负载效率和网络可用性，开发了一个“DeepSlice”模型。用网络关键性能指标 (KPI) 训练模型以分析传入流量并预测未知设备类型的网络切片。智能资源分配保证有效地使用现有网络切片上的可用资源并提供负载平衡。DeepSlice 模型能够做出明智的决策并为数据包选择最合适的网络切片，包括网络故障的情况。</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220212152159.png" alt="image-20220212152136937" style="zoom:60%;" />
+
+<p><strong>原文</strong></p>
+<p><a target="_blank" rel="noopener" href="https://lrk612.com/resources/DeepSlice%20A%20Deep%20Learning%20Approach%20towards%20an%20Efficient%20and%20Reliable%20Network%20Slicing%20in%205G%20Networks.pdf">DeepSlice: A Deep Learning Approach towards an Efficient and Reliable Network Slicing in 5G Networks</a></p>
+<span id="more"></span>
+
+<p>&nbsp;</p>
+<h2 id="问题导向及现有研究"><a href="#问题导向及现有研究" class="headerlink" title="问题导向及现有研究"></a>问题导向及现有研究</h2><p>&emsp;&emsp;在过去的二十年中，移动设备的数量呈指数级增长，不仅导致网络需要更高的容量和吞吐量，而且需要多种不同技术的紧密集成。许多新兴技术通过支持新的商业模式和为客户提供不同的体验，5G 网络将封装一些关键服务包括自动驾驶、企业商业模式、AR-VR 解决方案、工业自动化、远程监控、智能健康、智慧城市等等。第三代合作伙伴计划 (3GPP) 认为网络切片是 5G 的关键支持技术。切片将允许运营商在单个基础设施上有效地运行多个网络实例，从而以卓越的服务质量 (QoS) 为各种应用程序、用例和业务服务提供服务。</p>
+<p>&emsp;&emsp;电信行业正在经历一场大规模的数字化转型，采用机器学习、人工智能、基于反馈的自动化和高级分析来处理下一代应用程序和服务。人工智能概念并不新鲜。机器学习和深度学习使用的算法目前正在各个行业和技术垂直领域实施。随着 5G 数据的不断增长和海量信息，主动、快速和准确地预测数据的能力至关重要。人工智能将通过优化网络性能和提高体验质量 (QoE) 使网络功能能够提供超低延迟、更高的吞吐量和可靠性。</p>
+<p>&emsp;&emsp;本文模型的主要目标是</p>
+<ul>
+<li>为设备选择适当的网络切片</li>
+<li>正确预测切片并根据流量预测为该切片分配足够的资源</li>
+<li>在网络故障的情况下调整切片分配</li>
+</ul>
+<p>&emsp;&emsp;实现这些目标的关键工具是深度学习神经网络。文章利用 ML 和深度学习神经网络 (DLNN) 提出了DeepSlice 模型，来帮助为设备和服务选择最有效和优化的网络切片。同时还分析了整体流量模式并可以预测未来的流量，从而提前将资源分配给最合适的切片。</p>
+<table>
+<thead>
+<tr>
+<th>论文</th>
+<th>相关内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>[1]</td>
+<td>MVNO 的容量受用户数量和传输功率的影响，5G 网络切片的多租户性质</td>
+</tr>
+<tr>
+<td>[2]</td>
+<td>定义基于 SDN 和 NFV 的 5G 核心网络架构</td>
+</tr>
+<tr>
+<td>[3]</td>
+<td>提出了一种特定于应用程序的移动网络深度学习架构，在 RAN 中应用特定于应用程序的无线电频谱调度</td>
+</tr>
+<tr>
+<td>[4]</td>
+<td>提出了一个框架，使用优先级管理 SDN 方法对智能城市的网络流量进行优先级排序</td>
+</tr>
+<tr>
+<td>[5]</td>
+<td>讨论了网络切片的标准化、网络切片选择、识别切片独立功能，提出了切片架构和 RRC 帧</td>
+</tr>
+<tr>
+<td>[6]</td>
+<td>对比基于衰落持续时间中断概率 (FDOP) 的切换要求和蜂窝系统中基于传统 SINR 的切换方法</td>
+</tr>
+<tr>
+<td>[7]</td>
+<td>展示了动态数据速率分配以及在 5G 新无线电空中接口上提供硬服务保证的能力</td>
+</tr>
+<tr>
+<td>[9]</td>
+<td>使用矩阵指数分布表示用于公共安全和紧急通信的切换</td>
+</tr>
+<tr>
+<td>[10]</td>
+<td>提出了 5G 网络中的网络生存性框架</td>
+</tr>
+<tr>
+<td>[11]</td>
+<td>服务相关的安全要求</td>
+</tr>
+<tr>
+<td>[13]</td>
+<td>提出的模型实现了网络切片的成本优化部署，允许移动网络运营商根据其用户的需求有效地分配底层资源</td>
+</tr>
+</tbody></table>
+<p>&nbsp;</p>
+<h2 id="系统模型：DeepSlice"><a href="#系统模型：DeepSlice" class="headerlink" title="系统模型：DeepSlice"></a>系统模型：DeepSlice</h2><p>&emsp;&emsp;文章先创建了一个随机森林和神经网络，用来对输入数据包的切片类型进行判断。切片类型分为4中：eMBB、mMTC、URLLC和Master Slice，其中Master Slice具有属于其他每个切片的网络功能的切片，始终可以作为备用切片，处于热备用状态，并将根据其他切片上的负载状态使用。然后提出“DeepSlice”模型用于管理网络负载、切片故障条件并为连接到网络的任何新的未知设备类型检测最合适的切片。其中随机森林和神经网络使用相同的数据集，包含超过 65,000 个独特的输入组合。</p>
+<p>&emsp;&emsp;数据集包括来自网络和设备的最相关 KPI，包括用于连接的设备类型（智能手机、物联网设备、URLLC 设备等）、用户设备 (UE) 类别、QoS 类标识符 (QCI)、数据包延迟预算、最大丢包率、时间和星期几等。在 5G 中，数据包延迟预算和数据包丢失率是 5QI（5G QoS 标识符）的组成部分，这也包含在数据集中。 </p>
+<p>&emsp;&emsp;模型考虑了多种不同类型的输入设备，包括智能手机、通用 IoT 设备、AR-VR 设备、工业 4.0 流量、e911 或公共安全通信、医疗保健、智慧城市或智能家居流量等，甚至是请求访问的未知设备或多项服务。每种输入设备都有定义的 UE 类别值和预定义的 QCI 值。上述所有信息都用于神经网络训练，以便在当前做出明智的决策并有效地预测未来的网络资源预留。</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220212152159.png" alt="image-20220212152136937" style="zoom:60%;" />
+
+<center>总架构</center>
+
+<p>&emsp;&emsp;文章模型根据传入连接的先前信息预测每个网络切片上的网络负载，并跟踪哪个输出“网络切片”被使用最多。然后根据需要在所有切片之间有效地分配传入流量来将传入流量分配给网络。因为对于如何处理每种传入设备类型没有明确的规则集，所以用神经网络来处理非常合适。对于每一个新场景，与传统算法相比，智能网络都可以非常快速地学习和适应变化或新要求。下表展示了仿真模型的特点：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220212164055.png" alt="image-20220212164055405" style="zoom:70%;" />
+
+
+
+<h4 id="PartⅠ-随机森林分类器"><a href="#PartⅠ-随机森林分类器" class="headerlink" title="PartⅠ 随机森林分类器"></a>PartⅠ 随机森林分类器</h4><p>&emsp;&emsp;当拥有具有多个属性结构的数据集时，推荐使用随机森林 (RF)。 RF 是一种监督学习模型，主要用于为分类和回归问题建立预测模型。文章的模型选择 RF 而不是 k-Nearest Neighbor、朴素贝叶斯或决策树的主要原因是因为数据集中有大约 65,000 个独特的输入，并且所有这些数据都结构良好，因此 RF 通过使用多个子树来降低过度拟合的风险。RF 有助于将输入数据快速分类为任何预定义的类别。 RF 在大型数据库上高效运行并产生准确的预测。最重要的是，它可以估计任何丢失的数据，即使在某些输入数据丢失的情况下也能保持准确性</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220212164428.png" alt="image-20220212164428903" style="zoom: 60%;" />
+
+<p>&emsp;&emsp;下图是随机森林投票分类模型。输入数据集有大约 8 个不同的输入字符串，它们共同有助于模型做出决策。在现实世界的场景中很可能会发生 8 个输入中的一个或多个可能没有被接收到，而模型仍然必须预测一个输出的情况。在数据训练期间，RF 根据输入构建多个决策树，树的每个分支代表一个可能的事件或响应。文章使用 60% 的输入数据集来训练我们的模型，剩下的 40% 用于预测分类器的准确性。</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220212164443.png" alt="image-20220212164443517" style="zoom:55%;" />
+
+
+
+<h4 id="PartⅡ-神经网络分类器"><a href="#PartⅡ-神经网络分类器" class="headerlink" title="PartⅡ 神经网络分类器"></a>PartⅡ 神经网络分类器</h4><p>&emsp;&emsp;当数据非结构化且庞大的时，神经网络会比随机森林分类的效果更好。文章使用相同的数据集来训练神经网络的多个神经元，并根据来自 UE 信息的任何输入预测正确的网络切片。文章利用神经网络模型为未知设备类型选择正确的切片类型。在下图所示的DeepSlice 模型中，根据传入连接预测每个网络切片的网络负载，并跟踪哪个输出“网络切片”被使用最多，然后根据模型预测的负载和输出，通过在 eMBB、URLLC、mMTC 或主切片之间有效分配来将传入设备分配给切片。</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220212165139.png" alt="image-20220212165139106" style="zoom:55%;" />
+
+<p>&emsp;&emsp;在 24 小时模拟中产生了大约 25 万用户连接请求，其中 40% 是 eMBB、25% mMTC 和 35% URLLC。下图显示了运行 24 小时的模拟神经网络模型运行效果，给出了在一个实例中服务的用户数量。因为所有传入流量都有一个预定义的生存时间 (TTL)，因此每秒只有一小部分仍然有效。例如，在任何给定实例中，eMBB 活跃用户平均数为 275。与 eMBB 相比，为 URLLC 和 mMTC 用户分配了较短的 TTL，这就是为什么图中有更多用户使用宽带服务的原因。</p>
+<p>&emsp;&emsp;DeepSlice 最终将学习和了解什么样的设备会进入哪个切片，并且随着时间的推移，它将能够预测未来需要特定服务或网络切片的连接。它可以通过提前适当分配资源来帮助网络为任何新连接做好准备；这将节省以后的任何延误。数据集中包括任何连接的日期和时间，这也可以帮助网络在任何给定时间预测未来的连接数量，并根据从过去的信息中学习了解这些连接需要或请求哪些网络切片。</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220212165445.png" alt="image-20220212165445873" style="zoom:55%;" />
+
+<p>&nbsp;</p>
+<h2 id="仿真结果"><a href="#仿真结果" class="headerlink" title="仿真结果"></a>仿真结果</h2><p>在本节中，我们评估 DeepSlice 并验证它如何用于提供切片预测、负载平衡和网络可用性。在我们的第一个用例中，我们通过演示如何为请求连接到系统的任何未知设备类型准确选择切片来验证我们的方法。我们的第二个负载平衡用例涉及有效利用每个可用的网络切片。如果任何单个切片利用率超过其总可用资源的某个阈值，我们的模型将引导任何新连接到主切片，否则当切片利用率超过预定义阈值时需要承载设备。我们的第三个用例描述了一个切片故障场景，其中所有流量都将路由到主切片，并防止在切片故障期间出现任何服务丢失。 DeepSlice 将捕获任何连接失败的时间以及失败周围的一些属性；下次它可以尝试隔离问题并提前做好准备。</p>
+<h4 id="实验一-Unknown-Device-Type"><a href="#实验一-Unknown-Device-Type" class="headerlink" title="实验一 Unknown Device Type"></a>实验一 Unknown Device Type</h4><p>使用DeepSlice 模型对未知设备类型进行切片分类，交叉验证准确率超过 90.62%，其中包括新输入场景的整个测试数据集，以及训练时未使用的那些。</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220212214537.png" alt="image-20220212214537501" style="zoom:55%;" />
+
+<p>下表显示了一些未知数以及如何仅使用一部分输入信息来正确确定要使用的网络切片。</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220212214714.png" alt="image-20220212214714302" style="zoom:55%;" />
+
+<h4 id="实验二-Load-Balancing-Scenario"><a href="#实验二-Load-Balancing-Scenario" class="headerlink" title="实验二 Load Balancing Scenario"></a>实验二 Load Balancing Scenario</h4><p>假设使用率阈值为90%，如果连接数超过阈值，则该切片定义为过度使用。下图显示了一个 eMBB 切片被检测到具有超过 90% 的利用率，其流量超过了设置的阈值时，Master切片充当任何新 eMBB 连接的备份：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220212215050.png" alt="image-20220212215050386" style="zoom:55%;" />
+
+<p>DeepSlice 模型可以实现这种过载，并且准备下次重定向流量，从而不会导致特定切片过载。主切片接管多余的流量效果如图所示：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220212215159.png" alt="image-20220212215159502" style="zoom:55%;" />
+
+<h4 id="实验三-Network-Slicing-Failure-Scenario"><a href="#实验三-Network-Slicing-Failure-Scenario" class="headerlink" title="实验三 Network Slicing Failure Scenario"></a>实验三 Network Slicing Failure Scenario</h4><p>假设指定切片完全失效，例如是 eMBB，如图所示。此时 DeepSlice 模型会将所有新的 eMBB 相关流量引导到Master切片，避免网络中的流量传输丢失：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220212215347.png" alt="image-20220212215347359" style="zoom:55%;" />
+
+<p>但是，该切片上的任何正在进行的通信都会受到影响，并且所有现有连接都会由于切片突然故障而丢失。这由系统记录，例如日期和时间，并且下次将注意避免丢失所有正在进行的连接。</p>
+<p>下图显示，模拟模型在 mMTC 切片上出现故障，从 3 小时到 5 小时，持续两个小时，在 eMBB 切片上，在 16 小时到 18 小时的另外两个小时内出现故障。Master切片被标识为备份，并用于在这些切片故障期间重定向此流量。就容量和处理速度而言，Master切片中为每个网络切片保留了大量资源。</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220212215437.png" alt="image-20220212215437268" style="zoom:55%;" />
+
+<p>&nbsp;</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>&emsp;&emsp;我觉得这篇论文思路比较简单，就是用随机森林和一个简单的神经网络对数据包做了分类，然后加上了一些简单的切片资源调度策略，但是好在文章作者开源了代码和数据集。</p>
+<p>仓库：<a target="_blank" rel="noopener" href="https://github.com/adtmv7/DeepSlice">github</a></p>
+<p>源码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> keras.models <span class="keyword">import</span> Sequential</span><br><span class="line"><span class="keyword">from</span> keras.layers <span class="keyword">import</span> Dense</span><br><span class="line"><span class="keyword">from</span> keras.utils <span class="keyword">import</span> np_utils</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> numpy</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> LabelEncoder</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> keras.utils <span class="keyword">import</span> plot_model</span><br><span class="line"></span><br><span class="line">seed = <span class="number">9</span></span><br><span class="line">numpy.random.seed(seed)</span><br><span class="line"></span><br><span class="line"><span class="comment"># load datasets</span></span><br><span class="line"><span class="comment">#csv files were filtered based on the data.</span></span><br><span class="line">input_file = <span class="string">&quot;C:\\XXX...csv&quot;</span></span><br><span class="line">test_file = <span class="string">&quot;C:\\XXX.csv&quot;</span></span><br><span class="line"></span><br><span class="line">dataset = pd.read_csv(input_file).values</span><br><span class="line"></span><br><span class="line"><span class="comment"># read training data</span></span><br><span class="line">datasetTest = pd.read_csv(test_file).values</span><br><span class="line"></span><br><span class="line"><span class="comment"># split into input (X) and output (Y) variables</span></span><br><span class="line">X = dataset[:,<span class="number">0</span>:<span class="number">8</span>].astype(<span class="string">&quot;int32&quot;</span>)</span><br><span class="line">Y = dataset[:,<span class="number">8</span>]</span><br><span class="line">XT = datasetTest[:,<span class="number">0</span>:<span class="number">8</span>].astype(<span class="string">&quot;int32&quot;</span>)</span><br><span class="line"></span><br><span class="line">encoder = LabelEncoder()</span><br><span class="line">encoder.fit(Y)</span><br><span class="line">encoded_Y = encoder.transform(Y)</span><br><span class="line"></span><br><span class="line"><span class="comment"># convert integers to dummy variables (i.e. one hot encoded)</span></span><br><span class="line">dummy_y = np_utils.to_categorical(encoded_Y)</span><br><span class="line"></span><br><span class="line">(X_train, X_test, Y_train, Y_test) = train_test_split(X, dummy_y, test_size=<span class="number">0.001</span>, random_state=seed)</span><br><span class="line"><span class="comment"># create model</span></span><br><span class="line">model = Sequential()</span><br><span class="line">model.add(Dense(<span class="number">8</span>, input_dim=<span class="number">8</span>, init=<span class="string">&#x27;normal&#x27;</span>, activation=<span class="string">&#x27;relu&#x27;</span>))</span><br><span class="line">model.add(Dense(<span class="number">4</span>, init=<span class="string">&#x27;normal&#x27;</span>, activation=<span class="string">&#x27;relu&#x27;</span>))</span><br><span class="line">model.add(Dense(<span class="number">3</span>, init=<span class="string">&#x27;normal&#x27;</span>, activation=<span class="string">&#x27;tanh&#x27;</span>))</span><br><span class="line">model.add(Dense(<span class="number">3</span>, init=<span class="string">&#x27;normal&#x27;</span>, activation=<span class="string">&#x27;softmax&#x27;</span>))</span><br><span class="line"><span class="built_in">print</span>(model.summary())</span><br><span class="line"><span class="comment"># Compile model</span></span><br><span class="line">model.<span class="built_in">compile</span>(loss=<span class="string">&#x27;categorical_crossentropy&#x27;</span>, optimizer=<span class="string">&#x27;adam&#x27;</span>, metrics=[<span class="string">&#x27;accuracy&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># Fit the model</span></span><br><span class="line"></span><br><span class="line">history = model.fit(X_train, Y_train, validation_split=<span class="number">0.3</span>, epochs=<span class="number">16</span>, batch_size=<span class="number">128</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># evaluate the model</span></span><br><span class="line">scores = model.evaluate(X_test, Y_test)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\n%s: %.2f%%&quot;</span> % (model.metrics_names[<span class="number">1</span>], scores[<span class="number">1</span>]*<span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">plot_model(model, to_file=<span class="string">&#x27;model.png&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Plot training &amp; validation accuracy values</span></span><br><span class="line">plt.plot(history.history[<span class="string">&#x27;acc&#x27;</span>])</span><br><span class="line">plt.plot(history.history[<span class="string">&#x27;val_acc&#x27;</span>])</span><br><span class="line">plt.title(<span class="string">&#x27;Model Accuracy&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;Accuracy&#x27;</span>)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;Epoch&#x27;</span>)</span><br><span class="line">plt.legend([<span class="string">&#x27;Train&#x27;</span>, <span class="string">&#x27;Test&#x27;</span>], loc=<span class="string">&#x27;upper left&#x27;</span>)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Plot training &amp; validation loss values</span></span><br><span class="line">plt.plot(history.history[<span class="string">&#x27;loss&#x27;</span>])</span><br><span class="line">plt.plot(history.history[<span class="string">&#x27;val_loss&#x27;</span>])</span><br><span class="line">plt.title(<span class="string">&#x27;Model Loss&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;Loss&#x27;</span>)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;Epoch&#x27;</span>)</span><br><span class="line">plt.legend([<span class="string">&#x27;Train&#x27;</span>, <span class="string">&#x27;Test&#x27;</span>], loc=<span class="string">&#x27;upper right&#x27;</span>)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line"><span class="comment">#from sklearn.metrics import confusion_matrix</span></span><br><span class="line"><span class="comment">#y_pred_keras = model.predict_classes(XT)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#csv = open(&quot;C:\\DeepSlice\\5G\\output.csv&quot;, &quot;w&quot;)</span></span><br><span class="line"><span class="comment">#&quot;w&quot; indicates that you&#x27;re writing strings to the file</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#pd.DataFrame(y_pred_keras).to_csv(&quot;C:\\DeepSlice\\5G\\output.csv&quot;)</span></span><br><span class="line"><span class="comment">#cm = confusion_matrix(Y_test, y_pred_keras, labels=[0, 1, 2])</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#csv = open(&quot;C:\\DeepSlice\\5G\\input.csv&quot;, &quot;w&quot;)</span></span><br><span class="line"><span class="comment">#&quot;w&quot; indicates that you&#x27;re writing strings to the file</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#pd.DataFrame(XT).to_csv(&quot;C:\\DeepSlice\\5G\\input.csv&quot;)</span></span><br></pre></td></tr></table></figure>
+
+
+      </div>
+      
+      
+      
+    </div>
+    
+
+    
+    
+    
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%AF%BC%E5%90%91%E5%8F%8A%E7%8E%B0%E6%9C%89%E7%A0%94%E7%A9%B6"><span class="nav-text">问题导向及现有研究</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E6%A8%A1%E5%9E%8B%EF%BC%9ADeepSlice"><span class="nav-text">系统模型：DeepSlice</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Part%E2%85%A0-%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97%E5%88%86%E7%B1%BB%E5%99%A8"><span class="nav-text">PartⅠ 随机森林分类器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Part%E2%85%A1-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%88%86%E7%B1%BB%E5%99%A8"><span class="nav-text">PartⅡ 神经网络分类器</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%BF%E7%9C%9F%E7%BB%93%E6%9E%9C"><span class="nav-text">仿真结果</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E4%B8%80-Unknown-Device-Type"><span class="nav-text">实验一 Unknown Device Type</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E4%BA%8C-Load-Balancing-Scenario"><span class="nav-text">实验二 Load Balancing Scenario</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E4%B8%89-Network-Slicing-Failure-Scenario"><span class="nav-text">实验三 Network Slicing Failure Scenario</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Lrk612"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Lrk612</p>
+  <div class="site-description" itemprop="description">Lrk's blog</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.google.com/" title="https:&#x2F;&#x2F;www.google.com" rel="noopener" target="_blank">Google</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://arxiv.org/" title="https:&#x2F;&#x2F;arxiv.org&#x2F;" rel="noopener" target="_blank">arXiv</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ieeexplore.ieee.org/Xplore/home.jsp" title="https:&#x2F;&#x2F;ieeexplore.ieee.org&#x2F;Xplore&#x2F;home.jsp" rel="noopener" target="_blank">IEEE Xplore</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        <!-- 访问量 -->
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客数<span id="busuanzi_value_site_uv"></span>人</span>
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+$(document).ready(function() {
+
+    var int = setInterval(fixCount, 50);  // 50ms周期检测函数
+    var countOffset = 20000;  // 初始化首次数据
+
+    function fixCount() {            
+       if (document.getElementById("busuanzi_container_site_pv").style.display != "none")
+        {
+            $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + countOffset); 
+            clearInterval(int);
+        }                  
+        if ($("#busuanzi_container_site_pv").css("display") != "none")
+        {
+            $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + countOffset); // 加上初始数据 
+            clearInterval(int); // 停止检测
+        }  
+    }
+       	
+});
+</script> 
+
+
+<!-- 版权 -->
+<div class="copyright">
+  
+  &copy; 2021-12-1 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lrk612</span>
+</div>
+
+<!-- ICP备案 -->
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">ICP备案 </a>
+      <img src="https://my-picture-1311448338.file.myqcloud.com/img/20211209170739.png" style="display: inline-block;"><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=2021035798" rel="noopener" target="_blank">豫ICP备2021035798号 </a>
+  </div>
+
+<!-- 不知道是什么 -->
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'fH6OdGBcCG8D6jC8NeeJlX9b-gzGzoHsz',
+      appKey     : '1UoIb6vszMw6wl0n7kreb4Xz',
+      placeholder: "Just go go ^_^",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+    var infoEle = document.querySelector('#comments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0){
+      infoEle.childNodes.forEach(function(item) {
+        item.parentNode.removeChild(item);
+      });
+    }
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
