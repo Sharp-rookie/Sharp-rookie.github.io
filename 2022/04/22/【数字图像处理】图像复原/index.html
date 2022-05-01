@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"sharp-rookie.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+<script> 
+   (function(){
+          if(''){
+              if (prompt('请输入文章密码') !== ''){
+                  alert('密码错误！');
+                  history.back();
+              }
+          }
+      })();
+  </script>
+  <meta name="description" content="数字图像处理第五章知识总结：  图像的退化和复原 含噪图像复原方法 退化函数估计复原 逆滤波与维纳滤波 几何校正 图像的投影重建">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【数字图像处理】图像复原">
+<meta property="og:url" content="https://sharp-rookie.github.io/2022/04/22/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91%E5%9B%BE%E5%83%8F%E5%A4%8D%E5%8E%9F/index.html">
+<meta property="og:site_name" content="最忆是江南">
+<meta property="og:description" content="数字图像处理第五章知识总结：  图像的退化和复原 含噪图像复原方法 退化函数估计复原 逆滤波与维纳滤波 几何校正 图像的投影重建">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220405084030.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220405084136.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220405084219.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220405084527.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220405084726.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220405084732.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220405084742.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220405084753.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220405084953.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220405085007.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220405085225.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220405085303.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220405085525.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220405085713.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220405085741.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220405085805.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220405144458.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220405151609.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220405151618.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220405152441.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220405152039.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220405152157.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220405152135.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220405152509.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220405152523.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220405152733.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220405152825.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220405152904.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220405152923.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220405202828.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220405203325.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220405203505.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220405203540.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220405210229.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220405210346.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220405210404.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220405210455.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220407103539.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220407102821.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220407103045.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220407103132.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220407104051.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220407104112.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220407104723.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220407104752.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220407104910.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220407104940.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220407105003.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220407122330.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220407122349.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220407122519.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220407123254.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220407123428.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220407123507.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220407123514.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220407123553.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220407124636.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220407124910.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220407124930.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220407125048.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220409205226.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220409205432.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220409205500.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220409210142.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220409210201.png">
+<meta property="article:published_time" content="2022-04-22T13:59:17.483Z">
+<meta property="article:modified_time" content="2022-04-25T03:39:28.342Z">
+<meta property="article:author" content="Lrk612">
+<meta property="article:tag" content="数字图像处理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://my-picture-1311448338.file.myqcloud.com/img2/20220405084030.png">
+
+<link rel="canonical" href="https://sharp-rookie.github.io/2022/04/22/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91%E5%9B%BE%E5%83%8F%E5%A4%8D%E5%8E%9F/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>【数字图像处理】图像复原 | 最忆是江南</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+        <a target="_blank" rel="noopener" href="https://github.com/Sharp-rookie" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">最忆是江南</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Love actually is all around</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-papers">
+
+    <a href="/papers/" rel="section"><i class="fa-regular fa-book-open fa-fw"></i>论文阅读</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th-list fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-friendlink">
+
+    <a href="/friendlink/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="fa fa-download fa-fw"></i>资源</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://sharp-rookie.github.io/2022/04/22/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91%E5%9B%BE%E5%83%8F%E5%A4%8D%E5%8E%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Lrk612">
+      <meta itemprop="description" content="Lrk's blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="最忆是江南">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【数字图像处理】图像复原
+        </h1>
+
+        <div class="post-meta">
+         
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-04-22 21:59:17" itemprop="dateCreated datePublished" datetime="2022-04-22T21:59:17+08:00">2022-04-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/" itemprop="url" rel="index"><span itemprop="name">知识分享</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2022/04/22/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91%E5%9B%BE%E5%83%8F%E5%A4%8D%E5%8E%9F/" class="post-meta-item leancloud_visitors" data-flag-title="【数字图像处理】图像复原" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/04/22/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91%E5%9B%BE%E5%83%8F%E5%A4%8D%E5%8E%9F/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/04/22/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91%E5%9B%BE%E5%83%8F%E5%A4%8D%E5%8E%9F/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><strong>数字图像处理第五章知识总结：</strong></p>
+<ul>
+<li>图像的退化和复原</li>
+<li>含噪图像复原方法</li>
+<li>退化函数估计复原</li>
+<li>逆滤波与维纳滤波</li>
+<li>几何校正</li>
+<li>图像的投影重建</li>
+</ul>
+<span id="more"></span>
+
+<p>&nbsp;</p>
+<h1 id="退化模型"><a href="#退化模型" class="headerlink" title="退化模型"></a>退化模型</h1><h2 id="典型的退化形式"><a href="#典型的退化形式" class="headerlink" title="典型的退化形式"></a>典型的退化形式</h2><ul>
+<li>光学系统孔径衍射造成的退化</li>
+<li>目标运动造成的退化</li>
+<li>成像过程的非线性造成的退化</li>
+<li>噪声引入造成的退化</li>
+</ul>
+<p><strong>点的退化</strong></p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220405084030.png" alt="image-20220405084023594" style="zoom: 60%;" />
+
+
+
+<center>左上：原图，右上：噪声，左下：散焦，右下：运动</center>
+
+<p><strong>图像的退化</strong></p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220405084136.png" alt="image-20220405084136329" style="zoom:60%;" />
+
+<center>左上：原图，右上：噪声，左下：散焦，右下：运动</center>
+
+<p><strong>大气团流影响</strong></p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220405084219.png" alt="image-20220405084219725" style="zoom:60%;" />
+
+<center>左上：原图，右上：严重，左下：中度，右下：轻微</center>
+
+<p>&nbsp;</p>
+<h2 id="退化的数学描述"><a href="#退化的数学描述" class="headerlink" title="退化的数学描述"></a>退化的数学描述</h2><ul>
+<li><p>退化过程，采用系统函数 <code>H</code> 表示</p>
+</li>
+<li><p>退化还叠加有统计特性已知的加性噪声 <code>n(x,y)</code></p>
+</li>
+<li><p>退化模型的数学表示：<code>g(x, y) = H [f (x, y)]+ n(x, y)</code></p>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220405084527.png" alt="image-20220405084527174" style="zoom:60%;" /></li>
+<li><p>恢复图象：在给定 <code>g (x, y)</code> 和代表退化的 <code>H</code> 的基础上得到对 <code>f (x, y)</code> 的某个近似</p>
+</li>
+</ul>
+<p>&nbsp;</p>
+<h2 id="退化函数H的性质"><a href="#退化函数H的性质" class="headerlink" title="退化函数H的性质"></a>退化函数H的性质</h2><ul>
+<li><p>线性</p>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220405084726.png" alt="image-20220405084726308" style="zoom:67%;" /></li>
+<li><p>相加性</p>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220405084732.png" alt="image-20220405084732570" style="zoom:67%;" /></li>
+<li><p>一致性</p>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220405084742.png" alt="image-20220405084742566" style="zoom:67%;" /></li>
+<li><p>空间不变性</p>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220405084753.png" alt="image-20220405084752960" style="zoom:67%;" /></li>
+</ul>
+<p>&nbsp;</p>
+<h2 id="退化模型-1"><a href="#退化模型-1" class="headerlink" title="退化模型"></a>退化模型</h2><p><strong>空域模型</strong></p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220405084953.png" alt="image-20220405084953068" style="zoom:60%;" />
+
+<p><strong>频域模型</strong></p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220405085007.png" alt="image-20220405085007839" style="zoom:45%;" />
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h1 id="图像恢复的噪声问题"><a href="#图像恢复的噪声问题" class="headerlink" title="图像恢复的噪声问题"></a>图像恢复的噪声问题</h1><h2 id="噪声种类"><a href="#噪声种类" class="headerlink" title="噪声种类"></a>噪声种类</h2><ul>
+<li>高斯噪声</li>
+<li>均匀噪声</li>
+<li>脉冲（椒盐）噪声</li>
+<li>周期性噪声</li>
+<li>其他噪声（瑞利、指数、伽马）</li>
+</ul>
+<p><strong>分布图</strong></p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220405085225.png" alt="image-20220405085224918" style="zoom:50%;" />
+
+
+
+<p><strong>直方图</strong></p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220405085303.png" alt="image-20220405085303135" style="zoom:60%;" />
+
+<p>&nbsp;</p>
+<h2 id="噪声的参数估计"><a href="#噪声的参数估计" class="headerlink" title="噪声的参数估计"></a>噪声的参数估计</h2><ul>
+<li>选取图像中被噪声影响的均匀区域</li>
+<li>由直方图估计噪声类型</li>
+<li>计算区域 S 的统计参数</li>
+<li>根据噪声类型计算噪声参数</li>
+</ul>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220405085525.png" alt="image-20220405085524907" style="zoom:60%;" />
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h1 id="空域滤波去噪"><a href="#空域滤波去噪" class="headerlink" title="空域滤波去噪"></a>空域滤波去噪</h1><h2 id="均值滤波"><a href="#均值滤波" class="headerlink" title="均值滤波"></a>均值滤波</h2><img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220405085713.png" alt="image-20220405085713414" style="zoom: 50%;" />
+
+<p>&nbsp;</p>
+<h2 id="统计排序滤波"><a href="#统计排序滤波" class="headerlink" title="统计排序滤波"></a>统计排序滤波</h2><img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220405085741.png" alt="image-20220405085741062" style="zoom:50%;" />
+
+<p>&nbsp;</p>
+<h2 id="自适应滤波"><a href="#自适应滤波" class="headerlink" title="自适应滤波"></a>自适应滤波</h2><img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220405085805.png" alt="image-20220405085805644" style="zoom:60%;" />
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h1 id="频域滤波消除周期噪声"><a href="#频域滤波消除周期噪声" class="headerlink" title="频域滤波消除周期噪声"></a>频域滤波消除周期噪声</h1><ul>
+<li>带阻（通）滤波<ul>
+<li>对位于一定频带内的噪声进行滤除</li>
+<li>理想带阻滤波、巴特沃斯滤波…</li>
+</ul>
+</li>
+<li>陷波滤波<ul>
+<li>阻止（通过）对事先定义的中心频率邻域的信息</li>
+<li>理想陷波滤波、巴特沃斯陷波滤波…</li>
+</ul>
+</li>
+</ul>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220405144458.png" alt="image-20220405144457970" style="zoom: 50%;" />
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h1 id="图像恢复的频域滤波方法"><a href="#图像恢复的频域滤波方法" class="headerlink" title="图像恢复的频域滤波方法"></a>图像恢复的频域滤波方法</h1><h2 id="频域滤波思想"><a href="#频域滤波思想" class="headerlink" title="频域滤波思想"></a>频域滤波思想</h2><ul>
+<li><p>失真现象可以用传输函数H数学表示：</p>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220405151609.png" alt="image-20220405151609617" style="zoom:60%;" /></li>
+<li><p>不考虑噪声影响情况下为：</p>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220405151618.png" alt="image-20220405151617966" style="zoom:50%;" /></li>
+<li><p>恢复失真的图像，可以经过频域滤波实现，也就是频域除以传输函数H可得，这就是简单逆滤波</p>
+</li>
+</ul>
+<p>&nbsp;</p>
+<h2 id="简单逆滤波"><a href="#简单逆滤波" class="headerlink" title="简单逆滤波"></a>简单逆滤波</h2><img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220405152441.png" alt="image-20220405152441460" style="zoom:50%;" />
+
+<ul>
+<li><p>频域表达式</p>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220405152039.png" alt="image-20220405152039236" style="zoom:60%;" /></li>
+<li><p>改进1：</p>
+<p>  避免噪声的影响，除去 <code>H(u, v)</code> 为零的点</p>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220405152157.png" alt="image-20220405152157781" style="zoom:60%;" /></li>
+<li><p>改进2：</p>
+<p>  减少振铃效应，避免传输函数低值影响</p>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220405152135.png" alt="image-20220405152135533" style="zoom:60%;" /></li>
+</ul>
+<p><strong>效果</strong></p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220405152509.png" alt="image-20220405152509336" style="zoom:50%;" />
+
+<img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220405152523.png" alt="image-20220405152523705" style="zoom:50%;" />
+
+<p>&nbsp;</p>
+<h2 id="有约束滤波——维纳滤波（最小均方滤波）"><a href="#有约束滤波——维纳滤波（最小均方滤波）" class="headerlink" title="有约束滤波——维纳滤波（最小均方滤波）"></a>有约束滤波——维纳滤波（最小均方滤波）</h2><ul>
+<li><p>简单逆滤波没有考虑噪声，缺乏针对性，也就是恢复过程没有考虑噪声条件的约束</p>
+</li>
+<li><p>维纳滤波是一种在恢复过程考虑噪声影响的最经典的滤波恢复方式之一，有约束滤波：</p>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220405152733.png" alt="image-20220405152733347" style="zoom:60%;" />
+
+  <center>* 表示复共轭，Sf 和 Sn 分别表示图像信号和噪声的功率谱</center></li>
+<li><p>由线性系统理论已知 Sf 和 Sn 之间满足：</p>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220405152825.png" alt="image-20220405152825374" style="zoom:60%;" /></li>
+</ul>
+<p><strong>效果</strong></p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220405152904.png" alt="image-20220405152904339" style="zoom:50%;" />
+
+<img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220405152923.png" alt="image-20220405152923005" style="zoom:50%;" />
+
+<p>&nbsp;</p>
+<h2 id="系统传输函数h-x-y-的估计"><a href="#系统传输函数h-x-y-的估计" class="headerlink" title="系统传输函数h(x,y)的估计"></a>系统传输函数h(x,y)的估计</h2><ul>
+<li>图象恢复公式都用到了公式 <code>g = hf</code> 或 <code>g = hf + n</code>，或者其相应的频域表示</li>
+<li>求解这些方程的必要条件是点源传输函数（或它的频域表示 <code>H(u,v)</code> ）已知或可求</li>
+<li>当不知道点源传输函数 <code>h(x,y)</code> 时，由模糊图 <code>g(x,y)</code> 估计清楚图 <code>f(x,y)</code> 的问题就叫盲反卷积问题</li>
+</ul>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220405202828.png" alt="image-20220405202828376" style="zoom:50%;" />
+
+<p>&nbsp;</p>
+<h2 id="估计点源传播函数（PSF）的方法"><a href="#估计点源传播函数（PSF）的方法" class="headerlink" title="估计点源传播函数（PSF）的方法"></a>估计点源传播函数（PSF）的方法</h2><h3 id="图像观察"><a href="#图像观察" class="headerlink" title="图像观察"></a>图像观察</h3><ul>
+<li><p>在图像中寻找信号强的子区域 <code>gs(x,y)</code></p>
+</li>
+<li><p>对该区域的源图像进行估计 <code>fs^(x,y)</code></p>
+</li>
+<li><p>分别对子区域的两个图像进行傅里叶变换</p>
+</li>
+<li><p>得到关于该估计的成像传输函数：</p>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220405203325.png" alt="image-20220405203325794" style="zoom:70%;" /></li>
+<li><p>将该传输函数在全图像范围进行等比例扩展，得到传输函数的估计 <code>H(u,v)</code></p>
+</li>
+</ul>
+<h3 id="试验估计"><a href="#试验估计" class="headerlink" title="试验估计"></a>试验估计</h3><ul>
+<li><p>如果成像环境可再现，可由试验估计传输函数</p>
+</li>
+<li><p>在指定成像环境下，对孤立亮点试验成像，得到图像 <code>g(x,y)</code></p>
+</li>
+<li><p>计算傅里叶变换 <code>G(u,v)</code></p>
+</li>
+<li><p>孤立亮点图像的傅里叶变换为常数，假设为A</p>
+</li>
+<li><p>传输函数的估计为：</p>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220405203505.png" alt="image-20220405203504957" style="zoom:70%;" /></li>
+<li><p>举例：</p>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220405203540.png" alt="image-20220405203540264" style="zoom:50%;" /></li>
+</ul>
+<h3 id="模型估计"><a href="#模型估计" class="headerlink" title="模型估计"></a>模型估计</h3><ul>
+<li><p>对于由光学系统使用不当(目标不在焦面)引起的模糊，如果已知仪器的参数，则可以用几何光学和物理光学计算出 <code>h(x,y)</code></p>
+</li>
+<li><p>大气扰动引起的模糊，其点源传播函数呈<strong>高斯</strong>形状</p>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220405210229.png" alt="image-20220405210229327" style="zoom:30%;" /></li>
+<li><p>因运动引起的模糊其点源传播函数在频域是 <strong>Sinc</strong> 函数</p>
+</li>
+</ul>
+<p>&nbsp;</p>
+<h2 id="运动模糊传输函数估计"><a href="#运动模糊传输函数估计" class="headerlink" title="运动模糊传输函数估计"></a>运动模糊传输函数估计</h2><ul>
+<li><p>匀速直线运动的数学表达，T为采样时间长度：</p>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220405210346.png" alt="image-20220405210346912" style="zoom:60%;" /></li>
+<li><p>频域描述：</p>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220405210404.png" alt="image-20220405210404753" style="zoom:65%;" /></li>
+<li><p>简化为单方向运动——水平方向：</p>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220405210455.png" alt="image-20220405210455739" style="zoom:60%;" />
+
+  <center>c为曝光时间T内的物体运动距离</center></li>
+<li><p>当uc为整数，H(u,v)=0</p>
+</li>
+<li><p>因为H有0点，所以不能直接用逆滤波进行完整的恢复</p>
+</li>
+<li><p>另外寻找思路，在空间域通过运动对图像的影响结果进行估计，采用迭代方式进行恢复</p>
+</li>
+</ul>
+<p>&nbsp;</p>
+<h2 id="运动模糊的空域处理"><a href="#运动模糊的空域处理" class="headerlink" title="运动模糊的空域处理"></a>运动模糊的空域处理</h2><img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220407103539.png" alt="image-20220407103539415" style="zoom:60%;" />
+
+<ul>
+<li><p>在曝光时间T，物体x方向运动距离c，有：</p>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220407102821.png" alt="image-20220407102821156" style="zoom:70%;" /></li>
+<li><p>令 <code>x&#39;=x-ct/T</code>，有：</p>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220407103045.png" alt="image-20220407103045309" style="zoom:67%;" /></li>
+<li><p>求导得：</p>
+<p>  <img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220407103132.png" alt="image-20220407103132718"></p>
+</li>
+<li><p>由此可见从模糊图像 <code>g(x,y)</code> 恢复原图像 <code>f(x,y)</code> 是一个迭代关系</p>
+<ul>
+<li>模糊图像的导数是可以得到的</li>
+<li>只要有总长度为 <code>c</code> 的原图像 <code>f(x-c,y)</code>，就可以推导得到全部的原图像 <code>f(x,y)</code></li>
+</ul>
+</li>
+<li><p>推导过程：</p>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220407104051.png" alt="image-20220407104051325" style="zoom:50%;" />
+
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220407104112.png" alt="image-20220407104112766" style="zoom:50%;" /></li>
+<li><p>结论，对于 <code>mc ≤ x &lt; (m+1)c</code>，采用变量 x 表达的迭代公式为：</p>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220407104723.png" alt="image-20220407104723194" style="zoom:60%;" /></li>
+<li><p>由此得到在整个 <code>0≤x&lt;L</code> 范围的图像恢复表达式：</p>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220407104752.png" alt="image-20220407104752124" style="zoom:60%;" /></li>
+<li><p>其中，p(z) 的值需要进一步估计：</p>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220407104910.png" alt="image-20220407104910113" style="zoom:50%;" /></li>
+<li><p>综上，<code>f(x,y)</code> 的完整表达式为：</p>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220407104940.png" alt="image-20220407104940281" style="zoom:55%;" />
+
+<p>  变量替换到整个图像范围：</p>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220407105003.png" alt="image-20220407105003457" style="zoom:60%;" /></li>
+</ul>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h1 id="交互式恢复"><a href="#交互式恢复" class="headerlink" title="交互式恢复"></a>交互式恢复</h1><ul>
+<li><p>人机结合控制恢复过程，以达到一些特殊的效果</p>
+</li>
+<li><p>举例：正弦干扰模式（相关噪声）</p>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220407122330.png" alt="image-20220407122330696" style="zoom:50%;" />
+
+<p>  退化仅由噪声造成：</p>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220407122349.png" alt="image-20220407122349064" style="zoom:50%;" />
+
+<ul>
+<li><p>依靠视觉观察在频率域确定出脉冲分量的位置并在该位置利用带阻滤波器消除</p>
+</li>
+<li><p>存在多个正弦分量：在频率域里对应每个亮点的位置放1个带通滤波器 <code>H(u, v)</code></p>
+</li>
+<li><p>干扰模式的傅立叶变换 <code>P(u, v) = H(u, v)×G(u, v)</code></p>
+</li>
+<li><p>得到干扰模式的傅立叶变换，在进行反变换，从退化图像减去干扰图像，也能达到恢复的目的</p>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220407122519.png" alt="image-20220407122518932" style="zoom:50%;" /></li>
+</ul>
+<p>  &nbsp;</p>
+<p>  &nbsp;</p>
+<h1 id="几何失真的校正"><a href="#几何失真的校正" class="headerlink" title="几何失真的校正"></a>几何失真的校正</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2></li>
+<li><p>应用</p>
+<ul>
+<li>几何畸变的校正</li>
+<li>图像的匹配</li>
+</ul>
+</li>
+<li><p>处理步骤</p>
+<ul>
+<li>空间变换，即对图像坐标位置进行校正</li>
+<li>灰度插值，即对像素灰度级进行估算</li>
+</ul>
+</li>
+</ul>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220407123254.png" alt="image-20220407123254725" style="zoom:50%;" />
+
+<p>&nbsp;</p>
+<h2 id="空间变换"><a href="#空间变换" class="headerlink" title="空间变换"></a>空间变换</h2><h3 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h3><ul>
+<li><p>图象 <code>f (x, y)</code> 受几何形变的影响变成失真图象 <code>g(x&#39;, y&#39; )</code></p>
+</li>
+<li><p>失真的坐标变换数学描述如下：</p>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220407123428.png" alt="image-20220407123428321" style="zoom: 60%;" /></li>
+<li><p>线性失真：</p>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220407123507.png" alt="image-20220407123507766" style="zoom:60%;" /></li>
+<li><p>非线性失真：</p>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220407123514.png" alt="image-20220407123514589" style="zoom:60%;" />
+
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220407123553.png" alt="image-20220407123553618" style="zoom:50%;" /></li>
+</ul>
+<h3 id="模型系数的确定"><a href="#模型系数的确定" class="headerlink" title="模型系数的确定"></a>模型系数的确定</h3><ul>
+<li><p>采用约束对应点方法，也称控制点方法</p>
+</li>
+<li><p>在输入图（失真图）和输出图（校正图）上找一些其位置确切知道的点，然后利用这些点建立两幅图间其它象素空间位置的对应关系</p>
+</li>
+<li><p>如果选取四边形的顶点，可以有4组对应点，能确定8个系数的如下双线性方程</p>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220407124636.png" alt="image-20220407124635985" style="zoom:60%;" /></li>
+<li><p>选取不同的多边形，可以建立不同的变换方程，能校正不同的几何失真</p>
+<ul>
+<li>四边形（4控制点）可以建立8个系数的双线性方程</li>
+<li>三角形（3控制点）可以建立6个系数的线性方程</li>
+<li>六边形（6控制点）可以建立12个系数的非线性二次方程</li>
+</ul>
+</li>
+</ul>
+<h3 id="多控制点情况下的校正方程系数确定"><a href="#多控制点情况下的校正方程系数确定" class="headerlink" title="多控制点情况下的校正方程系数确定"></a>多控制点情况下的校正方程系数确定</h3><ul>
+<li><p>一般情况下几何失真的模型可以进行预估</p>
+<ul>
+<li>线性、双线性、非线性（2次、3次…）</li>
+</ul>
+</li>
+<li><p>确定模型后，选用的控制点数量一般多于系数确定所需要的控制点数，以便降低控制点选择不准确造成系数确定不正确带来的校正效果不好的风险。</p>
+</li>
+<li><p>此时校正方程系数解是最小均方误差意义上的解。</p>
+<ul>
+<li>M个控制点求解双线性变换方程系数的矩阵表示(&gt;4)</li>
+</ul>
+</li>
+<li><p>对于m个控制点，将控制点的数据带入求解</p>
+<ul>
+<li><p>对于坐标 x 的变换</p>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220407124910.png" alt="image-20220407124910198" style="zoom: 60%;" /></li>
+<li><p>对于坐标 y 的变换</p>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220407124930.png" alt="image-20220407124930915" style="zoom:60%;" /></li>
+</ul>
+</li>
+<li><p>矩阵A、B不是方阵，不能通过求逆矩阵得到系数a和b的解。根据矩阵论的知识，此时可以通过伪逆矩阵得到a、b在最小均方误差意义上的解：</p>
+  <img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220407125048.png" alt="image-20220407125048186" style="zoom:40%;" /></li>
+</ul>
+<p>&nbsp;</p>
+<h2 id="灰度插值"><a href="#灰度插值" class="headerlink" title="灰度插值"></a>灰度插值</h2><ul>
+<li>坐标变换后的结果不是整数，不在数字图像的像素位置上，需要用整数处的象素值来计算在非整数处的象素值，这就是灰度插值</li>
+<li>变换的策略，从校正后图像的坐标空间反变换到退化图像的坐标空间，非整数位置处的图像灰度，通过周边相邻像素的灰度值计算而得</li>
+</ul>
+<h3 id="最近邻插值"><a href="#最近邻插值" class="headerlink" title="最近邻插值"></a>最近邻插值</h3><p>也称为零阶插值，将离 <code>(x&#39;, y&#39; )</code> 点最近的象素的灰度值作为 <code>(x&#39;, y&#39; )</code> 点的灰度值赋给原图 <code>(x, y)</code> 处象素</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220409205226.png" alt="image-20220409205218926" style="zoom:60%;" />
+
+
+
+<h3 id="双线性插值"><a href="#双线性插值" class="headerlink" title="双线性插值"></a>双线性插值</h3><p>利用(x’, y’ )点的4个最近邻象素A、B、C、D，灰度值分别为g(A)、g(B)、g(C)、g(D)</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220409205432.png" alt="image-20220409205432272" style="zoom:50%;" />
+
+<p>推广到3维：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220409205500.png" alt="image-20220409205500344" style="zoom:50%;" />
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h1 id="图像的投影重建"><a href="#图像的投影重建" class="headerlink" title="图像的投影重建"></a>图像的投影重建</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><ul>
+<li>二维图像在某方向的一维投影，可以反映二维图像的部分信息</li>
+<li>多方向的一维投影数据，可以重建二维图像</li>
+</ul>
+<p>&nbsp;</p>
+<h2 id="傅里叶逆变换重建图像"><a href="#傅里叶逆变换重建图像" class="headerlink" title="傅里叶逆变换重建图像"></a>傅里叶逆变换重建图像</h2><img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220409210142.png" alt="image-20220409210142599" style="zoom:50%;" />
+
+<img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220409210201.png" alt="image-20220409210201104" style="zoom:50%;" />
+
+<h3 id="投影定理"><a href="#投影定理" class="headerlink" title="投影定理"></a>投影定理</h3><p><code>f(x,y)</code> 以 <code>θ</code> 角进行投影的傅立叶变换等于 <code>f(x,y)</code> 的傅立叶变换在傅立叶空间 <code>(R ,θ)</code> 处的值</p>
+<p>&nbsp;</p>
+<h3 id="傅立叶反变换进行投影重建的步骤"><a href="#傅立叶反变换进行投影重建的步骤" class="headerlink" title="傅立叶反变换进行投影重建的步骤"></a>傅立叶反变换进行投影重建的步骤</h3><ul>
+<li>对以角 <code>θn(n=1,2,...N)</code> 的投影进行1D傅立叶变换</li>
+<li>在傅立叶空间从极坐标向直角坐标插值</li>
+<li>进行2D傅立叶反变换得到重建图像</li>
+</ul>
+<p>&nbsp;</p>
+<h2 id="逆投影重建"><a href="#逆投影重建" class="headerlink" title="逆投影重建"></a>逆投影重建</h2><p>&nbsp;</p>
+<h2 id="平行投影到扇束投影"><a href="#平行投影到扇束投影" class="headerlink" title="平行投影到扇束投影"></a>平行投影到扇束投影</h2>
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Lrk612
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://sharp-rookie.github.io/2022/04/22/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91%E5%9B%BE%E5%83%8F%E5%A4%8D%E5%8E%9F/" title="【数字图像处理】图像复原">https://sharp-rookie.github.io/2022/04/22/【数字图像处理】图像复原/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" rel="tag"># 数字图像处理</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/04/22/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91Matlab%EF%BC%9A%E5%9B%BE%E5%83%8F%E5%A4%8D%E5%8E%9F/" rel="prev" title="【数字图像处理】Matlab：图像恢复">
+      <i class="fa fa-chevron-left"></i> 【数字图像处理】Matlab：图像恢复
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/04/22/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91Matlab%EF%BC%9A%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B/" rel="next" title="【数字图像处理】Matlab：边缘检测">
+      【数字图像处理】Matlab：边缘检测 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%80%E5%8C%96%E6%A8%A1%E5%9E%8B"><span class="nav-text">退化模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B8%E5%9E%8B%E7%9A%84%E9%80%80%E5%8C%96%E5%BD%A2%E5%BC%8F"><span class="nav-text">典型的退化形式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%80%E5%8C%96%E7%9A%84%E6%95%B0%E5%AD%A6%E6%8F%8F%E8%BF%B0"><span class="nav-text">退化的数学描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%80%E5%8C%96%E5%87%BD%E6%95%B0H%E7%9A%84%E6%80%A7%E8%B4%A8"><span class="nav-text">退化函数H的性质</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%80%E5%8C%96%E6%A8%A1%E5%9E%8B-1"><span class="nav-text">退化模型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%BE%E5%83%8F%E6%81%A2%E5%A4%8D%E7%9A%84%E5%99%AA%E5%A3%B0%E9%97%AE%E9%A2%98"><span class="nav-text">图像恢复的噪声问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%99%AA%E5%A3%B0%E7%A7%8D%E7%B1%BB"><span class="nav-text">噪声种类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%99%AA%E5%A3%B0%E7%9A%84%E5%8F%82%E6%95%B0%E4%BC%B0%E8%AE%A1"><span class="nav-text">噪声的参数估计</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A9%BA%E5%9F%9F%E6%BB%A4%E6%B3%A2%E5%8E%BB%E5%99%AA"><span class="nav-text">空域滤波去噪</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9D%87%E5%80%BC%E6%BB%A4%E6%B3%A2"><span class="nav-text">均值滤波</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%9F%E8%AE%A1%E6%8E%92%E5%BA%8F%E6%BB%A4%E6%B3%A2"><span class="nav-text">统计排序滤波</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E9%80%82%E5%BA%94%E6%BB%A4%E6%B3%A2"><span class="nav-text">自适应滤波</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%91%E5%9F%9F%E6%BB%A4%E6%B3%A2%E6%B6%88%E9%99%A4%E5%91%A8%E6%9C%9F%E5%99%AA%E5%A3%B0"><span class="nav-text">频域滤波消除周期噪声</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%BE%E5%83%8F%E6%81%A2%E5%A4%8D%E7%9A%84%E9%A2%91%E5%9F%9F%E6%BB%A4%E6%B3%A2%E6%96%B9%E6%B3%95"><span class="nav-text">图像恢复的频域滤波方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%91%E5%9F%9F%E6%BB%A4%E6%B3%A2%E6%80%9D%E6%83%B3"><span class="nav-text">频域滤波思想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E9%80%86%E6%BB%A4%E6%B3%A2"><span class="nav-text">简单逆滤波</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%89%E7%BA%A6%E6%9D%9F%E6%BB%A4%E6%B3%A2%E2%80%94%E2%80%94%E7%BB%B4%E7%BA%B3%E6%BB%A4%E6%B3%A2%EF%BC%88%E6%9C%80%E5%B0%8F%E5%9D%87%E6%96%B9%E6%BB%A4%E6%B3%A2%EF%BC%89"><span class="nav-text">有约束滤波——维纳滤波（最小均方滤波）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E4%BC%A0%E8%BE%93%E5%87%BD%E6%95%B0h-x-y-%E7%9A%84%E4%BC%B0%E8%AE%A1"><span class="nav-text">系统传输函数h(x,y)的估计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%B0%E8%AE%A1%E7%82%B9%E6%BA%90%E4%BC%A0%E6%92%AD%E5%87%BD%E6%95%B0%EF%BC%88PSF%EF%BC%89%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-text">估计点源传播函数（PSF）的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E5%83%8F%E8%A7%82%E5%AF%9F"><span class="nav-text">图像观察</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%95%E9%AA%8C%E4%BC%B0%E8%AE%A1"><span class="nav-text">试验估计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E4%BC%B0%E8%AE%A1"><span class="nav-text">模型估计</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E5%8A%A8%E6%A8%A1%E7%B3%8A%E4%BC%A0%E8%BE%93%E5%87%BD%E6%95%B0%E4%BC%B0%E8%AE%A1"><span class="nav-text">运动模糊传输函数估计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E5%8A%A8%E6%A8%A1%E7%B3%8A%E7%9A%84%E7%A9%BA%E5%9F%9F%E5%A4%84%E7%90%86"><span class="nav-text">运动模糊的空域处理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%A4%E4%BA%92%E5%BC%8F%E6%81%A2%E5%A4%8D"><span class="nav-text">交互式恢复</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%A0%E4%BD%95%E5%A4%B1%E7%9C%9F%E7%9A%84%E6%A0%A1%E6%AD%A3"><span class="nav-text">几何失真的校正</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2"><span class="nav-text">空间变换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B"><span class="nav-text">模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E7%B3%BB%E6%95%B0%E7%9A%84%E7%A1%AE%E5%AE%9A"><span class="nav-text">模型系数的确定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E6%8E%A7%E5%88%B6%E7%82%B9%E6%83%85%E5%86%B5%E4%B8%8B%E7%9A%84%E6%A0%A1%E6%AD%A3%E6%96%B9%E7%A8%8B%E7%B3%BB%E6%95%B0%E7%A1%AE%E5%AE%9A"><span class="nav-text">多控制点情况下的校正方程系数确定</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%81%B0%E5%BA%A6%E6%8F%92%E5%80%BC"><span class="nav-text">灰度插值</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E8%BF%91%E9%82%BB%E6%8F%92%E5%80%BC"><span class="nav-text">最近邻插值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8C%E7%BA%BF%E6%80%A7%E6%8F%92%E5%80%BC"><span class="nav-text">双线性插值</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%BE%E5%83%8F%E7%9A%84%E6%8A%95%E5%BD%B1%E9%87%8D%E5%BB%BA"><span class="nav-text">图像的投影重建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E5%BF%B5"><span class="nav-text">概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%82%85%E9%87%8C%E5%8F%B6%E9%80%86%E5%8F%98%E6%8D%A2%E9%87%8D%E5%BB%BA%E5%9B%BE%E5%83%8F"><span class="nav-text">傅里叶逆变换重建图像</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%95%E5%BD%B1%E5%AE%9A%E7%90%86"><span class="nav-text">投影定理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%82%85%E7%AB%8B%E5%8F%B6%E5%8F%8D%E5%8F%98%E6%8D%A2%E8%BF%9B%E8%A1%8C%E6%8A%95%E5%BD%B1%E9%87%8D%E5%BB%BA%E7%9A%84%E6%AD%A5%E9%AA%A4"><span class="nav-text">傅立叶反变换进行投影重建的步骤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%86%E6%8A%95%E5%BD%B1%E9%87%8D%E5%BB%BA"><span class="nav-text">逆投影重建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B3%E8%A1%8C%E6%8A%95%E5%BD%B1%E5%88%B0%E6%89%87%E6%9D%9F%E6%8A%95%E5%BD%B1"><span class="nav-text">平行投影到扇束投影</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Lrk612"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Lrk612</p>
+  <div class="site-description" itemprop="description">Lrk's blog</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.google.com/" title="https:&#x2F;&#x2F;www.google.com" rel="noopener" target="_blank">Google</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://arxiv.org/" title="https:&#x2F;&#x2F;arxiv.org&#x2F;" rel="noopener" target="_blank">arXiv</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ieeexplore.ieee.org/Xplore/home.jsp" title="https:&#x2F;&#x2F;ieeexplore.ieee.org&#x2F;Xplore&#x2F;home.jsp" rel="noopener" target="_blank">IEEE Xplore</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        <!-- 访问量 -->
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客数<span id="busuanzi_value_site_uv"></span>人</span>
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+$(document).ready(function() {
+
+    var int = setInterval(fixCount, 50);  // 50ms周期检测函数
+    var countOffset = 20000;  // 初始化首次数据
+
+    function fixCount() {            
+       if (document.getElementById("busuanzi_container_site_pv").style.display != "none")
+        {
+            $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + countOffset); 
+            clearInterval(int);
+        }                  
+        if ($("#busuanzi_container_site_pv").css("display") != "none")
+        {
+            $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + countOffset); // 加上初始数据 
+            clearInterval(int); // 停止检测
+        }  
+    }
+       	
+});
+</script> 
+
+
+<!-- 版权 -->
+<div class="copyright">
+  
+  &copy; 2021-12-1 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lrk612</span>
+</div>
+
+<!-- ICP备案 -->
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">ICP备案 </a>
+      <img src="https://my-picture-1311448338.file.myqcloud.com/img/20211209170739.png" style="display: inline-block;"><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=2021035798" rel="noopener" target="_blank">豫ICP备2021035798号 </a>
+  </div>
+
+<!-- 不知道是什么 -->
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'fH6OdGBcCG8D6jC8NeeJlX9b-gzGzoHsz',
+      appKey     : '1UoIb6vszMw6wl0n7kreb4Xz',
+      placeholder: "Just go go ^_^",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+    var infoEle = document.querySelector('#comments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0){
+      infoEle.childNodes.forEach(function(item) {
+        item.parentNode.removeChild(item);
+      });
+    }
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
