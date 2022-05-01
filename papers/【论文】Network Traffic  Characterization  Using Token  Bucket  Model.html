@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"sharp-rookie.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+<script> 
+   (function(){
+          if(''){
+              if (prompt('请输入文章密码') !== ''){
+                  alert('密码错误！');
+                  history.back();
+              }
+          }
+      })();
+  </script>
+  <meta name="description" content="主要内容本文研究了从两种情况下观察到的网络数据流的流量模式中导出令牌桶参数的问题：  给定数据流对应一组令牌桶参数，所有数据包都立即传送，不产生任何延迟或丢失 在上述模型中添加一个缓存队列，以临时存储在桶中积累足够的令牌之前无法立即传送的数据包。队列具有平滑流量的效果，因此对令牌桶参数的要求较低，同时还使得派生的令牌桶参数随时间的波动较小。  然后对两个模型严格分析了给定数据流的队列大小和令牌桶参">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Token Bucket参数范围的推导">
+<meta property="og:url" content="https://sharp-rookie.github.io/papers/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91Network%20Traffic%20%20Characterization%20%20Using%20Token%20%20Bucket%20%20Model.html">
+<meta property="og:site_name" content="最忆是江南">
+<meta property="og:description" content="主要内容本文研究了从两种情况下观察到的网络数据流的流量模式中导出令牌桶参数的问题：  给定数据流对应一组令牌桶参数，所有数据包都立即传送，不产生任何延迟或丢失 在上述模型中添加一个缓存队列，以临时存储在桶中积累足够的令牌之前无法立即传送的数据包。队列具有平滑流量的效果，因此对令牌桶参数的要求较低，同时还使得派生的令牌桶参数随时间的波动较小。  然后对两个模型严格分析了给定数据流的队列大小和令牌桶参">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211226194837.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211226194540.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211226194822.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211226195012.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211226201839.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211226195603.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211226195806.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211226201417.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211226224424.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211226224657.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211226224838.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211226224920.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211226225532.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211226231637.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211226233525.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211227110252.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211227110336.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211227110351.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211227111522.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211227111738.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211227111920.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211227112321.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211227124037.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211227124447.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211227125435.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211227125547.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211227125652.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211227125756.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211227131254.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211228182254.png">
+<meta property="article:published_time" content="2022-04-25T03:39:28.352Z">
+<meta property="article:modified_time" content="2022-04-25T03:39:28.352Z">
+<meta property="article:author" content="Lrk612">
+<meta property="article:tag" content="5G">
+<meta property="article:tag" content="Network Slice">
+<meta property="article:tag" content="Token Bucket">
+<meta property="article:tag" content="Resource Management">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20211226194837.png">
+
+<link rel="canonical" href="https://sharp-rookie.github.io/papers/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91Network%20Traffic%20%20Characterization%20%20Using%20Token%20%20Bucket%20%20Model">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Token Bucket参数范围的推导 | 最忆是江南
+</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+        <a target="_blank" rel="noopener" href="https://github.com/Sharp-rookie" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">最忆是江南</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Love actually is all around</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th-list fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-friendlink">
+
+    <a href="/friendlink/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="fa fa-download fa-fw"></i>资源</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+  
+  
+
+          <div class="content page posts-expand">
+            
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">Token Bucket参数范围的推导
+</h1>
+
+<div class="post-meta">
+  
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <h2 id="主要内容"><a href="#主要内容" class="headerlink" title="主要内容"></a>主要内容</h2><p>本文研究了从两种情况下观察到的网络数据流的流量模式中导出<strong>令牌桶参数</strong>的问题：</p>
+<ul>
+<li>给定数据流对应一组令牌桶参数，所有数据包都立即传送，不产生任何延迟或丢失</li>
+<li>在上述模型中添加一个缓存队列，以临时存储在桶中积累足够的令牌之前无法立即传送的数据包。队列具有平滑流量的效果，因此对令牌桶参数的要求较低，同时还使得派生的令牌桶参数随时间的波动较小。</li>
+</ul>
+<p>然后对两个模型严格分析了给定数据流的队列大小和令牌桶参数之间的关系，计算数据流中每个数据包的排队延迟并用于描述调整后的排队后流量模式。</p>
+<p>并且就两个模型分别介绍了用于推导基于测量的流量规范 (MBTS) 的简单高效算法以及经验结果。这种 MBTS 技术减轻了用户为在综合服务网络中保留网络资源而预先明确表征流量的需要。</p>
+<p><strong>原文</strong></p>
+<p><a target="_blank" rel="noopener" href="https://lrk612.com/resources/Network%20traffic%20characterization%20using%20token%20bucket%20model.pdf">Network traffic characterization using token bucket model</a></p>
+<span id="more"></span>
+
+<p>&nbsp;</p>
+<h2 id="令牌桶概念及问题"><a href="#令牌桶概念及问题" class="headerlink" title="令牌桶概念及问题"></a>令牌桶概念及问题</h2><h3 id="数据流"><a href="#数据流" class="headerlink" title="数据流"></a>数据流</h3><p>&emsp;&emsp;假设一个流存在于一个时间间隔 [t0 , tn ] 中并且由 n 个数据包 p1, p2, … ，pn 组成。它的流量模式 P = {(pi , ti）|1&lt;i&lt;n}，其中 t0&lt;t1&lt;t2&lt; … &lt; tn, 表示在时间[t0, tn]内，pi由主机中的应用程序生成，表示第 i 个数据包的字节数。</p>
+<h3 id="无缓存队列的令牌桶"><a href="#无缓存队列的令牌桶" class="headerlink" title="无缓存队列的令牌桶"></a>无缓存队列的令牌桶</h3><p>&emsp;&emsp;令牌桶是一个非负计数器，它以恒定速率 r 累积令牌，直到计数器达到其容量 b 。到达后，一个数据包将被发送出去，令牌计数器减少了数据包大小（以字节为单位），前提是该数据包有足够的令牌。否则，数据包将被丢弃或排队，直到令牌桶积累了足够的令牌以将数据包发送出去。当流空闲或以较低的速率运行，使得令牌计数器达到上限 b 时，令牌的累积将暂停，直到下一个数据包到达。请注意，令牌桶不是数据包的物理容器，而是用于调度数据包释放时间的令牌数字计数器。令牌桶由其令牌补充率 r 和令牌桶大小 b 参数化。</p>
+<p>&emsp;&emsp;流量表征的一个关键问题是，对于时间间隔 [t0, tn] 中模式 P 的数据流，如何从观察到的流量模式导出合适的令牌桶参数 (r, b) ，以便所有数据包在到达时立即发送出去。在这种情况下，我们说数据流符合由 (r, b) 参数化的令牌桶模型。</p>
+<h3 id="含缓存队列的令牌桶"><a href="#含缓存队列的令牌桶" class="headerlink" title="含缓存队列的令牌桶"></a>含缓存队列的令牌桶</h3><p>&emsp;&emsp;令牌桶模型可以通过向其添加缓存队列来扩展。该缓存队列用于在数据包流等待足够的令牌以在存储桶中累积时保存数据包流。通过排队，突发流量可以被平滑，因此派生的令牌桶参数变得比无缓存队列情况下的要求更低，从而导致网络中更有效的资源分配。另一方面，通过添加缓存队列，给定的令牌桶模型将能够以牺牲存储空间和数据源的数据包延迟为代价来适应更多变化的流量模式。</p>
+<p>对带有队列的令牌桶有如下问题：</p>
+<ol>
+<li>对于给定的数据流和令牌桶模型，最小队列大小 q 应该为多少才能保证数据流不会丢包？</li>
+<li>如果给定令牌速率r、桶容量b之一和队列大小 q，那么另一个参数的最佳选择是什么？</li>
+<li>对于排队情况下的每个数据包，排队延迟是多少？</li>
+<li>如果指定了最大排队延迟，那么应该如何确定最小队列大小和对应的令牌桶参数？</li>
+</ol>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2 id="两种模型下的参数求解"><a href="#两种模型下的参数求解" class="headerlink" title="两种模型下的参数求解"></a>两种模型下的参数求解</h2><h3 id="无缓存队列的令牌桶-1"><a href="#无缓存队列的令牌桶-1" class="headerlink" title="无缓存队列的令牌桶"></a>无缓存队列的令牌桶</h3><p>本文Part 2通过严格的数学证明和有效的算法：</p>
+<ul>
+<li><p>找到了 b 和 r 的下限和上限，以便所有满足无时延和丢包要求的合法 ( r , b ) 对</p>
+</li>
+<li><p>对任何给定有效的 r ，可以确定最优的（即与 r 耦合最小的） b 以便不丢弃任何数据包。这个最优 b 明确表示为 r 的函数，它是单调递减和分段线性的</p>
+</li>
+<li><p>提出了两种有效的算法来计算b(r)函数和相关经验结果</p>
+</li>
+</ul>
+<p>&nbsp;</p>
+<h4 id="r的有效范围"><a href="#r的有效范围" class="headerlink" title="r的有效范围"></a>r的有效范围</h4><p>一方面，如果 r 太小，则无论 b 的容量有多大，桶中都不会为传入的数据包生成足够的令牌。因此满足无延迟要求的必要条件：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211226194837.png" alt="image-20211226194836980" style="zoom:50%;" />
+
+<p>c0是t0时刻桶中初始令牌数，从而得：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211226194540.png" alt="image-20211226194540110" style="zoom:50%;" />
+
+<p>这是<strong>r的下限</strong>；</p>
+<p>另一方面，也没有必要使 r 无限大，最大 r 恰满足能使一个时间间隔内的所有数据包都被发送即可：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211226194822.png" alt="image-20211226194822619" style="zoom:50%;" />
+
+<p>pk是第k个时间间隔内的数据包流量，从而得：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211226195012.png" alt="image-20211226195012336" style="zoom:50%;" />
+
+<p>这是<strong>r的上限</strong>。（文中已证明其必大于r的下限）</p>
+<p>&nbsp;</p>
+<h4 id="b的有效范围"><a href="#b的有效范围" class="headerlink" title="b的有效范围"></a>b的有效范围</h4><p>由上可推出<strong>最大数据速率</strong>为：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211226201839.png" alt="image-20211226201839313" style="zoom:50%;" />
+
+<p>当时间间隔k内数据速率p大于rmax且初始令牌数c0时，得到最小桶的容量：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211226195603.png" alt="image-20211226195603013" style="zoom:50%;" />
+
+<p>这是<strong>b的下限</strong>；</p>
+<p>当满足上面r的限定范围时，每个时间间隔k过后内桶中会积累的令牌数量为：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211226195806.png" alt="image-20211226195806153" style="zoom:50%;" />
+
+<p>因此桶的大小必须至少能够容下ck的最大值：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211226201417.png" alt="image-20211226201417539" style="zoom:50%;" />
+
+<p>这是<strong>b的上限</strong>，可见b的范围是r的函数。</p>
+<p>&nbsp;</p>
+<h4 id="b和r的关系"><a href="#b和r的关系" class="headerlink" title="b和r的关系"></a>b和r的关系</h4><p>给定r，求解满足无时延和丢包前提下的最小b值</p>
+<p>记delta k表示第k个时间间隔大小，ck表示第k个数据包到达前时刻的桶中令牌数量（即上一个时间间隔结尾时刻的），则有：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211226224424.png" alt="image-20211226224424621" style="zoom:50%;" />
+
+<p>（注意到这里的ck(r,b)不同于前面的ck(r)，ck(r,b)小于等于ck(r)，仅当b大于等于bmax时取等号）</p>
+<p>因为满足无时延和丢包，即：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211226224657.png" alt="image-20211226224657804" style="zoom:50%;" />
+
+<p>递推得到：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211226224838.png" alt="image-20211226224838298" style="zoom:50%;" />
+
+<p>因此，满足无时延和丢包前提下，给定r时的最优（最小）b为：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211226224920.png" alt="image-20211226224920764" style="zoom:50%;" />
+
+<p>若取初始令牌数c0==b，即桶一开始是满的，则有：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211226225532.png" alt="image-20211226225532241" style="zoom:50%;" />
+
+<p>&nbsp;</p>
+<h4 id="降低b-r-时间复杂度"><a href="#降低b-r-时间复杂度" class="headerlink" title="降低b(r)时间复杂度"></a>降低b(r)时间复杂度</h4><p>&emsp;&emsp;由上可知，求解最优b值是至少要在 n(n-1)/2 个数字中取最大值，评估所有这些 O ( n 2 ) 数的成本太高了。文章中提出了两种有效的算法来计算给定 r 的 最优b值。第一个算法只解析一次输入模式 P ，复杂度为 O ( n ) 。第二个是multi-pass算法，复杂度为 O ( n log n)，但是可以推广到排队情况。</p>
+<h5 id="算法-1-简单数学推导"><a href="#算法-1-简单数学推导" class="headerlink" title="算法 1    简单数学推导"></a>算法 1    简单数学推导</h5><p>&emsp;&emsp;这里省去论文中的推导，直接记录结论。</p>
+<p>&emsp;&emsp;由递推公式  <img src="https://my-picture-1311448338.file.myqcloud.com/img/20211226231637.png" alt="image-20211226231637615" style="zoom:50%;" /></p>
+<p>&emsp;&emsp;可以计算出以P={(pk,tk) | 1&lt;k&lt;n}为流量模式的情况下，给定r后b的最优值。</p>
+<p>&emsp;&emsp;此算法不仅由于 O(n) 复杂度而具有 CPU 效率，而且在内存方面也很高效。只需要分配两个整数 d 和 b 作为 dk 和 bk 序列的占位符，不需要存储模式数据 P，因为这是一种一次性算法，它可以与到达的数据包流一起实时进行。</p>
+<h5 id="算法-2-二分查找"><a href="#算法-2-二分查找" class="headerlink" title="算法 2    二分查找"></a>算法 2    二分查找</h5><p>&emsp;&emsp;第二种算法没有利用 b(r)的显式解。相反它对其范围内的最小 b 进行二分搜索，使得对所有 k 都有ck(r,b) &gt;= pk。该算法的优点在于它可以推广并激发Part 3中的排队情况解决方案，同时也可以作为我们实验中检查第一个算法的正确性和性能的参考。</p>
+<p>&emsp;&emsp;用 [bl , bu] 表示b 的范围，其中 l 代表下限，u 代表上限。最初设置 bl = bmin、bu=bmax 和 b = 1/2*(bl + bu)。在初始满桶(c0=b)的情况下，选择归纳计算 ck(r,b) 并将其值与 pk 进行比较。如果对任何k都有pk &lt;= ck(r,b)，则设置 bu  = b 和 b = 1/2*(bl + bu) 。否则，当遇到的第一个pk &gt; ck(r,b)的 k 时，我们设置 bl = b 和 b = 1/2*(bl + bu)。重复上述步骤直到 bl = bu。</p>
+<p>&emsp;&emsp;由于用于二分搜索的 b 的初始范围最多为 O ( n ) ，因此 b 上恰好有 O(logn) 次更新。对于 b 的每次更新，最多需要遍历 (pk , tk) 的列表一次。在最坏的情况下也只需要时间 O (n) ，因此二分查找算法的复杂度是 O (n logn) 。</p>
+<h5 id="算法-3-Send-Now算法"><a href="#算法-3-Send-Now算法" class="headerlink" title="算法 3    Send-Now算法"></a>算法 3    Send-Now算法</h5><p>&emsp;&emsp;这是作者提到他们在一个tb程序中看见的算法，可以达到和算法 1相似的性能效果：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211226233525.png" alt="image-20211226233525702" style="zoom:67%;" />
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3 id="含缓存队列的令牌桶-1"><a href="#含缓存队列的令牌桶-1" class="headerlink" title="含缓存队列的令牌桶"></a>含缓存队列的令牌桶</h3><p>本文Part 3通过严格的数学证明和有效的算法：</p>
+<ul>
+<li>确定了给定缓存队列大小 q 的有效 r 和 b 的边界。发现对于给定的流量模式，在有时延但无丢包情况下，最小缓存队列大小q是 ( r , b ) 对的二元函数，且这个函数 q(r, b ) 是 r 和 b 的减函数</li>
+<li>提出了给定的缓存队列大小 q时最优 b 和 r 之间关系的计算算法。后者实际上是对无缓存队列情况的一般化，如果将缓存队列大小设置为0，则将退化为Part 2中的结果</li>
+<li>明确计算了给定令牌桶模型的数据流中每个数据包的排队延迟。从而推导出数据流的最大和平均排队延迟，以及调整后的排队后流量模式</li>
+<li>提出了在指定最大延迟或平均延迟的上限时确定满足延迟界限的令牌桶模型（r，b）集的算法，并分析了算法的时间复杂度</li>
+</ul>
+<p>&nbsp;</p>
+<h4 id="不考虑容量b的情况"><a href="#不考虑容量b的情况" class="headerlink" title="不考虑容量b的情况"></a>不考虑容量b的情况</h4><h5 id="r的有效范围-1"><a href="#r的有效范围-1" class="headerlink" title="r的有效范围"></a>r的有效范围</h5><p>假定桶容量b无穷大，从而简化推导。记缓存队列大小为q，则满足无丢包要求的必要条件：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211227110252.png" alt="image-20211227110252037" style="zoom:50%;" />
+
+<p>其中<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211227110336.png" alt="image-20211227110336667" style="zoom:50%;" />从而得：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211227110351.png" alt="image-20211227110351617" style="zoom:50%;" />
+
+<p>这是<strong>r的下限</strong>；至于<strong>r的上限</strong>则和上面无缓存队列情况时一致。</p>
+<p>&nbsp;</p>
+<h5 id="b的有效范围-1"><a href="#b的有效范围-1" class="headerlink" title="b的有效范围"></a>b的有效范围</h5><p>注意，在有缓存队列情况下，每个时间间隔内损耗的令牌数不只是时间间隔内新来的数据包pk大小，还包括缓存队列中多个delay的旧数据包。第k个时间间隔内delay的旧数据包大小为：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211227111522.png" alt="image-20211227111522588" style="zoom:50%;" />
+
+<p>记 I(k) 为使</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211227111738.png" alt="image-20211227111738322" style="zoom: 50%;" />
+
+<p>成立的最小 k’ 值，即 I(k) 是在pk到达之前令牌桶已经发出的数据包的数量。</p>
+<p>则有：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211227111920.png" alt="image-20211227111920444" style="zoom:50%;" />
+
+<p>因为有了缓存队列，令牌数不够用时数据包放入缓冲队列，此时的令牌数就是ck。</p>
+<p>数据包pk到达后缓存队列中剩余的字节数为：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211227112321.png" alt="image-20211227112321614" style="zoom:50%;" />
+
+<p>即令牌数不够用时放入缓冲队列的数据包总大小。</p>
+<p>（这里文章给出了 “ <em>当r&gt;rmin时，必有qk&lt;q（即缓存队列不会溢出）且无丢包</em> ” 的证明，感兴趣可以自己查阅）</p>
+<p>由上述推导得数据包时延为：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211227124037.png" alt="image-20211227124037294" style="zoom:50%;" />
+
+<p><strong>b的下限</strong>和上面无缓存队列情况时一致，<strong>b的上限</strong>则为：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211227124447.png" alt="image-20211227124447620" style="zoom:50%;" />
+
+<p>注意其中ck(r)的值有两种情况( I(t) &lt; 或 &gt; pk)，所以用max()函数表述。</p>
+<p>&nbsp;</p>
+<h4 id="考虑桶容量b的情况"><a href="#考虑桶容量b的情况" class="headerlink" title="考虑桶容量b的情况"></a>考虑桶容量b的情况</h4><p>&emsp;&emsp;上面研究了不受 b 限制的排队情况，现在考虑一般情况，即缓存队列q和令牌桶大小 b 都起作用。假设我们给出了位于无延迟 TB 曲线下方的值 ( r , b )，我们想知道这个令牌桶的最小队列大小及其相应的排队后的交通模式P。</p>
+<h5 id="q的有效范围"><a href="#q的有效范围" class="headerlink" title="q的有效范围"></a>q的有效范围</h5><p>I(k) 定义为使得</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211227125435.png" alt="image-20211227125435320" style="zoom:50%;" /> 
+
+<p>恒成立的最大 k‘ 值，即在 pk 到达之前已经发出而不是存入缓存队列的数据包的数量</p>
+<p>ck(r, b)定义为：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211227125547.png" alt="image-20211227125547219" style="zoom:50%;" />
+
+<p>qk 定义为需要在 pk到达后立即排队的字节数：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211227125652.png" alt="image-20211227125652836" style="zoom:50%;" />
+
+<p>则最小队列长qmin为：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211227125756.png" alt="image-20211227125756422" style="zoom:50%;" />
+
+<h5 id="q一定时，求b-r"><a href="#q一定时，求b-r" class="headerlink" title="q一定时，求b(r)"></a>q一定时，求b(r)</h5><h6 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a>二分查找</h6><p>&emsp;&emsp;同上面类似，只不过搜索时的有效条件改为</p>
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20211227131254.png" alt="image-20211227131254110" style="zoom:50%;" />，时间复杂度为O(n logn)&gt;</p>
+<h6 id="Send-Smooth算法"><a href="#Send-Smooth算法" class="headerlink" title="Send-Smooth算法"></a>Send-Smooth算法</h6><p>&emsp;这是作者上面提到他们在一个tb程序中看见的算法，可以达到O(n)的性能效果：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211228182254.png" alt="image-20211228182254925" style="zoom:67%;" />
+
+<p>&nbsp;</p>
+<h4 id="数据包时延"><a href="#数据包时延" class="headerlink" title="数据包时延"></a>数据包时延</h4><p>这边实在没看懂它这1999年的老论文里说的是什么混乱逻辑，反正项目后面做NSRRM时delay直接测实际值不需要计算获得，不管了。。。</p>
+<hr>
+<p>现在是2022.2.21，最终还是我太年轻了，虽然可以测得实际delay，但是测量通信指标的代价太高了，耗时，做决策时只能通过估算的delay来辅助判断，所以还是得看delay到估算怎么做。。。</p>
+
+      </div>
+      
+      
+      
+    </div>
+    
+
+    
+    
+    
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E5%86%85%E5%AE%B9"><span class="nav-text">主要内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A4%E7%89%8C%E6%A1%B6%E6%A6%82%E5%BF%B5%E5%8F%8A%E9%97%AE%E9%A2%98"><span class="nav-text">令牌桶概念及问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%B5%81"><span class="nav-text">数据流</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A0%E7%BC%93%E5%AD%98%E9%98%9F%E5%88%97%E7%9A%84%E4%BB%A4%E7%89%8C%E6%A1%B6"><span class="nav-text">无缓存队列的令牌桶</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AB%E7%BC%93%E5%AD%98%E9%98%9F%E5%88%97%E7%9A%84%E4%BB%A4%E7%89%8C%E6%A1%B6"><span class="nav-text">含缓存队列的令牌桶</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A4%E7%A7%8D%E6%A8%A1%E5%9E%8B%E4%B8%8B%E7%9A%84%E5%8F%82%E6%95%B0%E6%B1%82%E8%A7%A3"><span class="nav-text">两种模型下的参数求解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A0%E7%BC%93%E5%AD%98%E9%98%9F%E5%88%97%E7%9A%84%E4%BB%A4%E7%89%8C%E6%A1%B6-1"><span class="nav-text">无缓存队列的令牌桶</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#r%E7%9A%84%E6%9C%89%E6%95%88%E8%8C%83%E5%9B%B4"><span class="nav-text">r的有效范围</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#b%E7%9A%84%E6%9C%89%E6%95%88%E8%8C%83%E5%9B%B4"><span class="nav-text">b的有效范围</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#b%E5%92%8Cr%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-text">b和r的关系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%99%8D%E4%BD%8Eb-r-%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="nav-text">降低b(r)时间复杂度</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AE%97%E6%B3%95-1-%E7%AE%80%E5%8D%95%E6%95%B0%E5%AD%A6%E6%8E%A8%E5%AF%BC"><span class="nav-text">算法 1    简单数学推导</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AE%97%E6%B3%95-2-%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE"><span class="nav-text">算法 2    二分查找</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AE%97%E6%B3%95-3-Send-Now%E7%AE%97%E6%B3%95"><span class="nav-text">算法 3    Send-Now算法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AB%E7%BC%93%E5%AD%98%E9%98%9F%E5%88%97%E7%9A%84%E4%BB%A4%E7%89%8C%E6%A1%B6-1"><span class="nav-text">含缓存队列的令牌桶</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8D%E8%80%83%E8%99%91%E5%AE%B9%E9%87%8Fb%E7%9A%84%E6%83%85%E5%86%B5"><span class="nav-text">不考虑容量b的情况</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#r%E7%9A%84%E6%9C%89%E6%95%88%E8%8C%83%E5%9B%B4-1"><span class="nav-text">r的有效范围</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#b%E7%9A%84%E6%9C%89%E6%95%88%E8%8C%83%E5%9B%B4-1"><span class="nav-text">b的有效范围</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%80%83%E8%99%91%E6%A1%B6%E5%AE%B9%E9%87%8Fb%E7%9A%84%E6%83%85%E5%86%B5"><span class="nav-text">考虑桶容量b的情况</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#q%E7%9A%84%E6%9C%89%E6%95%88%E8%8C%83%E5%9B%B4"><span class="nav-text">q的有效范围</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#q%E4%B8%80%E5%AE%9A%E6%97%B6%EF%BC%8C%E6%B1%82b-r"><span class="nav-text">q一定时，求b(r)</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE"><span class="nav-text">二分查找</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Send-Smooth%E7%AE%97%E6%B3%95"><span class="nav-text">Send-Smooth算法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%8C%85%E6%97%B6%E5%BB%B6"><span class="nav-text">数据包时延</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Lrk612"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Lrk612</p>
+  <div class="site-description" itemprop="description">Lrk's blog</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.csdn.net/" title="https:&#x2F;&#x2F;www.csdn.net&#x2F;" rel="noopener" target="_blank">CSDN</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.google.com/" title="https:&#x2F;&#x2F;www.google.com" rel="noopener" target="_blank">Google</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        <!-- 访问量 -->
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客数<span id="busuanzi_value_site_uv"></span>人</span>
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+$(document).ready(function() {
+
+    var int = setInterval(fixCount, 50);  // 50ms周期检测函数
+    var countOffset = 20000;  // 初始化首次数据
+
+    function fixCount() {            
+       if (document.getElementById("busuanzi_container_site_pv").style.display != "none")
+        {
+            $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + countOffset); 
+            clearInterval(int);
+        }                  
+        if ($("#busuanzi_container_site_pv").css("display") != "none")
+        {
+            $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + countOffset); // 加上初始数据 
+            clearInterval(int); // 停止检测
+        }  
+    }
+       	
+});
+</script> 
+
+
+<!-- 版权 -->
+<div class="copyright">
+  
+  &copy; 2021-12-1 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lrk612</span>
+</div>
+
+<!-- ICP备案 -->
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">ICP备案 </a>
+      <img src="https://my-picture-1311448338.file.myqcloud.com/img/20211209170739.png" style="display: inline-block;"><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=2021035798" rel="noopener" target="_blank">豫ICP备2021035798号 </a>
+  </div>
+
+<!-- 不知道是什么 -->
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'fH6OdGBcCG8D6jC8NeeJlX9b-gzGzoHsz',
+      appKey     : '1UoIb6vszMw6wl0n7kreb4Xz',
+      placeholder: "Just go go ^_^",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+    var infoEle = document.querySelector('#comments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0){
+      infoEle.childNodes.forEach(function(item) {
+        item.parentNode.removeChild(item);
+      });
+    }
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
