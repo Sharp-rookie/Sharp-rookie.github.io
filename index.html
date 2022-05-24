@@ -216,6 +216,105 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://sharp-rookie.github.io/2022/05/24/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91Mercury%EF%BC%9A%E4%B8%80%E7%A7%8D%E7%94%A8%E4%BA%8E%E5%8A%A0%E9%80%9F%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83%E7%9A%84%E4%BC%A0%E8%BE%93%E5%B1%82%E8%B0%83%E5%BA%A6%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Lrk612">
+      <meta itemprop="description" content="Lrk's blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="最忆是江南">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/05/24/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91Mercury%EF%BC%9A%E4%B8%80%E7%A7%8D%E7%94%A8%E4%BA%8E%E5%8A%A0%E9%80%9F%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83%E7%9A%84%E4%BC%A0%E8%BE%93%E5%B1%82%E8%B0%83%E5%BA%A6%E5%99%A8/" class="post-title-link" itemprop="url">Mercury：一种用于加速分布式训练的传输层调度器</a>
+        </h2>
+
+        <div class="post-meta">
+         
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-05-24 20:11:50" itemprop="dateCreated datePublished" datetime="2022-05-24T20:11:50+08:00">2022-05-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">论文阅读</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2022/05/24/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91Mercury%EF%BC%9A%E4%B8%80%E7%A7%8D%E7%94%A8%E4%BA%8E%E5%8A%A0%E9%80%9F%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83%E7%9A%84%E4%BC%A0%E8%BE%93%E5%B1%82%E8%B0%83%E5%BA%A6%E5%99%A8/" class="post-meta-item leancloud_visitors" data-flag-title="Mercury：一种用于加速分布式训练的传输层调度器" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/05/24/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91Mercury%EF%BC%9A%E4%B8%80%E7%A7%8D%E7%94%A8%E4%BA%8E%E5%8A%A0%E9%80%9F%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83%E7%9A%84%E4%BC%A0%E8%BE%93%E5%B1%82%E8%B0%83%E5%BA%A6%E5%99%A8/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/05/24/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91Mercury%EF%BC%9A%E4%B8%80%E7%A7%8D%E7%94%A8%E4%BA%8E%E5%8A%A0%E9%80%9F%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83%E7%9A%84%E4%BC%A0%E8%BE%93%E5%B1%82%E8%B0%83%E5%BA%A6%E5%99%A8/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>并行训练的大规模深度学习模型的效率依赖分布式集群间的通信调度，优化时间开销的常规方法包括：<strong>Tensor Fusion</strong> 和 <strong>Tensor Partition</strong>。后者能够以更细的粒度实现优先级调度，但这需要在每个张量分区之前插入一个启动时隙，反而会抵消其带来的调度增益。此外，调整最佳分区大小也很耗时，所以现有的应用层解决方案无法消除分区开销。</p>
+<p>基于此背景，文章提出了 <strong>Mercury</strong>，一个简单的传输层调度器，在通信和计算之间实现了近乎最佳的重叠。它不对张量进行分区，而是将优先级调度以数据包粒度移动到传输层，缓冲区中优先级最高的数据包将首先被传输。 它利用传输层的<strong>即时聚合</strong>来实现一致的梯度推送和参数拉取。</p>
+<p>从实验结果来看，Mercury 在<strong>带宽资源受限</strong>的环境和<strong>通信时间开销</strong>占主导的场景下能够比以往优化方法取得更加卓越的效果。</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/202205230936326.png" alt="QQ图片20220523093623" style="zoom: 67%;" />
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/05/24/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91Mercury%EF%BC%9A%E4%B8%80%E7%A7%8D%E7%94%A8%E4%BA%8E%E5%8A%A0%E9%80%9F%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83%E7%9A%84%E4%BC%A0%E8%BE%93%E5%B1%82%E8%B0%83%E5%BA%A6%E5%99%A8/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://sharp-rookie.github.io/2022/05/08/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91%E4%B8%80%E7%A7%8D%E7%A9%BA%E5%9C%B0%E4%B8%80%E4%BD%93%E5%8C%96%E7%BD%91%E7%BB%9C%E6%9E%B6%E6%9E%84/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1151,111 +1250,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://sharp-rookie.github.io/2022/03/08/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91%E7%A9%BA%E9%97%B4%E5%9F%9F%E5%9B%BE%E5%83%8F%E5%A2%9E%E5%BC%BA/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Lrk612">
-      <meta itemprop="description" content="Lrk's blog">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="最忆是江南">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/08/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91%E7%A9%BA%E9%97%B4%E5%9F%9F%E5%9B%BE%E5%83%8F%E5%A2%9E%E5%BC%BA/" class="post-title-link" itemprop="url">【数字图像处理】空间域图像增强</a>
-        </h2>
-
-        <div class="post-meta">
-         
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-03-08 21:56:10" itemprop="dateCreated datePublished" datetime="2022-03-08T21:56:10+08:00">2022-03-08</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/" itemprop="url" rel="index"><span itemprop="name">知识分享</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2022/03/08/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91%E7%A9%BA%E9%97%B4%E5%9F%9F%E5%9B%BE%E5%83%8F%E5%A2%9E%E5%BC%BA/" class="post-meta-item leancloud_visitors" data-flag-title="【数字图像处理】空间域图像增强" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/03/08/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91%E7%A9%BA%E9%97%B4%E5%9F%9F%E5%9B%BE%E5%83%8F%E5%A2%9E%E5%BC%BA/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/03/08/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91%E7%A9%BA%E9%97%B4%E5%9F%9F%E5%9B%BE%E5%83%8F%E5%A2%9E%E5%BC%BA/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><strong>数字图像处理第三章知识总结：</strong></p>
-<p>空间图像增强技术是指在空间域中，通过线性或者非线性变换来增强构成图像的像素。增强的方法分为<strong>点处理</strong>和<strong>模板处理</strong>两大类；点处理作用于单个像素点，模板处理作用于像素邻域；点处理可视做邻域为 1×1 的模板处理</p>
-<ul>
-<li>直方图处理</li>
-<li>图像间运算</li>
-<li>平滑空域滤波</li>
-<li>锐化空域滤波</li>
-<li>混合空间增强</li>
-</ul>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220308112320.png" alt="image-20220308112320103" style="zoom:55%;" />
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/03/08/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91%E7%A9%BA%E9%97%B4%E5%9F%9F%E5%9B%BE%E5%83%8F%E5%A2%9E%E5%BC%BA/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1327,7 +1321,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-count">53</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1340,7 +1334,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-count">27</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

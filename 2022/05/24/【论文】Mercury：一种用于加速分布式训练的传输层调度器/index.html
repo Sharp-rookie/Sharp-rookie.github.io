@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"sharp-rookie.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+<script> 
+   (function(){
+          if(''){
+              if (prompt('请输入文章密码') !== ''){
+                  alert('密码错误！');
+                  history.back();
+              }
+          }
+      })();
+  </script>
+  <meta name="description" content="并行训练的大规模深度学习模型的效率依赖分布式集群间的通信调度，优化时间开销的常规方法包括：Tensor Fusion 和 Tensor Partition。后者能够以更细的粒度实现优先级调度，但这需要在每个张量分区之前插入一个启动时隙，反而会抵消其带来的调度增益。此外，调整最佳分区大小也很耗时，所以现有的应用层解决方案无法消除分区开销。 基于此背景，文章提出了 Mercury，一个简单的传输层调度">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mercury：一种用于加速分布式训练的传输层调度器">
+<meta property="og:url" content="https://sharp-rookie.github.io/2022/05/24/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91Mercury%EF%BC%9A%E4%B8%80%E7%A7%8D%E7%94%A8%E4%BA%8E%E5%8A%A0%E9%80%9F%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83%E7%9A%84%E4%BC%A0%E8%BE%93%E5%B1%82%E8%B0%83%E5%BA%A6%E5%99%A8/index.html">
+<meta property="og:site_name" content="最忆是江南">
+<meta property="og:description" content="并行训练的大规模深度学习模型的效率依赖分布式集群间的通信调度，优化时间开销的常规方法包括：Tensor Fusion 和 Tensor Partition。后者能够以更细的粒度实现优先级调度，但这需要在每个张量分区之前插入一个启动时隙，反而会抵消其带来的调度增益。此外，调整最佳分区大小也很耗时，所以现有的应用层解决方案无法消除分区开销。 基于此背景，文章提出了 Mercury，一个简单的传输层调度">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202205230936326.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202205230923203.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202205230923205.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202205230923206.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202205230923207.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202205230923208.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202205230921707.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202205230936326.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202205231031168.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202205231417618.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202205231422429.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202205231422194.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202205231422032.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202205230923205.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202205231520665.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202205231521844.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202205231525079.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202205230921707.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202205231547553.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202205231609227.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202205231718218.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202205231934688.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202205231943398.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202205241952666.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202205241959111.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202205242003742.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202205242003520.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202205242006999.png">
+<meta property="article:published_time" content="2022-05-24T12:11:50.282Z">
+<meta property="article:modified_time" content="2022-05-24T12:09:31.838Z">
+<meta property="article:author" content="Lrk612">
+<meta property="article:tag" content="Deep Learning">
+<meta property="article:tag" content="Resource Management">
+<meta property="article:tag" content="分布式">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202205230936326.png">
+
+<link rel="canonical" href="https://sharp-rookie.github.io/2022/05/24/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91Mercury%EF%BC%9A%E4%B8%80%E7%A7%8D%E7%94%A8%E4%BA%8E%E5%8A%A0%E9%80%9F%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83%E7%9A%84%E4%BC%A0%E8%BE%93%E5%B1%82%E8%B0%83%E5%BA%A6%E5%99%A8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Mercury：一种用于加速分布式训练的传输层调度器 | 最忆是江南</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+        <a target="_blank" rel="noopener" href="https://github.com/Sharp-rookie" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">最忆是江南</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Love actually is all around</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th-list fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-papers">
+
+    <a href="/papers/" rel="section"><i class="fa fa-book fa-fw"></i>论文阅读</a>
+
+  </li>
+        <li class="menu-item menu-item-friendlink">
+
+    <a href="/friendlink/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="fa fa-download fa-fw"></i>资源</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://sharp-rookie.github.io/2022/05/24/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91Mercury%EF%BC%9A%E4%B8%80%E7%A7%8D%E7%94%A8%E4%BA%8E%E5%8A%A0%E9%80%9F%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83%E7%9A%84%E4%BC%A0%E8%BE%93%E5%B1%82%E8%B0%83%E5%BA%A6%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Lrk612">
+      <meta itemprop="description" content="Lrk's blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="最忆是江南">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Mercury：一种用于加速分布式训练的传输层调度器
+        </h1>
+
+        <div class="post-meta">
+         
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-05-24 20:11:50" itemprop="dateCreated datePublished" datetime="2022-05-24T20:11:50+08:00">2022-05-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">论文阅读</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2022/05/24/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91Mercury%EF%BC%9A%E4%B8%80%E7%A7%8D%E7%94%A8%E4%BA%8E%E5%8A%A0%E9%80%9F%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83%E7%9A%84%E4%BC%A0%E8%BE%93%E5%B1%82%E8%B0%83%E5%BA%A6%E5%99%A8/" class="post-meta-item leancloud_visitors" data-flag-title="Mercury：一种用于加速分布式训练的传输层调度器" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/05/24/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91Mercury%EF%BC%9A%E4%B8%80%E7%A7%8D%E7%94%A8%E4%BA%8E%E5%8A%A0%E9%80%9F%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83%E7%9A%84%E4%BC%A0%E8%BE%93%E5%B1%82%E8%B0%83%E5%BA%A6%E5%99%A8/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/05/24/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91Mercury%EF%BC%9A%E4%B8%80%E7%A7%8D%E7%94%A8%E4%BA%8E%E5%8A%A0%E9%80%9F%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83%E7%9A%84%E4%BC%A0%E8%BE%93%E5%B1%82%E8%B0%83%E5%BA%A6%E5%99%A8/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>并行训练的大规模深度学习模型的效率依赖分布式集群间的通信调度，优化时间开销的常规方法包括：<strong>Tensor Fusion</strong> 和 <strong>Tensor Partition</strong>。后者能够以更细的粒度实现优先级调度，但这需要在每个张量分区之前插入一个启动时隙，反而会抵消其带来的调度增益。此外，调整最佳分区大小也很耗时，所以现有的应用层解决方案无法消除分区开销。</p>
+<p>基于此背景，文章提出了 <strong>Mercury</strong>，一个简单的传输层调度器，在通信和计算之间实现了近乎最佳的重叠。它不对张量进行分区，而是将优先级调度以数据包粒度移动到传输层，缓冲区中优先级最高的数据包将首先被传输。 它利用传输层的<strong>即时聚合</strong>来实现一致的梯度推送和参数拉取。</p>
+<p>从实验结果来看，Mercury 在<strong>带宽资源受限</strong>的环境和<strong>通信时间开销</strong>占主导的场景下能够比以往优化方法取得更加卓越的效果。</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/202205230936326.png" alt="QQ图片20220523093623" style="zoom: 67%;" />
+
+<span id="more"></span>
+
+<p>&nbsp;</p>
+<h2 id="分布式训练"><a href="#分布式训练" class="headerlink" title="分布式训练"></a>分布式训练</h2><p>架构：<strong>Parameter server architecture</strong></p>
+<p>并行数据的分布式深度学习将数据划分为多个分片，每个分片由单独的工作节点放置和计算。一种广泛使用的架构为参数服务器（PS）架构，节点在逻辑上被归类为“服务器”，需要保持模型参数的全局统一性，以及执行本地 DNN 训练的 “Worker”</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/202205230923203.png" alt="image-20220521192554463" style="zoom: 67%;" />
+
+<p>训练迭代流程：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. 每个 worker 计算本地梯度值并推送(push)到 PS</span><br><span class="line">2. PS 总和所有 worker 传来的梯度并更新模型参数</span><br><span class="line">3. 每个 worker 拉取(pull)新的统一模型参数并进入下一轮迭代计算</span><br><span class="line"></span><br><span class="line">信息交换只发生在 PS 和每个 worker 之间，worker 与 worker 不互相交换信息</span><br></pre></td></tr></table></figure>
+
+<p>通信瓶颈：</p>
+<p>模型愈来愈大，服务器集群通信带宽却有限。花在通信上的时间比本地计算梯度的时间要大得多，成为整体模型训练的瓶颈。</p>
+<h2 id="计算、通信的执行策略"><a href="#计算、通信的执行策略" class="headerlink" title="计算、通信的执行策略"></a>计算、通信的执行策略</h2><p>很自然地，反向传播结束后才能更新参数，然后 worker 才能拉取最新模型参数，进而才能推送本地计算的梯度值。前向传播、反向传播消耗计算资源，而 push 使用上行带宽、 pull 使用下行带宽，他们消耗的资源是不同的。因此如果计算时间与通信的执行能够一定程度上并行进行，则可以有效减少训练时间消耗。</p>
+<p>下面以一个3层神经网络的 tensor 调度时间使用作为例进行对比，文章做如下假设：</p>
+<ol>
+<li>设某一层的参数用一个 tensor 表示</li>
+<li>所有 worker 推送、拉取一个 tensor 的操作时间完全一致</li>
+<li>PS 可以瞬间完成 worker 传来的梯度值的累加</li>
+<li>不同层参数 tensor 大小不同，设 tensor2 &gt; tensor3 &gt; tensor1</li>
+</ol>
+<h4 id="WFBP策略"><a href="#WFBP策略" class="headerlink" title="WFBP策略"></a>WFBP策略</h4><p>WFBP 是目前主流深度学习框架采用的默认策略，梯度值在完成反向传播后才会调度传输。如图所示，<code>bp3</code> 完成后 worker 才 push 给 PS，push 操作消耗的时间包括：启动时间、传输时间。<code>TS1</code> 推送完后 worker 才会拉取<code>TS3</code> 对应的更新模型参数并推送 <code>TS2</code> 的梯度值。很明显，WFBP 并没有并行进行计算和通信操作。</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/202205230923205.png" alt="image-20220521194020648" style="zoom:67%;" />
+
+
+
+<h4 id="用户级Tensor分区策略"><a href="#用户级Tensor分区策略" class="headerlink" title="用户级Tensor分区策略"></a>用户级Tensor分区策略</h4><p>Tensor 分区和优先级调度能够改善计算-通信并行性。如下图所示，在分布式 DNN 训练中，每一层都可以细分为多个较小的张量进行细粒度的优先级调度。具有更小标号的 tensor 拥有更高优先级，可以看见两次<code>bp3</code>的 push 后，进行了一次<code>bp2</code>的 push，而由于此时<code>bp1</code>完成了计算，因此暂停<code>bp3</code>、<code>bp2</code>的push，优先推送<code>bp1</code>。这种抢占式调度与 Tensor 分区一起提前了 <code>fp1</code> 的执行，同时调度器可以利用 Tensor 分区来更好地并行化推拉操作。</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/202205230923206.png" alt="image-20220521200200098" style="zoom:67%;" />
+
+<p>但是在实际传输 tensor 时，需要先进行一系列的额外处理，包括：RPC序列化、ZeroMQ消息排队和处理器核心调度，其消耗的总时间称为启动时间，并与 tensor 大小无关。所以，Tensor 分区带来更多的传输次数，同时也会导致更多的启动时间消耗。</p>
+<h5 id="启动时间带来的问题"><a href="#启动时间带来的问题" class="headerlink" title="启动时间带来的问题"></a>启动时间带来的问题</h5><ol>
+<li><p>带宽利用率不足</p>
+<p> 由于 Tensor 分区，每次传输时间变短，相较之下启动时间开销增大，期间信道带宽就被浪费了</p>
+</li>
+<li><p>分区策略参数调整的低效</p>
+<p> 用户级 tensor 分区需要调整 tensor 的大小和调度抢占。虽然最小的 tensor 大小能带来最佳的优先级调度灵活性，但是太细粒度的 Tensor 划分会导致每轮训练的总启动时间更长。tensor 大小对训练速度的影响如图所示，这是一台 PS 和一台 worker 在不同通信带宽下不同 tensor 设置的训练速度对比：</p>
+ <img src="https://my-picture-1311448338.file.myqcloud.com/img/202205230923207.png" alt="image-20220521205220786" style="zoom:50%;" />
+
+<p> 有人提出过一种解决方案：<strong>基于信用值的抢占策略</strong></p>
+<p> 信用值定义为允许填充在网络堆栈发送缓冲区中 tensor 的最大容量。这些缓冲 tensor 可以在底层 FIFO 队列中同时传输。由于更早的张量的传输时间与后续张量的启动时间重叠，网络利用率得到了提高。不过这样会导致基于优先级的调度受到破坏，因为传递到底层队列的张量不能再按优先级来抢占。下图说明了训练速度如何受到不同带宽设置和不同 DNN 模型的信用值的影响：</p>
+ <img src="https://my-picture-1311448338.file.myqcloud.com/img/202205230923208.png" alt="image-20220521205546041" style="zoom:50%;" />
+
+<p> 选择最佳分区大小和信用值是个很复杂的工作，因为它们会受到带宽、计算硬件、DNN 框架和 DNN 模型的影响，并且它们的相互依赖关系也很难建模。</p>
+<p> 尽管 ByteScheduler 使用贝叶斯优化方法来自动调整系统参数，但其搜索时间长达几分钟，无法适用于动态网络环境，特别是当带宽由其他通信任务共享时。</p>
+</li>
+</ol>
+<p>综上，文章认为在存在启动时间的情况下，上层解决方案很难实现最佳的通信和计算的并行处理，因此提出了一种在传输层的解决方案：Mercucy。</p>
+<h2 id="Mercucy-系统设计"><a href="#Mercucy-系统设计" class="headerlink" title="Mercucy 系统设计"></a>Mercucy 系统设计</h2><h3 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h3><p>从用户级张量划分的问题可知，在 DNN 引擎之上部署中间件是很难实现完美的计算-通信并行的。文章提出在不牺牲抢占机会的情况下将基于优先级的调度下移到<strong>传输层</strong>。</p>
+<ol>
+<li><p>启动时间最小化</p>
+<p> 一旦 BP 操作完成，梯度 tensor 就直接传递到底层传输队列。不存在张量分区，也不会引入额外的启动时隙</p>
+</li>
+<li><p>传输层调度</p>
+<p> 通过配置多传输队列来实现基于优先级的调度。第 i 个张量的数据包存放在第 i 个优先级队列中，优先级最高的总是最先传输，相当于数据包级别的优先级调度和抢占</p>
+</li>
+<li><p>即使 PS 聚合</p>
+<p> PS 在数据包到达时聚合数据包中的梯度，并在所有 worker 梯度的聚合完成后将它们发送回数据包。也就是说拉取(pull)操作是数据包粒度的</p>
+</li>
+</ol>
+<p>Mercury 的时间使用如图所示，推操作只有三个启动时隙，并且推拉操作几乎完全重叠。与 WFBP 和 Tensor分区 相比，Mercury 大大减少了时间开销。</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/202205230921707.png" alt="QQ图片20220523092055" style="zoom:67%;" />
+
+<p>启动时间根本上来自分布式 DNN 引擎的工作流程。自顶向下，通信栈包括：用户代码、引擎核心、基于消息的通信库和 TCP 或 RDMA 传输。用户代码将推送和拉取操作及其关联的 tensor 封装到运算符中。引擎核心根据它们的依赖关系确定通信和计算算子的执行顺序。基于消息的通信库通常由 RPC、ZeroMQ、MPI 和 NVIDIA NCCL 组成。当一个大 tensor 的 push 操作在用户代码中被划分为多个算子时，它们必须被多次传递，从而导致更多的启动延迟。Mercucy避免了过多的启动间隔，因为每个 tensor 都被传递到通信堆栈而没有分区。</p>
+<p>基于优先级的 tensor 调度也是 Mercury 的关键部分。但是，传输层的传输队列是无视内容的。文章的提议只是将这个 FIFO 传输队列转换为 tensor 优先级队列。与用户级 Tensor 划分相比，优先级调度和抢占是在数据包级实现的。默认情况下，每一层的 tensor 都有其唯一的优先级，当层数过多时，多个 tensor 可以共享相同的优先级。即时 PS 聚合保证了在没有张量分区的情况下推拉操作的重叠。否则，Mercury 就退化为 WFBP。</p>
+<h3 id="系统概述"><a href="#系统概述" class="headerlink" title="系统概述"></a>系统概述</h3><p>Mercury 由两个组件组成：Mercury Worker 和 Mercury PS，下图显示了训练期间工人和 PS 之间的交互。用户级 Worker 和 PS 是由 DNN 引擎实现的高层抽象概念。 Worker 迭代执行 BP 和 FP，而 PS 聚合全局模型参数。 Mercury Worker 和 Mercury PS 充当传输库，将梯度 tensor 从 worker 传到 PS，参数 tensor 从 PS 传到 worker。</p>
+<p>Mercury Worker 执行基于数据包级别优先级的调度，且不会降低吞吐量。当 BP 产生的梯度  tensor 传递给 Mercury Worker 时，tensor 被细分为 Mercury 数据包。 Mercury Worker 根据 tensor 的层号为每个 Mercury 数据包分配一个优先级。优先级最高的数据包总是最先发送。 Mercury Worker 还从 Mercury PS 接收参数数据包，合并形成参数 tensor 后将其馈送到 FP。</p>
+<p>Mercury PS 执行即时数据包级梯度聚合。在批量同步并行 (BSP) 模式下，聚合仅包含简单的计算（比如对所有 worker 的梯度取平均），几乎不导致 CPU 开销。因此 Mercurcy 将聚合操作移动到传输层以方便立即拉取。 </p>
+<p>Mercury PS 使用代理模块来聚合梯度并更新模型参数，无需将 tensor 传递给 PS 用户代码。这样做有效地减少了 tensor 在数据包粒度上的处理延迟。否则，每个数据包都必须从最低的传输层传到最高的应用层进行聚合，然后返回传输层进行传输，由于通信堆栈处的非平凡延迟，导致聚合速度减慢。</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/202205230936326.png" alt="QQ图片20220523093623" style="zoom: 67%;" />
+
+
+
+<h3 id="实现细节"><a href="#实现细节" class="headerlink" title="实现细节"></a>实现细节</h3><h4 id="Mercucy-Worker"><a href="#Mercucy-Worker" class="headerlink" title="Mercucy Worker"></a>Mercucy Worker</h4><blockquote>
+<p>Sending Buffer：包含多个 Mercury 数据包队列</p>
+<p>Worker Sender：从发送缓冲区中逐一提取数据包</p>
+<p>Transport Library：实际进行传输操作</p>
+<p>Tensor Constructor：接收 Mercucy Packets 并构造参数 tensor</p>
+</blockquote>
+<p><strong>Sending Buffer</strong> 中的队列数等于调度优先级的总数。通常数据包的数量远大于调度优先级的数量。为了降低提取数据包的时间复杂度，Mercucy 使用一组 FIFO 队列而不是单个堆优先级队列。每个 FIFO 队列都唯一对应一个优先级。当一个 tensor 被传递到 Sending Buffer 时，会被划分并存储为其优先级相对应的 FIFO 队列中的 Mercury 数据包。由此，提取具有最高优先级的数据包的时间复杂度为 O(N )，其中 N 是队列数。</p>
+<p>在训练开始之前，worker 用户代码通知 Sending Buffer 来初始化 Mercury 数据包队列。文章发现大多数 DNN 模型的张量数量很少。因此，Mercucy 中为每个张量都分配了一个 Mercury 数据包队列。文章认为分配算法可以用来平衡调度多层 DNN 模型的效率和时间复杂度之间的权衡。</p>
+<p>下图是 Mercucy 数据包的结构，包头指示其地址（张量 ID、偏移量）和优先级。每个包的有效载荷包含一个张量中的连续梯度或参数。不存在梯度或参数拆分成两个数据包，也不存在一个数据包含两个张量。为了避免内存复制，Sending Buffer 的 FIFO 队列中的每个 Mercury 数据包仅包含一个 header，而非实际数据。</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/202205231031168.png" alt="image-20220523103107125" style="zoom: 80%;" />
+
+<p><strong>Worker Sender</strong> 不断地从 Sending Buffer 中提取优先级最高的 Mercury 数据包（仅包头）。然后 Worker Sender 从原始 tensor 中找到数据，并使用传输库将 header 和数据传输到正确的 PS。</p>
+<p><strong>Transport Library</strong> 执行多路复用和多路分解操作，将 Mercury 数据包封装到多个传输库数据包（例如 TCP 数据包）中用于发送数据，并在接收数据时执行相反的过程。内存复制只发生在传输库中。Mercury 包的大小为 n × Spkt，其中 Spkt 是传输库包的大小（例如 TCP 最大段大小）。使用 n = 1 会增加调度系统的负担。因此，在 Mercucy 的实现中，n 设置为 10。</p>
+<h4 id="Mercucy-PS"><a href="#Mercucy-PS" class="headerlink" title="Mercucy PS"></a>Mercucy PS</h4><blockquote>
+<p>Transport Library：和 Mercucy Worker 里的一样</p>
+<p>Packet Constructor：构造从 Worker 接收到的 Mercury 梯度数据包</p>
+<p>Updater：聚合梯度并更新模型参数</p>
+<p>PS Sender：将 Mercury 参数包传输给所有 Worker</p>
+</blockquote>
+<p><strong>Updater</strong> 是一个代理，负责保存 PS 的聚合逻辑和模型参数。 PS 用户代码在训练前将聚合函数和全局模型参数传递给 Updater。然后 PS 用户代码保持空闲，直到训练的完成信号被触发。所有的迭代模型同步工作都从用户代码转移到了 Updater。</p>
+<p><strong>Packet Constructor</strong> 构造 Mercury 梯度数据包，并在准备好时将其交付给 Updater。 Updater在收到所有 worker 的相同 header 的梯度包后，按照具体的聚合逻辑进行聚合。然后 Updater 更新一系列与梯度相对应的模型参数。</p>
+<p><strong>PS Sender</strong> 不断提取更新的参数，构造 M 个相同的 Mercury 参数包，其中 M 为 worker 个数。这些数据包分别传输给所有 Worker。</p>
+<p>Packet Constructor、Updater 和 PS Sender 以流水线方式处理 Mercury 数据包。 Mercury 包的大小通常比张量小得多。因此 Mercury PS 能够近乎完美地实现上行链路和下行链路传输重叠。从 Worker 的角度来看，每一层的推拉都是完全重叠的，下文会展示此设计不影响 PS 的带宽利用率。</p>
+<h3 id="实例部署"><a href="#实例部署" class="headerlink" title="实例部署"></a>实例部署</h3><p>文章基于内核 TCP 部署了 Mercury，并使用 C++ 和 Python 将其集成到 MXNet 框架中。</p>
+<p>主要修改的是组件 Van，它是 ps-lite1 中点对点通信的抽象（即 MXNet 的底层 PS 架构库）。在当前的 ps-lite 实现中，push 和 pull 函数调用 Van 中的通信 API 来传输张量。文章使用 Mercury_Van 替换 Van，且没有对迭代训练的代码做任何修改，通信栈中的所有 API 都和以前一样。</p>
+<p>文章在工作用户代码中添加了一个插件，能够在训练前通过环境变量通知 Mercury_Van 包队列的数量（即调度优先级的数量）。此外还在 PS 用户代码中添加了一个插件，用于初始化 Mercury_Van 中的聚合代理。</p>
+<p>Mercury 能够很容易地与支持 PS 架构的其他深度学习框架集成，例如 Tensor-Flow 和 PyTorch。这些框架的 PS 架构实现维护所有节点的通信关系，并且通常建立在点对点通信库之上。为这些框架实现 Mercury，只需将它们的点对点通信库替换为 Mercury。 All-Reduce 架构同样可以从 Mercury 的基于优先级的调度中受益。</p>
+<h2 id="策略对比的建模"><a href="#策略对比的建模" class="headerlink" title="策略对比的建模"></a>策略对比的建模</h2><p>对3种不同策略下的分布式深度学习的一个epoch进行建模，用于分析时间消耗情况的对比</p>
+<h3 id="不同策略的相同时间开销"><a href="#不同策略的相同时间开销" class="headerlink" title="不同策略的相同时间开销"></a>不同策略的相同时间开销</h3><p>假设 worker 和 PS 之间硬件一致（GPU 和 CPU）。在这种情况下，PS 同时从所有 Worker 那里接收到相同的梯度。常用变量如下表所示。将第 L 层的 BP 视为一次迭代的第一个算子，FP 视为作为最后一个，BP 的开始时间戳记为 0。</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/202205231417618.png" alt="QQ图片20220523141720" style="zoom: 50%;" />
+
+<p>这里建立三个时间的公式：</p>
+<ol>
+<li><p>第 l 层反向传播的开始时间戳：</p>
+ <img src="https://my-picture-1311448338.file.myqcloud.com/img/202205231422429.png" alt="QQ图片20220523142142" style="zoom:55%;" />
+
+<p> 反向传播不依赖push或pull的通信步骤，因此直接是前几次耗时的累加</p>
+</li>
+<li><p>第 l 层前向传播的开始时间戳：</p>
+ <img src="https://my-picture-1311448338.file.myqcloud.com/img/202205231422194.png" alt="QQ图片20220523142147" style="zoom:55%;" />
+
+<p> 由于前向传播依赖两个因素：pull操作、上一步前向传播操作，因此需要先完成这两个操作后才进行本轮前向传播</p>
+</li>
+<li><p>单轮迭代总时间：</p>
+ <img src="https://my-picture-1311448338.file.myqcloud.com/img/202205231422032.png" alt="QQ图片20220523142153" style="zoom:60%;" />
+
+<p> 总时间中，pull操作耗时起到主要影响作用，下面对3种策略下pull操作的耗时进行比较</p>
+</li>
+</ol>
+<h3 id="不同策略的差异时间开销"><a href="#不同策略的差异时间开销" class="headerlink" title="不同策略的差异时间开销"></a>不同策略的差异时间开销</h3><h4 id="WFBP"><a href="#WFBP" class="headerlink" title="WFBP"></a>WFBP</h4><img src="https://my-picture-1311448338.file.myqcloud.com/img/202205230923205.png" alt="image-20220521194020648" style="zoom:67%;" />
+
+<p>在WFBP策略下，第 l 层参数 tensor 的推送(push)操作前必须保证反向传播和第 l+1 层参数 tensor 的推送操作已完成，因此其推送的时间戳为：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/202205231520665.png" alt="QQ图片20220523151928" style="zoom:50%;" />
+
+<p>所以完成第 l 层拉取(pull)操作的时间戳为：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/202205231521844.png" alt="QQ图片20220523151932" style="zoom:50%;" />
+
+<p>简便起见，认为只有推送(push)操作前需要启动时间，则推送和拉取的时长分别为：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/202205231525079.png" alt="QQ图片20220523151936" style="zoom:50%;" />
+
+
+
+<h4 id="Mercury"><a href="#Mercury" class="headerlink" title="Mercury"></a>Mercury</h4><img src="https://my-picture-1311448338.file.myqcloud.com/img/202205230921707.png" alt="QQ图片20220523092055" style="zoom:67%;" />
+
+<p>推送和拉取的时长和 WFBP 中相同。由于 Mercury Packet 远小于 tensor 的大小，所以设 Mercury Packet 大小为无穷小。再假设聚合时间始终小于通信传输时间，所以可以认为推送、拉取和聚合时间是完全重合的，即：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/202205231547553.png" alt="QQ图片20220523154704" style="zoom:35%;" />
+
+<p>由于优先级和即使抢占的机制导致推拉的时间戳难以用闭式函数表示，所以文章使用下面算法来动态模拟推送操作的调度，从而计算推拉的时间戳：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/202205231609227.png" alt="QQ图片20220523160850" style="zoom:50%;" />
+
+<center>其中，Buf 是 tensor 的推送缓冲区</center>
+
+<p>1~3行是初始化，4~10行是对第 l 层反向传播后事件的仿真。</p>
+<p>函数 <code>CONSUME</code> 用于计算推送时长，buffer 中层序号越小的 tensor，优先级越高。当推送完成后，tensor 将从buffer中释放，并记录此刻时间。</p>
+<p>若满足以下假设，则 Mercury 策略将成为最优解（文章因篇幅限制未给出详细证明）：</p>
+<ol>
+<li>所有计算操作串行进行，没有并行操作</li>
+<li>不使用 Tensor Fusion</li>
+<li>聚合运算耗时可忽略</li>
+<li>Mercury Packet 大小可忽略</li>
+</ol>
+<h4 id="User-level-Tensor-Partitioning"><a href="#User-level-Tensor-Partitioning" class="headerlink" title="User-level Tensor Partitioning"></a>User-level Tensor Partitioning</h4><p>这里忽略信用值的大小，因为建模比较麻烦。这样就可以只关注分区大小和启动时间。当 tensor 开始以分区粒度进行传输，第 l 层的拉取(pull)操作结束的时间戳为：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/202205231718218.png" alt="QQ图片20220523171826" style="zoom: 30%;" />
+
+<center>第二项为聚合运算所用时间</center>
+
+<p>推送(push)的消耗时长计算方法和 Mercury 中的类似</p>
+<h3 id="性能分析"><a href="#性能分析" class="headerlink" title="性能分析"></a>性能分析</h3><p>为了说明不同的 DNN 模型如何从调度方案中受益，文章基于上述计算模型分析了理论性能增益。下图显示了 VGG-16 和 ResNet-50 不同层的计算（BP，FP）时间和通信时间分布。</p>
+<p>通信时间是通过将每层 tensor 的大小除以带宽（10 Gbps）来计算的，通信时间是分别在一个 NVIDIA 1080Ti 和 Tesla V100S 显卡上对单 Worker 单 PS 场景训练时测量的。</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/202205231934688.png" alt="QQ图片20220523193339" style="zoom: 65%;" />
+
+<p>将不同策略下观测得到的上图指标输入前文建立的分析模型中，得到 Mercury 和其他两个策略的理论性能比较。</p>
+<p>文章以 WFBP 作为 baseline，对比了 Tensor Partitioning 和 Mercury 在不同带宽和前者取不同 Parttion size 时的性能。启动时间固定为 <code>500us</code>，具体差异如下图所示，其中纵坐标 speedup 为 WFBP 分别与 Mercury 和 Tensor Partition 耗时之比：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/202205231943398.png" alt="QQ图片20220523194318" style="zoom: 55%;" />
+
+<center>左图中取最佳Partition size，右图带宽固定10Gbps</center>
+
+<p>可见 Mercury 大部分场景下是优于 Tensor Partition 的，特别是通信开销占主导的 VGG16 下。不过计算开销占主导的 ResNet50 下，二者就差异不大了，除非带宽特别窄时。</p>
+<h2 id="评估测试"><a href="#评估测试" class="headerlink" title="评估测试"></a>评估测试</h2><p>文章用了8台物理机服务器来做实机测试，具体配置为：</p>
+<blockquote>
+<p>均为 3.20GHz 的 8 核 Intel Xeon W2140b CPU 和 32 GB 的 DDR4 RAM</p>
+<p>均使用一个 Mellanox ConnectX-3 NIC 连接到交换机，提供 10Gbps 以太网</p>
+<p>操作系统均为Ubuntu 18.04，Linux内核为5.4，内核TCP默认拥塞控制算法为CUBIC</p>
+<p>其中四台服务器配一个 NVIDIA GTX 1080Ti 11 GB GPU 作为 Worker，其他四台作为 PS</p>
+<p>深度学习框架为带有 CUDA-9.0 和 cuDNN-7.1.3 的 MXNet-1.5.0</p>
+</blockquote>
+<p>测试时跑的模型如下，包含 CNN、Transformer 模型：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/202205241952666.png" alt="QQ图片20220524195155" style="zoom:65%;" />
+
+<p>文章作者把 Mercury 部署在 MXNet 上，然后 MXNet 默认策略 以及 Tensor Partition 的一个比较好的实例：ByteScheduler 算法进行对标，以模型训练速度作为指标。Mercury 通过100个epoch 来进行 warm-up，ByteScheduler经过1500个epoch来搜素最优超参数（Tensor划分的大小）。</p>
+<h3 id="10Gbps-固定带宽下"><a href="#10Gbps-固定带宽下" class="headerlink" title="10Gbps 固定带宽下"></a>10Gbps 固定带宽下</h3><p><img src="https://my-picture-1311448338.file.myqcloud.com/img/202205241959111.png" alt="QQ图片20220524195929"></p>
+<center>除了ResNet50这种通信和计算开销都不大的模型，其他优化效果都明显</center>
+
+<h3 id="动态带宽场景下"><a href="#动态带宽场景下" class="headerlink" title="动态带宽场景下"></a>动态带宽场景下</h3><img src="https://my-picture-1311448338.file.myqcloud.com/img/202205242003742.png" alt="QQ图片20220524200302" style="zoom:50%;" />
+
+<center>1~10Gbps 变化</center>
+
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/202205242003520.png" alt="QQ图片20220524200307" style="zoom:50%;" />
+
+<center>5~10Gbps 变化</center>
+
+<h3 id="带宽使用情况"><a href="#带宽使用情况" class="headerlink" title="带宽使用情况"></a>带宽使用情况</h3><img src="https://my-picture-1311448338.file.myqcloud.com/img/202205242006999.png" alt="QQ图片20220524200554" style="zoom:50%;" />
+
+
+
+
+
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Lrk612
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://sharp-rookie.github.io/2022/05/24/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91Mercury%EF%BC%9A%E4%B8%80%E7%A7%8D%E7%94%A8%E4%BA%8E%E5%8A%A0%E9%80%9F%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83%E7%9A%84%E4%BC%A0%E8%BE%93%E5%B1%82%E8%B0%83%E5%BA%A6%E5%99%A8/" title="Mercury：一种用于加速分布式训练的传输层调度器">https://sharp-rookie.github.io/2022/05/24/【论文】Mercury：一种用于加速分布式训练的传输层调度器/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Deep-Learning/" rel="tag"># Deep Learning</a>
+              <a href="/tags/Resource-Management/" rel="tag"># Resource Management</a>
+              <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/" rel="tag"># 分布式</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/05/08/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91%E4%B8%80%E7%A7%8D%E7%A9%BA%E5%9C%B0%E4%B8%80%E4%BD%93%E5%8C%96%E7%BD%91%E7%BB%9C%E6%9E%B6%E6%9E%84/" rel="prev" title="一种空地一体化网络架构">
+      <i class="fa fa-chevron-left"></i> 一种空地一体化网络架构
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83"><span class="nav-text">分布式训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E3%80%81%E9%80%9A%E4%BF%A1%E7%9A%84%E6%89%A7%E8%A1%8C%E7%AD%96%E7%95%A5"><span class="nav-text">计算、通信的执行策略</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#WFBP%E7%AD%96%E7%95%A5"><span class="nav-text">WFBP策略</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E7%BA%A7Tensor%E5%88%86%E5%8C%BA%E7%AD%96%E7%95%A5"><span class="nav-text">用户级Tensor分区策略</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E6%97%B6%E9%97%B4%E5%B8%A6%E6%9D%A5%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-text">启动时间带来的问题</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mercucy-%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1"><span class="nav-text">Mercucy 系统设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5"><span class="nav-text">核心概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0"><span class="nav-text">系统概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E7%BB%86%E8%8A%82"><span class="nav-text">实现细节</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Mercucy-Worker"><span class="nav-text">Mercucy Worker</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Mercucy-PS"><span class="nav-text">Mercucy PS</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B%E9%83%A8%E7%BD%B2"><span class="nav-text">实例部署</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AD%96%E7%95%A5%E5%AF%B9%E6%AF%94%E7%9A%84%E5%BB%BA%E6%A8%A1"><span class="nav-text">策略对比的建模</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E5%90%8C%E7%AD%96%E7%95%A5%E7%9A%84%E7%9B%B8%E5%90%8C%E6%97%B6%E9%97%B4%E5%BC%80%E9%94%80"><span class="nav-text">不同策略的相同时间开销</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E5%90%8C%E7%AD%96%E7%95%A5%E7%9A%84%E5%B7%AE%E5%BC%82%E6%97%B6%E9%97%B4%E5%BC%80%E9%94%80"><span class="nav-text">不同策略的差异时间开销</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#WFBP"><span class="nav-text">WFBP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Mercury"><span class="nav-text">Mercury</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#User-level-Tensor-Partitioning"><span class="nav-text">User-level Tensor Partitioning</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90"><span class="nav-text">性能分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%84%E4%BC%B0%E6%B5%8B%E8%AF%95"><span class="nav-text">评估测试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#10Gbps-%E5%9B%BA%E5%AE%9A%E5%B8%A6%E5%AE%BD%E4%B8%8B"><span class="nav-text">10Gbps 固定带宽下</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E5%B8%A6%E5%AE%BD%E5%9C%BA%E6%99%AF%E4%B8%8B"><span class="nav-text">动态带宽场景下</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%A6%E5%AE%BD%E4%BD%BF%E7%94%A8%E6%83%85%E5%86%B5"><span class="nav-text">带宽使用情况</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Lrk612"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Lrk612</p>
+  <div class="site-description" itemprop="description">Lrk's blog</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.google.com/" title="https:&#x2F;&#x2F;www.google.com" rel="noopener" target="_blank">Google</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://arxiv.org/" title="https:&#x2F;&#x2F;arxiv.org&#x2F;" rel="noopener" target="_blank">arXiv</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ieeexplore.ieee.org/Xplore/home.jsp" title="https:&#x2F;&#x2F;ieeexplore.ieee.org&#x2F;Xplore&#x2F;home.jsp" rel="noopener" target="_blank">IEEE Xplore</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        <!-- 访问量 -->
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客数<span id="busuanzi_value_site_uv"></span>人</span>
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+$(document).ready(function() {
+
+    var int = setInterval(fixCount, 50);  // 50ms周期检测函数
+    var countOffset = 20000;  // 初始化首次数据
+
+    function fixCount() {            
+       if (document.getElementById("busuanzi_container_site_pv").style.display != "none")
+        {
+            $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + countOffset); 
+            clearInterval(int);
+        }                  
+        if ($("#busuanzi_container_site_pv").css("display") != "none")
+        {
+            $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + countOffset); // 加上初始数据 
+            clearInterval(int); // 停止检测
+        }  
+    }
+       	
+});
+</script> 
+
+
+<!-- 版权 -->
+<div class="copyright">
+  
+  &copy; 2021-12-1 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lrk612</span>
+</div>
+
+<!-- ICP备案 -->
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">ICP备案 </a>
+      <img src="https://my-picture-1311448338.file.myqcloud.com/img/20211209170739.png" style="display: inline-block;"><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=2021035798" rel="noopener" target="_blank">豫ICP备2021035798号 </a>
+  </div>
+
+<!-- 不知道是什么 -->
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'fH6OdGBcCG8D6jC8NeeJlX9b-gzGzoHsz',
+      appKey     : '1UoIb6vszMw6wl0n7kreb4Xz',
+      placeholder: "Just go go ^_^",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+    var infoEle = document.querySelector('#comments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0){
+      infoEle.childNodes.forEach(function(item) {
+        item.parentNode.removeChild(item);
+      });
+    }
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
