@@ -54,7 +54,7 @@
 <meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202206021616193.png">
 <meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202206021617416.png">
 <meta property="article:published_time" content="2022-06-02T08:23:31.157Z">
-<meta property="article:modified_time" content="2022-06-05T12:34:41.555Z">
+<meta property="article:modified_time" content="2022-06-06T06:52:06.952Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="matlab">
 <meta name="twitter:card" content="summary">
@@ -358,10 +358,14 @@
   <img src="https://my-picture-1311448338.file.myqcloud.com/img/202206052033328.bmp" alt="1" style="zoom:50%;" /></li>
 <li><p>代码细节：代码简单没有细节说明</p>
 </li>
-<li><p>参数设置：约束长度为7时，（171，133）是比较好的一组编码多项式</p>
+<li><p>参数设置：约束长度为7时，（171，133）是比较好的一组编码多项式（IEEE 802.11标准）</p>
+<ul>
+<li>171（八进制）== 1111001（表示Y的抽头位置）</li>
+<li>133（八进制）== 1011011（表示X的抽头位置）</li>
+</ul>
 </li>
 </ul>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">%----------调用matlab库函数生成(2,1,7)卷积码编码结果----------</span></span><br><span class="line">trel = poly2trellis(CoderConstraint, [<span class="number">171</span>, <span class="number">133</span>]);</span><br><span class="line">msgWithTail = [msg, <span class="built_in">zeros</span>(<span class="built_in">size</span>(<span class="number">1</span>:CoderConstraint - <span class="number">1</span>))]; <span class="comment">% 结尾处理, 在消息的结尾添加 coder_constraint-1 个零</span></span><br><span class="line">code = convenc(msgWithTail, trel); <span class="comment">% 调用库函数所生成卷积码</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">%----------调用matlab库函数生成(2,1,7)卷积码编码结果----------</span></span><br><span class="line">trel = poly2trellis(CoderConstraint, [<span class="number">171</span>, <span class="number">133</span>]);</span><br><span class="line">msgWithTail = [msg, <span class="built_in">zeros</span>(<span class="built_in">size</span>(<span class="number">1</span>:CoderConstraint - <span class="number">1</span>))]; <span class="comment">% 结尾处理, 在消息的结尾添加 coder_constraint-1 个零</span></span><br><span class="line">code = convenc(msgWithTail, trel); <span class="comment">% 调用编码函数所生成卷积码</span></span><br></pre></td></tr></table></figure>
 
 <h4 id="插入前导码"><a href="#插入前导码" class="headerlink" title="插入前导码"></a>插入前导码</h4><ul>
 <li>原理：为便于同步识别，插入预先设计好的前导码序列：<code>1010110010101100</code></li>
@@ -441,7 +445,7 @@
 </li>
 <li><p>参数设置：</p>
 <ul>
-<li><p>poly2trellis函数：为了保证能正确解码，使用了与发射端编码时相同的参数</p>
+<li><p>poly2trellis函数：把（2，1，7）卷积码的生成多项式转成网格图，以供vitdec（）函数使用。为保证能正确解码，这里使用与发射端编码时相同的参数</p>
 </li>
 <li><p>vitdec函数：维特比译码的基本思想是利用编码网格图，在其中搜索一条路径，使其最接近实际路径，实质上是最大似然译码</p>
 <ul>
@@ -455,7 +459,7 @@
 <li><p>opmode</p>
 <p>  查阅文档</p>
 <p>  <img src="https://my-picture-1311448338.file.myqcloud.com/img/202206021524598.png" alt="image-20220602152405508"></p>
-<p>  ‘trunc’用于不知道发送端是否补充了足够零的情况，所以选用‘trunc’</p>
+<p>  ‘tterm’用于发送端在开头和结尾都补充了足够零的情况，所以选用‘term</p>
 </li>
 <li><p>dectype</p>
 <p>  查阅文档</p>
