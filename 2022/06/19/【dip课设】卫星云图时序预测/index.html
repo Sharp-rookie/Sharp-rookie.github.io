@@ -41,9 +41,19 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202206191857214.png">
 <meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202206191940370.png">
-<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202206191942251.gif">
+<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/202206192004167.gif">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202206192016316.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202206192021389.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202206192031227.png">
+<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/202206192037700.gif">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202206192041879.png">
+<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/202206192044277.gif">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202206192046181.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202206192050888.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202206192052522.png">
+<meta property="og:image" content="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/202206192056422.gif">
 <meta property="article:published_time" content="2022-06-19T11:44:50.436Z">
-<meta property="article:modified_time" content="2022-06-19T11:53:12.975Z">
+<meta property="article:modified_time" content="2022-06-19T12:58:47.749Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="AI">
 <meta property="article:tag" content="Deep Learning">
@@ -351,11 +361,58 @@
 
 <p>&nbsp;</p>
 <h1 id="任务说明"><a href="#任务说明" class="headerlink" title="任务说明"></a>任务说明</h1><p>我们的数据集包含3种卫星云图：雷达回波（Radar）、降水（Precip）和平均风（Wind），来自阿里天池的一项比赛：</p>
-<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/202206191942251.gif" alt="图片1"></p>
+<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/202206192004167.gif" style="zoom: 100%" />
+
+<center>雷达、降水、风</center>
+
+<p>数据集包含连续4个小时中每隔6分钟一张的图像，测试集需要基于前2个小时图像预测出这3种卫星图像后两个小时的图像。</p>
 <p>&nbsp;</p>
-<h1 id="方案一：基于特征的预测"><a href="#方案一：基于特征的预测" class="headerlink" title="方案一：基于特征的预测"></a>方案一：基于特征的预测</h1><p>&nbsp;</p>
+<h1 id="方案一：基于特征的预测"><a href="#方案一：基于特征的预测" class="headerlink" title="方案一：基于特征的预测"></a>方案一：基于特征的预测</h1><p>我们的第一个方案是在 [4] 中方法的基础上进行改进得出的，其基本思想是分别训练<strong>图像生成器</strong>和<strong>图像预测器</strong>两个模块，前者工作由GAN来实现，后者由LSTM来实现。</p>
+<h2 id="图像生成器设计"><a href="#图像生成器设计" class="headerlink" title="图像生成器设计"></a>图像生成器设计</h2><h3 id="版本一：naive-GAN"><a href="#版本一：naive-GAN" class="headerlink" title="版本一：naive GAN"></a>版本一：naive GAN</h3><p>最初我们按照 [4] 中所用的 GAN 模型进行复现，其实就是最基础的结构，给 Generator 输入噪声，并将其输出和真实图像输入到 DIscriminator 进行评估：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/202206192016316.png" alt="image-20220619201601261" style="zoom: 80%;" />
+
+<p>使用的损失函数为 adversarial loss：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/202206192021389.png" alt="image-20220619202101349" style="zoom:67%;" />
+
+<p>但是很快我们意识到一个问题，我们要做的是时序预测工作，如果GAN接收的只是随机噪声，那么即使输出的图像足够逼真，但是却依然缺乏可解释性，也就是说我们并不知道是噪声向量哪些维度控制了 Generator 生成图像的结构和纹理等细节，进而把 LSTM预测的特征输入给 Generator 也只会被当成随机噪声处理，未必能得到对应结构和纹理的图像。</p>
+<h3 id="版本二：conditional-GAN"><a href="#版本二：conditional-GAN" class="headerlink" title="版本二：conditional GAN"></a>版本二：conditional GAN</h3><p>基于上述思考，我们决定使用改造的 vgg16 作为backbone来提取图像特征（编码），然后输入给 Generator进行图像生成（解码），由Discriminator进行评估。损失函数依然使用 adversarial loss：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/202206192031227.png" alt="image-20220619203112158" style="zoom: 45%;" />
+
+<p>但是，实际这样做的生成质量很差：</p>
+<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/202206192037700.gif" style="zoom: 55%" />
+
+<center>左：ground truth，右：generated image</center>
+
+<p>几乎只学会了大致形状，内容细节颗粒感极强。我们认为是 Discriminator 所导致的，不妨直接去除 Discriminator 部分，只训练 backbone 和 Generator，相当于编码器和解码器结构。</p>
+<h3 id="版本三：encoder-amp-decoder"><a href="#版本三：encoder-amp-decoder" class="headerlink" title="版本三：encoder &amp; decoder"></a>版本三：encoder &amp; decoder</h3><p>这里使用真实图像和生成图像的像素级 L1 损失作为损失函数，模型结构如下：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/202206192041879.png" alt="image-20220619204159824" style="zoom: 80%;" />
+
+<p>很明显，这样的结构网络可以轻易学到很好的效果：</p>
+<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/202206192044277.gif" style="zoom: 50%" />
+
+<center>左：ground truth，右：generated image</center>
+
+
+
+<h2 id="图像预测器设计"><a href="#图像预测器设计" class="headerlink" title="图像预测器设计"></a>图像预测器设计</h2><p>预测时，使用 backbone 提取历史图像的特征序列，输入到 LSTM 预测后续图像的特征序列：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/202206192046181.png" alt="image-20220619204633114" style="zoom:70%;" />
+
+<p>使用 LSTM 的输出和 backbone 对未来帧提取的特征向量之间的 L2 损失作为损失函数进行 LSTM 的训练。</p>
+<h2 id="总模型架构-amp-算法细节"><a href="#总模型架构-amp-算法细节" class="headerlink" title="总模型架构 &amp; 算法细节"></a>总模型架构 &amp; 算法细节</h2><p>编解码器和预测器的总体结构如下：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/202206192050888.png" alt="image-20220619205029828" style="zoom: 80%;" />
+
+<p>算法细节上，backbone、Generator 和 LSTM 结构如图所示：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/202206192052522.png" alt="image-20220619205233431" style="zoom: 45%;" />
+
+<p>&nbsp;</p>
 <h1 id="方案二：端到端的预测"><a href="#方案二：端到端的预测" class="headerlink" title="方案二：端到端的预测"></a>方案二：端到端的预测</h1><p>&nbsp;</p>
-<h1 id="测试效果"><a href="#测试效果" class="headerlink" title="测试效果"></a>测试效果</h1><p>&nbsp;</p>
+<h1 id="测试效果"><a href="#测试效果" class="headerlink" title="测试效果"></a>测试效果</h1><p><strong>方案一效果：</strong></p>
+<img src="https://my-picture-1311448338.cos.ap-nanjing.myqcloud.com/img/202206192056422.gif" style="zoom: 50%" />
+
+<center>左：ground truth，中：编解码效果，右：predict image</center>
+
+<p><strong>方案二效果：</strong></p>
+<p>&nbsp;</p>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>[1] S. Xingjian, Z. Chen, H. Wang, D.-Y. Yeung, W.-K. Wong, and W.c. Woo, “Convolutional lstm network: A machine learning approach for precipitation nowcasting,” in Advances in neural information processing systems, 2015, pp. 802–810.</p>
 <p>[2] N. Srivastava, E. Mansimov, and R. Salakhudinov, “Unsupervised learning of video representations using lstms,” in International conference on machine learning, 2015, pp. 843–852.</p>
 <p>[3] A. Gensler, J. Henze, B. Sick, and N. Raabe, “Deep learning for solar power forecastingłan approach using autoencoder and lstm neural networks,” in Systems, Man, and Cybernetics (SMC), 2016 IEEE International Conference on. IEEE, 2016, pp. 002 858–002 865.</p>
@@ -459,7 +516,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%89%E9%A2%98%E8%83%8C%E6%99%AF"><span class="nav-text">选题背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C%E8%B0%83%E7%A0%94"><span class="nav-text">相关工作调研</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1%E8%AF%B4%E6%98%8E"><span class="nav-text">任务说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%B9%E6%A1%88%E4%B8%80%EF%BC%9A%E5%9F%BA%E4%BA%8E%E7%89%B9%E5%BE%81%E7%9A%84%E9%A2%84%E6%B5%8B"><span class="nav-text">方案一：基于特征的预测</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%B9%E6%A1%88%E4%BA%8C%EF%BC%9A%E7%AB%AF%E5%88%B0%E7%AB%AF%E7%9A%84%E9%A2%84%E6%B5%8B"><span class="nav-text">方案二：端到端的预测</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E6%95%88%E6%9E%9C"><span class="nav-text">测试效果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-text">Reference</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%89%E9%A2%98%E8%83%8C%E6%99%AF"><span class="nav-text">选题背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C%E8%B0%83%E7%A0%94"><span class="nav-text">相关工作调研</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1%E8%AF%B4%E6%98%8E"><span class="nav-text">任务说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%B9%E6%A1%88%E4%B8%80%EF%BC%9A%E5%9F%BA%E4%BA%8E%E7%89%B9%E5%BE%81%E7%9A%84%E9%A2%84%E6%B5%8B"><span class="nav-text">方案一：基于特征的预测</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BE%E5%83%8F%E7%94%9F%E6%88%90%E5%99%A8%E8%AE%BE%E8%AE%A1"><span class="nav-text">图像生成器设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%88%E6%9C%AC%E4%B8%80%EF%BC%9Anaive-GAN"><span class="nav-text">版本一：naive GAN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%88%E6%9C%AC%E4%BA%8C%EF%BC%9Aconditional-GAN"><span class="nav-text">版本二：conditional GAN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%88%E6%9C%AC%E4%B8%89%EF%BC%9Aencoder-amp-decoder"><span class="nav-text">版本三：encoder &amp; decoder</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BE%E5%83%8F%E9%A2%84%E6%B5%8B%E5%99%A8%E8%AE%BE%E8%AE%A1"><span class="nav-text">图像预测器设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E6%A8%A1%E5%9E%8B%E6%9E%B6%E6%9E%84-amp-%E7%AE%97%E6%B3%95%E7%BB%86%E8%8A%82"><span class="nav-text">总模型架构 &amp; 算法细节</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%B9%E6%A1%88%E4%BA%8C%EF%BC%9A%E7%AB%AF%E5%88%B0%E7%AB%AF%E7%9A%84%E9%A2%84%E6%B5%8B"><span class="nav-text">方案二：端到端的预测</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E6%95%88%E6%9E%9C"><span class="nav-text">测试效果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-text">Reference</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
