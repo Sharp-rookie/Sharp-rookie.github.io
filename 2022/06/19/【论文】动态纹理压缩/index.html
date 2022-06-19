@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"sharp-rookie.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+<script> 
+   (function(){
+          if(''){
+              if (prompt('请输入文章密码') !== ''){
+                  alert('密码错误！');
+                  history.back();
+              }
+          }
+      })();
+  </script>
+  <meta name="description" content="如果在视频编码前，把比较占用存储空间且对视觉效果影响不大的内容忽略掉，那么就可以大大提高视频的编码效率，无论是对用户观影体验，还是对分布式数据传输，亦或者仅仅在本地保存备份，都有着提升传输&#x2F;储存效率的作用。而动态纹理常见于日常视频中，例如：流水、摇曳的树叶等，并且人眼确实对这些物体不敏感，所以期望能够在编码时忽略，解码时用某种方法将其恢复出来。 文章提出了一种用于监控视频编码的基于时空生成对抗网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一种针对动态纹理优化的视频编码方案">
+<meta property="og:url" content="https://sharp-rookie.github.io/2022/06/19/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91%E5%8A%A8%E6%80%81%E7%BA%B9%E7%90%86%E5%8E%8B%E7%BC%A9/index.html">
+<meta property="og:site_name" content="最忆是江南">
+<meta property="og:description" content="如果在视频编码前，把比较占用存储空间且对视觉效果影响不大的内容忽略掉，那么就可以大大提高视频的编码效率，无论是对用户观影体验，还是对分布式数据传输，亦或者仅仅在本地保存备份，都有着提升传输&#x2F;储存效率的作用。而动态纹理常见于日常视频中，例如：流水、摇曳的树叶等，并且人眼确实对这些物体不敏感，所以期望能够在编码时忽略，解码时用某种方法将其恢复出来。 文章提出了一种用于监控视频编码的基于时空生成对抗网络">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202206191131186.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202206191131186.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202206191210290.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202206191227918.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202206191254403.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202206191303262.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202206191314759.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202206191332964.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202206191309971.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202206191407556.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202206191426224.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202206191430496.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202206191556429.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202206191537633.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202206191546406.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202206191552423.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202206191755997.png">
+<meta property="article:published_time" content="2022-06-19T10:15:29.765Z">
+<meta property="article:modified_time" content="2022-06-19T10:15:06.658Z">
+<meta property="article:author" content="Lrk612">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="Deep Learning">
+<meta property="article:tag" content="Intelligent Vedio Coding">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202206191131186.png">
+
+<link rel="canonical" href="https://sharp-rookie.github.io/2022/06/19/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91%E5%8A%A8%E6%80%81%E7%BA%B9%E7%90%86%E5%8E%8B%E7%BC%A9/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>一种针对动态纹理优化的视频编码方案 | 最忆是江南</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+        <a target="_blank" rel="noopener" href="https://github.com/Sharp-rookie" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">最忆是江南</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Love actually is all around</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th-list fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-papers">
+
+    <a href="/papers/" rel="section"><i class="fa fa-book fa-fw"></i>论文阅读</a>
+
+  </li>
+        <li class="menu-item menu-item-friendlink">
+
+    <a href="/friendlink/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="fa fa-download fa-fw"></i>资源</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://sharp-rookie.github.io/2022/06/19/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91%E5%8A%A8%E6%80%81%E7%BA%B9%E7%90%86%E5%8E%8B%E7%BC%A9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Lrk612">
+      <meta itemprop="description" content="Lrk's blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="最忆是江南">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          一种针对动态纹理优化的视频编码方案
+        </h1>
+
+        <div class="post-meta">
+         
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-06-19 18:15:29" itemprop="dateCreated datePublished" datetime="2022-06-19T18:15:29+08:00">2022-06-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">论文阅读</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2022/06/19/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91%E5%8A%A8%E6%80%81%E7%BA%B9%E7%90%86%E5%8E%8B%E7%BC%A9/" class="post-meta-item leancloud_visitors" data-flag-title="一种针对动态纹理优化的视频编码方案" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/06/19/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91%E5%8A%A8%E6%80%81%E7%BA%B9%E7%90%86%E5%8E%8B%E7%BC%A9/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/06/19/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91%E5%8A%A8%E6%80%81%E7%BA%B9%E7%90%86%E5%8E%8B%E7%BC%A9/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>如果在视频编码前，把比较占用存储空间且对视觉效果影响不大的内容忽略掉，那么就可以大大提高视频的编码效率，无论是对用户观影体验，还是对分布式数据传输，亦或者仅仅在本地保存备份，都有着提升传输/储存效率的作用。而动态纹理常见于日常视频中，例如：流水、摇曳的树叶等，并且人眼确实对这些物体不敏感，所以期望能够在编码时忽略，解码时用某种方法将其恢复出来。</p>
+<p>文章提出了一种用于监控视频编码的基于时空生成对抗网络（GAN）的动态纹理合成方法。<strong>编码器端</strong>检测并移除与机器视觉无关的动态纹理内容，<strong>解码器端</strong>使用 GAN 生成动态纹理内容，以尽量保证人眼观察视频的质量。</p>
+<p><strong>具体工作：</strong></p>
+<ul>
+<li><p>设计一个 GAN 网络，利用空间和时间邻域间的相关性合成动态纹理</p>
+</li>
+<li><p>在此基础上，提出一种具有动态纹理检测/合成方法的监控视频编码方案</p>
+</li>
+<li><p>构建了一个高质量的动态纹理数据集，我们通过专注于监控场景收集了一个超越现有视频编码测试数据集的动态纹理测试数据集</p>
+</li>
+<li><p>在高效视频编码 (HEVC) 参考软件上部署，并在低延迟 B 和低延迟 P 的配置下分别实现了 7.4% 和 7.6% 的比特率节省，且告感知效果相似</p>
+</li>
+</ul>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/202206191131186.png" alt="image-20220619113145036" style="zoom: 43%;" />
+
+<p><strong>原文</strong></p>
+<p><a target="_blank" rel="noopener" href="https://lrk612.com/resources/Spatiotemporal%20Generative%20Adversarial%20Network-Based%20Dynamic%20Texture%20Synthesis%20for%20Surveillance%20Video%20Coding.pdf">Spatiotemporal Generative Adversarial Network-Based Dynamic Texture Synthesis for Surveillance Video Coding</a></p>
+<p>&nbsp;</p>
+<h1 id="文章概述"><a href="#文章概述" class="headerlink" title="文章概述"></a>文章概述</h1><p>随着监控摄像头的部署和视频分辨率的提高，越来越多的监控视频需要传输和存储，这也导致高额开销。而在视频分割[9]和视频检索[10]等领域，动态纹理有着相当重要性，因此备受关注。</p>
+<p><strong>相关工作</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>流行的视频压缩标准</td>
+<td>H.264/AVC [1] 和 H.265/HEVC</td>
+<td>面向通用场景，对监控视频无针对性，无效率优势</td>
+</tr>
+<tr>
+<td>传统的监控视频编码框架</td>
+<td>[3]-[5]、[6]</td>
+<td>只针对摄像机捕获的监控视频中的背景</td>
+</tr>
+<tr>
+<td>一种监控视频编码技术</td>
+<td>[7]、[8]</td>
+<td>消除多摄像机前景对象重复导致的冗余</td>
+</tr>
+<tr>
+<td>传统视频编码方案和动态纹理分析合成的结合</td>
+<td>[12]-[18]</td>
+<td>只针对原始信号和重建信号之间的像素保真度，而不关注肉眼感知<br>只针对通用场景而非监控视频</td>
+</tr>
+<tr>
+<td>基于卷积神经网络的动态纹理合成技术</td>
+<td>[20]</td>
+<td>缺乏精细的细节，即使在低分辨率下也显得不切实际</td>
+</tr>
+</tbody></table>
+<p><strong>面对困难：</strong></p>
+<p>监控场景中往往包含多种动态纹理内容，例如树叶和水。动态纹理包含丰富的高频细节和随机运动，即使是由最先进的编解码器（H.265/HEVC）处理，也会存储时占用大量比特。HEVC 中，动态纹理区域通常被划分为小的编码单元以适应局部特征，通常会导致大量的开销比特。此外，由于帧内/帧间预测不准确，动态纹理内容的残差通常具有大量高频分量，传统编解码器中的熵编码难以有效编码这些高频分量。</p>
+<p>所以动态纹理需要从新的角度进行针对性处理。</p>
+<p><strong>本文基本思路的产生：</strong></p>
+<p>虽然很多监控工作由机器视觉完成，但在某些情况下需要人工复查。因此解码后的视频质量应同时满足机器视觉和人类视觉的要求（混合人机监控）。考虑到人眼对图像高频部分不敏感，这包括动态纹理。因此，监控视频编码方案的目的是，在不降低动态纹理感知质量的前提下，实现更低比特率的输入视频信号。</p>
+<p>受到近年来深度神经网络在各种图像/视频处理任务中的优异表现和生成对抗网络在不适定问题（语音合成、图像超分辨率等）的启发，本文提出了一种用于动态纹理合成的 GAN 网络。就人类感知而言，现有研究已证明 GAN 优于传统方法。</p>
+<p>文章作者之前提出过一种基于动态纹理背景检测的监控视频压缩方法，主要是在编码器端实现了一种动态纹理检测算法。在本文中有两个改进：</p>
+<ul>
+<li>改进了动态纹理检测算法，能检测每一帧中的动态纹理内容</li>
+<li>在解码端提出一种时空 GAN 网络，能合成动态纹理（首创性）</li>
+</ul>
+<p><strong>编码方案概述：</strong></p>
+<p>首先，使用改进的检测算法，判定编码树单元区域是否为动态纹理；</p>
+<p>如果是，则该区域不用传统技术编码，而是用所提出的神经网络提取动态纹理的空间和时间信息；</p>
+<p>后续交由解码器中基于 GAN 的时空合成器来生成具有高视觉质量的相应 CTU 区域；</p>
+<p>此框架能无缝集成到当前的标准化视频编解码器中，例如 H.265/HEVC。</p>
+<p><strong>本文所作工作：</strong></p>
+<ul>
+<li>设计了一个用于动态纹理合成的时空 GAN，其生成器和判别器都利用了输入的时空信息，从而获得更高的感知质量</li>
+<li>对标 HEVC，将基于GAN 的动态纹理合成器集成到视频编码方案中，通过对动态纹理的处理实现了更优的压缩效率</li>
+<li>改进了之前论文中，编码器的动态纹理检测算法</li>
+<li>使用未压缩的视频序列构建了一个动态纹理的训练/验证数据集，还收集了一个监控视频测试数据集，用于评估基于动态纹理合成的视频编码的性能</li>
+</ul>
+<p><strong>实验比较：</strong></p>
+<p>本文的编码方案已部署在 H.265/HEVC 上，并进行了大量实验来测试其方法的编码效率。此外还通过主观观察来评估合成纹理的质量。</p>
+<p>结果表明，本文编码方案在监控视频上比最先进的编解码器 HEVC 有着定量和定性的改进，说明基于 GAN 的动态纹理合成为提高监控视频编码的压缩效率提供了一种替代方法。</p>
+<p>&nbsp;</p>
+<h1 id="相关工作"><a href="#相关工作" class="headerlink" title="相关工作"></a>相关工作</h1><p>动态纹理内容在由 H.265/HEVC 等传统视频编解码器处理时通常会消耗大量比特。为降低比特成本，动态纹理分析/合成技术已成为一个活跃的研究领域，下面从两个方面回顾以往的相关工作：</p>
+<p><strong>动态纹理合成</strong></p>
+<table>
+<thead>
+<tr>
+<th>参数方法（基于纹理模型）</th>
+<th>非参数方法（基于数据集）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>[11] 基于高斯-马尔可夫模型的具有代表性的动态纹理模型</td>
+<td>[27] 基于马尔可夫随机场 (MRF) ，通过确定性搜索过程合成纹理</td>
+</tr>
+<tr>
+<td>[25] 用高阶奇异值分解分析进行动态纹理合成</td>
+<td>[28] 用图形切割将补丁从样本转换和缝合到输出</td>
+</tr>
+<tr>
+<td>[26] 提出了一种多张量秩-R分解方法</td>
+<td>[29] 用多分辨率分析树合并方法进行2D纹理的合成，并推广到动态纹理</td>
+</tr>
+<tr>
+<td></td>
+<td>[20] 用卷积神经网络合成动态纹理</td>
+</tr>
+<tr>
+<td></td>
+<td>[30] 用 VGG-19 网络来捕获几个动态纹理帧的时空相关性</td>
+</tr>
+<tr>
+<td></td>
+<td>[31] 用双流卷积网络生成动态纹理</td>
+</tr>
+</tbody></table>
+<p><strong>基于纹理合成的视频编码</strong></p>
+<table>
+<thead>
+<tr>
+<th>失真标准：信号保真度（最小化速率和均方误差 ）</th>
+<th>失真标准：感知质量</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>用存储在解码图像缓冲区（DPB）中的重建帧来合成基于 ARMA 模型的动态纹理；然后将合成的纹理内容用于闭环混合视频编码系统中的动态纹理预测（DTP）</td>
+<td>[16] 一种基于内容的闭环编码方案</td>
+</tr>
+<tr>
+<td>用合成帧作为虚拟参考帧来提高帧间预测效率</td>
+<td>[17] 将图片区域分为纹理区域和结构区域，在编码器处选择性地跳过并在解码器处使用基于补丁的纹理合成方法进行重建</td>
+</tr>
+<tr>
+<td>在解码器处使用合成帧来隐藏帧丢失错误</td>
+<td>[15] 允许根据局部纹理特征使用多种合成算法</td>
+</tr>
+<tr>
+<td></td>
+<td>[35] 通过一组一阶运动特征来建模动态纹理，用运动共生矩阵来合成纹理</td>
+</tr>
+</tbody></table>
+<p>&nbsp;</p>
+<h1 id="视频编码方案"><a href="#视频编码方案" class="headerlink" title="视频编码方案"></a>视频编码方案</h1><p>文章给出的视频编码方案在传统编码方案基础上增加了对动态纹理的特殊处理。首先在编码器处进行检测，非纹理区域使用传统编码，纹理区域不做编码处理，只做标记。然后在解码器处，非纹理区域依然传统解码，纹理区域则用GAN基于时空信息进行生成：</p>
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/202206191131186.png" alt="image-20220619113145036"></p>
+<p><strong>动态纹理检测模块</strong>需要快速定位纹理区域，并避免出错。本文使用的是作者之前工作中提出的 histogram of motion direction (HMD) 算法，其基本假设是：动态纹理的运动模式是随机的，运动向量符合均匀分布，可以使用运动矢量方向的直方图捕捉这些运动特征。对每个CTU使用检测算法，动态纹理的CTU区域标记为1，非纹理标记为0。（详细原理见下文）</p>
+<p><strong>动态纹理生成模块</strong>需要在给定上下文的时空信息情况下，优化生成动态纹理的感知质量。动态纹理通常具有时空运动模式。因此，难点在于如何保持空间平滑度以防止块的假影，并保持时间一致性以防止相邻帧之间的突变。具体而言，在生成一个动态纹理区域时，会把前一帧和后一帧的相同区域（时间信息）、同一帧的周围一圈相邻区域（空间信息）都输入给生成器，以充分利用时空信息。在之前的工作中作者为例避免误差累积，只对奇数帧进行生成，偶数帧使用传统解码，但是本文中的处理是采用交错模式：如果要合成一个 CTU，则其在前一帧和下一帧中同位置的 CTU 则不合成；同时，其当前帧中上下左右的 CTU 也不做合成。</p>
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/202206191210290.png" alt="image-20220619121028233"></p>
+<p>&nbsp;</p>
+<h1 id="动态纹理检测算法"><a href="#动态纹理检测算法" class="headerlink" title="动态纹理检测算法"></a>动态纹理检测算法</h1><h2 id="step1：检测前-背景"><a href="#step1：检测前-背景" class="headerlink" title="step1：检测前/背景"></a>step1：检测前/背景</h2><p>目的是减少前景（行人、车等）和静态背景（建筑、道路等）的影响。这里使用的方法是，利用当前帧和前一帧、当前帧和最后第4帧之间的差异来粗略检测前景和背景。由此，可以得到每一帧中每个CTU的一个标签：前景、背景、动态纹理候选区域，可以减少后续的计算开销。</p>
+<h2 id="step2：检测动态纹理"><a href="#step2：检测动态纹理" class="headerlink" title="step2：检测动态纹理"></a>step2：检测动态纹理</h2><p>动态纹理区域在时空域上有局部随机运动，运动的幅度和方向比起前景区域中的运动物体更加具有多样性。前景区域的局部运动物体的特征通常与时空域中的相邻区域有着相同的模式。</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/202206191227918.png" alt="image-20220619122701811" style="zoom: 40%;" />
+
+<p>作者之前的工作中通过运动方向直方图来捕获物体的运动特征：</p>
+<ol>
+<li><p>每个动态纹理 CTU 区域划分成以不重叠的 2 × 2 粒度单元为单位</p>
+</li>
+<li><p>对每个单元进行运动评估，从而使每个CTU得到一个 2 × 2 粒度的运动场（比逐像素运动场、密集光流有着更优的噪声鲁棒性）</p>
+</li>
+<li><p>每个候选动态纹理CTU划分成不重叠的 8×8 个块，每个块有16 个 2 × 2 单元</p>
+</li>
+<li><p>统计每个块内每个单元的运动方向，方向从0~360°均匀量化为8个值，对应直方图中8列，从而得到每个候选 CTU 的运动矢量方向直方图（不统计运动幅度是因为，幅度波动较大，检测难度高）</p>
+</li>
+<li><p>计算运行方向分布直方图的稀疏度，动态纹理方向呈均匀分布，CTU 的直方图稀疏度低于阈值时即可认为是动态纹理区域：</p>
+<p> <img src="https://my-picture-1311448338.file.myqcloud.com/img/202206191254403.png" alt="image-20220619125400360"></p>
+<p> 其中，n 是运动向量的数量，K 是8维向量，即表示8个量化方向的运动向量的数量</p>
+</li>
+<li><p>文章注意到，动态纹理的时空邻域大概率也是动态纹理，因此针对此做了更进一步细化</p>
+</li>
+</ol>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/202206191303262.png" alt="image-20220619130259892" style="zoom: 33%;" />
+
+<p>&nbsp;</p>
+<h1 id="动态纹理的合成：时空-GAN"><a href="#动态纹理的合成：时空-GAN" class="headerlink" title="动态纹理的合成：时空 GAN"></a>动态纹理的合成：时空 GAN</h1><p>由于现有工作使用卷积网路的生成图片不够真实，文章引入 GAN 的架构，同时还使用 3D 卷积层和时空鉴别器来探索时空信息。具体而言是用掩膜来提取时空信息。时域掩膜如下图(a)左所示，用于从前后帧中提取相同CTU区域（128×128×3），空域掩膜如下图(a)右所示，用于提取当前帧该CTU的邻域（128×128×3）。而生成器的目标就是通过训练，拟合出实际CTU基于时空信息的分布情况，从而利用时空信息得到实际CTU区域（64×64×3）。</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/202206191314759.png" alt="image-20220619131437682" style="zoom: 60%;" />
+
+<p>GAN 的训练是通过最小化对抗损失，从而生成以假乱真的图像，目标函数为：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/202206191332964.png" alt="image-20220619133256914" style="zoom:67%;" />
+
+<center>其中，x 为真实图像、z为随机噪声</center>
+
+<p>本文使用的 GAN结构如下，包含一个 Generator 和两个 Discriminator：</p>
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/202206191309971.png" alt="image-20220619130916809"></p>
+<h2 id="Generator"><a href="#Generator" class="headerlink" title="Generator"></a>Generator</h2><h3 id="时空特征提取"><a href="#时空特征提取" class="headerlink" title="时空特征提取"></a>时空特征提取</h3><p>与传统 GAN 不同的是即，这里输入给 Generator 的不是随机噪声，而是前一帧和后一阵同CTU区域的平均值，即把时空信息馈入 Generator。由此，训练的 GAN 将拟合出在指定时空信息下的真实图像的条件分布。==//TODO：这里输入的不包含空间信息？同一帧的邻域没有输入吗？==</p>
+<h3 id="全局-局部特征融合"><a href="#全局-局部特征融合" class="headerlink" title="全局/局部特征融合"></a>全局/局部特征融合</h3><p>动态纹理的合成依赖于局部信息和全局特征。因此，文章用两个不对称分支处理分别提取全局和局部的时空特征。全局特征作为局部特征的先验，指示纹理类别和结构等全局信息；而局部特征提供隐藏空间中的细节信息，或者例如动态纹理的纹理边缘。</p>
+<h3 id="全局特征"><a href="#全局特征" class="headerlink" title="全局特征"></a>全局特征</h3><p>在全局分支中，时空特征首先进行四个卷积层的堆栈处理。这四个卷积层逐渐减少空间维度，从而特征降低特征维度和计算成本。然后经过一个全连接层，该层具有覆盖整个低级特征的感受野。最后得到了动态纹理的 4096 维向量表示，并将其重塑为 64 × 64 的特征矩阵。</p>
+<h3 id="局部特征"><a href="#局部特征" class="headerlink" title="局部特征"></a>局部特征</h3><p>本地分支与全局分支共享相同的输入，由7个步长 s = 1 的卷积层组成。在这个分支中保持特征的空间分辨率和通道不变，但更深的层具有更复杂的非线性和更强的表达能力，可以探索更复杂的输入信号模式。同时还在每两层引入一个跨层连接，以加快收敛速度并避免梯度爆炸。</p>
+<h3 id="特征融合"><a href="#特征融合" class="headerlink" title="特征融合"></a>特征融合</h3><p>全局和局部两个分支分别生成大小为 64×64×1 的全局特征矩阵和大小为 64×64×9 的局部特征Tensor。后面引入融合层来结合这两种特征，然后进行 ReLU 激活：</p>
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/202206191407556.png" alt="image-20220619140752511"></p>
+<p>输出的形状自然就是：64×64×10，最后经过两层卷积得到输出图像：64×64×3</p>
+<h2 id="Discriminator"><a href="#Discriminator" class="headerlink" title="Discriminator"></a>Discriminator</h2><p>Generator 生成相应的动态纹理像素中会存在一些不自然的伪影。在 naive GAN 中，判别器只有两种不同的输入：真实图像和合成图像，即只通过空间信息来区分真假图像，不能生成图像具有时间连贯性。因此，文章设计了一个改进的时空 Discriminator 来分别区分空间和时间信息。文章使用了两个Discriminator：空间鉴别器 和 时间鉴别器。从而要求生成的纹理在空间上更真实，在时间上更一致。</p>
+<p><strong>空间鉴别器 Ds</strong>与一般的 Discriminator 相同，以真实图像和合成图像作为输入，用于指导 Generator 产生更视觉逼真的动态纹理，但是却不能保证时间一致性。所以可能存在闪烁和块状伪影。</p>
+<p><strong>时间鉴频器 Dt</strong>用于保证时间一致性。为了捕捉时间特征，网络必须对时间信息进行处理。这里没有直接给时间鉴别器输入相邻帧的图像，而是输入残差 Rreal 和 Rgen：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/202206191426224.png" alt="image-20220619142653176" style="zoom:90%;" />
+
+<center>Yt-1 是上一帧、Yt+1是下一帧 (64×64×3)，G(X|c)是条件分布在x处的输出，即生成图像</center>
+
+<p>输入残差而不是真实图像可以有效地去除相邻帧内的冗余，从而增强探索时间信息的能力。</p>
+<p>由此，GAN的训练目标函数为：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/202206191430496.png" alt="image-20220619143033447" style="zoom: 90%;" />
+
+
+
+<h2 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h2><p>loss 由3部分加权得到：</p>
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/202206191556429.png" alt="image-20220619155636371"></p>
+<p>其中，对抗性损失的权重不宜过大，会导致训练不稳定 ==//TODO：为什么？==</p>
+<h3 id="内容损失"><a href="#内容损失" class="headerlink" title="内容损失"></a>内容损失</h3><p><img src="https://my-picture-1311448338.file.myqcloud.com/img/202206191537633.png" alt="image-20220619153750589"></p>
+<p>真实图像和生成图像之间的像素级L1损失，目的是捕获整体信息。</p>
+<p>文章使用 L1 距离而不是 L2，是因为 L1 有更高的峰值信噪比 (PSNR)。虽然这种简单的损失实现了高 PSNR，但但是只有L1损失会导致生成图像缺乏高频细节，纹理过度光滑。</p>
+<h3 id="梯度损失"><a href="#梯度损失" class="headerlink" title="梯度损失"></a>梯度损失</h3><p>引用GDL，避免缺乏高频细节导致边缘处模糊：</p>
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/202206191546406.png" alt="image-20220619154609367" style="zoom:90%;" />
+
+<center>i,j 表示第i行第j列</center>
+
+<p>相当于对梯度做L2损失，梯度信息包含丰富的高频信息，即边缘细节，因此可以降低细节处太过光滑的影响。</p>
+<h3 id="对抗损失"><a href="#对抗损失" class="headerlink" title="对抗损失"></a>对抗损失</h3><p>传统 GAN 的 loss，用于保证生成图像足够逼真：</p>
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/202206191552423.png" alt="image-20220619155241374"></p>
+<p>但是文章中显然是改造过的，时域、空域都做 loss。但是这里少了个1，文章解释是为了更好的梯度表现 ==//TODO：为什么少了1就有更好的梯度表现？==</p>
+<p>&nbsp;</p>
+<h1 id="测试效果"><a href="#测试效果" class="headerlink" title="测试效果"></a>测试效果</h1><p>文章进行了非常详细的测试实验，就码率、感知质量方面和现有方案进行了详细的对比。</p>
+<p>值得一提的是，在训练时使用的是以树叶为主的动态纹理数据集，但是能够在以流水为主的动态纹理测试集上跑出很好的效果，证明模型泛化能力比较强：</p>
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/202206191755997.png" alt="image-20220619175503325"></p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Lrk612
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://sharp-rookie.github.io/2022/06/19/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91%E5%8A%A8%E6%80%81%E7%BA%B9%E7%90%86%E5%8E%8B%E7%BC%A9/" title="一种针对动态纹理优化的视频编码方案">https://sharp-rookie.github.io/2022/06/19/【论文】动态纹理压缩/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/AI/" rel="tag"># AI</a>
+              <a href="/tags/Deep-Learning/" rel="tag"># Deep Learning</a>
+              <a href="/tags/Intelligent-Vedio-Coding/" rel="tag"># Intelligent Vedio Coding</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/06/02/%E3%80%90%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86%E3%80%91FSK%E5%8F%91%E9%80%81%E6%8E%A5%E6%94%B6%E5%AE%9E%E9%AA%8C/" rel="prev" title="通信原理实验：FSK调制发送与接收">
+      <i class="fa fa-chevron-left"></i> 通信原理实验：FSK调制发送与接收
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E6%A6%82%E8%BF%B0"><span class="nav-text">文章概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C"><span class="nav-text">相关工作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%86%E9%A2%91%E7%BC%96%E7%A0%81%E6%96%B9%E6%A1%88"><span class="nav-text">视频编码方案</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E7%BA%B9%E7%90%86%E6%A3%80%E6%B5%8B%E7%AE%97%E6%B3%95"><span class="nav-text">动态纹理检测算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#step1%EF%BC%9A%E6%A3%80%E6%B5%8B%E5%89%8D-%E8%83%8C%E6%99%AF"><span class="nav-text">step1：检测前&#x2F;背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#step2%EF%BC%9A%E6%A3%80%E6%B5%8B%E5%8A%A8%E6%80%81%E7%BA%B9%E7%90%86"><span class="nav-text">step2：检测动态纹理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E7%BA%B9%E7%90%86%E7%9A%84%E5%90%88%E6%88%90%EF%BC%9A%E6%97%B6%E7%A9%BA-GAN"><span class="nav-text">动态纹理的合成：时空 GAN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Generator"><span class="nav-text">Generator</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E7%A9%BA%E7%89%B9%E5%BE%81%E6%8F%90%E5%8F%96"><span class="nav-text">时空特征提取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%A8%E5%B1%80-%E5%B1%80%E9%83%A8%E7%89%B9%E5%BE%81%E8%9E%8D%E5%90%88"><span class="nav-text">全局&#x2F;局部特征融合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%A8%E5%B1%80%E7%89%B9%E5%BE%81"><span class="nav-text">全局特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B1%80%E9%83%A8%E7%89%B9%E5%BE%81"><span class="nav-text">局部特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E5%BE%81%E8%9E%8D%E5%90%88"><span class="nav-text">特征融合</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Discriminator"><span class="nav-text">Discriminator</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="nav-text">损失函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9%E6%8D%9F%E5%A4%B1"><span class="nav-text">内容损失</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A2%AF%E5%BA%A6%E6%8D%9F%E5%A4%B1"><span class="nav-text">梯度损失</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E6%8A%97%E6%8D%9F%E5%A4%B1"><span class="nav-text">对抗损失</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E6%95%88%E6%9E%9C"><span class="nav-text">测试效果</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Lrk612"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Lrk612</p>
+  <div class="site-description" itemprop="description">Lrk's blog</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.google.com/" title="https:&#x2F;&#x2F;www.google.com" rel="noopener" target="_blank">Google</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://arxiv.org/" title="https:&#x2F;&#x2F;arxiv.org&#x2F;" rel="noopener" target="_blank">arXiv</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ieeexplore.ieee.org/Xplore/home.jsp" title="https:&#x2F;&#x2F;ieeexplore.ieee.org&#x2F;Xplore&#x2F;home.jsp" rel="noopener" target="_blank">IEEE Xplore</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        <!-- 访问量 -->
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客数<span id="busuanzi_value_site_uv"></span>人</span>
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+$(document).ready(function() {
+
+    var int = setInterval(fixCount, 50);  // 50ms周期检测函数
+    var countOffset = 20000;  // 初始化首次数据
+
+    function fixCount() {            
+       if (document.getElementById("busuanzi_container_site_pv").style.display != "none")
+        {
+            $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + countOffset); 
+            clearInterval(int);
+        }                  
+        if ($("#busuanzi_container_site_pv").css("display") != "none")
+        {
+            $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + countOffset); // 加上初始数据 
+            clearInterval(int); // 停止检测
+        }  
+    }
+       	
+});
+</script> 
+
+
+<!-- 版权 -->
+<div class="copyright">
+  
+  &copy; 2021-12-1 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lrk612</span>
+</div>
+
+<!-- ICP备案 -->
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">ICP备案 </a>
+      <img src="https://my-picture-1311448338.file.myqcloud.com/img/20211209170739.png" style="display: inline-block;"><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=2021035798" rel="noopener" target="_blank">豫ICP备2021035798号 </a>
+  </div>
+
+<!-- 不知道是什么 -->
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'fH6OdGBcCG8D6jC8NeeJlX9b-gzGzoHsz',
+      appKey     : '1UoIb6vszMw6wl0n7kreb4Xz',
+      placeholder: "Just go go ^_^",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+    var infoEle = document.querySelector('#comments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0){
+      infoEle.childNodes.forEach(function(item) {
+        item.parentNode.removeChild(item);
+      });
+    }
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
