@@ -57,7 +57,7 @@
 <meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202206191552423.png">
 <meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202206191755997.png">
 <meta property="article:published_time" content="2022-06-19T10:15:29.765Z">
-<meta property="article:modified_time" content="2022-06-19T11:38:22.526Z">
+<meta property="article:modified_time" content="2022-06-20T00:50:23.766Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="AI">
 <meta property="article:tag" content="Deep Learning">
@@ -340,9 +340,9 @@
 <table>
 <thead>
 <tr>
-<th></th>
-<th></th>
-<th></th>
+<th>paper</th>
+<th>reference</th>
+<th>work</th>
 </tr>
 </thead>
 <tbody><tr>
@@ -505,7 +505,7 @@
 <p>&emsp;&emsp;输出的形状自然就是：64×64×10，最后经过两层卷积得到输出图像：64×64×3</p>
 <h2 id="Discriminator"><a href="#Discriminator" class="headerlink" title="Discriminator"></a>Discriminator</h2><p>&emsp;&emsp;Generator 生成相应的动态纹理像素中会存在一些不自然的伪影。在 naive GAN 中，判别器只有两种不同的输入：真实图像和合成图像，即只通过空间信息来区分真假图像，不能生成图像具有时间连贯性。因此，文章设计了一个改进的时空 Discriminator 来分别区分空间和时间信息。文章使用了两个Discriminator：空间鉴别器 和 时间鉴别器。从而要求生成的纹理在空间上更真实，在时间上更一致。</p>
 <p>&emsp;&emsp;<strong>空间鉴别器 Ds</strong>与一般的 Discriminator 相同，以真实图像和合成图像作为输入，用于指导 Generator 产生更视觉逼真的动态纹理，但是却不能保证时间一致性。所以可能存在闪烁和块状伪影。</p>
-<p><strong>&emsp;&emsp;时间鉴频器 Dt</strong>用于保证时间一致性。为了捕捉时间特征，网络必须对时间信息进行处理。这里没有直接给时间鉴别器输入相邻帧的图像，而是输入残差 Rreal 和 Rgen：</p>
+<p><strong>&emsp;&emsp;时间鉴别器 Dt</strong>用于保证时间一致性。为了捕捉时间特征，网络必须对时间信息进行处理。这里没有直接给时间鉴别器输入相邻帧的图像，而是输入残差 Rreal 和 Rgen：</p>
 <img src="https://my-picture-1311448338.file.myqcloud.com/img/202206191426224.png" alt="image-20220619142653176" style="zoom:90%;" />
 
 <center>Yt-1 是上一帧、Yt+1是下一帧 (64×64×3)，G(X|c)是条件分布在x处的输出，即生成图像</center>
@@ -531,7 +531,7 @@
 <p><img src="https://my-picture-1311448338.file.myqcloud.com/img/202206191552423.png" alt="image-20220619155241374"></p>
 <p>但是文章中显然是改造过的，时域、空域都做 loss。但是这里少了个1，文章解释是为了更好的梯度表现。</p>
 <p>&nbsp;</p>
-<h1 id="测试效果"><a href="#测试效果" class="headerlink" title="测试效果"></a>测试效果</h1><p>&emsp;&emsp;文章进行了非常详细的测试实验，就码率、感知质量方面和现有方案进行了详细的对比。</p>
+<h1 id="测试效果"><a href="#测试效果" class="headerlink" title="测试效果"></a>测试效果</h1><p>&emsp;&emsp;文章进行了非常详细的测试实验，就码率、感知质量方面和现有方案进行了详细的对比。针对损失函数、网络结构等，作者也专门做了消融实验，对比了不同方案的效果差异。</p>
 <p>&emsp;&emsp;值得一提的是，在训练时使用的是以树叶为主的动态纹理数据集，但是能够在以流水为主的动态纹理测试集上跑出很好的效果，证明模型泛化能力比较强：</p>
 <p><img src="https://my-picture-1311448338.file.myqcloud.com/img/202206191755997.png" alt="image-20220619175503325"></p>
 
