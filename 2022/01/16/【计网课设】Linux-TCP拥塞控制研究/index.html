@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.4.2">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -315,13 +315,12 @@
 
       
         <p>&emsp;&emsp;我们使用mininet平台作为网络拓扑仿真工具，选择TCP拥塞控制算法作为研究对象，以项目组工作技术背景：5G无线通信场景中的强化学习作为切入点，对 Linux 内核搭载的经典 TCP 拥塞控制算法：Reno、Vegas、Veno、BBR、CUBIC进行调研学习，最终决定对超参数依赖性较强的TCP_Veno算法进行强化学习调优。期间我们把算法直接集成到Linux内核的拥塞控制模块，克服了内核态进程内存空间与用户态Python程序交互的映射问题，并使用C语言构造Python模块提高算法效率。同时，我们的强化学习环境也集成到了OpenAI Gym中。</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220116104456.png" alt="image-20220116104456599" style="zoom: 80%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220116104456.png" alt="image-20220116104456599" style="zoom: 80%;" /></p>
 <span id="more"></span>
-
 <p>&nbsp;</p>
 <h2 id="Linux-TCP拥塞控制算法"><a href="#Linux-TCP拥塞控制算法" class="headerlink" title="Linux TCP拥塞控制算法"></a>Linux TCP拥塞控制算法</h2><h3 id="Linux如何实现TCP拥塞控制"><a href="#Linux如何实现TCP拥塞控制" class="headerlink" title="Linux如何实现TCP拥塞控制"></a>Linux如何实现TCP拥塞控制</h3><p>&emsp;&emsp;其实在Linux内核代码中，拥塞控制包括4个部分：<code>拥塞控制框架</code>、<code>框架与 TCP 其余部分的接口</code>、<code>恢复状态机</code>、<code>不同拥塞的细节控制算法</code>，我们调研的重点是<strong>拥塞控制框架</strong>和<strong>框架与 TCP 其余部分的接口</strong>。</p>
 <h4 id="TCP实现中的重要结构体-枚举类型"><a href="#TCP实现中的重要结构体-枚举类型" class="headerlink" title="TCP实现中的重要结构体/枚举类型"></a>TCP实现中的重要结构体/枚举类型</h4><h5 id="tcp-ca-state"><a href="#tcp-ca-state" class="headerlink" title="tcp_ca_state"></a>tcp_ca_state</h5><p>&emsp;&emsp;TCP 的拥塞控制实现中使用<strong>状态机</strong>来保持和在连接的不同状态之间切换，以用于恢复目的。这些不同的状态在 tcp.h 中的枚举类型中定义：</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -329,7 +328,8 @@
 <th>含义</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>Open</td>
 <td>代表TCP连接处于正常状态，没有可疑事件。此状态下接收到的数据包通过快速路径。</td>
 </tr>
@@ -349,15 +349,16 @@
 <td>Loss</td>
 <td>这种状态表明由于 RTO 超时或 SACK 拒绝，拥塞窗口减小</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>源码如下：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">tcp_ca_state</span> &#123;</span></span><br><span class="line">	TCP_CA_Open = <span class="number">0</span>,</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TCPF_CA_Open	(1&lt;&lt;TCP_CA_Open)</span></span><br><span class="line">	TCP_CA_Disorder = <span class="number">1</span>,</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TCPF_CA_Disorder (1&lt;&lt;TCP_CA_Disorder)</span></span><br><span class="line">	TCP_CA_CWR = <span class="number">2</span>,</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TCPF_CA_CWR	(1&lt;&lt;TCP_CA_CWR)</span></span><br><span class="line">	TCP_CA_Recovery = <span class="number">3</span>,</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TCPF_CA_Recovery (1&lt;&lt;TCP_CA_Recovery)</span></span><br><span class="line">	TCP_CA_Loss = <span class="number">4</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TCPF_CA_Loss	(1&lt;&lt;TCP_CA_Loss)</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
 <p>&nbsp;</p>
 <h5 id="tcp-congestion-ops"><a href="#tcp-congestion-ops" class="headerlink" title="tcp_congestion_ops"></a>tcp_congestion_ops</h5><p>&emsp;&emsp;定义了用于不同可插拔拥塞控制算法的 TCP 拥塞处理接口，是一个函数调用指针的结构。在 tcp.h 文件中定义如下：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">tcp_congestion_ops</span> &#123;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">list_head</span>	<span class="title">list</span>;</span></span><br><span class="line">	u32 key;</span><br><span class="line">	u32 flags;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* initialize private data (optional) */</span></span><br><span class="line">	<span class="keyword">void</span> (*init)(struct sock *sk);</span><br><span class="line">	<span class="comment">/* cleanup private data  (optional) */</span></span><br><span class="line">	<span class="keyword">void</span> (*release)(struct sock *sk);</span><br><span class="line">	<span class="comment">/* return slow start threshold (required) */</span></span><br><span class="line">	u32 (*ssthresh)(struct sock *sk);</span><br><span class="line">	<span class="comment">/* do new cwnd calculation (required) */</span></span><br><span class="line">	<span class="keyword">void</span> (*cong_avoid)(struct sock *sk, u32 ack, u32 acked);</span><br><span class="line">	<span class="comment">/* call before changing ca_state (optional) */</span></span><br><span class="line">	<span class="keyword">void</span> (*set_state)(struct sock *sk, u8 new_state);</span><br><span class="line">	<span class="comment">/* call when cwnd event occurs (optional) */</span></span><br><span class="line">	<span class="keyword">void</span> (*cwnd_event)(struct sock *sk, <span class="keyword">enum</span> tcp_ca_event ev);</span><br><span class="line">	<span class="comment">/* call when ack arrives (optional) */</span></span><br><span class="line">	<span class="keyword">void</span> (*in_ack_event)(struct sock *sk, u32 flags);</span><br><span class="line">	<span class="comment">/* new value of cwnd after loss (required) */</span></span><br><span class="line">	u32  (*undo_cwnd)(struct sock *sk);</span><br><span class="line">	<span class="comment">/* hook for packet ack accounting (optional) */</span></span><br><span class="line">	<span class="keyword">void</span> (*pkts_acked)(struct sock *sk, <span class="keyword">const</span> struct ack_sample *sample);</span><br><span class="line">	<span class="comment">/* override sysctl_tcp_min_tso_segs */</span></span><br><span class="line">	u32 (*min_tso_segs)(struct sock *sk);</span><br><span class="line">	<span class="comment">/* returns the multiplier used in tcp_sndbuf_expand (optional) */</span></span><br><span class="line">	u32 (*sndbuf_expand)(struct sock *sk);</span><br><span class="line">	<span class="comment">/* call when packets are delivered to update cwnd and pacing rate,</span></span><br><span class="line"><span class="comment">	 * after all the ca_state processing. (optional)</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="keyword">void</span> (*cong_control)(struct sock *sk, <span class="keyword">const</span> struct rate_sample *rs);</span><br><span class="line">	<span class="comment">/* get info for inet_diag (optional) */</span></span><br><span class="line">	<span class="keyword">size_t</span> (*get_info)(struct sock *sk, u32 ext, <span class="keyword">int</span> *attr,</span><br><span class="line">			   <span class="keyword">union</span> tcp_cc_info *info);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">char</span> 		name[TCP_CA_NAME_MAX];</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">module</span> 	*<span class="title">owner</span>;</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
 <p>其中一些重要的函数说明如下：</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -365,7 +366,8 @@
 <th>说明</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>init()</td>
 <td>在收到第一个确认(ACK)之后和第一次调用拥塞控制算法之前调用</td>
 </tr>
@@ -381,9 +383,12 @@
 <td>undo_cwnd()</td>
 <td>在检测到错误的丢失检测（由于错误的超时或数据包重新排序）时，返回流的拥塞窗口大小</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>&nbsp;</p>
 <h4 id="内核中-TCP-代码的主要文件"><a href="#内核中-TCP-代码的主要文件" class="headerlink" title="内核中 TCP 代码的主要文件"></a>内核中 TCP 代码的主要文件</h4><p>&emsp;&emsp;Linux Kernel中有关TCP的代码基本上都在<code>net/ipv4/</code>目录下，主要包括：</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -391,7 +396,8 @@
 <th>内容</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>tcp.h</td>
 <td>包含TCP相关结构体的声明，在include/net/下</td>
 </tr>
@@ -423,16 +429,17 @@
 <td>tcp_[name of algorithm].c</td>
 <td>不同TCP拥塞控制算法文件，例如：tcp_vegas.c、tcp_cubic.c等</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>&nbsp;</p>
 <h4 id="TCP拥塞控制算法-注册-初始化-传参"><a href="#TCP拥塞控制算法-注册-初始化-传参" class="headerlink" title="TCP拥塞控制算法 注册-初始化-传参"></a>TCP拥塞控制算法 注册-初始化-传参</h4><h5 id="注册"><a href="#注册" class="headerlink" title="注册"></a>注册</h5><p>实现的算法可以通过实例化该结构体、调用注册函数实现算法的注册（例：bbr）</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">struct</span> <span class="title">tcp_congestion_ops</span> <span class="title">tcp_bbr_cong_ops</span> __<span class="title">read_mostly</span> =</span> &#123;</span><br><span class="line">	.flags		= TCP_CONG_NON_RESTRICTED,</span><br><span class="line">	.name		= <span class="string">&quot;bbr&quot;</span>,</span><br><span class="line">	.owner		= THIS_MODULE,</span><br><span class="line">	.init		= bbr_init,</span><br><span class="line">	.cong_control	= bbr_main,</span><br><span class="line">	.sndbuf_expand	= bbr_sndbuf_expand,</span><br><span class="line">	.undo_cwnd	= bbr_undo_cwnd,</span><br><span class="line">	.cwnd_event	= bbr_cwnd_event,</span><br><span class="line">	.ssthresh	= bbr_ssthresh,</span><br><span class="line">	.min_tso_segs	= bbr_min_tso_segs,</span><br><span class="line">	.get_info	= bbr_get_info,</span><br><span class="line">	.set_state	= bbr_set_state,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> __init <span class="title">bbr_register</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	BUILD_BUG_ON(<span class="keyword">sizeof</span>(struct bbr) &gt; ICSK_CA_PRIV_SIZE);</span><br><span class="line">	<span class="keyword">return</span> tcp_register_congestion_control(&amp;tcp_bbr_cong_ops);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <h5 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h5><ul>
 <li><p>算法的参数通常是定义在一个结构体里（例：cubic）</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* BIC TCP Parameters */</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">bictcp</span> &#123;</span></span><br><span class="line">	u32	cnt;		<span class="comment">/* increase cwnd by 1 after ACKs */</span></span><br><span class="line">	u32	last_max_cwnd;	<span class="comment">/* last maximum snd_cwnd */</span></span><br><span class="line">	u32	last_cwnd;	<span class="comment">/* the last snd_cwnd */</span></span><br><span class="line">	u32	last_time;	<span class="comment">/* time when updated last_cwnd */</span></span><br><span class="line">	u32	bic_origin_point;<span class="comment">/* origin point of bic function */</span></span><br><span class="line">	u32	bic_K;		<span class="comment">/* time to origin point</span></span><br><span class="line"><span class="comment">				   from the beginning of the current epoch */</span></span><br><span class="line">	u32	delay_min;	<span class="comment">/* min delay (msec &lt;&lt; 3) */</span></span><br><span class="line">	u32	epoch_start;	<span class="comment">/* beginning of an epoch */</span></span><br><span class="line">	u32	ack_cnt;	<span class="comment">/* number of acks */</span></span><br><span class="line">	u32	tcp_cwnd;	<span class="comment">/* estimated tcp cwnd */</span></span><br><span class="line">	u16	unused;</span><br><span class="line">	u8	sample_cnt;	<span class="comment">/* number of samples to decide curr_rtt */</span></span><br><span class="line">	u8	found;		<span class="comment">/* the exit point is found? */</span></span><br><span class="line">	u32	round_start;	<span class="comment">/* beginning of each round */</span></span><br><span class="line">	u32	end_seq;	<span class="comment">/* end_seq of the round */</span></span><br><span class="line">	u32	last_ack;	<span class="comment">/* last time when the ACK spacing is close */</span></span><br><span class="line">	u32	curr_rtt;	<span class="comment">/* the minimum rtt of current round */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* BIC TCP Parameters */</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">bictcp</span> &#123;</span></span><br><span class="line">	u32	cnt;		<span class="comment">/* increase cwnd by 1 after ACKs */</span></span><br><span class="line">	u32	last_max_cwnd;	<span class="comment">/* last maximum snd_cwnd */</span></span><br><span class="line">	u32	last_cwnd;	<span class="comment">/* the last snd_cwnd */</span></span><br><span class="line">	u32	last_time;	<span class="comment">/* time when updated last_cwnd */</span></span><br><span class="line">	u32	bic_origin_point;<span class="comment">/* origin point of bic function */</span></span><br><span class="line">	u32	bic_K;		<span class="comment">/* time to origin point</span></span><br><span class="line"><span class="comment">				   from the beginning of the current epoch */</span></span><br><span class="line">	u32	delay_min;	<span class="comment">/* min delay (msec &lt;&lt; 3) */</span></span><br><span class="line">	u32	epoch_start;	<span class="comment">/* beginning of an epoch */</span></span><br><span class="line">	u32	ack_cnt;	<span class="comment">/* number of acks */</span></span><br><span class="line">	u32	tcp_cwnd;	<span class="comment">/* estimated tcp cwnd */</span></span><br><span class="line">	u16	unused;</span><br><span class="line">	u8	sample_cnt;	<span class="comment">/* number of samples to decide curr_rtt */</span></span><br><span class="line">	u8	found;		<span class="comment">/* the exit point is found? */</span></span><br><span class="line">	u32	round_start;	<span class="comment">/* beginning of each round */</span></span><br><span class="line">	u32	end_seq;	<span class="comment">/* end_seq of the round */</span></span><br><span class="line">	u32	last_ack;	<span class="comment">/* last time when the ACK spacing is close */</span></span><br><span class="line">	u32	curr_rtt;	<span class="comment">/* the minimum rtt of current round */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
 <li><p>初始化函数中，算法申请私有空间，初始化参数</p>
 </li>
 <li><p>可以在算法模块中声明一些参数，并调<code>module_param(name,type,perm)</code>使得参数可以在insmod的时候传入（例：cubic）</p>
@@ -441,13 +448,15 @@
 <li>type 表示参数的数据类型，是下列之一：byte, short, ushort, int, uint, long, ulong, charp, bool, invbool;</li>
 <li>perm 指定了在sysfs中相应文件的访问权限。访问权限与linux文件访问权限相同的方式管理，如0644，或使用stat.h中的宏如S_IRUGO表示。</li>
 </ul>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Note parameters that are used for precomputing scale factors are read-only */</span></span><br><span class="line">module_param(fast_convergence, <span class="keyword">int</span>, <span class="number">0644</span>);</span><br><span class="line">MODULE_PARM_DESC(fast_convergence, <span class="string">&quot;turn on/off fast convergence&quot;</span>);</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Note parameters that are used for precomputing scale factors are read-only */</span></span><br><span class="line">module_param(fast_convergence, <span class="keyword">int</span>, <span class="number">0644</span>);</span><br><span class="line">MODULE_PARM_DESC(fast_convergence, <span class="string">&quot;turn on/off fast convergence&quot;</span>);</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
 <h5 id="传参"><a href="#传参" class="headerlink" title="传参"></a>传参</h5><ul>
 <li><p>根据上面的信息，我们知道算法的参数定义在结构体里</p>
 </li>
 <li><p>算法的每个步骤，都会从传入的socket得到一个算法结构体，这个过程是怎么实现的？</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/***example cubic***/</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">tcp_sock</span> *<span class="title">tp</span> =</span> tcp_sk(sk);</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">bictcp</span> *<span class="title">ca</span> =</span> inet_csk_ca(sk);</span><br><span class="line"><span class="comment">/***example bbr***/</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">tcp_sock</span> *<span class="title">tp</span> =</span> tcp_sk(sk);</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">bbr</span> *<span class="title">bbr</span> =</span> inet_csk_ca(sk);</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/***example cubic***/</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">tcp_sock</span> *<span class="title">tp</span> =</span> tcp_sk(sk);</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">bictcp</span> *<span class="title">ca</span> =</span> inet_csk_ca(sk);</span><br><span class="line"><span class="comment">/***example bbr***/</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">tcp_sock</span> *<span class="title">tp</span> =</span> tcp_sk(sk);</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">bbr</span> *<span class="title">bbr</span> =</span> inet_csk_ca(sk);</span><br></pre></td></tr></table></figure>
+</li>
 <li><p>首先从当前socket获取tcp socket结构体</p>
 </li>
 <li><ul>
@@ -475,8 +484,7 @@
 </li>
 <li><p>优点：较好地预测带宽</p>
 </li>
-<li><p>缺点：竞争性差。网络环境中有其他主机采用基于丢包的算法时，由于他们会尝试填满缓冲区，会导致Vegas估计地RTT增大，性能不断被挤占，只适用于<strong>只使用Vegas的网络环境</strong>中</p>
-</li>
+<li>缺点：竞争性差。网络环境中有其他主机采用基于丢包的算法时，由于他们会尝试填满缓冲区，会导致Vegas估计地RTT增大，性能不断被挤占，只适用于<strong>只使用Vegas的网络环境</strong>中</li>
 </ul>
 <p>&nbsp;</p>
 <h4 id="TCP-Veno"><a href="#TCP-Veno" class="headerlink" title="TCP Veno"></a>TCP Veno</h4><blockquote>
@@ -503,13 +511,11 @@
 </li>
 <li><p>优点：在<strong>时延带宽积适中的、丢包率高的链路</strong>表现好</p>
 </li>
-<li><p>缺点：不能解决长肥管道问题</p>
-</li>
+<li>缺点：不能解决长肥管道问题</li>
 </ul>
 <p>&nbsp;</p>
 <h4 id="TCP-BBR"><a href="#TCP-BBR" class="headerlink" title="TCP BBR"></a>TCP BBR</h4><ul>
-<li><p>特点：基于带宽和延迟（链路容量）</p>
-</li>
+<li>特点：基于带宽和延迟（链路容量）</li>
 <li><p>优点：</p>
 <ul>
 <li>避免Bufferfloat</li>
@@ -563,10 +569,10 @@
 </ul>
 </li>
 </ul>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220116114931.png" alt="image-20220116114931639" style="zoom: 40%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220116114931.png" alt="image-20220116114931639" style="zoom: 40%;" /></p>
 <p>&nbsp;</p>
-<h4 id="对比"><a href="#对比" class="headerlink" title="对比"></a>对比</h4><table>
+<h4 id="对比"><a href="#对比" class="headerlink" title="对比"></a>对比</h4><div class="table-container">
+<table>
 <thead>
 <tr>
 <th><strong>名称</strong></th>
@@ -575,7 +581,8 @@
 <th><strong>缺点</strong></th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>TCP Reno</td>
 <td>基于丢包 AIMD</td>
 <td>公平性</td>
@@ -605,30 +612,29 @@
 <td>避免Bufferbloat</td>
 <td>公平性模糊</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>&nbsp;</p>
 <h2 id="强化学习改进Veno算法"><a href="#强化学习改进Veno算法" class="headerlink" title="强化学习改进Veno算法"></a>强化学习改进Veno算法</h2><h3 id="设计思路"><a href="#设计思路" class="headerlink" title="设计思路"></a>设计思路</h3><h4 id="Veno算法核心"><a href="#Veno算法核心" class="headerlink" title="Veno算法核心"></a>Veno算法核心</h4><ol>
 <li><p>根据拥塞窗口和往返时间估计当前队列堆积的报文个数N</p>
 <blockquote>
 <p>首先计算期望发送速率和实际速率：</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220116115012.png" alt="image-20220116115012530" style="zoom: 67%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220116115012.png" alt="image-20220116115012530" style="zoom: 67%;" /></p>
 <p>二者差值：</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220116115023.png" alt="image-20220116115023138" style="zoom: 67%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220116115023.png" alt="image-20220116115023138" style="zoom: 67%;" /></p>
 <p>估计堆积报文个数N：</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220116115036.png" alt="image-20220116115036767" style="zoom:67%;" /></blockquote>
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220116115036.png" alt="image-20220116115036767" style="zoom:67%;" /></p>
+</blockquote>
 </li>
 <li><p>根据N值调整拥塞控制算法</p>
 <blockquote>
 <p>慢启动阶段：与Reno相同无变化</p>
 <p>AIMD——加性增阶段：</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220116115049.png" alt="image-20220116115049018" style="zoom:67%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220116115049.png" alt="image-20220116115049018" style="zoom:67%;" /></p>
 <p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;beta 是一个超参数、增速1、0.5也是超参</p>
 <p>AIMD——乘性减阶段：</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220116115059.png" alt="image-20220116115059582" style="zoom: 60%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220116115059.png" alt="image-20220116115059582" style="zoom: 60%;" /></p>
 <p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;4/5、1/2也是超参</p>
 </blockquote>
 </li>
@@ -649,11 +655,9 @@
 </li>
 </ul>
 <p>注意，加性增时的”0.5“在源代码中不是通过变量表示的，而是通过标志位veno-&gt;cnt，所以需要重构代码：</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220116131249.png" alt="image-20220116131249660" style="zoom:50%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220116131249.png" alt="image-20220116131249660" style="zoom:50%;" /></p>
 <p>模型框架：(基于DQN)</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220116105019.png" alt="image-20220116105019402" style="zoom: 33%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220116105019.png" alt="image-20220116105019402" style="zoom: 33%;" /></p>
 <h4 id="代码仓库"><a href="#代码仓库" class="headerlink" title="代码仓库"></a>代码仓库</h4><p>github：<a target="_blank" rel="noopener" href="https://github.com/Gaopeili/lgd">Computer Network Course Design using Mininet simulator</a></p>
 <p>&nbsp;</p>
 <h3 id="实验观察"><a href="#实验观察" class="headerlink" title="实验观察"></a>实验观察</h3><h4 id="仿真环境"><a href="#仿真环境" class="headerlink" title="仿真环境"></a>仿真环境</h4><h5 id="软件版本"><a href="#软件版本" class="headerlink" title="软件版本"></a>软件版本</h5><ul>
@@ -662,8 +666,7 @@
 <li>KVM搭建的Mininet虚拟机</li>
 </ul>
 <h5 id="拓扑结构"><a href="#拓扑结构" class="headerlink" title="拓扑结构"></a>拓扑结构</h5><p>&emsp;&emsp;选择搭建经典的 <code>bottleneck</code> 结构，设置传输过程中某条链路带宽较小且延迟较大，发送方以较大比特率发送数据，来构建出网络拓扑模型：</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220116105214.png" alt="image-20220116105213972" style="zoom:75%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220116105214.png" alt="image-20220116105213972" style="zoom:75%;" /></p>
 <h5 id="拥塞场景"><a href="#拥塞场景" class="headerlink" title="拥塞场景"></a>拥塞场景</h5><p>&emsp;&emsp;创建好网络拓扑之后，调整各个client的发送速率，使用命令行工具iperf来模拟客户端与服务端。Client1，Client2以100Mbps的速率发送TCP数据包，Client3以50Mbps的速率发送UDP数据包，使用wireshark工具观察拥塞现象，发现throughput发生了明显的下降、RTT明显增加并且出现了丢包现象。</p>
 <h4 id="效果对比"><a href="#效果对比" class="headerlink" title="效果对比"></a>效果对比</h4><p>&emsp;&emsp;观察到拥塞现象后，我们使用Linux内核提供的各种算法进行拥塞控制。从iperf提供的输出观察到了cwnd慢启动、加性增乘性减的过程，并且对比了不同算法之间的异同：</p>
 <h5 id="算法性能测试"><a href="#算法性能测试" class="headerlink" title="算法性能测试"></a>算法性能测试</h5><p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220116105121.png" alt="image-20220116105121283"></p>
@@ -673,37 +676,29 @@
 <p>&nbsp;</p>
 <h2 id="环境配置与仿真平台"><a href="#环境配置与仿真平台" class="headerlink" title="环境配置与仿真平台"></a>环境配置与仿真平台</h2><h3 id="查看内核信息"><a href="#查看内核信息" class="headerlink" title="查看内核信息"></a>查看内核信息</h3><p>查看当前可用的拥塞算法：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sysctl net.ipv4.tcp_available_congestion_control</span><br></pre></td></tr></table></figure>
-
 <p>如图，服务器上ubuntu下目前可使用的拥塞控制有<code>cubic</code>和<code>reno</code>：</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220115224959.png" alt="image-20220115224959598" style="zoom: 67%;" />
-
-
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220115224959.png" alt="image-20220115224959598" style="zoom: 67%;" /></p>
 <p>查看当前使用了哪种拥塞算法：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sysctl net.ipv4.tcp_congestion_control</span><br></pre></td></tr></table></figure>
-
 <p>目前是用的是<code>cubic</code>（默认）：</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220115225127.png" alt="image-20220115225127025" style="zoom:67%;" />
-
-
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220115225127.png" alt="image-20220115225127025" style="zoom:67%;" /></p>
 <p>设置当前使用的拥塞算法(为reno)：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo sysctl -w net.ipv4.tcp_congestion_control=reno</span><br></pre></td></tr></table></figure>
-
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220115225212.png" alt="image-20220115225212546" style="zoom:67%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220115225212.png" alt="image-20220115225212546" style="zoom:67%;" /></p>
 <p>&nbsp;</p>
-<h3 id="Mininet"><a href="#Mininet" class="headerlink" title="Mininet"></a>Mininet</h3><p>&emsp;&emsp;Mininet是由斯坦福大学基于Linux <a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=Container&spm=1001.2101.3001.7020">Container</a>架构开发的一个进程虚拟化网络仿真工具，可以创建一个包含主机，交换机，控制器和链路的虚拟网络，其交换机支持OpenFlow，具备高度灵活的自定义软件定义网络。</p>
+<h3 id="Mininet"><a href="#Mininet" class="headerlink" title="Mininet"></a>Mininet</h3><p>&emsp;&emsp;Mininet是由斯坦福大学基于Linux <a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=Container&amp;spm=1001.2101.3001.7020">Container</a>架构开发的一个进程虚拟化网络仿真工具，可以创建一个包含主机，交换机，控制器和链路的虚拟网络，其交换机支持OpenFlow，具备高度灵活的自定义软件定义网络。</p>
 <p>官网：<a target="_blank" rel="noopener" href="http://mininet.org/">Mininet</a></p>
 <p>github仓库：<a target="_blank" rel="noopener" href="https://github.com/mininet/mininet">mininet</a></p>
-<h4 id="网络构建启动参数"><a href="#网络构建启动参数" class="headerlink" title="网络构建启动参数"></a>网络构建启动参数</h4><table>
+<h4 id="网络构建启动参数"><a href="#网络构建启动参数" class="headerlink" title="网络构建启动参数"></a>网络构建启动参数</h4><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>参数</th>
 <th>功能</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>-c</td>
 <td>释放之前创建拓扑时占用的未释放资源</td>
 </tr>
@@ -712,38 +707,41 @@
 <td>查看帮助</td>
 </tr>
 <tr>
-<td>–topo</td>
+<td>—topo</td>
 <td>定义创建的拓扑结构</td>
 </tr>
 <tr>
-<td>–custom</td>
+<td>—custom</td>
 <td>创建自定义拓扑（python脚本）</td>
 </tr>
 <tr>
-<td>–switch</td>
+<td>—switch</td>
 <td>定义要使用的交换机</td>
 </tr>
 <tr>
-<td>–controller</td>
+<td>—controller</td>
 <td>定义要使用的控制器</td>
 </tr>
 <tr>
-<td>–mac</td>
+<td>—mac</td>
 <td>自动设置设备的MAC地址</td>
 </tr>
 <tr>
 <td>……</td>
-<td></td>
 </tr>
-</tbody></table>
-<h4 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h4><table>
+</tbody>
+</table>
+</div>
+<h4 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h4><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>命令</th>
 <th>功能</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>dump</td>
 <td>显示每个节点的接口设置和表示每个节点的进程PID</td>
 </tr>
@@ -787,22 +785,25 @@
 <td>exit</td>
 <td>退出mininet</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>示例：</p>
 <p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220116104916.png" alt="image-20220116104916505"></p>
 <h4 id="Python自定义拓扑脚本"><a href="#Python自定义拓扑脚本" class="headerlink" title="Python自定义拓扑脚本"></a>Python自定义拓扑脚本</h4><p>&emsp;&emsp;mininet支持使用python脚本自定义网络拓扑结构和通信场景设置，示例代码如下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> mininet.topo <span class="keyword">import</span> Topo</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AwesomeBottleneckTopo</span>(<span class="params">Topo</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;Build Awesome Topo for Computer Network Design&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">build</span>(<span class="params">self, client_num=<span class="number">3</span>, server_num=<span class="number">3</span></span>):</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">#  awesome_client1                                    awesome_server1(5Mbps)</span></span><br><span class="line">        <span class="comment">#                  \ 40Mbps                 40Mbps   /</span></span><br><span class="line">        <span class="comment">#  awesome_client2 --------- s1 --------- s2 -------- awesome_server2(30Mbps)</span></span><br><span class="line">        <span class="comment">#                  /          35Mbps(20ms)           \</span></span><br><span class="line">        <span class="comment">#  awesome_client3                                    awesome_server3(20Mbps)</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># TODO(gpl): add awesome topo</span></span><br><span class="line">        self.clients = [self.addHost(<span class="string">f&#x27;h<span class="subst">&#123;i + <span class="number">1</span>&#125;</span>&#x27;</span>)</span><br><span class="line">                        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(client_num)]</span><br><span class="line">        self.servers = [self.addHost(<span class="string">f&#x27;n<span class="subst">&#123;i + <span class="number">1</span>&#125;</span>&#x27;</span>)</span><br><span class="line">                        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(server_num)]</span><br><span class="line"></span><br><span class="line">        self.s1 = self.addSwitch(<span class="string">&#x27;awesome-s1&#x27;</span>)</span><br><span class="line">        self.s2 = self.addSwitch(<span class="string">&#x27;awesome-s2&#x27;</span>)</span><br><span class="line"></span><br><span class="line">        linkops = <span class="built_in">dict</span>(bw=<span class="number">35</span>, delay=<span class="string">&#x27;5ms&#x27;</span>,</span><br><span class="line">                       max_queue_size=<span class="number">1000</span>, use_htb=<span class="literal">True</span>)</span><br><span class="line">        self.addLink(self.s1, self.s2, **linkops)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;clients:&quot;</span>, self.clients)</span><br><span class="line">        <span class="keyword">for</span> client <span class="keyword">in</span> self.clients:</span><br><span class="line">            <span class="built_in">print</span>(client)</span><br><span class="line">            linkops = <span class="built_in">dict</span>(bw=<span class="number">40</span>, max_queue_size=<span class="number">1000</span>, use_htb=<span class="literal">True</span>)</span><br><span class="line">            self.addLink(client, self.s1, **linkops)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> server <span class="keyword">in</span> self.servers:</span><br><span class="line">            linkops = <span class="built_in">dict</span>(bw=<span class="number">40</span>, max_queue_size=<span class="number">1000</span>, use_htb=<span class="literal">True</span>)</span><br><span class="line">            self.addLink(server, self.s2, **linkops)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    backwnd = BottleneckBackend(AwesomeBottleneckTopo())</span><br></pre></td></tr></table></figure>
-
 <h4 id="GUI界面构建拓扑"><a href="#GUI界面构建拓扑" class="headerlink" title="GUI界面构建拓扑"></a>GUI界面构建拓扑</h4><p>&emsp;&emsp;mininet支持使用GUI图形界面构造网络拓扑结构，执行<code>mininet/examples/miniedit.py</code>脚本即可。</p>
 <p>&nbsp;</p>
-<h2 id="工作总结"><a href="#工作总结" class="headerlink" title="工作总结"></a>工作总结</h2><h3 id="任务分工"><a href="#任务分工" class="headerlink" title="任务分工"></a>任务分工</h3><table>
+<h2 id="工作总结"><a href="#工作总结" class="headerlink" title="工作总结"></a>工作总结</h2><h3 id="任务分工"><a href="#任务分工" class="headerlink" title="任务分工"></a>任务分工</h3><div class="table-container">
+<table>
 <thead>
 <tr>
 <th><strong>任务</strong></th>
 <th><strong>负责人</strong></th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>Mininet拓扑、强化学习环境搭建、OpenAI-gym集成</td>
 <td>gpl</td>
 </tr>
@@ -814,7 +815,9 @@
 <td>CPython模块、Linux内核/用户空间映射、算法调研、系统测试</td>
 <td>lrk</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h3 id="突出亮点"><a href="#突出亮点" class="headerlink" title="突出亮点"></a>突出亮点</h3><ul>
 <li>新的工具（Mininet，iperf，dcpctl，wireshark…）</li>
 <li>真实环境（与内核交互，可与真实环境通信）</li>
@@ -1112,6 +1115,8 @@ $(document).ready(function() {
 
 
 
+
+  
 
   
 

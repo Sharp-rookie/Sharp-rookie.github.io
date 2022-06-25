@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.4.2">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -375,32 +375,25 @@
 <li>Typora</li>
 <li>神经网络结构图</li>
 </ul>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220203174821.png" alt="image-20220203174227516" style="zoom:40%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220203174821.png" alt="image-20220203174227516" style="zoom:40%;" /></p>
 <span id="more"></span>
-
 <p>&nbsp;</p>
 <h2 id="MarkDown绘图"><a href="#MarkDown绘图" class="headerlink" title="MarkDown绘图"></a>MarkDown绘图</h2><p>&emsp;&emsp;Mermaid是一种简单的类似 Markdown 的脚本语言，通过 JavaScript 编程语言，将文本转换为图片。实现画图功能的并不是 Typora 本身，而是它内置的对 Mermaid 的支持。</p>
 <h3 id="时序图"><a href="#时序图" class="headerlink" title="时序图"></a>时序图</h3><p><strong>示例</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">Title:example</span><br><span class="line">    Alice-&gt;&gt;John: Hello John, how are you?</span><br><span class="line">    John--&gt;&gt;Alice: Great!</span><br></pre></td></tr></table></figure>
-
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220128232624.png" alt="image-20220128232614051" style="zoom:50%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220128232624.png" alt="image-20220128232614051" style="zoom:50%;" /></p>
 <p>&nbsp;</p>
 <h3 id="状态图"><a href="#状态图" class="headerlink" title="状态图"></a>状态图</h3><p><code>[*]</code> 表示开始或者结束，如果在箭头右边则表示结束。</p>
 <p><strong>示例</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">stateDiagram</span><br><span class="line">    [*] --&gt; s1</span><br><span class="line">    s1 --&gt; [*]</span><br></pre></td></tr></table></figure>
-
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220128232634.png" alt="image-20220128232634737" style="zoom:50%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220128232634.png" alt="image-20220128232634737" style="zoom:50%;" /></p>
 <p>&nbsp;</p>
 <h3 id="类图"><a href="#类图" class="headerlink" title="类图"></a><strong>类图</strong></h3><p>语法解释：<code>&lt;|--</code> 表示继承，<code>+</code> 表示 <code>public</code>，<code>-</code> 表示 <code>private</code>，学过 Java 的应该都知道。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">classDiagram</span><br><span class="line">      Animal &lt;|-- Duck</span><br><span class="line">      Animal &lt;|-- Fish</span><br><span class="line">      Animal &lt;|-- Zebra</span><br><span class="line">      Animal : +int age</span><br><span class="line">      Animal : +String gender</span><br><span class="line">      Animal: +isMammal()</span><br><span class="line">      Animal: +mate()</span><br><span class="line">      class Duck&#123;</span><br><span class="line">          +String beakColor</span><br><span class="line">          +swim()</span><br><span class="line">          +quack()</span><br><span class="line">      &#125;</span><br><span class="line">      class Fish&#123;</span><br><span class="line">          -int sizeInFeet</span><br><span class="line">          -canEat()</span><br><span class="line">      &#125;</span><br><span class="line">      class Zebra&#123;</span><br><span class="line">          +bool is_wild</span><br><span class="line">          +run()</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
-
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220128232652.png" alt="image-20220128232652835" style="zoom:50%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220128232652.png" alt="image-20220128232652835" style="zoom:50%;" /></p>
 <p>&nbsp;</p>
 <h3 id="流程图"><a href="#流程图" class="headerlink" title="流程图"></a>流程图</h3><p><strong>方向</strong></p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -408,7 +401,8 @@
 <th>含义</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>TB</td>
 <td>从上到下</td>
 </tr>
@@ -424,8 +418,11 @@
 <td>RL</td>
 <td>从右到左</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p><strong>节点</strong></p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -434,7 +431,8 @@
 <th>含义</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>id[文字]</td>
 <td>矩形节点</td>
 <td>表示过程</td>
@@ -457,17 +455,17 @@
 <tr>
 <td>id&gt;文字 ]</td>
 <td>右向旗帜节点</td>
-<td></td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p><strong>示例</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">graph TB;</span><br><span class="line">subgraph 分情况</span><br><span class="line">A(开始)--&gt;B&#123;判断&#125;</span><br><span class="line">end</span><br><span class="line">B--第一种情况--&gt;C[第一种方案]</span><br><span class="line">B--第二种情况--&gt;D[第二种方案]</span><br><span class="line">B--第三种情况--&gt;F&#123;第三种方案&#125;</span><br><span class="line">subgraph 分种类</span><br><span class="line">F-.第1个.-&gt;J((测试圆形))</span><br><span class="line">F-.第2个.-&gt;H&gt;右向旗帜形]</span><br><span class="line">end</span><br><span class="line">H---I(测试完毕)</span><br><span class="line">C--票数100---I(测试完毕)</span><br><span class="line">D---I(测试完毕)</span><br><span class="line">J---I(测试完毕)</span><br></pre></td></tr></table></figure>
-
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220128232710.png" alt="image-20220128232710479" style="zoom:50%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220128232710.png" alt="image-20220128232710479" style="zoom:50%;" /></p>
 <p>&nbsp;</p>
 <h3 id="序列图"><a href="#序列图" class="headerlink" title="序列图"></a>序列图</h3><p>序列图共有5个部分，分别是：<strong>参与者、消息线、循环、选择、可选、并行、注解</strong></p>
 <p><strong>消息线</strong></p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -475,12 +473,13 @@
 <th>描述</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>-&gt;</td>
 <td>无箭头的实线</td>
 </tr>
 <tr>
-<td>–&gt;</td>
+<td>—&gt;</td>
 <td>无箭头的虚线</td>
 </tr>
 <tr>
@@ -488,7 +487,7 @@
 <td>有箭头的实线(主动发出消息)</td>
 </tr>
 <tr>
-<td>–&gt;&gt;</td>
+<td>—&gt;&gt;</td>
 <td>有箭头的虚线(响应)</td>
 </tr>
 <tr>
@@ -496,29 +495,28 @@
 <td>末端为X的实线(主动发出异步消息)</td>
 </tr>
 <tr>
-<td>–x</td>
+<td>—x</td>
 <td>有箭头的实线(以异步形式响应消息)</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p><strong>示例</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">Title: 小明买书</span><br><span class="line"></span><br><span class="line">participant consumer as 小明</span><br><span class="line">participant store as 书店</span><br><span class="line">participant publisher as 出版社</span><br><span class="line"></span><br><span class="line">consumer -&gt;&gt; store: 想买一本限量版书籍</span><br><span class="line">store --&gt;&gt; consumer: 缺货</span><br><span class="line">consumer -&gt;&gt; store: 隔一个月再次询问</span><br><span class="line">store --&gt;&gt; consumer: 抢完了</span><br><span class="line">loop 一个星期一次</span><br><span class="line">consumer -x +store: 有货了吗</span><br><span class="line">store --x -consumer: 正在订,有货马上通知你</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">store -&gt;&gt; publisher: 我要订购一批货</span><br><span class="line">publisher --x store: 返回所有书籍的类别信息</span><br><span class="line"></span><br><span class="line">alt 书籍类别符合要求</span><br><span class="line">store -&gt;&gt; publisher: 请求书单信息</span><br><span class="line">publisher --x store: 返回该类别书单信息</span><br><span class="line"><span class="keyword">else</span> 书单里的书有市场需求</span><br><span class="line">store -&gt;&gt; publisher: 购买指定数据</span><br><span class="line">publisher --x store: 确认订单</span><br><span class="line"><span class="keyword">else</span> 书籍不符合要求</span><br><span class="line">store --&gt;&gt; publisher: 暂时不购买</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">par 并行执行</span><br><span class="line">publisher -&gt;&gt; publisher : 生产</span><br><span class="line">publisher -&gt;&gt; publisher : 销售</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">opt 书籍购买量&gt;=500 &amp;&amp; 库存&gt;=50</span><br><span class="line">publisher -&gt;&gt; store : 出货</span><br><span class="line">store --x publisher : 确认收货</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">Note left of consumer : 图书收藏家</span><br><span class="line">Note over consumer,store : 去书店购买书籍</span><br><span class="line">Note left of store : 全国知名书店</span><br><span class="line">Note over store,publisher : 去出版社进货</span><br><span class="line">Note left of publisher : 持有版权的出版社</span><br></pre></td></tr></table></figure>
-
 <p>&nbsp;</p>
 <h3 id="饼图"><a href="#饼图" class="headerlink" title="饼图"></a>饼图</h3><p><strong>示例</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">pie</span><br><span class="line"> title Pie Chart</span><br><span class="line"> <span class="string">&quot;Dogs&quot;</span> : 386</span><br><span class="line"> <span class="string">&quot;cats&quot;</span> : 567</span><br><span class="line"> <span class="string">&quot;rabbit&quot;</span> : 700</span><br><span class="line"> <span class="string">&quot;pig&quot;</span>:365</span><br><span class="line"> <span class="string">&quot;tiger&quot;</span> : 15</span><br></pre></td></tr></table></figure>
-
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220128232805.png" alt="image-20220128232805096" style="zoom:50%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220128232805.png" alt="image-20220128232805096" style="zoom:50%;" /></p>
 <p>&nbsp;</p>
 <h3 id="甘特图"><a href="#甘特图" class="headerlink" title="甘特图"></a>甘特图</h3><p>甘特图一般用来表示项目的计划排期，目前在工作中经常会用到,语法也非常简单，从上到下依次是图片标题、日期格式、项目、项目细分的任务。</p>
 <p><strong>示例</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">gantt</span><br><span class="line">    title 工作计划</span><br><span class="line">    dateFormat  YYYY-MM-DD	//底部的时间格式</span><br><span class="line">    </span><br><span class="line">    section Section</span><br><span class="line">    task1:	a1, 2020-01-01, 30d</span><br><span class="line">    task2:	des3, 2020-03-01, 15d</span><br><span class="line"> 	task3:	crit, <span class="keyword">done</span>, 2020-02-30, 24h</span><br><span class="line">    Another task:	after a1, 20d</span><br><span class="line">    </span><br><span class="line">    section Another</span><br><span class="line">    Task <span class="keyword">in</span> sec:	2020-01-12, 12d</span><br><span class="line">    another task:	24d</span><br></pre></td></tr></table></figure>
-
 <p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220128232832.png" alt="image-20220128232832655"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <h2 id="PlantUML"><a href="#PlantUML" class="headerlink" title="PlantUML"></a>PlantUML</h2><h3 id="时序图-1"><a href="#时序图-1" class="headerlink" title="时序图"></a>时序图</h3><p>&emsp;&emsp;时序图（Sequence Diagram），又名序列图、循序图、顺序图，是一种UML交互图。它通过描述对象之间发送消息的时间顺序显示多个对象之间的动态协作。它可以表示用例的行为顺序，当执行一个用例行为时，其中的每条消息对应一个类操作或状态机中引起转换的触发事件。</p>
-<p>参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/zh_weir/article/details/72675013?ops_request_misc=%7B%22request_id%22:%22164319070816780274150424%22,%22scm%22:%2220140713.130102334..%22%7D&request_id=164319070816780274150424&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-3-72675013.pc_search_insert_es_download&utm_term=plantuml&spm=1018.2226.3001.4187">PlantUML时序图</a></p>
+<p>参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/zh_weir/article/details/72675013?ops_request_misc=%7B%22request%5Fid%22%3A%22164319070816780274150424%22%2C%22scm%22%3A%2220140713.130102334..%22%7D&amp;request_id=164319070816780274150424&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-3-72675013.pc_search_insert_es_download&amp;utm_term=plantuml&amp;spm=1018.2226.3001.4187">PlantUML时序图</a></p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -527,7 +525,8 @@
 <th>效果</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>实、虚线</td>
 <td><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220128232625.png" alt="image-20220126181332755" style="zoom:45%;" /></td>
 <td><img src="https://my-picture-1311448338.file.myqcloud.com/img/20210825123356.png" alt="image-20210825105656559" width="20%" /></td>
@@ -582,10 +581,13 @@
 <td><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220128232626.png" alt="image-20220126183216677" style="zoom:50%;" /></td>
 <td><img src="https://my-picture-1311448338.file.myqcloud.com/img/20210825123406.png" alt="image-20210825110640942" width="60%" /></td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<h3 id="流程图-1"><a href="#流程图-1" class="headerlink" title="流程图"></a>流程图</h3><p>参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/zhangjikuan/article/details/53484558?ops_request_misc=%7B%22request_id%22:%22164319070816780274150424%22,%22scm%22:%2220140713.130102334..%22%7D&request_id=164319070816780274150424&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-2-53484558.pc_search_insert_es_download&utm_term=plantuml&spm=1018.2226.3001.4187">PlantUML流程图</a></p>
+<h3 id="流程图-1"><a href="#流程图-1" class="headerlink" title="流程图"></a>流程图</h3><p>参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/zhangjikuan/article/details/53484558?ops_request_misc=%7B%22request%5Fid%22%3A%22164319070816780274150424%22%2C%22scm%22%3A%2220140713.130102334..%22%7D&amp;request_id=164319070816780274150424&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-2-53484558.pc_search_insert_es_download&amp;utm_term=plantuml&amp;spm=1018.2226.3001.4187">PlantUML流程图</a></p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -594,7 +596,8 @@
 <th>效果</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>基本</td>
 <td><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220126185758.png" alt="image-20220126185758399" style="zoom:50%;" /></td>
 <td><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220126185426.png" alt="image-20220126185426351" style="zoom: 60%;" /></td>
@@ -659,11 +662,14 @@
 <td><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220126191628.png" alt="image-20220126191628012" style="zoom:50%;" /></td>
 <td><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220126191655.png" alt="image-20220126191655656" style="zoom:50%;" /></td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <h3 id="类图-1"><a href="#类图-1" class="headerlink" title="类图"></a>类图</h3><p>类图显示了系统的静态结构<br>类：类图中的主要元素，用矩形表示。矩形的上层表示类名、中层表示属性、下层表示方法。<br>类之间的关系：关联、依赖、聚集、泛化和实现五种。</p>
 <p>五种类间关系的图形表示介绍：</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -674,21 +680,21 @@
 <th>实现 implements</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>带实线的箭头</td>
 <td>带虚线的箭头</td>
 <td>菱形箭头</td>
 <td>带实线的三角形箭头</td>
 <td>带虚线的三角形箭头</td>
 </tr>
-</tbody></table>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220126192936.png" alt="image-20220126192936034" style="zoom: 67%;" />
-
-<p>参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/junhuahouse/article/details/80767632?ops_request_misc=%7B%22request_id%22:%22164319596516780265433006%22,%22scm%22:%2220140713.130102334..%22%7D&request_id=164319596516780265433006&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-1-80767632.pc_search_insert_es_download&utm_term=plantuml%E7%B1%BB%E5%9B%BE&spm=1018.2226.3001.4187">PlantUML类图</a></p>
+</tbody>
+</table>
+</div>
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220126192936.png" alt="image-20220126192936034" style="zoom: 67%;" /></p>
+<p>参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/junhuahouse/article/details/80767632?ops_request_misc=%7B%22request%5Fid%22%3A%22164319596516780265433006%22%2C%22scm%22%3A%2220140713.130102334..%22%7D&amp;request_id=164319596516780265433006&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-1-80767632.pc_search_insert_es_download&amp;utm_term=plantuml类图&amp;spm=1018.2226.3001.4187">PlantUML类图</a></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">@startuml</span><br><span class="line">skinparam packageStyle rect/&#x27; 加入这行代码，样式纯矩形&#x27;/</span><br><span class="line">interface Set&lt;&lt;接口&gt;&gt;&#123;</span><br><span class="line">boolean add (Object o)</span><br><span class="line">boolean remove(Object o)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace com.ztman.org #green&#123;</span><br><span class="line">class HashSet&#123;</span><br><span class="line">+boolean add (Object o)</span><br><span class="line">+boolean remove(Object o)</span><br><span class="line">&#125;</span><br><span class="line">interface IntSet&#123;</span><br><span class="line">boolean add (int i)</span><br><span class="line">boolean remove(int i)</span><br><span class="line">&#125;</span><br><span class="line">class IntHashSet&#123;</span><br><span class="line">+boolean add (int i)</span><br><span class="line">+boolean remove(int i)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.Set &lt;|.. HashSet</span><br><span class="line">HashSet &lt;|-- IntHashSet</span><br><span class="line">IntSet &lt;|.. IntHashSet</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">namespace cn #orange&#123;</span><br><span class="line">class TreeSet &#123;</span><br><span class="line">+boolean add (Object o)</span><br><span class="line">+boolean remove(Object o)</span><br><span class="line">&#125;</span><br><span class="line">class IntTreeSet&#123;</span><br><span class="line">+boolean add (int i)</span><br><span class="line">+boolean remove(int i)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">com.ztman.org.IntSet &lt;|.. IntTreeSet</span><br><span class="line">TreeSet &lt;|-- IntTreeSet</span><br><span class="line">.Set &lt;|.. TreeSet</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@enduml</span><br></pre></td></tr></table></figure>
-
-
-
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -697,7 +703,8 @@
 <th>效果</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>定义一个类（上层-类名、中层-属性、下层-方法）</td>
 <td><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220126193208.png" alt="image-20220126193208462" style="zoom:50%;" /></td>
 <td><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220126193221.png" alt="image-20220126193221888" style="zoom:60%;" /></td>
@@ -732,41 +739,37 @@
 <td><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220126195117.png" alt="image-20220126195117872" style="zoom:50%;" /></td>
 <td><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220126195133.png" alt="image-20220126195133029" style="zoom: 70%;" /></td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <h2 id="神经网络结构图"><a href="#神经网络结构图" class="headerlink" title="神经网络结构图"></a>神经网络结构图</h2><h3 id="PlotNeuralNet"><a href="#PlotNeuralNet" class="headerlink" title="PlotNeuralNet"></a>PlotNeuralNet</h3><p>这是github上一个开源的用Latex转换为PDF来绘制神经网络结构图的工具，<a target="_blank" rel="noopener" href="https://github.com/HarisIqbal88/PlotNeuralNet">地址</a>，使用方法如下：</p>
 <p><strong>安装</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># clone仓库</span></span><br><span class="line">git <span class="built_in">clone</span> git@github.com:HarisIqbal88/PlotNeuralNet.git</span><br><span class="line"></span><br><span class="line"><span class="comment"># 打开linux终端，按照所需依赖</span></span><br><span class="line">sudo apt-get install texlive-latex-base</span><br><span class="line">sudo apt-get install texlive-fonts-recommended</span><br><span class="line">sudo apt-get install texlive-latex-extra</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行示例</span></span><br><span class="line"><span class="built_in">cd</span> pyexamples/</span><br><span class="line">bash ../tikzmake.sh test_simple</span><br></pre></td></tr></table></figure>
-
 <p>如果出现报错：$‘\r‘: command not found，是因为Shell脚本在Windows系统编写时，每行结尾是\r\n，而在Linux系统中行每行结尾是\n，所以在Linux系统中运行脚本时，会认为\r是一个字符，此时使用指令：<code>sed -i &#39;s/\r//&#39; ../tikzmake.sh</code> 来去除脚本中的\r字符，然后再次执行 <code>bash ../tikzmake.sh test_simple</code> ，效果是生成一个神经网络结果图的pdf文件。</p>
 <p><strong>绘制自己的神经网络</strong></p>
 <p>&emsp;&emsp;经过尝试，本以为可以自己建一个文件夹然后写python程序，然后通过示例中的方法用 <code>tikzmake.sh</code> 脚本生成pdf，但失败了，所以以后使用时就把 <code>pyexamples/</code> 目录下的python文件中的网络结构部分代码改成自己的，然后像上一步运行示例一样使用。</p>
 <p>&emsp;&emsp; <code>pycore/</code> 目录下有各种神经网络组件的python转换latex接口</p>
 <p>神经网络部分代码：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 修改过的</span></span><br><span class="line">arch = [</span><br><span class="line">    to_head(<span class="string">&#x27;..&#x27;</span>),</span><br><span class="line">    to_cor(),</span><br><span class="line">    to_begin(),</span><br><span class="line">    to_Conv(<span class="string">&quot;conv1&quot;</span>, <span class="number">512</span>, <span class="number">64</span>, offset=<span class="string">&quot;(0,0,0)&quot;</span>,</span><br><span class="line">            to=<span class="string">&quot;(0,0,0)&quot;</span>, height=<span class="number">64</span>, depth=<span class="number">64</span>, width=<span class="number">2</span>),</span><br><span class="line">    to_Pool(<span class="string">&quot;pool1&quot;</span>, offset=<span class="string">&quot;(0,0,0)&quot;</span>, to=<span class="string">&quot;(conv1-east)&quot;</span>),</span><br><span class="line">    to_Conv(<span class="string">&quot;conv2&quot;</span>, <span class="number">128</span>, <span class="number">64</span>, offset=<span class="string">&quot;(1,0,0)&quot;</span>,</span><br><span class="line">            to=<span class="string">&quot;(pool1-east)&quot;</span>, height=<span class="number">32</span>, depth=<span class="number">32</span>, width=<span class="number">2</span>),</span><br><span class="line">    to_connection(<span class="string">&quot;pool1&quot;</span>, <span class="string">&quot;conv2&quot;</span>),</span><br><span class="line">    to_Pool(<span class="string">&quot;pool2&quot;</span>, offset=<span class="string">&quot;(0,0,0)&quot;</span>, to=<span class="string">&quot;(conv2-east)&quot;</span>,</span><br><span class="line">            height=<span class="number">28</span>, depth=<span class="number">28</span>, width=<span class="number">1</span>),</span><br><span class="line">    to_SoftMax(<span class="string">&quot;soft1&quot;</span>, <span class="number">10</span>, <span class="string">&quot;(3,0,0)&quot;</span>, <span class="string">&quot;(pool1-east)&quot;</span>, caption=<span class="string">&quot;SOFT&quot;</span>),</span><br><span class="line">    to_connection(<span class="string">&quot;pool2&quot;</span>, <span class="string">&quot;soft1&quot;</span>),</span><br><span class="line">    to_Sum(<span class="string">&quot;sum1&quot;</span>, offset=<span class="string">&quot;(1.5,0,0)&quot;</span>,</span><br><span class="line">           to=<span class="string">&quot;(soft1-east)&quot;</span>, radius=<span class="number">2.5</span>, opacity=<span class="number">0.6</span>),</span><br><span class="line">    to_connection(<span class="string">&quot;soft1&quot;</span>, <span class="string">&quot;sum1&quot;</span>),</span><br><span class="line">    to_end()</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-
 <p>运行：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash ../tikzmake.sh test_simple</span><br></pre></td></tr></table></figure>
-
 <p>效果：</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220203172520.png" alt="image-20220203172520176" style="zoom: 33%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220203172520.png" alt="image-20220203172520176" style="zoom: 33%;" /></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <h3 id="NN-SVG"><a href="#NN-SVG" class="headerlink" title="NN-SVG"></a>NN-SVG</h3><p><a target="_blank" rel="noopener" href="http://alexlenail.me/NN-SVG/LeNet.html">NN SVG</a> 是一个在线绘制神经网络结构体结构图的网站，可自定义网络层参数，十分方便</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220203173138.png" alt="image-20220203173138234" style="zoom: 35%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220203173138.png" alt="image-20220203173138234" style="zoom: 35%;" /></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <h3 id="donets"><a href="#donets" class="headerlink" title="donets"></a>donets</h3><p>&emsp;&emsp;这是我无意间在github发现的一个轻量级绘制神经网络的开源python仓库：<a target="_blank" rel="noopener" href="https://github.com/martisak/dotnets">dotnets</a>，使用 Python 和 Graphviz 生成前馈神经网络的图片。使用时更改 <code>dotnets.py</code> 中的网络结构即可</p>
 <p><strong>代码</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">layers = [<span class="number">3</span>, <span class="number">5</span>, <span class="number">5</span>, <span class="number">5</span>, <span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">layers_str = [<span class="string">&quot;Status&quot;</span>] + [<span class="string">&quot;Linear&quot;</span>] + [<span class="string">&quot;Relu&quot;</span>] + [<span class="string">&quot;Linear&quot;</span>] + [<span class="string">&quot;Beta&quot;</span>]</span><br><span class="line">layers_col = [<span class="string">&quot;none&quot;</span>] + [<span class="string">&quot;none&quot;</span>] * (<span class="built_in">len</span>(layers) - <span class="number">2</span>) + [<span class="string">&quot;none&quot;</span>]</span><br><span class="line">layers_fill = [<span class="string">&quot;black&quot;</span>] + [<span class="string">&quot;gray&quot;</span>] * (<span class="built_in">len</span>(layers) - <span class="number">2</span>) + [<span class="string">&quot;black&quot;</span>]</span><br><span class="line"></span><br><span class="line">penwidth = <span class="number">15</span></span><br><span class="line">font = <span class="string">&quot;Hilda 10&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;digraph G &#123;&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\tfontname = \&quot;&#123;&#125;\&quot;&quot;</span>.<span class="built_in">format</span>(font))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\trankdir=LR&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\tsplines=line&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\tnodesep=.08;&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\tranksep=1;&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\tedge [color=black, arrowsize=.5];&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\tnode [fixedsize=true,label=\&quot;\&quot;,style=filled,&quot;</span> +</span><br><span class="line">      <span class="string">&quot;color=none,fillcolor=gray,shape=circle]\n&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Clusters</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="built_in">len</span>(layers)):</span><br><span class="line">    <span class="built_in">print</span>((<span class="string">&quot;\tsubgraph cluster_&#123;&#125; &#123;&#123;&quot;</span>.<span class="built_in">format</span>(i)))</span><br><span class="line">    <span class="built_in">print</span>((<span class="string">&quot;\t\tcolor=&#123;&#125;;&quot;</span>.<span class="built_in">format</span>(layers_col[i])))</span><br><span class="line">    <span class="built_in">print</span>((<span class="string">&quot;\t\tnode [style=filled, color=white, penwidth=&#123;&#125;,&quot;</span></span><br><span class="line">          <span class="string">&quot;fillcolor=&#123;&#125; shape=circle];&quot;</span>.<span class="built_in">format</span>(</span><br><span class="line">              penwidth,</span><br><span class="line">              layers_fill[i])))</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>((<span class="string">&quot;\t\t&quot;</span>), end=<span class="string">&#x27; &#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> a <span class="keyword">in</span> <span class="built_in">range</span>(layers[i]):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;l&#123;&#125;&#123;&#125; &quot;</span>.<span class="built_in">format</span>(i + <span class="number">1</span>, a), end=<span class="string">&#x27; &#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;;&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>((<span class="string">&quot;\t\tlabel = &#123;&#125;;&quot;</span>.<span class="built_in">format</span>(layers_str[i])))</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;\t&#125;\n&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Nodes</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="built_in">len</span>(layers)):</span><br><span class="line">    <span class="keyword">for</span> a <span class="keyword">in</span> <span class="built_in">range</span>(layers[i - <span class="number">1</span>]):</span><br><span class="line">        <span class="keyword">for</span> b <span class="keyword">in</span> <span class="built_in">range</span>(layers[i]):</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;\tl&#123;&#125;&#123;&#125; -&gt; l&#123;&#125;&#123;&#125;&quot;</span>.<span class="built_in">format</span>(i, a, i + <span class="number">1</span>, b))</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;&#125;&quot;</span>)</span><br></pre></td></tr></table></figure>
-
 <p><strong>运行</strong></p>
 <p><code>python3 dotnets.py | dot -Tpdf &gt; test.pdf</code></p>
 <p><strong>效果</strong></p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220203174821.png" alt="image-20220203174227516" style="zoom:40%;" />
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220203174821.png" alt="image-20220203174227516" style="zoom:40%;" /></p>
 
     </div>
 
@@ -1040,6 +1043,8 @@ $(document).ready(function() {
 
 
 
+
+  
 
   
 

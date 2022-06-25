@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.4.2">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -319,24 +319,21 @@
 <p>&emsp;&emsp;文章提出了一种用于监控视频编码的基于时空生成对抗网络（GAN）的动态纹理合成方法。<strong>编码器端</strong>检测并移除与机器视觉无关的动态纹理内容，<strong>解码器端</strong>使用 GAN 生成动态纹理内容，以尽量保证人眼观察视频的质量。</p>
 <p><strong>具体工作：</strong></p>
 <ul>
-<li><p>设计一个 GAN 网络，利用空间和时间邻域间的相关性合成动态纹理</p>
-</li>
-<li><p>在此基础上，提出一种具有动态纹理检测/合成方法的监控视频编码方案</p>
-</li>
+<li>设计一个 GAN 网络，利用空间和时间邻域间的相关性合成动态纹理</li>
+<li>在此基础上，提出一种具有动态纹理检测/合成方法的监控视频编码方案</li>
 <li><p>构建了一个高质量的动态纹理数据集，我们通过专注于监控场景收集了一个超越现有视频编码测试数据集的动态纹理测试数据集</p>
 </li>
 <li><p>在高效视频编码 (HEVC) 参考软件上部署，并在低延迟 B 和低延迟 P 的配置下分别实现了 7.4% 和 7.6% 的比特率节省，且告感知效果相似</p>
 </li>
 </ul>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/202206191131186.png" alt="image-20220619113145036" style="zoom: 43%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/202206191131186.png" alt="image-20220619113145036" style="zoom: 43%;" /></p>
 <p><strong>原文</strong></p>
 <p><a target="_blank" rel="noopener" href="https://lrk612.com/resources/Spatiotemporal%20Generative%20Adversarial%20Network-Based%20Dynamic%20Texture%20Synthesis%20for%20Surveillance%20Video%20Coding.pdf">Spatiotemporal Generative Adversarial Network-Based Dynamic Texture Synthesis for Surveillance Video Coding</a></p>
 <span id="more"></span>
-
 <p>&nbsp;</p>
 <h1 id="文章概述"><a href="#文章概述" class="headerlink" title="文章概述"></a>文章概述</h1><p>&emsp;&emsp;随着监控摄像头的部署和视频分辨率的提高，越来越多的监控视频需要传输和存储，这也导致高额开销。而在视频分割[9]和视频检索[10]等领域，动态纹理有着相当重要性，因此备受关注。</p>
 <p><strong>相关工作</strong></p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -345,7 +342,8 @@
 <th>work</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>流行的视频压缩标准</td>
 <td>H.264/AVC [1] 和 H.265/HEVC</td>
 <td>面向通用场景，对监控视频无针对性，无效率优势</td>
@@ -370,7 +368,9 @@
 <td>[20]</td>
 <td>缺乏精细的细节，即使在低分辨率下也显得不切实际</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p><strong>面对困难：</strong></p>
 <p>&emsp;&emsp;监控场景中往往包含多种动态纹理内容，例如树叶和水。动态纹理包含丰富的高频细节和随机运动，即使是由最先进的编解码器（H.265/HEVC）处理，也会存储时占用大量比特。HEVC 中，动态纹理区域通常被划分为小的编码单元以适应局部特征，通常会导致大量的开销比特。此外，由于帧内/帧间预测不准确，动态纹理内容的残差通常具有大量高频分量，传统编解码器中的熵编码难以有效编码这些高频分量。所以动态纹理需要从新的角度进行针对性处理。</p>
 <p><strong>本文基本思路的产生：</strong></p>
@@ -398,6 +398,7 @@
 <p>&nbsp;</p>
 <h1 id="相关工作"><a href="#相关工作" class="headerlink" title="相关工作"></a>相关工作</h1><p>&emsp;&emsp;动态纹理内容在由 H.265/HEVC 等传统视频编解码器处理时通常会消耗大量比特。为降低比特成本，动态纹理分析/合成技术已成为一个活跃的研究领域，下面从两个方面回顾以往的相关工作：</p>
 <p><strong>动态纹理合成</strong></p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -405,7 +406,8 @@
 <th>非参数方法（基于数据集）</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>[11] 基于高斯-马尔可夫模型的具有代表性的动态纹理模型</td>
 <td>[27] 基于马尔可夫随机场 (MRF) ，通过确定性搜索过程合成纹理</td>
 </tr>
@@ -429,8 +431,11 @@
 <td></td>
 <td>[31] 用双流卷积网络生成动态纹理</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p><strong>基于纹理合成的视频编码</strong></p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -438,7 +443,8 @@
 <th>失真标准：感知质量</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>用存储在解码图像缓冲区（DPB）中的重建帧来合成基于 ARMA 模型的动态纹理；然后将合成的纹理内容用于闭环混合视频编码系统中的动态纹理预测（DTP）</td>
 <td>[16] 一种基于内容的闭环编码方案</td>
 </tr>
@@ -454,7 +460,9 @@
 <td></td>
 <td>[35] 通过一组一阶运动特征来建模动态纹理，用运动共生矩阵来合成纹理</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>&nbsp;</p>
 <h1 id="视频编码方案"><a href="#视频编码方案" class="headerlink" title="视频编码方案"></a>视频编码方案</h1><p>&emsp;&emsp;文章给出的视频编码方案在传统编码方案基础上增加了对动态纹理的特殊处理。首先在编码器处进行检测，非纹理区域使用传统编码，纹理区域不做编码处理，只做标记。然后在解码器处，非纹理区域依然传统解码，纹理区域则用GAN基于时空信息进行生成：</p>
 <p><img src="https://my-picture-1311448338.file.myqcloud.com/img/202206191131186.png" alt="image-20220619113145036"></p>
@@ -464,8 +472,7 @@
 <p>&nbsp;</p>
 <h1 id="动态纹理检测算法"><a href="#动态纹理检测算法" class="headerlink" title="动态纹理检测算法"></a>动态纹理检测算法</h1><h2 id="step1：检测前-背景"><a href="#step1：检测前-背景" class="headerlink" title="step1：检测前/背景"></a>step1：检测前/背景</h2><p>&emsp;&emsp;目的是减少前景（行人、车等）和静态背景（建筑、道路等）的影响。这里使用的方法是，利用当前帧和前一帧、当前帧和最后第4帧之间的差异来粗略检测前景和背景。由此，可以得到每一帧中每个CTU的一个标签：前景、背景、动态纹理候选区域，可以减少后续的计算开销。</p>
 <h2 id="step2：检测动态纹理"><a href="#step2：检测动态纹理" class="headerlink" title="step2：检测动态纹理"></a>step2：检测动态纹理</h2><p>&emsp;&emsp;动态纹理区域在时空域上有局部随机运动，运动的幅度和方向比起前景区域中的运动物体更加具有多样性。前景区域的局部运动物体的特征通常与时空域中的相邻区域有着相同的模式。</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/202206191227918.png" alt="image-20220619122701811" style="zoom: 40%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/202206191227918.png" alt="image-20220619122701811" style="zoom: 40%;" /></p>
 <p>作者之前的工作中通过运动方向直方图来捕获物体的运动特征：</p>
 <ol>
 <li><p>每个动态纹理 CTU 区域划分成以不重叠的 2 × 2 粒度单元为单位</p>
@@ -483,15 +490,12 @@
 <li><p>文章注意到，动态纹理的时空邻域大概率也是动态纹理，因此针对此做了更进一步细化</p>
 </li>
 </ol>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/202206191303262.png" alt="image-20220619130259892" style="zoom: 33%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/202206191303262.png" alt="image-20220619130259892" style="zoom: 33%;" /></p>
 <p>&nbsp;</p>
 <h1 id="动态纹理的合成：时空-GAN"><a href="#动态纹理的合成：时空-GAN" class="headerlink" title="动态纹理的合成：时空 GAN"></a>动态纹理的合成：时空 GAN</h1><p>&emsp;&emsp;由于现有工作使用卷积网路的生成图片不够真实，文章引入 GAN 的架构，同时还使用 3D 卷积层和时空鉴别器来探索时空信息。具体而言是用掩膜来提取时空信息。时域掩膜如下图(a)左所示，用于从前后帧中提取相同CTU区域（128×128×3），空域掩膜如下图(a)右所示，用于提取当前帧该CTU的邻域（128×128×3）。而生成器的目标就是通过训练，拟合出实际CTU基于时空信息的分布情况，从而利用时空信息得到实际CTU区域（64×64×3）。</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/202206191314759.png" alt="image-20220619131437682" style="zoom: 60%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/202206191314759.png" alt="image-20220619131437682" style="zoom: 60%;" /></p>
 <p>&emsp;&emsp;GAN 的训练是通过最小化对抗损失，从而生成以假乱真的图像，目标函数为：</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/202206191332964.png" alt="image-20220619133256914" style="zoom:67%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/202206191332964.png" alt="image-20220619133256914" style="zoom:67%;" /></p>
 <center>其中，x 为真实图像、z为随机噪声</center>
 
 <p>&emsp;&emsp;本文使用的 GAN结构如下，包含一个 Generator 和两个 Discriminator：</p>
@@ -506,15 +510,11 @@
 <h2 id="Discriminator"><a href="#Discriminator" class="headerlink" title="Discriminator"></a>Discriminator</h2><p>&emsp;&emsp;Generator 生成相应的动态纹理像素中会存在一些不自然的伪影。在 naive GAN 中，判别器只有两种不同的输入：真实图像和合成图像，即只通过空间信息来区分真假图像，不能生成图像具有时间连贯性。因此，文章设计了一个改进的时空 Discriminator 来分别区分空间和时间信息。文章使用了两个Discriminator：空间鉴别器 和 时间鉴别器。从而要求生成的纹理在空间上更真实，在时间上更一致。</p>
 <p>&emsp;&emsp;<strong>空间鉴别器 Ds</strong>与一般的 Discriminator 相同，以真实图像和合成图像作为输入，用于指导 Generator 产生更视觉逼真的动态纹理，但是却不能保证时间一致性。所以可能存在闪烁和块状伪影。</p>
 <p><strong>&emsp;&emsp;时间鉴别器 Dt</strong>用于保证时间一致性。为了捕捉时间特征，网络必须对时间信息进行处理。这里没有直接给时间鉴别器输入相邻帧的图像，而是输入残差 Rreal 和 Rgen：</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/202206191426224.png" alt="image-20220619142653176" style="zoom:90%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/202206191426224.png" alt="image-20220619142653176" style="zoom:90%;" /></p>
 <center>Yt-1 是上一帧、Yt+1是下一帧 (64×64×3)，G(X|c)是条件分布在x处的输出，即生成图像</center>
 
 <p>输入残差而不是真实图像可以有效地去除相邻帧内的冗余，从而增强探索时间信息的能力。由此，GAN的训练目标函数为：</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/202206191430496.png" alt="image-20220619143033447" style="zoom: 90%;" />
-
-
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/202206191430496.png" alt="image-20220619143033447" style="zoom: 90%;" /></p>
 <h2 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h2><p>loss 由3部分加权得到：</p>
 <p><img src="https://my-picture-1311448338.file.myqcloud.com/img/202206191556429.png" alt="image-20220619155636371"></p>
 <p>其中，对抗性损失的权重不宜过大，会导致训练不稳定。</p>
@@ -522,8 +522,7 @@
 <p>真实图像和生成图像之间的像素级L1损失，目的是捕获整体信息。</p>
 <p>文章使用 L1 距离而不是 L2，是因为 L1 有更高的峰值信噪比 (PSNR)。虽然这种简单的损失实现了高 PSNR，但但是只有L1损失会导致生成图像缺乏高频细节，纹理过度光滑。</p>
 <h3 id="梯度损失"><a href="#梯度损失" class="headerlink" title="梯度损失"></a>梯度损失</h3><p>引用GDL，避免缺乏高频细节导致边缘处模糊：</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/202206191546406.png" alt="image-20220619154609367" style="zoom:90%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/202206191546406.png" alt="image-20220619154609367" style="zoom:90%;" /></p>
 <center>i,j 表示第i行第j列</center>
 
 <p>相当于对梯度做L2损失，梯度信息包含丰富的高频信息，即边缘细节，因此可以降低细节处太过光滑的影响。</p>
@@ -809,6 +808,8 @@ $(document).ready(function() {
 
 
 
+
+  
 
   
 

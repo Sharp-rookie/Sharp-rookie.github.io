@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.4.2">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -305,10 +305,8 @@
 
       
         <p>&emsp;&emsp;遗传拓扑神经网络模型最早由2002年的一篇论文 <a target="_blank" rel="noopener" href="https://lrk612.com/resources/Efficient%20Evolution%20of%20Neural%20Network%20Topologies.pdf">Efficient Evolution of Neural Network Topologies</a> 提出，同年的另一篇论文 <a target="_blank" rel="noopener" href="https://lrk612.com/resources/Evolving%20Neural%20Networks%20through%20Augmenting%20Topologies.pdf">Evolving Neural Networks through Augmenting Topologies</a> 对其进行了详细地论述。NEAT对神经网络结构设计进行建模，并认为是一个NP问题，故引入遗传算法来优化网络结构设计，使得网络中神经元的组合逐渐向着满足尽可能高的适应度方向进化。</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220220002540.png" alt="image-20220220002533169" style="zoom:45%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220220002540.png" alt="image-20220220002533169" style="zoom:45%;" /></p>
 <span id="more"></span>
-
 <p>&nbsp;</p>
 <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>一般深度学习模型解决问题的思路是期望搭建一个深度神经网络来拟合一个从输入x到输出y之间的复杂映射关系。通过深度神经网络中丰富的神经元组合，以及一个个小的、拟合能力有限的功能组件，构成一个拥有复杂拟合能力的模型。网络越深，其VC维越高，高层特征的提取能力越强，网络能够学习的东西越多。</p>
 <p>而NEAT的方法论与深度学习模型不同，它是神经网络和遗传算法的朴素结合。NEAT的优点主要有三点：</p>
@@ -319,8 +317,7 @@
 </ol>
 <p>在NEAT算法中的神经网络因为基因突变的存在，会导致网络内神经元的连接都不是很规则。而不规则、不对称的网络结构正是NEAT的一个特点。</p>
 <h2 id="建模"><a href="#建模" class="headerlink" title="建模"></a>建模</h2><h3 id="基因组"><a href="#基因组" class="headerlink" title="基因组"></a>基因组</h3><p>一个完整的基因组（Genome）中有两类节点描述，一是节点基因（Node Genes）、二是连接基因（Connect Genes）。</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220219083434.png" alt="image-20220219083413316" style="zoom:40%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220219083434.png" alt="image-20220219083413316" style="zoom:40%;" /></p>
 <p>重点是连接基因，一个连接基因携带的信息如下：</p>
 <ul>
 <li>输入节点：In</li>
@@ -335,23 +332,20 @@
 <ul>
 <li><p>添加连接变异（Mutate Add Connection）</p>
 <p>  在已有节点基因间随即加入一个新的连接基因</p>
-  <img src="https://my-picture-1311448338.file.myqcloud.com/img/20220219084624.png" alt="image-20220219084624534" style="zoom:50%;" /></li>
+<p>  <img src="https://my-picture-1311448338.file.myqcloud.com/img/20220219084624.png" alt="image-20220219084624534" style="zoom:50%;" /></p>
+</li>
 <li><p>添加节点变异（Mutate Add Node）</p>
 <p>  增加一个新的节点，并为该节点随机增加一些连接基因</p>
-  <img src="https://my-picture-1311448338.file.myqcloud.com/img/20220219084645.png" alt="image-20220219084645037" style="zoom:50%;" /></li>
+<p>  <img src="https://my-picture-1311448338.file.myqcloud.com/img/20220219084645.png" alt="image-20220219084645037" style="zoom:50%;" /></p>
+</li>
 </ul>
 <p><strong>遗传</strong></p>
 <p>首先对“双亲”的基因进行对齐操作，Innov序号从小到大一一对齐，如果双方都有该Innov，就保留该Innov对应的基因；如果Innov不匹配，则取适应度较高一方的基因。</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220219085025.png" alt="image-20220219085024986" style="zoom: 40%;" />
-
-
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220219085025.png" alt="image-20220219085024986" style="zoom: 40%;" /></p>
 <h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p><code>gym—cartpole</code></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> neat</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> gym</span><br><span class="line"><span class="keyword">import</span> visualize</span><br><span class="line"></span><br><span class="line">GAME = <span class="string">&#x27;CartPole-v0&#x27;</span></span><br><span class="line">env = gym.make(GAME).unwrapped</span><br><span class="line"></span><br><span class="line">CONFIG = <span class="string">&quot;./config&quot;</span></span><br><span class="line">EP_STEP = <span class="number">300</span></span><br><span class="line">GENERATION_EP = <span class="number">30</span></span><br><span class="line">CHECKPOINT = <span class="number">29</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">eval_genomes</span>(<span class="params">genomes, config</span>):</span></span><br><span class="line">    <span class="keyword">for</span> genome_id, genome <span class="keyword">in</span> genomes:</span><br><span class="line">        net = neat.nn.FeedForwardNetwork.create(genome, config)</span><br><span class="line">        ep_r = []</span><br><span class="line">        <span class="keyword">for</span> ep <span class="keyword">in</span> <span class="built_in">range</span>(GENERATION_EP):</span><br><span class="line">            accumulative_r = <span class="number">0</span></span><br><span class="line">            observation = env.reset()</span><br><span class="line">            <span class="keyword">for</span> t <span class="keyword">in</span> <span class="built_in">range</span>(EP_STEP):</span><br><span class="line">                action_values = net.activate(observation)</span><br><span class="line">                action = np.argmax(action_values)</span><br><span class="line">                observation_, reward, done, _ = env.step(action)</span><br><span class="line">                accumulative_r += reward</span><br><span class="line">                <span class="keyword">if</span> done:</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">                observation = observation_</span><br><span class="line">            ep_r.append(accumulative_r)</span><br><span class="line">        genome.fitness = np.<span class="built_in">min</span>(ep_r)/<span class="built_in">float</span>(EP_STEP)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span>():</span></span><br><span class="line">    config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,</span><br><span class="line">                         neat.DefaultSpeciesSet, neat.DefaultStagnation, CONFIG)</span><br><span class="line">    pop = neat.Population(config)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># recode history</span></span><br><span class="line">    stats = neat.StatisticsReporter()</span><br><span class="line">    pop.add_reporter(stats)</span><br><span class="line">    pop.add_reporter(neat.StdOutReporter(<span class="literal">True</span>))</span><br><span class="line">    pop.add_reporter(neat.Checkpointer(<span class="number">5</span>))</span><br><span class="line"></span><br><span class="line">    pop.run(eval_genomes, GENERATION_EP)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># visualize training</span></span><br><span class="line">    visualize.plot_stats(stats, ylog=<span class="literal">False</span>, view=<span class="literal">True</span>)</span><br><span class="line">    visualize.plot_species(stats, view=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">evaluation</span>():</span></span><br><span class="line">    p = neat.Checkpointer.restore_checkpoint(<span class="string">&#x27;neat-checkpoint-%i&#x27;</span> % CHECKPOINT)</span><br><span class="line">    winner = p.run(eval_genomes, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># show winner net</span></span><br><span class="line">    node_names = &#123;-<span class="number">1</span>: <span class="string">&#x27;In0&#x27;</span>, -<span class="number">2</span>: <span class="string">&#x27;In1&#x27;</span>, -</span><br><span class="line">                  <span class="number">3</span>: <span class="string">&#x27;In3&#x27;</span>, -<span class="number">4</span>: <span class="string">&#x27;In4&#x27;</span>, <span class="number">0</span>: <span class="string">&#x27;act1&#x27;</span>, <span class="number">1</span>: <span class="string">&#x27;act2&#x27;</span>&#125;</span><br><span class="line">    visualize.draw_net(p.config, winner, <span class="literal">True</span>, node_names=node_names)</span><br><span class="line"></span><br><span class="line">    net = neat.nn.FeedForwardNetwork.create(winner, p.config)</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        s = env.reset()</span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            env.render()</span><br><span class="line">            a = np.argmax(net.activate(s))</span><br><span class="line">            s, r, done, _ = env.step(a)</span><br><span class="line">            <span class="keyword">if</span> done:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(sys.argv) == <span class="number">1</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;Please input the option: TRAIN or EVAL&#x27;</span>)</span><br><span class="line">        exit(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    TRAINING = sys.argv[<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> TRAINING == <span class="string">&#x27;TRAIN&#x27;</span>:</span><br><span class="line">        run()</span><br><span class="line">    <span class="keyword">elif</span> TRAINING == <span class="string">&#x27;EVAL&#x27;</span>:</span><br><span class="line">        evaluation()</span><br></pre></td></tr></table></figure>
-
 <p>29轮生成的网络结构：</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220219151746.png" alt="image-20220219151738869" style="zoom: 35%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220219151746.png" alt="image-20220219151738869" style="zoom: 35%;" /></p>
 <p>代码仓库：<a target="_blank" rel="noopener" href="https://github.com/Sharp-rookie/NEAT">github</a></p>
 
     </div>
@@ -628,6 +622,8 @@ $(document).ready(function() {
 
 
 
+
+  
 
   
 

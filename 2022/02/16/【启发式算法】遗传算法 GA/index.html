@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.4.2">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -301,10 +301,8 @@
 
       
         <p>&emsp;&emsp;由于遗传算法的整体搜索策略和优化搜索方法在计算时不依赖于梯度信息或其它辅助知识，而只需要影响搜索方向的目标函数和相应的适应度函数，所以遗传算法提供了一种求解复杂系统问题的通用框架，不依赖于问题的具体领域，对问题的种类有很强的鲁棒性，广泛应用于许多场景。</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220216231227.png" alt="image-20220216231227178" style="zoom: 35%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220216231227.png" alt="image-20220216231227178" style="zoom: 35%;" /></p>
 <span id="more"></span>
-
 <p>&nbsp;</p>
 <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>&emsp;&emsp;遗传算法（Genetic Algorithm）是一类借鉴生物界的进化规律（遗传变异、优胜劣汰、适者生存）演化而来的随机化搜索方法。与其说遗传算法是一类算法，不如说是一种处理问题的思想。</p>
 <h4 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h4><p>&emsp;&emsp;在遗传算法的建模中，编码是关键。在遗传算法中，遗传空间的染色体或者个体建模为一系列bit位的0、1二进制数值串，也就是说需要把原问题的解空间<strong>一一映射</strong>且<strong>满射</strong>为二进制定长数值串，后续的遗传、基因重组、变异都是在数值串基础上进行的。</p>
@@ -349,6 +347,7 @@
 <p>问题的名称来源于如何选择最合适的物品放置于给定背包中，相似问题经常出现在商业、组合数学，计算复杂性理论、密码学和应用数学等领域中。</p>
 <p><strong>场景</strong></p>
 <p>现在假设有一个承重80的包，还有6个物体：</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -357,7 +356,8 @@
 <th>价值</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>1</td>
 <td>10</td>
 <td>15</td>
@@ -387,7 +387,9 @@
 <td>35</td>
 <td>70</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p><strong>编码</strong></p>
 <p>本场景编码使用六位二进制，每位的1、0分别表示物体的有无，类似独热向量</p>
 <p><strong>初始种群</strong></p>
@@ -397,6 +399,7 @@
 <p><strong>遗传</strong></p>
 <p>计算出4种组合（个体）的适性度，以适性度比例为概率随机从4种组合（个体）中抽取出4个用于基因重组和突变。对依概率抽取出的4个两两配对进行重组得到新的4种组合（个体），然后随机对某种或某些组合（个体）的某个或某些bit位做突变（建议概率低一些）。</p>
 <p>检测所以新组合（个体）的质量之和是否超过80，超过的直接淘汰。</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -407,7 +410,8 @@
 <th>重组结果</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>100100</td>
 <td>60</td>
 <td>101010</td>
@@ -435,31 +439,30 @@
 <td>4</td>
 <td>010110</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <center>假设依概率选取出的4个组合是101010、010101各两个</center>
 
 <p><strong>收敛条件</strong></p>
 <p>这里定义收敛判定为：连续两代适性函数最大值不增加</p>
 <p><strong>代码</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding=utf-8</span></span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="comment"># 背包问题</span></span><br><span class="line"><span class="comment"># 物品质量价格</span></span><br><span class="line">X = &#123;</span><br><span class="line">    <span class="number">1</span>: [<span class="number">10</span>, <span class="number">15</span>],</span><br><span class="line">    <span class="number">2</span>: [<span class="number">15</span>, <span class="number">25</span>],</span><br><span class="line">    <span class="number">3</span>: [<span class="number">20</span>, <span class="number">35</span>],</span><br><span class="line">    <span class="number">4</span>: [<span class="number">25</span>, <span class="number">45</span>],</span><br><span class="line">    <span class="number">5</span>: [<span class="number">30</span>, <span class="number">55</span>],</span><br><span class="line">    <span class="number">6</span>: [<span class="number">35</span>, <span class="number">70</span>]&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 终止界限</span></span><br><span class="line">FINISHED_LIMIT = <span class="number">5</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 重量界限</span></span><br><span class="line">WEIGHT_LIMIT = <span class="number">80</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 染色体长度</span></span><br><span class="line">CHROMOSOME_SIZE = <span class="number">6</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 遴选次数</span></span><br><span class="line">SELECT_NUMBER = <span class="number">4</span></span><br><span class="line"></span><br><span class="line">max_last = <span class="number">0</span></span><br><span class="line">diff_last = <span class="number">10000</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 判断退出</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">is_finished</span>(<span class="params">fitnesses</span>):</span></span><br><span class="line">    <span class="keyword">global</span> max_last</span><br><span class="line">    <span class="keyword">global</span> diff_last</span><br><span class="line"></span><br><span class="line">    max_current = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> v <span class="keyword">in</span> fitnesses:</span><br><span class="line">        <span class="keyword">if</span> v[<span class="number">1</span>] &gt; max_current:</span><br><span class="line">            max_current = v[<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">    diff = max_current - max_last</span><br><span class="line">    <span class="keyword">if</span> diff &lt; FINISHED_LIMIT <span class="keyword">and</span> diff_last &lt; FINISHED_LIMIT:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        diff_last = diff</span><br><span class="line">        max_last = max_current</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始染色体样态</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">init</span>():</span></span><br><span class="line">    chromosome_state1 = <span class="string">&#x27;100100&#x27;</span></span><br><span class="line">    chromosome_state2 = <span class="string">&#x27;101010&#x27;</span></span><br><span class="line">    chromosome_state3 = <span class="string">&#x27;010101&#x27;</span></span><br><span class="line">    chromosome_state4 = <span class="string">&#x27;101011&#x27;</span></span><br><span class="line">    chromosome_states = [chromosome_state1,</span><br><span class="line">                         chromosome_state2,</span><br><span class="line">                         chromosome_state3,</span><br><span class="line">                         chromosome_state4]</span><br><span class="line">    <span class="keyword">return</span> chromosome_states</span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算适应度</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fitness</span>(<span class="params">chromosome_states</span>):</span></span><br><span class="line">    fitnesses = []</span><br><span class="line">    <span class="keyword">for</span> chromosome_state <span class="keyword">in</span> chromosome_states:</span><br><span class="line">        value_sum = <span class="number">0</span></span><br><span class="line">        weight_sum = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i, v <span class="keyword">in</span> <span class="built_in">enumerate</span>(chromosome_state):</span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">int</span>(v) == <span class="number">1</span>:</span><br><span class="line">                weight_sum += X[i + <span class="number">1</span>][<span class="number">0</span>]</span><br><span class="line">                value_sum += X[i + <span class="number">1</span>][<span class="number">1</span>]</span><br><span class="line">        fitnesses.append([value_sum, weight_sum])</span><br><span class="line">    <span class="keyword">return</span> fitnesses</span><br><span class="line"></span><br><span class="line"><span class="comment"># 筛选</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">filter</span>(<span class="params">chromosome_states, fitnesses</span>):</span></span><br><span class="line">    <span class="comment"># 重量大于80的被淘汰</span></span><br><span class="line">    index = <span class="built_in">len</span>(fitnesses) - <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> index &gt;= <span class="number">0</span>:</span><br><span class="line">        index -= <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> fitnesses[index][<span class="number">1</span>] &gt; WEIGHT_LIMIT:</span><br><span class="line">            chromosome_states.pop(index)</span><br><span class="line">            fitnesses.pop(index)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 遴选</span></span><br><span class="line">    selected_index = [<span class="number">0</span>] * <span class="built_in">len</span>(chromosome_states)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(SELECT_NUMBER):</span><br><span class="line">        j = chromosome_states.index(random.choice(chromosome_states))</span><br><span class="line">        selected_index[j] += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> selected_index</span><br><span class="line"></span><br><span class="line"><span class="comment"># 产生下一代</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">crossover</span>(<span class="params">chromosome_states, selected_index</span>):</span></span><br><span class="line">    chromosome_states_new = []</span><br><span class="line">    index = <span class="built_in">len</span>(chromosome_states) - <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> index &gt;= <span class="number">0</span>:</span><br><span class="line">        index -= <span class="number">1</span></span><br><span class="line">        chromosome_state = chromosome_states.pop(index)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(selected_index[index]):</span><br><span class="line">            chromosome_state_x = random.choice(chromosome_states)</span><br><span class="line">            pos = random.choice(<span class="built_in">range</span>(<span class="number">1</span>, CHROMOSOME_SIZE - <span class="number">1</span>))</span><br><span class="line">            chromosome_states_new.append(</span><br><span class="line">                chromosome_state[:pos] + chromosome_state_x[pos:])</span><br><span class="line">        chromosome_states.insert(index, chromosome_state)</span><br><span class="line">    <span class="keyword">return</span> chromosome_states_new</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="comment"># 初始群体</span></span><br><span class="line">    chromosome_states = init()</span><br><span class="line">    n = <span class="number">100</span></span><br><span class="line">    <span class="keyword">while</span> n &gt; <span class="number">0</span>:</span><br><span class="line">        n -= <span class="number">1</span></span><br><span class="line">        <span class="comment"># 适应度计算</span></span><br><span class="line">        fitnesses = fitness(chromosome_states)</span><br><span class="line">        <span class="keyword">if</span> is_finished(fitnesses):</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;1:&#x27;</span>, fitnesses)</span><br><span class="line">        <span class="comment"># 遴选</span></span><br><span class="line">        selected_index = <span class="built_in">filter</span>(chromosome_states, fitnesses)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;2:&#x27;</span>, selected_index)</span><br><span class="line">        <span class="comment"># 产生下一代</span></span><br><span class="line">        chromosome_states = crossover(chromosome_states, selected_index)</span><br><span class="line">        <span class="comment"># print &#x27;3:&#x27;, chromosome_states</span></span><br><span class="line"></span><br><span class="line">    fitnesses = fitness(chromosome_states)</span><br><span class="line">    <span class="built_in">print</span>(chromosome_states)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 1: [[60, 35], [105, 60], [140, 75], [175, 95]]</span></span><br><span class="line"><span class="comment"># 2: [1, 1, 2]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 1: [[60, 35], [105, 60], [80, 45], [90, 50]]</span></span><br><span class="line"><span class="comment"># 2: [2, 1, 0, 1]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 1: [[95, 55], [115, 65], [70, 40], [90, 50]]</span></span><br><span class="line"><span class="comment"># 2: [2, 0, 2, 0]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 1: [[70, 40], [70, 40], [150, 85], [115, 65]]</span></span><br><span class="line"><span class="comment"># 2: [3, 0, 1]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 1: [[115, 65], [115, 65], [115, 65], [70, 40]]</span></span><br><span class="line"><span class="comment"># 2: [2, 0, 0, 2]</span></span><br><span class="line"><span class="comment"># [&#x27;100110&#x27;, &#x27;100110&#x27;, &#x27;100110&#x27;, &#x27;100110&#x27;]</span></span><br></pre></td></tr></table></figure>
-
 <p>&nbsp;</p>
 <h2 id="示例二：凸函数最大值"><a href="#示例二：凸函数最大值" class="headerlink" title="示例二：凸函数最大值"></a>示例二：凸函数最大值</h2><p>函数优化是遗传算法的经典应用领域，也是遗传算法进行性能评价的常用算例，许多人构造出了各种各样复杂形式的测试函数：连续函数和离散函数、凸函数和凹函数、低维函数和高维函数、单峰函数和多峰函数等。对于一些非线性、多模型、多目标的函数优化问题，用其它优化方法较难求解，而遗传算法可以方便的得到较好的结果。</p>
 <p><strong>场景</strong></p>
 <p>x∈[-10, 10], y∈[-10, 10]时，求二元函数 <code>z(x,y) = y*sin(x) + x*cos(y)</code> 的最大值点，使用matlab绘制图像如下：</p>
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[x,y] = <span class="built_in">meshgrid</span>(<span class="number">-10</span>:<span class="number">0.01</span>:<span class="number">10</span>);</span><br><span class="line">z = y.*<span class="built_in">sin</span>(x)+x.*<span class="built_in">cos</span>(y);</span><br><span class="line">mesh(x,y,z),xlabel(<span class="string">&#x27;x&#x27;</span>),ylabel(<span class="string">&#x27;y&#x27;</span>),zlabel(<span class="string">&#x27;z&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220219083829.png" alt="image-20220219083829525" style="zoom: 20%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220219083829.png" alt="image-20220219083829525" style="zoom: 20%;" /></p>
 <p><strong>编码</strong></p>
 <p>计算机无法处理连续值，为了确保准确性和离散性，对x、y的取值精确到3位小数，以0.001为最小粒度。因此x和y从-10.000变化到10.000各自总共20001个离散取值，因为<code>2^14 &lt; 20001 &lt; 2^15</code>，所以编码为15位二进制值。同时为了保证一一映射和满射，具体编码映射方式为：</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220219083445.png" alt="image-20220217110053767" style="zoom:60%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220219083445.png" alt="image-20220217110053767" style="zoom:60%;" /></p>
 <center>h为实际值，m为编码值</center>
 
 <p>注意，这里的编码和上例不同，不再是独热向量。这就导致在基因重组和突变时，不同交叉点和突变位对个体产生的变化影响大小是不等的，越靠左的位影响越大。</p>
 <p><strong>初始种群</strong></p>
 <p>随机选取8个：</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -468,7 +471,8 @@
 <th>Y基因</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>1</td>
 <td>000000100101001</td>
 <td>101010101010101</td>
@@ -508,12 +512,15 @@
 <td>100110101101000</td>
 <td>000011110000111</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>注意，因为这个场景中，可以看见函数图像里有很多凸点，会导致某部分个体集中在次优解，而少数个体在最优解的半山腰处反而不如次优解从而提前被淘汰。为了规避这种现象，可以增大种群初始规模（个体数量）和分布均匀度。</p>
 <p><strong>适性度</strong></p>
 <p>即：<code>z(x,y) = y*sin(x) + x*cos(y)</code></p>
 <p><strong>遗传</strong></p>
 <p>与上例不同，这里先基因重组，重组后再依照适性值随机选取。</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -524,7 +531,8 @@
 <th>重组后Y</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>1</td>
 <td>000000100101001</td>
 <td>101010101010101</td>
@@ -538,7 +546,9 @@
 <td>011000100101001</td>
 <td>001100101010101</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>如上所示，8个个体两两配对，产生C8_2 = 56种子代个体，计算它们各自的适性值，然后选出8个进入下一轮遗传。</p>
 <p><strong>迭代至收敛</strong></p>
 <p>相隔两代的适性函数最大值相差小于1即判断为收敛</p>
@@ -817,6 +827,8 @@ $(document).ready(function() {
 
 
 
+
+  
 
   
 

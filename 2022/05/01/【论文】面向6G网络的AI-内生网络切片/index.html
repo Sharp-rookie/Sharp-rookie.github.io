@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.4.2">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -32,12 +32,12 @@
           }
       })();
   </script>
-  <meta name="description" content="6G智能内生这篇文章提出了一种6G网络中 AI-native 的网络切片架构，用于智能化网络管理以及支持AI服务。这个架构包含两个方面：  AI for Slicing，将AI作为工具使能网络切片全生命周期的智能化 Slicing for AI，利用网络切片技术来支持AI service的提供    原文 AI-Native Network Slicing for 6G Networks">
+  <meta name="description" content="6G智能内生这篇文章提出了一种6G网络中 AI-native 的网络切片架构，用于智能化网络管理以及支持AI服务。这个架构包含两个方面：  AI for Slicing，将AI作为工具使能网络切片全生命周期的智能化 Slicing for AI，利用网络切片技术来支持AI service的提供   原文 AI-Native Network Slicing for 6G Networks">
 <meta property="og:type" content="article">
 <meta property="og:title" content="面向6G网络的AI原生网络切片">
 <meta property="og:url" content="https://sharp-rookie.github.io/2022/05/01/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91%E9%9D%A2%E5%90%916G%E7%BD%91%E7%BB%9C%E7%9A%84AI-%E5%86%85%E7%94%9F%E7%BD%91%E7%BB%9C%E5%88%87%E7%89%87/index.html">
 <meta property="og:site_name" content="最忆是江南">
-<meta property="og:description" content="6G智能内生这篇文章提出了一种6G网络中 AI-native 的网络切片架构，用于智能化网络管理以及支持AI服务。这个架构包含两个方面：  AI for Slicing，将AI作为工具使能网络切片全生命周期的智能化 Slicing for AI，利用网络切片技术来支持AI service的提供    原文 AI-Native Network Slicing for 6G Networks">
+<meta property="og:description" content="6G智能内生这篇文章提出了一种6G网络中 AI-native 的网络切片架构，用于智能化网络管理以及支持AI服务。这个架构包含两个方面：  AI for Slicing，将AI作为工具使能网络切片全生命周期的智能化 Slicing for AI，利用网络切片技术来支持AI service的提供   原文 AI-Native Network Slicing for 6G Networks">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202205011514121.png">
 <meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202205011514121.png">
@@ -308,12 +308,10 @@
 <li><strong>AI for Slicing</strong>，将AI作为工具使能网络切片全生命周期的智能化</li>
 <li><strong>Slicing for AI</strong>，利用网络切片技术来支持AI service的提供</li>
 </ul>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/202205011514121.png" alt="image-20220430184151295" style="zoom: 30%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/202205011514121.png" alt="image-20220430184151295" style="zoom: 30%;" /></p>
 <p><strong>原文</strong></p>
 <p><a target="_blank" rel="noopener" href="https://lrk612.com/resources/AI-Native_Network_Slicing_for_6G_Networks.pdf">AI-Native Network Slicing for 6G Networks</a></p>
 <span id="more"></span>
-
 <p>&nbsp;</p>
 <h2 id="研究背景"><a href="#研究背景" class="headerlink" title="研究背景"></a>研究背景</h2><h3 id="网络切片"><a href="#网络切片" class="headerlink" title="网络切片"></a>网络切片</h3><p>&emsp;&emsp;网络切片概念的提出主要是为了应对无线通信逐渐业务化的趋势所导致的定制服务需求。在5G网络中，所有业务使用同一套硬件设备支持，通过使用网络功能虚拟化（NFV）和软件定义网络（SDN）技术可以把物理资源抽象为虚拟资源，并通过软件来灵活化分配调度，构成了网络切片的技术基础。第三代移动合作伙伴项目3GPP为5G定义了3中业务场景：增强移动带宽、高可靠低时延通信、海量机器通信。而在6G网络中，网络切片会继续扮演一个关键角色。</p>
 <p>&emsp;&emsp;网络切片的基本想法就是在公用物理基础设施上构建多个逻辑隔离的网络切片，从而实现灵活自适应的网络管理功能，特点有三：</p>
@@ -353,8 +351,7 @@
 </li>
 </ul>
 <p>这个架构中包含两种SDN控制器，一种是部署在云端的中央SDN控制器，管理网络切片；另一种是基站本地SDN控制器，为切片内的终端用户调度资源</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/202205011514121.png" alt="image-202205011514121" style="zoom: 33%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/202205011514121.png" alt="image-202205011514121" style="zoom: 33%;" /></p>
 <p>&nbsp;</p>
 <h2 id="AI-for-Slicing"><a href="#AI-for-Slicing" class="headerlink" title="AI for Slicing"></a>AI for Slicing</h2><h3 id="网络切片生存周期"><a href="#网络切片生存周期" class="headerlink" title="网络切片生存周期"></a>网络切片生存周期</h3><p>文章将网络切片的生存周期定义为三个部分：preparation、planning、operation，由中央SDN控制器进行准备和规划，由本地SDN控制器进行执行。</p>
 <h4 id="preparation"><a href="#preparation" class="headerlink" title="preparation"></a>preparation</h4><ul>
@@ -376,8 +373,7 @@
 <h4 id="operation"><a href="#operation" class="headerlink" title="operation"></a>operation</h4><p>&emsp;&emsp;本地SDN控制器根据各个终端用户的数据流量信息，把预留的资源调度给每个终端用户，相比planning阶段的大时间尺度，这里的时间尺度约为100ms。具体的决策包括：选择无线接入技术（RAT）、确定用户与特定无线接入点的关联、确定适当的协议和相关参数、在最终用户之间协调资源等。</p>
 <p>&nbsp;</p>
 <h3 id="AI在网络切片中的作用"><a href="#AI在网络切片中的作用" class="headerlink" title="AI在网络切片中的作用"></a>AI在网络切片中的作用</h3><p>&emsp;&emsp;尽管网络切片可以促进提供服务，管理大量切片会产生很大的成本，特别是在6G网络下。所以考虑在网络切片的生存周期所有阶段都引入AI技术来降低管理难度和成本。</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/202205011514122.png" alt="image-202205011514122" style="zoom: 25%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/202205011514122.png" alt="image-202205011514122" style="zoom: 25%;" /></p>
 <h4 id="AI-for-Preparation"><a href="#AI-for-Preparation" class="headerlink" title="AI for Preparation"></a>AI for Preparation</h4><ul>
 <li><p>服务需求预测</p>
 <p>  用循环神经网络等AI技术，基于历史数据可以准确地预测服务需求和切片资源的使用情况，预测结果用于后续进行决策</p>
@@ -404,8 +400,7 @@
 </ul>
 <p>&nbsp;</p>
 <h3 id="信息交换过程"><a href="#信息交换过程" class="headerlink" title="信息交换过程"></a>信息交换过程</h3><p>&emsp;&emsp;AI for Slicing过程包括终端用户、基站和SDN控制器之间的信息交换。图解过程如下：</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/202205011514123.png" alt="image-202205011514123" style="zoom: 50%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/202205011514123.png" alt="image-202205011514123" style="zoom: 50%;" /></p>
 <p>&nbsp;</p>
 <h2 id="Slicing-for-AI"><a href="#Slicing-for-AI" class="headerlink" title="Slicing for AI"></a>Slicing for AI</h2><p>&emsp;&emsp;Slicing for AI使用网络切片来支持AI services，同时满足QoS需求。这需要：构造和选择AI instances、AI services生存周期内的有效资源管理</p>
 <h3 id="AI-Instance"><a href="#AI-Instance" class="headerlink" title="AI Instance"></a>AI Instance</h3><p>&emsp;&emsp;AI services的实例化包括：算法类型、训练方法、网络资源分配，AI Instance是AI service的一个实例化选项，基本思想是构造多个候选实例选项，然后基于网络环境选择一个合适的，包括两部分：</p>
@@ -700,6 +695,8 @@ $(document).ready(function() {
 
 
 
+
+  
 
   
 

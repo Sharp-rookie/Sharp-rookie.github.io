@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.4.2">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -74,8 +74,8 @@
 <meta property="article:published_time" content="2022-03-12T15:04:22.650Z">
 <meta property="article:modified_time" content="2022-04-25T03:39:28.355Z">
 <meta property="article:author" content="Lrk612">
-<meta property="article:tag" content="5G">
 <meta property="article:tag" content="AI">
+<meta property="article:tag" content="5G">
 <meta property="article:tag" content="Reinforcement Learning">
 <meta property="article:tag" content="Mutli-Agent RL">
 <meta property="article:tag" content="Machine Learning">
@@ -340,12 +340,10 @@
 </ul>
 <p>文章证明了此问题是个 NP-Hard 问题。然后把每个时间尺度建模为马尔可夫决策过程（MDP），其中大时间尺度被建模为<strong>单个代理 MDP</strong>，而较短时间尺度被建模为<strong>多代理 MDP</strong></p>
 <p>文章利用<strong>指数权重算法 (EXP3)</strong> 来解决大时间尺度 MDP 的单智能体 MDP，并利用<strong>多智能体 Deep Q-Learning 算法</strong>来求解多智能体 MDP，即短时间尺度的资源分配</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312162931.png" alt="image-20220312162931068" style="zoom:60%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312162931.png" alt="image-20220312162931068" style="zoom:60%;" /></p>
 <p><strong>原文</strong></p>
 <p><a target="_blank" rel="noopener" href="https://lrk612.com/resources/Dynamic%20SDN-based%20Radio%20Access%20Network%20Slicing%20with%20Deep%20Reinforcement%20Learning%20for%20URLLC%20and%20eMBB%20Services.pdf">Dynamic SDN-based Radio Access Network Slicing with Deep Reinforcement Learning for URLLC and eMBB Services</a></p>
 <span id="more"></span>
-
 <p>&nbsp;</p>
 <h2 id="问题导向及现有研究"><a href="#问题导向及现有研究" class="headerlink" title="问题导向及现有研究"></a>问题导向及现有研究</h2><h3 id="NS-amp-SDN-amp-问题背景"><a href="#NS-amp-SDN-amp-问题背景" class="headerlink" title="NS &amp; SDN &amp; 问题背景"></a>NS &amp; SDN &amp; 问题背景</h3><p>5G支持的异构业务主要分为增强型移动宽带（eMBB）、超可靠低时延通信（URLLC）和海量机器类通信（mMTC）服务 [1]：</p>
 <ul>
@@ -355,8 +353,7 @@
 </ul>
 <p>为了支持这三种 5G 服务，同时尊重它们对通用无线网络基础设施的异构和不同要求，无线接入网切片被视为下一代蜂窝网络的关键使能技术。<strong>网络切片 (NS)</strong> 提供了构建多个独立逻辑网络（称为网络切片）的能力，每个网络切片都适应特定服务的需求 [5]。因此，每个 RAN 切片都可以定制并专用于支持具有独特特征和要求的特定服务。网络运营商可以利用<strong>软件定义网络 (SDN)</strong> 提供的网络可编程性来动态管理为 RAN 切片提供的无线电资源</p>
 <p>与云 RAN (C-RAN) 架构不同，在部署多接入边缘计算 (MEC) 环境时，维护服务可用性和利用 MEC 资源方面有着重大挑战 [7]，SDN 可以被认为是重要的 fog RAN (F-RAN) 架构中的 5G RAN 使能器。具体而言，将 SDN 与 F-RAN 共同部署可提高利用其网络全局视野开发无线电资源的能力 [8]。在这项工作中考虑的无线电资源是资源块（RB），它是可以分配给 UE 的最小资源元素，它由频带和时隙对标识。每个 gNodeB 应该有足够的来自共享无线电 RB 池的 RB 来满足其 UE 的需求。在 RAN 切片场景中，SDN 可用于为每个 gNodeB 中的每个 RAN 切片分配适当的 RB，具体取决于无线电资源的可用性和相应 gNodeB 的 UE 所需的服务，这里的难点是<strong>如何实现为每个基站设计最优RBs分配方案以满足其不同切片中的 UE 的QoS要求</strong></p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312162931.png" alt="image-20220312162931068" style="zoom:70%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312162931.png" alt="image-20220312162931068" style="zoom:70%;" /></p>
 <center>图 1</center>
 
 <h3 id="相关工作调研"><a href="#相关工作调研" class="headerlink" title="相关工作调研"></a>相关工作调研</h3><p>为了解决这个问题，近年来提出了各种各样的算法和方案[9]-[18]，主要提出集中式资源分配解决方案或多级资源分配解决方案</p>
@@ -366,6 +363,7 @@
 <li><p>在<strong>多级资源分配</strong>解决方案方法中，SDN控制器在上层将无线电资源分配给RAN切片或gNodeB。后者负责在较低级别并基于SDN控制器预先分配的资源，为 UE 分配无线电资源。虽然多级资源分配方案可以有效地为 UE 分配资源块，但是当SDN控制器预先分配的资源不足以处理所需的业务时，低级分配操作可能会失败，因为它必须等待下一个资源预留更新或立即向 SDN 控制器请求更多资源，这会显着降低网络运营商预期提供的 QoS</p>
 </li>
 </ul>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -374,7 +372,8 @@
 <th>不足</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>[9]</td>
 <td>使用两种机器学习方法提出了 RAN 切片框架：<br/>1. 用LSTM预测在较长时间内分配给切片的资源量<br/>2. 用多智能体 RL 算法：异步 actor-critic agent (A3C)，为RAN切片做在线资源调度</td>
 <td>仅考虑了eMBB类型的UE，并且没有考虑对单个UE的切片</td>
@@ -422,9 +421,10 @@
 <tr>
 <td>[18]</td>
 <td>把根据切片需求来分配无线资源的问题建模为受正交约束（即服务隔离）、延迟相关约束和最小速率约束的总速率最大化问题<br/>先用非线性 AMC 可实现吞吐量的近似值来放松 AMC 的数学难处理性<br/>然后通过使用问题的惩罚性重构将二元约束放松为框约束<br/>最后又提出一种启发式算法求解问题的思路，比上面方法复杂度更低</td>
-<td></td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h3 id="文章工作内容"><a href="#文章工作内容" class="headerlink" title="文章工作内容"></a>文章工作内容</h3><p>文章通过提出两级 RB 分配机制来填补这两个空白。在第一层和大时间尺度上，SDN控制器根据gNodeB的要求从公共无线电RB池中为每个gNodeB分配一定数量的RB。在第二层，每个 gNodeB 在短时间内将预分配的 RB 调度给其关联的UE，以满足他们在数据速率和延迟方面的 QoS 要求。这种机制避免了由于无线网络流量的突然和潜在的意外波动而导致 gNodeB 和 SDN 控制器之间的频繁通信。为了进一步减少 gNodeB 和 SDN 控制器之间的通信，gNodeB 可以在其预分配的 RB 不足时向其他相邻的 gNodeB 请求额外的 RB，从而可以立即响应 UE 的要求</p>
 <p>在这项工作中，考虑了两种类型的切片，每种切片专用于单个 5G 服务，即 eMBB 服务和 URLLC 服务。然后，我们将两级 RB 分配问题表述为一个优化问题，其目标是最大化 eMBB 和 URLLC  UE 的总可实现数据速率。这一目标的实现必须满足 URLLC 服务的超低延迟要求以及 eMBB 服务的最低数据速率要求。解决这一优化问题的建议机制将：</p>
 <ol>
@@ -458,8 +458,7 @@
 <p>在第二层，RB 分配过程由 gNodeB 执行，将 RB 分配给每个 UE 。文章将此 RB 分配级别称为 gNodeB 分配级别</p>
 <p>每个 gNodeB b ∈B 在短时间内从预先分配的 RBs： Kb ⊆K 中为每个相关的 UE 分配一些 RBs，以满足每个 UE在数据速率和延迟方面的 QoS 要求。为了确保由同一 gNodeB b ∈B 服务的 UE 之间的 DL 传输的正交性，每个 RB k ∈ Kb 被<strong>排他地</strong>分配给一个 UE：ub ∈ Ub</p>
 <p>用二进制变量 <code>xk_ub</code> 表示 RB：k 是否分配给了 UE ub</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312222009.png" alt="image-20220312222009821" style="zoom:80%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312222009.png" alt="image-20220312222009821" style="zoom:80%;" /></p>
 <center>二式表示一个RB必须一次只分配给一个 UE （反应了OFDMA约束）</center>
 
 <hr>
@@ -467,18 +466,15 @@
 <p>在文章的方法中，RB分配操作是在考虑给定的时频资源网格模型的情况下执行的。换言之，对于特定的子载波间隔，例如 15 KHz、30 KHz 和 60 KHz，应使用适当的训练模型来执行 RB 分配操作</p>
 <p>文章假设 gNodeB 对信道状态信息 [20]、[21] 有（近乎）完美的了解。当衰落随时间缓慢变化并且 UE 的移动性较低时，在真实 5G 网络中，gNodeB 上（接近）完美的信道状态信息的可用性是合理的，因为无线信道不会快速变化，这类似于本文的案例。可以使用例如深度学习算法 [22] 在 5G 网络中准确估计信道状态信息</p>
 <p>在第 <code>k</code> 个 RB 上与第 <code>b</code> 个 gNodeB 相关联并属于切片 <code>s ∈&#123;su,se&#125;</code> 的第 <code>ub</code> 个 UE 的可实现数据速率定义如下：</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312222138.png" alt="image-20220312222138477" style="zoom:80%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312222138.png" alt="image-20220312222138477" style="zoom:80%;" /></p>
 <p>其中 <code>W</code> 表示 RB 的带宽，<code>P_s_ub</code> 是基站 b ∈ B 到 UE ub ∈ Ub 在切片 s ∈ {su,se} 中的传输功率，<code>Gub_k</code> 是基站 b ∈ B 与其关联的 DL 信道增益 UE ub ∈ Ub，<code>σ2</code> 是加性高斯白噪声 (AWGN) 的功率，这里假设所有 RB 的带宽和下行传输功率都相同</p>
 <hr>
 <p>在第二级资源分配过程中，如果SDN控制器没有为一个gNodeB分配足够的RB，后者可以向其他gNodeB请求额外的RB。当且仅当 <code>∑ ub∈Ub ∑ k∈Kb x_k_ub ≥|Kb|</code>（即预留的RB确实不够用）时，gNodeB b 才可以从其他 gNodeB 请求额外的 RB 并将它们分配给其相关的 UE。这个约束可以定义如下：</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312224919.png" alt="image-20220312224919264" style="zoom:80%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312224919.png" alt="image-20220312224919264" style="zoom:80%;" /></p>
 <p>其中 k‘ 是从其他基站 b 借来的RB，显然此时 <code>x_k&#39;_ub = 1</code></p>
 <hr>
 <p>属于切片 <code>s ∈ &#123;su,se&#125;</code> 并与 gNodeB b ∈ B 相关联的UE：ub ∈Ub 的总数据速率定义为：</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312225249.png" alt="image-20220312225249659" style="zoom:80%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312225249.png" alt="image-20220312225249659" style="zoom:80%;" /></p>
 <hr>
 <p>为了计算 URLLC 和 eMBB 流量的延迟，假设：</p>
 <ol>
@@ -486,19 +482,16 @@
 <li>数据包的到达间隔时间是独立的并且遵循<strong>指数分布</strong>[23]</li>
 </ol>
 <p>因此，排队流量模型可以被认为是一个 M/M/1 排队系统。此外，不同切片的数据包长度不同，但在切片 <code>s ∈&#123;su,se&#125;</code> 中它们是相似的。下式是通过应用<strong>利特尔定律</strong>来计算得到的时延。属于切片 <code>s ∈ &#123;su,se&#125;</code> 且与 b ∈B 相关联的 UE 数据包 <code>ub</code> 经历的平均延迟 <code>d_s_ub</code> ，其中 <code>λ_s_ub</code> 是 <code>ub ∈Ub</code> 且属于切片 <code>s ∈ &#123;su,se&#125;</code> 的数据包到达率：</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312225321.png" alt="image-20220312225321214" style="zoom:90%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312225321.png" alt="image-20220312225321214" style="zoom:90%;" /></p>
 <p>文章选择 M/M/1 排队系统，是因为它广泛用于表征无线通信系统，特别是在 RAN 切片方法 [15]、[24]、[25] 中</p>
 <p>然而，在一些实际场景中，流量会变得突发，因此 M/M/1 假设（即每个 gNodeB 的数据包到达过程遵循泊松分布）可能太过乐观。在这种情况下，gNodeB 不能被视为 M/M/1 系统，队列不能被建模为连续时间马尔可夫过程。在这种情况下，流量突发时，排队系统可以建模为离散时间马尔可夫过程[26]，[27]。如[28]所示，许多连续时间马尔可夫过程可以通过仅观察状态转换转换为离散时间马尔可夫过程。由于 M/M/1 排队假设可以看作是一个连续时间的马尔可夫过程，所以在这项工作中获得的分析和结果对于大多数无法应用泊松分布的场景都是有效的。注意，在不同的排队假设下，数学分析可能会有所不同且更加复杂。简单起见，这里只假设了 M/M/1 的情况</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <h2 id="Part3：RB分配问题建模-amp-NP-Hard分析"><a href="#Part3：RB分配问题建模-amp-NP-Hard分析" class="headerlink" title="Part3：RB分配问题建模 &amp; NP-Hard分析"></a>Part3：RB分配问题建模 &amp; NP-Hard分析</h2><h3 id="场景建模"><a href="#场景建模" class="headerlink" title="场景建模"></a>场景建模</h3><p>RAN中RB分配的主要问题是如何为URLLC和eMBB的UE推导RB的两级最优分配，以满足其在数据速率和延迟方面的QoS要求。为此，全局RB分配优化问题表述如下：</p>
 <p>优化目标是最大化URLLC和eMBB的UE总数据速率：</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312153530.png" alt="image-20220312153530543" style="zoom:75%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312153530.png" alt="image-20220312153530543" style="zoom:75%;" /></p>
 <p>约束条件：</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312153547.png" alt="image-20220312153547076" style="zoom:75%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312153547.png" alt="image-20220312153547076" style="zoom:75%;" /></p>
 <p>其中，<code>x_k_ub</code> 表示用户 ub 是否分配得到第 <code>k</code> 个RB（二进制变量），每个约束含义为：</p>
 <ul>
 <li>(7b) 表示每个UE分配的最大RB数量不超过 <code>Kmax</code>，从而保证分配的公平性</li>
@@ -512,7 +505,6 @@
 <p>&nbsp;</p>
 <h3 id="NP-Hard-分析"><a href="#NP-Hard-分析" class="headerlink" title="NP-Hard 分析"></a>NP-Hard 分析</h3><p>文章用 P 表示上述优化问题。为了证明 P 是 NP-hard，文章将NP-hard的 0-1 背包问题  [29] 简化为 P 的一个实例：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">0-1背包问题：</span><br><span class="line">给定一组 N 件物品，每件物品都有它的利润 pi 和重量 wi，以及一个容量为 C 的背包</span><br><span class="line">每个物品可以放入或不放入背包（1或0）</span><br><span class="line">目标是找到一个子集 N′⊆N 使得物品的总价值 ∑ni∈N′ pi 最大化，并且所选物品的总重量小于或等于背包容量，即 (∑ni∈N′ wi)≤C</span><br></pre></td></tr></table></figure>
-
 <p>证明问题 P 为 NP-Hard：</p>
 <p>如果 P 的受限情况下就是NP-Hard问题，那么在一般情况下就也是 NP 难的，所以考虑受限情况：</p>
 <ul>
@@ -522,11 +514,9 @@
 </ul>
 <p>在这种情况下，P 等效于：</p>
 <p>优化目标最大化eMBB的UE总数据速率：</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312155705.png" alt="image-20220312155705408" style="zoom:80%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312155705.png" alt="image-20220312155705408" style="zoom:80%;" /></p>
 <p>约束条件：</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312155730.png" alt="image-20220312155730468" style="zoom:75%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312155730.png" alt="image-20220312155730468" style="zoom:75%;" /></p>
 <p>其中，每个约束含义为：</p>
 <ul>
 <li>(8b) 表示每个UE分配的最大RB数量不超过 <code>Kmax</code>，从而保证分配的公平性</li>
@@ -546,8 +536,7 @@
 <p>&nbsp;</p>
 <h2 id="Part4：基于-Single-Agent-amp-Mutli-Agent-RL-的资源切片"><a href="#Part4：基于-Single-Agent-amp-Mutli-Agent-RL-的资源切片" class="headerlink" title="Part4：基于 Single-Agent &amp; Mutli-Agent RL 的资源切片"></a>Part4：基于 Single-Agent &amp; Mutli-Agent RL 的资源切片</h2><p>资源分配问题很难在两级过程（即：控制器级和 gNodeB 级）中取得最优解。为了克服这一挑战，文章利用机器学习技术，特别是 RL 来执行 RB 分配任务，因为它能以高效的计算方式解决无线网络资源分配问题[30]</p>
 <p>文章提出了一种单智能体-多智能体-强化学习 (SA-MA-RL) 框架来解决两级 RB 分配问题，如图 2 所示</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312162847.png" alt="image-20220312162847141" style="zoom: 80%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312162847.png" alt="image-20220312162847141" style="zoom: 80%;" /></p>
 <center>图 2</center>
 
 <h3 id="SDN-Level"><a href="#SDN-Level" class="headerlink" title="SDN Level"></a>SDN Level</h3><p>因为在 SDN 分配级别的资源分配不受维数爆炸问题的影响，所以文章选择了经典的 RL 算法：<strong>指数权重算法</strong> (EXP3) 进行探索和利用[31]，SDN控制器扮演 RL agent 的角色，执行将 RB 分配给 gNodeB 的操作</p>
@@ -598,8 +587,7 @@
 </ol>
 <p>由于每个智能体形成联合动作 a，因此 (i) 和 (ii) 可以很容易地被智能体 b 验证。如果其中至少一个是正确的，则不满足约束（7d），因此代理 b 选择的动作是不可行的</p>
 <p>因此，智能体 b 的个人奖励用 <code>Rb</code> 表示如下：</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312204906.png" alt="image-20220312204906897" style="zoom:85%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312204906.png" alt="image-20220312204906897" style="zoom:85%;" /></p>
 <p>当一个动作 <code>ab ∈ Ab</code> 不可行时，它会受到负奖励 <code>Rb = -1</code> 的惩罚，以防止代理在未来选择不可行的动作</p>
 <p>&nbsp;</p>
 <h3 id="单智能体-EXP3-算法"><a href="#单智能体-EXP3-算法" class="headerlink" title="单智能体 EXP3 算法"></a>单智能体 EXP3 算法</h3><p>为了解决 SDN 分配级别问题，文章采用了基于多武装老虎机（MAB）方法的<strong>在线学习</strong>算法 [31]</p>
@@ -611,11 +599,9 @@
 <li>使用收到的奖励通过<strong>应用指数加权方案</strong>来更新每个动作的权重。这种方案的优点是能迅速增加好动作的概率，并迅速降低坏动作的概率</li>
 </ol>
 <p>EXP3算法的伪代码：</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312221112.png" alt="image-20220312221112891" style="zoom:70%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312221112.png" alt="image-20220312221112891" style="zoom:70%;" /></p>
 <p>其中：</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312221643.png" alt="image-20220312221643332" style="zoom:80%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312221643.png" alt="image-20220312221643332" style="zoom:80%;" /></p>
 <p>EXP3 算法很容易实现，不需要巨大的计算复杂度，因为它只是通过根据其性能增加或减少动作的概率来更新选择动作的权重。注意，EXP3 算法是一种<strong>在线学习</strong>算法，它使 SDN 控制器能够根据从 gNodeB 接收到的反馈来增加或减少动作的权重</p>
 <p>准确地说，SDN 控制器选择一个动作 <code>ac,i</code> 将 RB 分配给 gNodeB。然后它等待由 gNodeB 执行的第二个 RB 分配级别的结果。一旦 gNodeB 将 SDN 控制器选择的 RB 分配给其 UE，每个 gNodeB：</p>
 <ol>
@@ -624,40 +610,34 @@
 </ol>
 <p>EXP3 算法将使用所有 gNodeB 的总数据速率作为奖励来更新动作的权重</p>
 <p>&nbsp;</p>
-<h3 id="多智能体-Double-DQN-算法"><a href="#多智能体-Double-DQN-算法" class="headerlink" title="多智能体 Double DQN 算法"></a>多智能体 Double DQN 算法</h3><h4 id="训练阶段"><a href="#训练阶段" class="headerlink" title="训练阶段"></a>训练阶段</h4><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312205910.png" alt="image-20220312205910922" style="zoom:70%;" />
-
+<h3 id="多智能体-Double-DQN-算法"><a href="#多智能体-Double-DQN-算法" class="headerlink" title="多智能体 Double DQN 算法"></a>多智能体 Double DQN 算法</h3><h4 id="训练阶段"><a href="#训练阶段" class="headerlink" title="训练阶段"></a>训练阶段</h4><p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312205910.png" alt="image-20220312205910922" style="zoom:70%;" /></p>
 <p>损失函数定义：</p>
 <p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312210909.png" alt="image-20220312210909006"></p>
 <p>更新方式：</p>
 <p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312210927.png" alt="image-20220312210927890"></p>
-<h4 id="推理阶段"><a href="#推理阶段" class="headerlink" title="推理阶段"></a>推理阶段</h4><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312211613.png" alt="image-20220312211613420" style="zoom:70%;" />
-
+<h4 id="推理阶段"><a href="#推理阶段" class="headerlink" title="推理阶段"></a>推理阶段</h4><p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312211613.png" alt="image-20220312211613420" style="zoom:70%;" /></p>
 <p>在训练阶段之后，主要Q网络的参数用于在DQL算法的在线实施阶段为 UE 寻找RB分配解决方案。此阶段使用经过训练的代理 DDQN。在每一集的开始，它都会构建每个代理的环境。然后，对于每一步，当观察到一个新状态时，每个智能体 b 选择最大化当前状态 Q 值的动作。一旦所有代理都选择了他们的行动，每个代理就可以形成一个联合行动。从而得到一个RBs分配方案</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <h2 id="Part5：仿真结果"><a href="#Part5：仿真结果" class="headerlink" title="Part5：仿真结果"></a>Part5：仿真结果</h2><h3 id="实验场景和设置"><a href="#实验场景和设置" class="headerlink" title="实验场景和设置"></a>实验场景和设置</h3><p>考虑支持 SDN 的 RAN 架构，其中 gNodeB 部署在面积为 1Km^2 的正方形中。UE均匀分布在整个覆盖区域，其中每个用户仅与一个 gNodeB 相关联。假定每个 UE 是 eMBB 的 UE 或 URLLC 的 UE。为简单起见，所有 ub ∈ Ub 和 b ∈ B 的传输功率 P_sub 相同</p>
 <p>表 I 总结了仿真的关键参数。为了选择有效的 Q 网络模型，训练阶段DQL 算法在配备 Intel Core i7-8750H 处理器、16 GB RAM 和 NVIDIA GeForce GTX 1070 显卡的笔记本电脑上执行。使用 PyTorch 框架创建和训练代理的 DDQN。为了选择最佳的超参数值来训练 DDQN 模型，需要进行大量的模拟。文章在基于文献 [16]、[38] 中的常见设置选择的一组细粒度值中测试了超参数的随机组合</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312212049.png" alt="image-20220312212049040" style="zoom:80%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312212049.png" alt="image-20220312212049040" style="zoom:80%;" /></p>
 <center>表 1</center>
 
 <p>特别是，每个 DDQN 由两个完全连接的隐藏层组成，每个隐藏层有 256 个神经元。使用整流线性单元（ReLU）作为激活函数来避免反向传播中的梯度消失问题，从而加速学习过程。 Adam 优化器使用 0.001 的学习率。在训练过程中，每 1000 步将主 Q 网络的权重复制到目标 Q 网络的权重，以避免高估 Q 值</p>
 <p>此外还考虑了移动性较低的 UE，因此 gNodeB 和 UE 之间的信道增益在一段时间内保持不变。为此，文章在几个训练集内固定了 UE 的位置，这有助于学习算法更好地获取 UE 的动态，同时稳定训练。 DDQN 的其他超参数在表 II 中给出</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312212213.png" alt="image-20220312212213624" style="zoom:80%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312212213.png" alt="image-20220312212213624" style="zoom:80%;" /></p>
 <center>表 2</center>
 
 <p>&nbsp;</p>
 <h3 id="DDQN-训练结果"><a href="#DDQN-训练结果" class="headerlink" title="DDQN 训练结果"></a>DDQN 训练结果</h3><p>为了评估所提出的多智能体 DRL 方法的训练性能，文章观察了每个训练集的累积奖励以及训练过程中损失函数的行为</p>
 <p>图 3 显示了每轮代理的累积平均奖励。从这个图中看出，累积奖励随着训练集数的增加而提高，当训练集大约达到 1800 时，代理会获得较好体验并开始利用更好的动作。累积奖励接近最大值，表明训练过程在可接受数量的训练集之后收敛。注意，DQL 算法的收敛不会出现大的波动，这主要是由于环境中 UE 的低移动性</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312212435.png" alt="image-20220312212435105" style="zoom:80%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312212435.png" alt="image-20220312212435105" style="zoom:80%;" /></p>
 <center>图 3</center>
 
 <hr>
 <p>图 4 说明了损失函数 Eq 的收敛性。在 DDQN 的训练过程中，绘制了代理损失结果每轮次的平均值。损失随着训练次数的增加而减少。在前 11 轮中，损失逐渐下降，因为各种新动作是随机探索的，随着学习的进展，基于变得更加可靠的 Q 值函数选择性地执行好的动作。因此，在第 2500 轮之后，损失收敛到最小值，这证明了准确的 Q 值近似效果</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312212612.png" alt="image-20220312212612916" style="zoom:80%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312212612.png" alt="image-20220312212612916" style="zoom:80%;" /></p>
 <center>图 4</center>
 
 <hr>
@@ -702,8 +682,7 @@
 <p>另一方面，当 UE 的数量很大时，每种方法都试图为每个 UE 分配最少数量的 RB，以便在数据速率和延迟要求方面满足尽可能多的 UE </p>
 <p>SA-MA-RL 比 3-SRA 更好地最大化 UE 的总数据速率，因为 3-SRA 根据整个切片所需的数据速率将 RB 分配给 UE ，切片中包括一组 UE ，而不是单独依赖每个 UE 所需的数据速率。因此，它不能有效地将所需的资源块分配给 UE </p>
 <p>而在 1-SRA 方法中，RB 的分配仅基于每个 UE 的最高估计 SNR，这可能很难确定满足 UE  QoS 所需的 RB</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312220424.png" alt="image-20220312220424071" style="zoom:80%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312220424.png" alt="image-20220312220424071" style="zoom:80%;" /></p>
 <center>图 5</center>
 
 <hr>
@@ -714,22 +693,19 @@
 <li>最小数据速率阈值越高，SA-MA-RL 与两种基准方法之间的性能差距就越大</li>
 </ol>
 <p>这是由于在 gNodeB 分配级别提出的多代理方法，当 SDN 控制器预分配的 RB 不足时，gNodeB 可以从其他相邻的 gNodeB 借用 RB。这确实说明了所提出的多智能体方法的有效性并证明了它的鲁棒性</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312220606.png" alt="image-20220312220606871" style="zoom:80%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312220606.png" alt="image-20220312220606871" style="zoom:80%;" /></p>
 <center>图 6</center>
 
 <hr>
 <p>图 7 显示出 SA-MA-RL 与两种基准方法（即 3-SRA 和 1-SRA）在实现的数据速率大于或等于最小数据速率阈值的 UE 的平均数量方面的比较最小</p>
 <p>可以看到，对于所有最小数据速率阈值，SA-MA-RL 始终优于 3-SRA 和 1-SRA。这是因为，在 3-SRA 中，如果给定切片的预留资源不足以提供所需的服务，即最小数据速率阈值，则切片必须等待下一次资源预留更新，而在SA-MA-RL，gNodeB 可以在必要时从其他 gNodeB 请求一些 RB。在 1-SRA 中，如果 SNR 估计不合适，分配给 UE 的 RB 可能不足以提供所需的服务，因此将在下一次资源分配操作中为 UE 提供服务</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312220723.png" alt="image-20220312220723813" style="zoom:80%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312220723.png" alt="image-20220312220723813" style="zoom:80%;" /></p>
 <center>图 7</center>
 
 <hr>
 <p>在图 8 中，根据数据包所经历的延迟小于或等于最大延迟阈值 Dmax 的 UE 的平均数量，将 SA-MA-RL 的性能与两种基准方法的性能进行了比较</p>
 <p>与图 7 中获得的结果类似，可以再次确认，对于所有最大延迟阈值，SA-MA-RL 与 3-SRA 和 1-SRA 相比具有更好的性能</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312220804.png" alt="image-20220312220804350" style="zoom:80%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220312220804.png" alt="image-20220312220804350" style="zoom:80%;" /></p>
 <center>图 8</center>
 
     </div>
@@ -757,8 +733,8 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/5G/" rel="tag"># 5G</a>
               <a href="/tags/AI/" rel="tag"># AI</a>
+              <a href="/tags/5G/" rel="tag"># 5G</a>
               <a href="/tags/Reinforcement-Learning/" rel="tag"># Reinforcement Learning</a>
               <a href="/tags/Mutli-Agent-RL/" rel="tag"># Mutli-Agent RL</a>
               <a href="/tags/Machine-Learning/" rel="tag"># Machine Learning</a>
@@ -1009,6 +985,8 @@ $(document).ready(function() {
 
 
 
+
+  
 
   
 

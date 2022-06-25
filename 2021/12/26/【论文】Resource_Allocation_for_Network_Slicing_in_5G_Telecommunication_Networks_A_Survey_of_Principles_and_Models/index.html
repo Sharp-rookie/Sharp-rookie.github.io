@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.4.2">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -317,7 +317,6 @@
 <p><strong>原文</strong></p>
 <p><a target="_blank" rel="noopener" href="https://lrk612.com/resources/Resource%20Allocation%20for%20Network%20Slicing%20in%205G%20Telecommunication%20Networks%20A%20Survey%20of%20Principles%20and%20Models.pdf">Resource Allocation for Network Slicing in 5G Telecommunication Networks A Survey of Principles and Models</a></p>
 <span id="more"></span>
-
 <p>&nbsp;</p>
 <h2 id="网络切片"><a href="#网络切片" class="headerlink" title="网络切片"></a>网络切片</h2><p>&emsp;&emsp;作为 5G 中很有前途的技术之一，网络切片在电信网络基础设施上创建了端到端（即从无线电接入网络 (RAN) 到核心网络 (CN)）逻辑上独立的网络。每个逻辑上独立的网络称为网络切片，是为特定需求而设计的，由从底层通信和网络资源中抽象出来的若干网络功能和资源组成。网络切片的基本思想与云计算中的基础设施（即服务 IaaS） 的基本思想密切相关。 IaaS 在不同租户之间共享计算、存储和网络资源，并提供由软件定义网络 (SDN) 和网络功能虚拟化 (NFV) 支持的全功能虚拟网络。事实上，SDN和NFV被认为是5G背景下网络切片的关键技术。 SDN依靠控制平面和数据平面的分离来增强数据转发效率和网络可编程性，NFV 使虚拟网络功能 (VNF) 能够在通用硬件上运行以降低部署成本。网络切片作为多个 VNF 的组合，不仅可以提供灵活、可扩展和可编程的网络服务，还可以通过高效编排和管理 VNF 来降低资本支出 (CAPEX) 和运营支出 (OPEX)</p>
 <p>&emsp;&emsp;作为5G电信网络的一个主要问题，网络切片的资源分配面临隔离、定制、弹性、端到端协调等诸多挑战。具体而言，在资源隔离方面，由于通信环境的变化，网络切片的共享和隔离资源并不简单。例如，无线电资源的严格隔离可能导致低复用增益。定制化实现网络切片的高效资源利用，满足特定的网络服务需求。如何将网络服务需求有效地转化为所需的网络资源，需要在不同层面进行更多的考虑，包括控制层面、数据平面层面、网络层面。例如，在时变数据流量下无法直接获得具有相应计算、存储和网络资源的虚拟机（VM）的确切数量。共享资源的动态分配可能会影响网络切片的网络性能。端到端资源分配必须跨越不同的域，例如 CN、RAN 和传输网络 (TN)。在不同网络层的异构技术之间实现新的协调并不容易。</p>
@@ -330,26 +329,20 @@
 <p>&nbsp;</p>
 <h2 id="MO架构"><a href="#MO架构" class="headerlink" title="MO架构"></a>MO架构</h2><p>&emsp;&emsp;Management and Orchestration Architecture of Network Slicing</p>
 <p>&emsp;&emsp;网络切片的基本问题包括网络切片需求的描述和网络切片的部署及其生命周期管理。为了解决这些问题，第三代合作伙伴计划 (3GPP) 提出了具有相应网络功能的基本 MO 架构，包括通信服务管理功能 (CSMF)、网络切片管理功能 (NSMF) 和网络切片子网管理功能 (NSSMF) ，每个子网都有一个 NSSMF，例如：RAN、CN。</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211226105342.png" alt="image-20211226105335500" style="zoom: 50%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20211226105342.png" alt="image-20211226105335500" style="zoom: 50%;" /></p>
 <p>&emsp;&emsp;在这种架构下，特定网络服务的需求由CMSF转换为网络切片的需求（即网络切片需求描述），传递给NSMF。然后，NSMF 将网络切片的需求分解为不同子网的需求。不同子网中的 NSSMF 管理和编排相应子网中的网络切片。例如，CN 中的 NSSMF 可以根据从 NSMF 接收到的网络服务的需求，求解出计算、存储和网络资源（即 VM 的资源）相关联的 VNF 的数量。然后，基本的 VNF 由 NFV-MANO 初始化，如图左侧所示。资源分配依赖于带有NFV-MANO的NSSMF，可以根据网络服务的需求计算所需的资源。此外，带有 NFV-MANO 的 NSSMF 可以通过升级或扩展网络功能来动态调整资源分配，这些功能由流量波动或网络切片需求的变化触发。在网络切片的 MO 架构下，隔离级别和数学模型在资源分配中扮演着重要的角色。</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <h2 id="Resouce-Type-and-Isolation"><a href="#Resouce-Type-and-Isolation" class="headerlink" title="Resouce Type and Isolation"></a>Resouce Type and Isolation</h2><h4 id="RAN-Slicing"><a href="#RAN-Slicing" class="headerlink" title="RAN Slicing"></a>RAN Slicing</h4><p>&emsp;&emsp;频谱是 RAN 切片的基本无线资源，在长期演进 (4G LTE) 系统中，频谱资源被提取为资源块 (RB) 或物理资源块 (PRB)。具有专用 PRB 的网络切片严格确保所需的 QoS/SLA，而公共媒体访问控制 (MAC) 调度程序可以分配和管理共享 PRB 以适应弹性流量、变化的信道条件和 QoS 要求，从而增强资源弹性和复用增益。除了频谱资源以外，其他基本物理资源还有：包括传输功率和基站（BS）的缓存空间等。</p>
 <p>&emsp;&emsp;基于 PRB 隔离，数据包调度作为一种高级隔离，负责决定使用空闲 PRB 处理数据流量的时间。最高级别的资源隔离是<strong>准入控制</strong>，它通过估计网络资源使用状态来确定是否在用户和 CN（即无线接入承载）之间建立数据传送服务。更一般地，准入控制还包括确定是否允许用户访问网络或是否接受网络切片请求。此外，<strong>用户关联</strong>是RAN切片中资源分配的重要步骤，它决定了用户是否与特定的BS相关联。用户关联发生在数据传输之前和用户准入控制之后。很难为用户关联确定不同的隔离级别，但值得注意的是它在负载平衡、无线电频谱效率和网络效率方面起着关键作用。</p>
 <p>&emsp;&emsp;与传统的RAN架构相比，Cloud-RAN（C-RAN）将基带过程和远程无线接入分离。集中式基带单元 (BBU) 池、分布式多个远程射频头 (RRH)、通过光链路连接 BBU 池和 RRH 的前传网络以及将 BBU 池连接到 CN 的回程网络是 C-RAN的四个基本部分。 BBU池用于基带处理，建立在具有虚拟化技术的高性能通用硬件上，可以运行在虚拟机或容器上，以提高物理资源（如计算、存储、网络资源）的利用率。由于部署成本低，分布式 RRH 通过天线为用户提供无线接入，以低 CAPEX 和 OPEX 覆盖大面积区域。在设计资源分配算法时，BBU 池和具有前传带宽的 RRH 的容量是重要因素。此外，用户关联和回程容量也会影响资源分配。下图左侧总结了与 RAN 切片的资源类型相关的隔离级别。</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211226123601.png" alt="image-20211226123601454" style="zoom:67%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20211226123601.png" alt="image-20211226123601454" style="zoom:67%;" /></p>
 <h4 id="CN-Slicing"><a href="#CN-Slicing" class="headerlink" title="CN Slicing"></a>CN Slicing</h4><p>&emsp;&emsp;与4G中的EPC相比，5G核心网采用更加模块化的架构，将网络划分为更细粒度的网络功能。每个网络功能都可以以VM或容器的方式部署在虚拟平台上，由SDN和NFV进行管理和编排，提供灵活、可扩展、可编程的网络服务。CN 切片中的高级资源隔离可以是 VM 或容器，这意味着网络运营商利用 VM 或容器粒度的扩展/扩展操作来初始化或调整资源分配。</p>
 <p>&emsp;&emsp;在NFV-MANO的框架下，一个CN切片由多个VNF组成，形成一个运行在底层网络上的虚拟网络。在这种情况下，CN 切片的资源分配被转换为虚拟网络嵌入 (VNE) 问题。VNE 提出了两个问题：将虚拟节点映射到物理节点，将连接虚拟节点的虚拟链路映射到连接物理节点的路径。物理节点和路径代表计算、存储和网络资源。在我们看来，VNE 可用于对 CN 切片以及 C-RAN 切片的某些部分（例如，BBU 容量的虚拟化）中的资源分配问题进行建模。 </p>
 <p>CN 切片中的隔离级别和资源类型：</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211226135025.png" alt="CN 切片中的隔离级别和资源类型" style="zoom: 67%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20211226135025.png" alt="CN 切片中的隔离级别和资源类型" style="zoom: 67%;" /></p>
 <p>无线资源管理、VNE和网络切片的资源分配之间的关系：</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211226135101.png" alt="image-20211226135101482" style="zoom:50%;" />
-
-
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20211226135101.png" alt="image-20211226135101482" style="zoom:50%;" /></p>
 <p>&nbsp;</p>
 <h2 id="资源分配模型"><a href="#资源分配模型" class="headerlink" title="资源分配模型"></a>资源分配模型</h2><h4 id="一般模型"><a href="#一般模型" class="headerlink" title="一般模型"></a>一般模型</h4><p>&emsp;&emsp;很自然地将网络切片的资源分配问题表述为线性规划 (LP) 问题或非线性规划 (NLP) 问题，优化目标包括网络切片的吞吐量、资源利用率、下一次分配的剩余物理资源等。一般的约束是基站的传输功率、基于服务合同的每个网络切片的最小PRB数量、不同网络切片之间的分配公平性等，这些可能会因网络环境的变化和网络切片的多样化需求而变得复杂。因此，一些一般的优化问题很难在<strong>多项式时间</strong>内解决。采用结合多个隔离级别的<strong>启发式方法</strong>来推导出具有低计算复杂性的近乎最优的解决方案。</p>
 <h5 id="example-1"><a href="#example-1" class="headerlink" title="example 1"></a>example 1</h5><blockquote>
@@ -419,11 +412,9 @@
 <p>优化目标是在重新映射期间最小化总带宽消耗。</p>
 <p>&nbsp;</p>
 <h3 id="4种模型对比"><a href="#4种模型对比" class="headerlink" title="4种模型对比"></a>4种模型对比</h3><p>图中说明了四种数学模型之间的关系，每个饼图中每种方法的比例代表了相应的研究潜力：</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211226161345.png" alt="image-20211226161345382" style="zoom: 33%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20211226161345.png" alt="image-20211226161345382" style="zoom: 33%;" /></p>
 <p>表中根据目标、资源类型、场景和关键描述总结了所讨论的算法：</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/20211226161507.png" alt="image-20211226161507843" style="zoom:50%;" />
-
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20211226161507.png" alt="image-20211226161507843" style="zoom:50%;" /></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <h3 id="网络切片潜力研究方向"><a href="#网络切片潜力研究方向" class="headerlink" title="网络切片潜力研究方向"></a>网络切片潜力研究方向</h3><h4 id="资源分配的更新周期"><a href="#资源分配的更新周期" class="headerlink" title="资源分配的更新周期"></a>资源分配的更新周期</h4><p>&emsp;&emsp;为了尽可能降低资源分配算法的计算复杂度，前面提出了启发式方法以提供具有低计算复杂度的次优解决方案。而<strong>多级资源分配</strong>则是另一种方式，包括准入控制、用户关联等。然而，很少有研究报告或出版物讨论资源分配算法的更新周期。合适的更新间隔不仅可以提高资源利用率，还可以减少信令开销和计算负担。在example1中，作者指出分配PRB的周期不能短于信道条件报告的周期。较长的更新周期在慢变通道中是可行的解决方案，但在快变通道中可能无法实现高性能。此外，在设计资源分配更新周期时，可以综合考虑用户数量的变化、数据流量的波动以及网络功能故障的平均周期。</p>
@@ -706,6 +697,8 @@ $(document).ready(function() {
 
 
 
+
+  
 
   
 

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.4.2">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -306,28 +306,27 @@
 <li>快速傅里叶变换</li>
 </ul>
 <span id="more"></span>
-
 <p>&nbsp;</p>
 <h2 id="周期信号傅里叶级数"><a href="#周期信号傅里叶级数" class="headerlink" title="周期信号傅里叶级数"></a>周期信号傅里叶级数</h2><blockquote>
 <p>只有周期信号才有傅里叶级数，无论连续还是离散</p>
 <p>周期信号的傅里叶级数统一都是离散谱</p>
 </blockquote>
 <h3 id="连续周期信号（CTFS）"><a href="#连续周期信号（CTFS）" class="headerlink" title="连续周期信号（CTFS）"></a>连续周期信号（CTFS）</h3><p>连续周期信号的频谱是离散谱，从正变换可以看出，a_k 是离散值</p>
-<h4 id="正变换"><a href="#正变换" class="headerlink" title="正变换"></a>正变换</h4><p>$$<br>a_k=\frac{1}{T}\cdot\int_{T}{x(t)\cdot e^{-jkw_0t}}dt<br>$$</p>
-<ul>
+<h4 id="正变换"><a href="#正变换" class="headerlink" title="正变换"></a>正变换</h4><script type="math/tex; mode=display">
+a_k=\frac{1}{T}\cdot\int_{T}{x(t)\cdot e^{-jkw_0t}}dt</script><ul>
 <li>a_k 就是原信号在 kw0 频点上的频谱系数，反映了幅频和相频</li>
 <li>a_k 的计算使用了指数函数<strong>正交性</strong>的原理</li>
 </ul>
-<h4 id="逆变换"><a href="#逆变换" class="headerlink" title="逆变换"></a>逆变换</h4><p>$$<br>x(t)=\sum_{k=-\infty}^{+\infty}{a_k\cdot e^{jkw_0\cdot t}}<br>$$</p>
-<ul>
+<h4 id="逆变换"><a href="#逆变换" class="headerlink" title="逆变换"></a>逆变换</h4><script type="math/tex; mode=display">
+x(t)=\sum_{k=-\infty}^{+\infty}{a_k\cdot e^{jkw_0\cdot t}}</script><ul>
 <li>逆变化计算原信号</li>
 </ul>
-<h3 id="离散周期信号（DTFS）"><a href="#离散周期信号（DTFS）" class="headerlink" title="离散周期信号（DTFS）"></a>离散周期信号（DTFS）</h3><h4 id="正变换-1"><a href="#正变换-1" class="headerlink" title="正变换"></a>正变换</h4><p>$$<br>a_k=\frac{1}{N}\cdot\sum_{k=<N>}x[n]\cdot e^{-jk{\frac{2\pi}{N}}n}<br>$$</p>
-<ul>
+<h3 id="离散周期信号（DTFS）"><a href="#离散周期信号（DTFS）" class="headerlink" title="离散周期信号（DTFS）"></a>离散周期信号（DTFS）</h3><h4 id="正变换-1"><a href="#正变换-1" class="headerlink" title="正变换"></a>正变换</h4><script type="math/tex; mode=display">
+a_k=\frac{1}{N}\cdot\sum_{k=<N>}x[n]\cdot e^{-jk{\frac{2\pi}{N}}n}</script><ul>
 <li>形式与连续周期信号基本保持一致</li>
 </ul>
-<h4 id="逆变换-1"><a href="#逆变换-1" class="headerlink" title="逆变换"></a>逆变换</h4><p>$$<br>x[n]=\sum_{k=<N>}a_k\cdot e^{jk{\frac{2\pi}{N}}n}<br>$$</p>
-<ul>
+<h4 id="逆变换-1"><a href="#逆变换-1" class="headerlink" title="逆变换"></a>逆变换</h4><script type="math/tex; mode=display">
+x[n]=\sum_{k=<N>}a_k\cdot e^{jk{\frac{2\pi}{N}}n}</script><ul>
 <li>与连续信号最大的不同是，<strong>离散信号的傅里叶级数是周期的</strong>，因此逆变换只计算一个周期内的和</li>
 <li>而连续周期信号的傅里叶级数相当于周期为无穷，因此是无穷求和</li>
 </ul>
@@ -337,47 +336,49 @@
 <p>并且傅里叶级数的系数和级数中的 a_k 的含义并不完全一样</p>
 <p>另外，时域连续，对应频谱都是非周期的</p>
 </blockquote>
-<h3 id="非周期连续信号"><a href="#非周期连续信号" class="headerlink" title="非周期连续信号"></a>非周期连续信号</h3><h4 id="正变换-2"><a href="#正变换-2" class="headerlink" title="正变换"></a>正变换</h4><p>$$<br>F[x(t)]=X(jw)=\int_{-\infty}^{+\infty}{x(t)\cdot e^{-jwt}dt}<br>$$</p>
-<ul>
+<h3 id="非周期连续信号"><a href="#非周期连续信号" class="headerlink" title="非周期连续信号"></a>非周期连续信号</h3><h4 id="正变换-2"><a href="#正变换-2" class="headerlink" title="正变换"></a>正变换</h4><script type="math/tex; mode=display">
+F[x(t)]=X(jw)=\int_{-\infty}^{+\infty}{x(t)\cdot e^{-jwt}dt}</script><ul>
 <li>很明显，非周期连续信号的频谱是<strong>连续谱</strong></li>
 <li>与傅里叶级数的系数 a_k 的关系是：<code>X(jw) = T × a_k</code></li>
 <li>上式中的 T 相当于信号周期，对于非周期信号而言是无穷大，所以其 a_k 在这里趋于 0（X是有限值）</li>
 </ul>
-<h4 id="逆变换-2"><a href="#逆变换-2" class="headerlink" title="逆变换"></a>逆变换</h4><p>$$<br>F^{-1}[X(jw)]=x(t)=\frac{1}{2\pi}\int_{-\infty}^{+\infty}{X(jw)\cdot e^{jwt}dw}<br>$$</p>
-<ul>
+<h4 id="逆变换-2"><a href="#逆变换-2" class="headerlink" title="逆变换"></a>逆变换</h4><script type="math/tex; mode=display">
+F^{-1}[X(jw)]=x(t)=\frac{1}{2\pi}\int_{-\infty}^{+\infty}{X(jw)\cdot e^{jwt}dw}</script><ul>
 <li>逆变换有点怪的地方是，积分范围是无穷，但是外面乘的系数是 1/2Π</li>
 </ul>
-<h3 id="周期连续信号"><a href="#周期连续信号" class="headerlink" title="周期连续信号"></a>周期连续信号</h3><p>记一个重要变换对，正变换是基于 这个变换对 和 傅里叶级数 得到的<br>$$<br>e^{jkw_ot} &lt;-&gt; 2\pi\delta(w-kw_0)<br>$$</p>
-<h4 id="正变换-3"><a href="#正变换-3" class="headerlink" title="正变换"></a>正变换</h4><p>$$<br>F[x(t)]=X(jw)=\sum_{k=-\infty}^{+\infty}{2\pi \cdot a_k \cdot \delta(w-kw_0)}<br>$$</p>
-<ul>
+<h3 id="周期连续信号"><a href="#周期连续信号" class="headerlink" title="周期连续信号"></a>周期连续信号</h3><p>记一个重要变换对，正变换是基于 这个变换对 和 傅里叶级数 得到的</p>
+<script type="math/tex; mode=display">
+e^{jkw_ot} <-> 2\pi\delta(w-kw_0)</script><h4 id="正变换-3"><a href="#正变换-3" class="headerlink" title="正变换"></a>正变换</h4><script type="math/tex; mode=display">
+F[x(t)]=X(jw)=\sum_{k=-\infty}^{+\infty}{2\pi \cdot a_k \cdot \delta(w-kw_0)}</script><ul>
 <li>正变换是一系列冲击项之和，冲击项是傅里叶级数的系数 乘 2Π</li>
 <li>与周期信号的傅里叶级数系数相对应，是离散谱</li>
 </ul>
-<h4 id="逆变换-3"><a href="#逆变换-3" class="headerlink" title="逆变换"></a>逆变换</h4><p>$$<br>F^{-1}[X(jw)]=x(t)=\sum_{k=-\infty}^{+\infty}{a_k \cdot e^{jkw_0t}}<br>$$</p>
-<ul>
+<h4 id="逆变换-3"><a href="#逆变换-3" class="headerlink" title="逆变换"></a>逆变换</h4><script type="math/tex; mode=display">
+F^{-1}[X(jw)]=x(t)=\sum_{k=-\infty}^{+\infty}{a_k \cdot e^{jkw_0t}}</script><ul>
 <li>和傅里叶级数的逆变换一样</li>
 </ul>
 <h2 id="离散信号傅里叶变换（DTFT）"><a href="#离散信号傅里叶变换（DTFT）" class="headerlink" title="离散信号傅里叶变换（DTFT）"></a>离散信号傅里叶变换（DTFT）</h2><blockquote>
 <p>基本类比连续信号的FT，</p>
 <p>时域离散，对应频谱都是周期的，与连续信号恰好相反</p>
 </blockquote>
-<h3 id="非周期信号"><a href="#非周期信号" class="headerlink" title="非周期信号"></a>非周期信号</h3><h4 id="正变换-4"><a href="#正变换-4" class="headerlink" title="正变换"></a>正变换</h4><p>$$<br>F[x[n]]=X(e^{jw})=\sum_{n=-\infty}^{+\infty}{x[n] \cdot e^{-jwn}}<br>$$</p>
-<ul>
+<h3 id="非周期信号"><a href="#非周期信号" class="headerlink" title="非周期信号"></a>非周期信号</h3><h4 id="正变换-4"><a href="#正变换-4" class="headerlink" title="正变换"></a>正变换</h4><script type="math/tex; mode=display">
+F[x[n]]=X(e^{jw})=\sum_{n=-\infty}^{+\infty}{x[n] \cdot e^{-jwn}}</script><ul>
 <li>由于 n 是整数，所以频谱是以 2Π 为周期的函数</li>
 <li>w 越接近 kΠ，频率越大；越接近 2kΠ，频率越低</li>
 </ul>
-<h4 id="逆变换-4"><a href="#逆变换-4" class="headerlink" title="逆变换"></a>逆变换</h4><p>$$<br>F^{-1}[X(e^{jw})]=x[n]=\frac{1}{2\pi} \cdot \int_{2\pi}X(e^{jw}) \cdot e^{jwn} dw<br>$$</p>
-<ul>
+<h4 id="逆变换-4"><a href="#逆变换-4" class="headerlink" title="逆变换"></a>逆变换</h4><script type="math/tex; mode=display">
+F^{-1}[X(e^{jw})]=x[n]=\frac{1}{2\pi} \cdot \int_{2\pi}X(e^{jw}) \cdot e^{jwn} dw</script><ul>
 <li>频谱以 wΠ 为周期，逆变换时积分也对 2Π 范围积</li>
 </ul>
-<h3 id="周期信号"><a href="#周期信号" class="headerlink" title="周期信号"></a>周期信号</h3><p>记一个重要变换对，正变换是基于 这个变换对 和 傅里叶级数 得到的<br>$$<br>e^{jkw_on} &lt;-&gt; 2\pi\delta(w-w_0-2\pi l)<br>$$</p>
-<h4 id="正变换-5"><a href="#正变换-5" class="headerlink" title="正变换"></a>正变换</h4><p>$$<br>F[x[n]]=X(e^{jw})=\sum_{k=-\infty}^{+\infty}{2\pi \cdot a_k \cdot \delta(w-k \cdot \frac{2\pi}{N})}<br>$$</p>
-<ul>
+<h3 id="周期信号"><a href="#周期信号" class="headerlink" title="周期信号"></a>周期信号</h3><p>记一个重要变换对，正变换是基于 这个变换对 和 傅里叶级数 得到的</p>
+<script type="math/tex; mode=display">
+e^{jkw_on} <-> 2\pi\delta(w-w_0-2\pi l)</script><h4 id="正变换-5"><a href="#正变换-5" class="headerlink" title="正变换"></a>正变换</h4><script type="math/tex; mode=display">
+F[x[n]]=X(e^{jw})=\sum_{k=-\infty}^{+\infty}{2\pi \cdot a_k \cdot \delta(w-k \cdot \frac{2\pi}{N})}</script><ul>
 <li>式中 2Π/N 就是 w0</li>
 <li>很明显，也是以 2Π 为周期</li>
 </ul>
-<h4 id="逆变换-5"><a href="#逆变换-5" class="headerlink" title="逆变换"></a>逆变换</h4><p>$$<br>F^{-1}[X(e^{jw})]=x(t)=\sum_{n=<N>}{a_k \cdot e^{jk\frac{2\pi}{N}n}}<br>$$</p>
-<ul>
+<h4 id="逆变换-5"><a href="#逆变换-5" class="headerlink" title="逆变换"></a>逆变换</h4><script type="math/tex; mode=display">
+F^{-1}[X(e^{jw})]=x(t)=\sum_{n=<N>}{a_k \cdot e^{jk\frac{2\pi}{N}n}}</script><ul>
 <li>与傅里叶级数一样</li>
 </ul>
 <h2 id="连续信号拉普拉斯变换（Laplace）"><a href="#连续信号拉普拉斯变换（Laplace）" class="headerlink" title="连续信号拉普拉斯变换（Laplace）"></a>连续信号拉普拉斯变换（Laplace）</h2><blockquote>
@@ -386,17 +387,18 @@
 <p>拉氏变换是连续信号傅里叶变换的广义延伸</p>
 <p>拉氏变换不区分周期或不周期，但必须是连续信号</p>
 </blockquote>
-<h4 id="正变换-6"><a href="#正变换-6" class="headerlink" title="正变换"></a>正变换</h4><p>$$<br>X(s)=\int_{-\infty}^{+\infty}{x(t) \cdot e^{-st}dt}<br>$$</p>
-<ul>
+<h4 id="正变换-6"><a href="#正变换-6" class="headerlink" title="正变换"></a>正变换</h4><script type="math/tex; mode=display">
+X(s)=\int_{-\infty}^{+\infty}{x(t) \cdot e^{-st}dt}</script><ul>
 <li><p>s 是复数：<code>σ+jw</code></p>
 </li>
-<li><p>等效于傅里叶变换：<br>  $$<br>  F[x(t) \cdot e^{-σt}]<br>  $$</p>
-</li>
+<li><p>等效于傅里叶变换：</p>
+<script type="math/tex; mode=display">
+  F[x(t) \cdot e^{-σt}]</script></li>
 <li><p>右边衰减因子项保证了整体的绝对可积，同时也引入了<strong>收敛域</strong>的概念</p>
 </li>
 </ul>
-<h4 id="逆变换-6"><a href="#逆变换-6" class="headerlink" title="逆变换"></a>逆变换</h4><p>$$<br>x(t)=\frac{1}{2\pi j} \cdot \int_{\beta-j\infty}^{\beta+j\infty}{F(s) \cdot e^{st}ds}<br>$$</p>
-<ul>
+<h4 id="逆变换-6"><a href="#逆变换-6" class="headerlink" title="逆变换"></a>逆变换</h4><script type="math/tex; mode=display">
+x(t)=\frac{1}{2\pi j} \cdot \int_{\beta-j\infty}^{\beta+j\infty}{F(s) \cdot e^{st}ds}</script><ul>
 <li>一般不用定义式计算</li>
 <li>使用：部分分式展开+变换对+性质</li>
 <li>使用：留数法</li>
@@ -407,12 +409,12 @@
 <p>Z变换是离散信号傅里叶变换的广义延伸</p>
 <p>Z变换不区分周期或不周期，但必须是离散信号</p>
 </blockquote>
-<h4 id="正变换-7"><a href="#正变换-7" class="headerlink" title="正变换"></a>正变换</h4><p>$$<br>X(z)=\sum_{n=-\infty}^{+\infty}{x[n] \cdot z^{-n}}<br>$$</p>
-<ul>
+<h4 id="正变换-7"><a href="#正变换-7" class="headerlink" title="正变换"></a>正变换</h4><script type="math/tex; mode=display">
+X(z)=\sum_{n=-\infty}^{+\infty}{x[n] \cdot z^{-n}}</script><ul>
 <li>洛朗级数形式</li>
 </ul>
-<h4 id="逆变换-7"><a href="#逆变换-7" class="headerlink" title="逆变换"></a>逆变换</h4><p>$$<br>x[n]=\frac{1}{a\pi j} \cdot \int{X(z) \cdot z^{n-1}dz}<br>$$</p>
-<ul>
+<h4 id="逆变换-7"><a href="#逆变换-7" class="headerlink" title="逆变换"></a>逆变换</h4><script type="math/tex; mode=display">
+x[n]=\frac{1}{a\pi j} \cdot \int{X(z) \cdot z^{n-1}dz}</script><ul>
 <li>一般不用定义式计算</li>
 <li>使用：围线积分+留数法</li>
 <li>使用：部分分式展开+变换对+性质</li>
@@ -428,25 +430,30 @@
 <li>求周期离散信号 x’[n] 的傅里叶变换得 X‘(k)，则 X’(k) 也是周期信号</li>
 <li>取 X’(k) 一个周期的主值，即为 DFT 的结果 X(k)</li>
 </ol>
-<p><strong>旋转因子：</strong><br>$$<br>W_{N}^{kn}=e^{-j\frac{2\pi}{N}kn}<br>$$</p>
-<h4 id="正变换-8"><a href="#正变换-8" class="headerlink" title="正变换"></a>正变换</h4><p>$$<br>X(k)=DTF[x[n]]=\sum_{n=0}^{N-1}{x[n] \cdot W_{N}^{kn}},\quad\quad\quad k=0,1,…,N-1<br>$$</p>
-<ul>
+<p><strong>旋转因子：</strong></p>
+<script type="math/tex; mode=display">
+W_{N}^{kn}=e^{-j\frac{2\pi}{N}kn}</script><h4 id="正变换-8"><a href="#正变换-8" class="headerlink" title="正变换"></a>正变换</h4><script type="math/tex; mode=display">
+X(k)=DTF[x[n]]=\sum_{n=0}^{N-1}{x[n] \cdot W_{N}^{kn}},\quad\quad\quad k=0,1,…,N-1</script><ul>
 <li>X(k) 与 x[n] 的序列长度相等</li>
 </ul>
-<h4 id="逆变换-8"><a href="#逆变换-8" class="headerlink" title="逆变换"></a>逆变换</h4><p>$$<br>x[n]=IDFT[X(k)]=\frac{1}{N} \cdot \sum_{k=0}^{N-1}{X(k) \cdot W_{N}^{kn}}, \quad\quad\quad n=0,1,…,N-1<br>$$</p>
-<h2 id="快速傅里叶变换（FFT）"><a href="#快速傅里叶变换（FFT）" class="headerlink" title="快速傅里叶变换（FFT）"></a>快速傅里叶变换（FFT）</h2><blockquote>
-<p>快速傅里叶变换泛指一类用于计算机加速计算离散傅里叶变换的算法:<br>$$<br>\begin{cases} \quad X(k)=DTF[x[n]]=\sum_{n=0}^{N-1}{x[n] \cdot W_{N}^{kn}},\quad\quad\quad k=0,1,…,N-1 \ \ \quad x[n]=IDFT[X(k)]=\frac{1}{N} \cdot \sum_{k=0}^{N-1}{X(k) \cdot W_{N}^{kn}}, \quad\quad\quad n=0,1,…,N-1 \end{cases}<br>$$</p>
-</blockquote>
+<h4 id="逆变换-8"><a href="#逆变换-8" class="headerlink" title="逆变换"></a>逆变换</h4><script type="math/tex; mode=display">
+x[n]=IDFT[X(k)]=\frac{1}{N} \cdot \sum_{k=0}^{N-1}{X(k) \cdot W_{N}^{kn}}, \quad\quad\quad n=0,1,…,N-1</script><h2 id="快速傅里叶变换（FFT）"><a href="#快速傅里叶变换（FFT）" class="headerlink" title="快速傅里叶变换（FFT）"></a>快速傅里叶变换（FFT）</h2><blockquote>
+<p>快速傅里叶变换泛指一类用于计算机加速计算离散傅里叶变换的算法:</p>
+<script type="math/tex; mode=display">
+\begin{cases} \quad X(k)=DTF[x[n]]=\sum_{n=0}^{N-1}{x[n] \cdot W_{N}^{kn}},\quad\quad\quad k=0,1,…,N-1 \\ \\ \quad x[n]=IDFT[X(k)]=\frac{1}{N} \cdot \sum_{k=0}^{N-1}{X(k) \cdot W_{N}^{kn}}, \quad\quad\quad n=0,1,…,N-1 \end{cases}</script></blockquote>
 <h3 id="时间抽取FFT算法："><a href="#时间抽取FFT算法：" class="headerlink" title="时间抽取FFT算法："></a>时间抽取FFT算法：</h3><ol>
-<li><p>时间奇偶分：<br> $$<br> \begin{cases} \quad g(r)=x(2r) \ \quad\quad\quad\quad\quad\quad\quad\quad\quad\quad r=0,1,…,\frac{N}{2}-1 \ \quad h(r)=x(2r+1) \end{cases}<br> $$</p>
-<p> $$<br> X(k)=G(k) + W_{N}^{k} \cdot H(k) \quad\quad\quad k=0,1,…,N-1<br> $$</p>
-</li>
-<li><p>频率前后分：<br> $$<br> \begin{cases} \quad X(k)=G(k) + W_{N}^{k} \ \quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad k=0,1,…,\frac{N}{2} \ \quad X(k+\frac{N}{2})=G(k) - W_{N}^{k} \end{cases}<br> $$</p>
-</li>
+<li><p>时间奇偶分：</p>
+<script type="math/tex; mode=display">
+ \begin{cases} \quad g(r)=x(2r) \\ \quad\quad\quad\quad\quad\quad\quad\quad\quad\quad r=0,1,…,\frac{N}{2}-1 \\ \quad h(r)=x(2r+1) \end{cases}</script><script type="math/tex; mode=display">
+ X(k)=G(k) + W_{N}^{k} \cdot H(k) \quad\quad\quad k=0,1,…,N-1</script></li>
+<li><p>频率前后分：</p>
+<script type="math/tex; mode=display">
+ \begin{cases} \quad X(k)=G(k) + W_{N}^{k} \\ \quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad k=0,1,…,\frac{N}{2} \\ \quad X(k+\frac{N}{2})=G(k) - W_{N}^{k} \end{cases}</script></li>
 </ol>
 <p>通过这2步，一个 N 点 DFT 变换化简为 N/2 点 DFT，可以重复一直化简到 1 点 DFT，</p>
 <p>8点 FFT 计算流图如下：</p>
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/202206251514561.PNG" alt="IMG_2457" style="zoom: 40%;" />
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/202206251514561.PNG" alt="IMG_2457" style="zoom: 40%;" /></p>
+
     </div>
 
     
@@ -713,6 +720,8 @@ $(document).ready(function() {
 
 
 
+
+  
 
   
 
