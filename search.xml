@@ -8,7 +8,7 @@
       <link href="/2022/06/25/%E5%8F%98%E6%8D%A2%E6%80%BB%E7%BB%93/"/>
       <url>/2022/06/25/%E5%8F%98%E6%8D%A2%E6%80%BB%E7%BB%93/</url>
       
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>&emsp;&emsp;作为一名学通信的本科生，在微积分、复变函数与积分变换、信号与系统、数字信号处理、数字图像处理等课程中陆陆续续出现过各种各样的傅里叶变换、拉普拉斯变换、Z变化，并且其时域、频域转换的思路在众多工程应用中频繁出现，所以有必要集中整理一下这些概念：</p><ul><li>傅里叶级数</li><li>傅里叶变换</li><li>拉普拉斯变换</li><li>Z变化</li><li>离散傅里叶变换 &amp; 快速傅里叶变换</li></ul><span id="more"></span><p>&nbsp;</p><h2 id="周期信号傅里叶级数"><a href="#周期信号傅里叶级数" class="headerlink" title="周期信号傅里叶级数"></a>周期信号傅里叶级数</h2><blockquote><p>只有周期信号才有傅里叶级数，无论连续还是离散</p><p>周期信号的傅里叶级数统一都是离散谱</p></blockquote><h3 id="连续周期信号的傅里叶级数（CTFS）"><a href="#连续周期信号的傅里叶级数（CTFS）" class="headerlink" title="连续周期信号的傅里叶级数（CTFS）"></a>连续周期信号的傅里叶级数（CTFS）</h3><p>连续周期信号的频谱是离散谱，从正变换可以看出，a_k 是离散值</p><h4 id="正变换"><a href="#正变换" class="headerlink" title="正变换"></a>正变换</h4><p>$$<br>a_k=\frac{1}{T}\cdot\int_{T}{x(t)\cdot e^{-jkw_0t}}dt<br>$$</p><ul><li>a_k 就是原信号在 kw0 频点上的频谱系数，反映了幅频和相频</li><li>a_k 的计算使用了指数函数<strong>正交性</strong>的原理</li></ul><h4 id="逆变换"><a href="#逆变换" class="headerlink" title="逆变换"></a>逆变换</h4><p>$$<br>x(t)=\sum_{k=-\infty}^{+\infty}{a_k\cdot e^{jkw_0\cdot t}}<br>$$</p><ul><li>逆变化计算原信号</li></ul><h3 id="离散周期信号的傅里叶级数（DTFS）"><a href="#离散周期信号的傅里叶级数（DTFS）" class="headerlink" title="离散周期信号的傅里叶级数（DTFS）"></a>离散周期信号的傅里叶级数（DTFS）</h3><h4 id="正变换-1"><a href="#正变换-1" class="headerlink" title="正变换"></a>正变换</h4><p>$$<br>a_k=\frac{1}{N}\cdot\sum_{k=<N>}x[n]\cdot e^{-jk{\frac{2\pi}{N}}n}<br>$$</p><ul><li>形式与连续周期信号基本保持一致</li></ul><h4 id="逆变换-1"><a href="#逆变换-1" class="headerlink" title="逆变换"></a>逆变换</h4><p>$$<br>x[n]=\sum_{k=<N>}a_k\cdot e^{jk{\frac{2\pi}{N}}n}<br>$$</p><ul><li>与连续信号最大的不同是，<strong>离散信号的傅里叶级数是周期的</strong>，因此逆变换只计算一个周期内的和</li><li>而连续周期信号的傅里叶级数相当于周期为无穷，因此是无穷求和</li></ul><h2 id="连续信号傅里叶变换"><a href="#连续信号傅里叶变换" class="headerlink" title="连续信号傅里叶变换"></a>连续信号傅里叶变换</h2><blockquote><p>只有周期信号才有傅里叶级数，</p><p>但是无论是否周期，都有傅里叶级数，</p><p>并且傅里叶级数的系数和级数中的 a_k 的含义并不完全一样</p></blockquote><h3 id="连续非周期信号的傅里叶变换"><a href="#连续非周期信号的傅里叶变换" class="headerlink" title="连续非周期信号的傅里叶变换"></a>连续非周期信号的傅里叶变换</h3><h2 id="离散信号傅里叶变换"><a href="#离散信号傅里叶变换" class="headerlink" title="离散信号傅里叶变换"></a>离散信号傅里叶变换</h2><h2 id="连续信号拉普拉斯变换"><a href="#连续信号拉普拉斯变换" class="headerlink" title="连续信号拉普拉斯变换"></a>连续信号拉普拉斯变换</h2><h2 id="离散信号Z变换"><a href="#离散信号Z变换" class="headerlink" title="离散信号Z变换"></a>离散信号Z变换</h2><h2 id="离散傅里叶变换-amp-快速傅里叶变换"><a href="#离散傅里叶变换-amp-快速傅里叶变换" class="headerlink" title="离散傅里叶变换 &amp; 快速傅里叶变换"></a>离散傅里叶变换 &amp; 快速傅里叶变换</h2>]]></content>
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>&emsp;&emsp;作为一名学通信的本科生，在微积分、复变函数与积分变换、信号与系统、数字信号处理、数字图像处理等课程中陆陆续续出现过各种各样的傅里叶变换、拉普拉斯变换、Z变化，并且其时域、频域转换的思路在众多工程应用中频繁出现，所以有必要集中整理一下这些概念：</p><ul><li>傅里叶级数</li><li>傅里叶变换</li><li>拉普拉斯变换</li><li>Z变化</li><li>离散傅里叶变换 &amp; 快速傅里叶变换</li></ul><span id="more"></span><p>&nbsp;</p><h2 id="周期信号傅里叶级数"><a href="#周期信号傅里叶级数" class="headerlink" title="周期信号傅里叶级数"></a>周期信号傅里叶级数</h2><blockquote><p>只有周期信号才有傅里叶级数，无论连续还是离散</p><p>周期信号的傅里叶级数统一都是离散谱</p></blockquote><h3 id="连续周期信号（CTFS）"><a href="#连续周期信号（CTFS）" class="headerlink" title="连续周期信号（CTFS）"></a>连续周期信号（CTFS）</h3><p>连续周期信号的频谱是离散谱，从正变换可以看出，a_k 是离散值</p><h4 id="正变换"><a href="#正变换" class="headerlink" title="正变换"></a>正变换</h4><p>$$<br>a_k=\frac{1}{T}\cdot\int_{T}{x(t)\cdot e^{-jkw_0t}}dt<br>$$</p><ul><li>a_k 就是原信号在 kw0 频点上的频谱系数，反映了幅频和相频</li><li>a_k 的计算使用了指数函数<strong>正交性</strong>的原理</li></ul><h4 id="逆变换"><a href="#逆变换" class="headerlink" title="逆变换"></a>逆变换</h4><p>$$<br>x(t)=\sum_{k=-\infty}^{+\infty}{a_k\cdot e^{jkw_0\cdot t}}<br>$$</p><ul><li>逆变化计算原信号</li></ul><h3 id="离散周期信号（DTFS）"><a href="#离散周期信号（DTFS）" class="headerlink" title="离散周期信号（DTFS）"></a>离散周期信号（DTFS）</h3><h4 id="正变换-1"><a href="#正变换-1" class="headerlink" title="正变换"></a>正变换</h4><p>$$<br>a_k=\frac{1}{N}\cdot\sum_{k=<N>}x[n]\cdot e^{-jk{\frac{2\pi}{N}}n}<br>$$</p><ul><li>形式与连续周期信号基本保持一致</li></ul><h4 id="逆变换-1"><a href="#逆变换-1" class="headerlink" title="逆变换"></a>逆变换</h4><p>$$<br>x[n]=\sum_{k=<N>}a_k\cdot e^{jk{\frac{2\pi}{N}}n}<br>$$</p><ul><li>与连续信号最大的不同是，<strong>离散信号的傅里叶级数是周期的</strong>，因此逆变换只计算一个周期内的和</li><li>而连续周期信号的傅里叶级数相当于周期为无穷，因此是无穷求和</li></ul><h2 id="连续信号傅里叶变换（CTFT）"><a href="#连续信号傅里叶变换（CTFT）" class="headerlink" title="连续信号傅里叶变换（CTFT）"></a>连续信号傅里叶变换（CTFT）</h2><blockquote><p>只有周期信号才有傅里叶级数，</p><p>但是无论是否周期，都有傅里叶级数，</p><p>并且傅里叶级数的系数和级数中的 a_k 的含义并不完全一样</p><p>另外，时域连续，对应频谱都是非周期的</p></blockquote><h3 id="非周期连续信号"><a href="#非周期连续信号" class="headerlink" title="非周期连续信号"></a>非周期连续信号</h3><h4 id="正变换-2"><a href="#正变换-2" class="headerlink" title="正变换"></a>正变换</h4><p>$$<br>F[x(t)]=X(jw)=\int_{-\infty}^{+\infty}{x(t)\cdot e^{-jwt}dt}<br>$$</p><ul><li>很明显，非周期连续信号的频谱是<strong>连续谱</strong></li><li>与傅里叶级数的系数 a_k 的关系是：<code>X(jw) = T × a_k</code></li><li>上式中的 T 相当于信号周期，对于非周期信号而言是无穷大，所以其 a_k 在这里趋于 0（X是有限值）</li></ul><h4 id="逆变换-2"><a href="#逆变换-2" class="headerlink" title="逆变换"></a>逆变换</h4><p>$$<br>F^{-1}[X(jw)]=x(t)=\frac{1}{2\pi}\int_{-\infty}^{+\infty}{X(jw)\cdot e^{jwt}dw}<br>$$</p><ul><li>逆变换有点怪的地方是，积分范围是无穷，但是外面乘的系数是 1/2Π</li></ul><h3 id="周期连续信号"><a href="#周期连续信号" class="headerlink" title="周期连续信号"></a>周期连续信号</h3><p>记一个重要变换对，正变换是基于 这个变换对 和 傅里叶级数 得到的<br>$$<br>e^{jkw_ot} &lt;-&gt; 2\pi\delta(w-kw_0)<br>$$</p><h4 id="正变换-3"><a href="#正变换-3" class="headerlink" title="正变换"></a>正变换</h4><p>$$<br>F[x(t)]=X(jw)=\sum_{k=-\infty}^{+\infty}{2\pi \cdot a_k \cdot \delta(w-kw_0)}<br>$$</p><ul><li>正变换是一系列冲击项之和，冲击项是傅里叶级数的系数 乘 2Π</li><li>与周期信号的傅里叶级数系数相对应，是离散谱</li></ul><h4 id="逆变换-3"><a href="#逆变换-3" class="headerlink" title="逆变换"></a>逆变换</h4><p>$$<br>F^{-1}[X(jw)]=x(t)=\sum_{k=-\infty}^{+\infty}{a_k \cdot e^{jkw_0t}}<br>$$</p><ul><li>和傅里叶级数的逆变换一样</li></ul><h2 id="离散信号傅里叶变换（DTFT）"><a href="#离散信号傅里叶变换（DTFT）" class="headerlink" title="离散信号傅里叶变换（DTFT）"></a>离散信号傅里叶变换（DTFT）</h2><blockquote><p>基本类比连续信号的FT，</p><p>时域离散，对应频谱都是周期的，与连续信号恰好相反</p></blockquote><h3 id="非周期信号"><a href="#非周期信号" class="headerlink" title="非周期信号"></a>非周期信号</h3><h4 id="正变换-4"><a href="#正变换-4" class="headerlink" title="正变换"></a>正变换</h4><p>$$<br>F[x[n]]=X(e^{jw})=\sum_{n=-\infty}^{+\infty}{x[n] \cdot e^{-jwn}}<br>$$</p><ul><li>由于 n 是整数，所以频谱是以 2Π 为周期的函数</li><li>w 越接近 kΠ，频率越大；越接近 2kΠ，频率越低</li></ul><h4 id="逆变换-4"><a href="#逆变换-4" class="headerlink" title="逆变换"></a>逆变换</h4><p>$$<br>F^{-1}[X(e^{jw})]=x[n]=\frac{1}{2\pi} \cdot \int_{2\pi}X(e^{jw}) \cdot e^{jwn} dw<br>$$</p><ul><li>频谱以 wΠ 为周期，逆变换时积分也对 2Π 范围积</li></ul><h3 id="周期信号"><a href="#周期信号" class="headerlink" title="周期信号"></a>周期信号</h3><h4 id="正变换-5"><a href="#正变换-5" class="headerlink" title="正变换"></a>正变换</h4><h4 id="逆变换-5"><a href="#逆变换-5" class="headerlink" title="逆变换"></a>逆变换</h4><h2 id="连续信号拉普拉斯变换"><a href="#连续信号拉普拉斯变换" class="headerlink" title="连续信号拉普拉斯变换"></a>连续信号拉普拉斯变换</h2><h2 id="离散信号Z变换"><a href="#离散信号Z变换" class="headerlink" title="离散信号Z变换"></a>离散信号Z变换</h2><h2 id="离散傅里叶变换-amp-快速傅里叶变换"><a href="#离散傅里叶变换-amp-快速傅里叶变换" class="headerlink" title="离散傅里叶变换 &amp; 快速傅里叶变换"></a>离散傅里叶变换 &amp; 快速傅里叶变换</h2>]]></content>
       
       
       <categories>
@@ -765,11 +765,11 @@
             
             <tag> Reinforcement Learning </tag>
             
-            <tag> Regression </tag>
+            <tag> Classifier </tag>
             
             <tag> Machine Learning </tag>
             
-            <tag> Classifier </tag>
+            <tag> Regression </tag>
             
             <tag> Network Slice </tag>
             
@@ -939,9 +939,9 @@
       
         <tags>
             
-            <tag> Regression </tag>
-            
             <tag> Machine Learning </tag>
+            
+            <tag> Regression </tag>
             
         </tags>
       
@@ -966,9 +966,9 @@
       
         <tags>
             
-            <tag> Machine Learning </tag>
-            
             <tag> Classifier </tag>
+            
+            <tag> Machine Learning </tag>
             
         </tags>
       
@@ -993,9 +993,9 @@
       
         <tags>
             
-            <tag> Machine Learning </tag>
-            
             <tag> Classifier </tag>
+            
+            <tag> Machine Learning </tag>
             
         </tags>
       
@@ -1472,7 +1472,7 @@
       <link href="/2021/12/09/test/"/>
       <url>/2021/12/09/test/</url>
       
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>分享每月歌单</p><span id="more"></span><h5 id="2021-12"><a href="#2021-12" class="headerlink" title="2021-12"></a>2021-12</h5><p># 歌曲模板</p>    <div id="aplayer-ITIrCazy" class="aplayer aplayer-tag-marker meting-tag-marker"         data-id="3986040" data-server="netease" data-type="song" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"    ></div><p># 歌单模板</p>    <div id="aplayer-MXssXcGy" class="aplayer aplayer-tag-marker meting-tag-marker"         data-id="627070825" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"    ></div>]]></content>
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>分享每月歌单</p><span id="more"></span><h5 id="2021-12"><a href="#2021-12" class="headerlink" title="2021-12"></a>2021-12</h5><p># 歌曲模板</p>    <div id="aplayer-IfttAxAz" class="aplayer aplayer-tag-marker meting-tag-marker"         data-id="3986040" data-server="netease" data-type="song" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"    ></div><p># 歌单模板</p>    <div id="aplayer-gdjyGuSQ" class="aplayer aplayer-tag-marker meting-tag-marker"         data-id="627070825" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"    ></div>]]></content>
       
       
       <categories>

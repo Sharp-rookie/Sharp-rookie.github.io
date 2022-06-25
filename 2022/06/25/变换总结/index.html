@@ -40,7 +40,7 @@
 <meta property="og:description" content="&amp;emsp;&amp;emsp;作为一名学通信的本科生，在微积分、复变函数与积分变换、信号与系统、数字信号处理、数字图像处理等课程中陆陆续续出现过各种各样的傅里叶变换、拉普拉斯变换、Z变化，并且其时域、频域转换的思路在众多工程应用中频繁出现，所以有必要集中整理一下这些概念：  傅里叶级数 傅里叶变换 拉普拉斯变换 Z变化 离散傅里叶变换 &amp; 快速傅里叶变换">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-06-25T05:57:32.337Z">
-<meta property="article:modified_time" content="2022-06-25T06:00:12.149Z">
+<meta property="article:modified_time" content="2022-06-25T06:28:48.616Z">
 <meta property="article:author" content="Lrk612">
 <meta name="twitter:card" content="summary">
 
@@ -309,7 +309,7 @@
 <p>只有周期信号才有傅里叶级数，无论连续还是离散</p>
 <p>周期信号的傅里叶级数统一都是离散谱</p>
 </blockquote>
-<h3 id="连续周期信号的傅里叶级数（CTFS）"><a href="#连续周期信号的傅里叶级数（CTFS）" class="headerlink" title="连续周期信号的傅里叶级数（CTFS）"></a>连续周期信号的傅里叶级数（CTFS）</h3><p>连续周期信号的频谱是离散谱，从正变换可以看出，a_k 是离散值</p>
+<h3 id="连续周期信号（CTFS）"><a href="#连续周期信号（CTFS）" class="headerlink" title="连续周期信号（CTFS）"></a>连续周期信号（CTFS）</h3><p>连续周期信号的频谱是离散谱，从正变换可以看出，a_k 是离散值</p>
 <h4 id="正变换"><a href="#正变换" class="headerlink" title="正变换"></a>正变换</h4><p>$$<br>a_k=\frac{1}{T}\cdot\int_{T}{x(t)\cdot e^{-jkw_0t}}dt<br>$$</p>
 <ul>
 <li>a_k 就是原信号在 kw0 频点上的频谱系数，反映了幅频和相频</li>
@@ -319,7 +319,7 @@
 <ul>
 <li>逆变化计算原信号</li>
 </ul>
-<h3 id="离散周期信号的傅里叶级数（DTFS）"><a href="#离散周期信号的傅里叶级数（DTFS）" class="headerlink" title="离散周期信号的傅里叶级数（DTFS）"></a>离散周期信号的傅里叶级数（DTFS）</h3><h4 id="正变换-1"><a href="#正变换-1" class="headerlink" title="正变换"></a>正变换</h4><p>$$<br>a_k=\frac{1}{N}\cdot\sum_{k=<N>}x[n]\cdot e^{-jk{\frac{2\pi}{N}}n}<br>$$</p>
+<h3 id="离散周期信号（DTFS）"><a href="#离散周期信号（DTFS）" class="headerlink" title="离散周期信号（DTFS）"></a>离散周期信号（DTFS）</h3><h4 id="正变换-1"><a href="#正变换-1" class="headerlink" title="正变换"></a>正变换</h4><p>$$<br>a_k=\frac{1}{N}\cdot\sum_{k=<N>}x[n]\cdot e^{-jk{\frac{2\pi}{N}}n}<br>$$</p>
 <ul>
 <li>形式与连续周期信号基本保持一致</li>
 </ul>
@@ -328,12 +328,46 @@
 <li>与连续信号最大的不同是，<strong>离散信号的傅里叶级数是周期的</strong>，因此逆变换只计算一个周期内的和</li>
 <li>而连续周期信号的傅里叶级数相当于周期为无穷，因此是无穷求和</li>
 </ul>
-<h2 id="连续信号傅里叶变换"><a href="#连续信号傅里叶变换" class="headerlink" title="连续信号傅里叶变换"></a>连续信号傅里叶变换</h2><blockquote>
+<h2 id="连续信号傅里叶变换（CTFT）"><a href="#连续信号傅里叶变换（CTFT）" class="headerlink" title="连续信号傅里叶变换（CTFT）"></a>连续信号傅里叶变换（CTFT）</h2><blockquote>
 <p>只有周期信号才有傅里叶级数，</p>
 <p>但是无论是否周期，都有傅里叶级数，</p>
 <p>并且傅里叶级数的系数和级数中的 a_k 的含义并不完全一样</p>
+<p>另外，时域连续，对应频谱都是非周期的</p>
 </blockquote>
-<h3 id="连续非周期信号的傅里叶变换"><a href="#连续非周期信号的傅里叶变换" class="headerlink" title="连续非周期信号的傅里叶变换"></a>连续非周期信号的傅里叶变换</h3><h2 id="离散信号傅里叶变换"><a href="#离散信号傅里叶变换" class="headerlink" title="离散信号傅里叶变换"></a>离散信号傅里叶变换</h2><h2 id="连续信号拉普拉斯变换"><a href="#连续信号拉普拉斯变换" class="headerlink" title="连续信号拉普拉斯变换"></a>连续信号拉普拉斯变换</h2><h2 id="离散信号Z变换"><a href="#离散信号Z变换" class="headerlink" title="离散信号Z变换"></a>离散信号Z变换</h2><h2 id="离散傅里叶变换-amp-快速傅里叶变换"><a href="#离散傅里叶变换-amp-快速傅里叶变换" class="headerlink" title="离散傅里叶变换 &amp; 快速傅里叶变换"></a>离散傅里叶变换 &amp; 快速傅里叶变换</h2>
+<h3 id="非周期连续信号"><a href="#非周期连续信号" class="headerlink" title="非周期连续信号"></a>非周期连续信号</h3><h4 id="正变换-2"><a href="#正变换-2" class="headerlink" title="正变换"></a>正变换</h4><p>$$<br>F[x(t)]=X(jw)=\int_{-\infty}^{+\infty}{x(t)\cdot e^{-jwt}dt}<br>$$</p>
+<ul>
+<li>很明显，非周期连续信号的频谱是<strong>连续谱</strong></li>
+<li>与傅里叶级数的系数 a_k 的关系是：<code>X(jw) = T × a_k</code></li>
+<li>上式中的 T 相当于信号周期，对于非周期信号而言是无穷大，所以其 a_k 在这里趋于 0（X是有限值）</li>
+</ul>
+<h4 id="逆变换-2"><a href="#逆变换-2" class="headerlink" title="逆变换"></a>逆变换</h4><p>$$<br>F^{-1}[X(jw)]=x(t)=\frac{1}{2\pi}\int_{-\infty}^{+\infty}{X(jw)\cdot e^{jwt}dw}<br>$$</p>
+<ul>
+<li>逆变换有点怪的地方是，积分范围是无穷，但是外面乘的系数是 1/2Π</li>
+</ul>
+<h3 id="周期连续信号"><a href="#周期连续信号" class="headerlink" title="周期连续信号"></a>周期连续信号</h3><p>记一个重要变换对，正变换是基于 这个变换对 和 傅里叶级数 得到的<br>$$<br>e^{jkw_ot} &lt;-&gt; 2\pi\delta(w-kw_0)<br>$$</p>
+<h4 id="正变换-3"><a href="#正变换-3" class="headerlink" title="正变换"></a>正变换</h4><p>$$<br>F[x(t)]=X(jw)=\sum_{k=-\infty}^{+\infty}{2\pi \cdot a_k \cdot \delta(w-kw_0)}<br>$$</p>
+<ul>
+<li>正变换是一系列冲击项之和，冲击项是傅里叶级数的系数 乘 2Π</li>
+<li>与周期信号的傅里叶级数系数相对应，是离散谱</li>
+</ul>
+<h4 id="逆变换-3"><a href="#逆变换-3" class="headerlink" title="逆变换"></a>逆变换</h4><p>$$<br>F^{-1}[X(jw)]=x(t)=\sum_{k=-\infty}^{+\infty}{a_k \cdot e^{jkw_0t}}<br>$$</p>
+<ul>
+<li>和傅里叶级数的逆变换一样</li>
+</ul>
+<h2 id="离散信号傅里叶变换（DTFT）"><a href="#离散信号傅里叶变换（DTFT）" class="headerlink" title="离散信号傅里叶变换（DTFT）"></a>离散信号傅里叶变换（DTFT）</h2><blockquote>
+<p>基本类比连续信号的FT，</p>
+<p>时域离散，对应频谱都是周期的，与连续信号恰好相反</p>
+</blockquote>
+<h3 id="非周期信号"><a href="#非周期信号" class="headerlink" title="非周期信号"></a>非周期信号</h3><h4 id="正变换-4"><a href="#正变换-4" class="headerlink" title="正变换"></a>正变换</h4><p>$$<br>F[x[n]]=X(e^{jw})=\sum_{n=-\infty}^{+\infty}{x[n] \cdot e^{-jwn}}<br>$$</p>
+<ul>
+<li>由于 n 是整数，所以频谱是以 2Π 为周期的函数</li>
+<li>w 越接近 kΠ，频率越大；越接近 2kΠ，频率越低</li>
+</ul>
+<h4 id="逆变换-4"><a href="#逆变换-4" class="headerlink" title="逆变换"></a>逆变换</h4><p>$$<br>F^{-1}[X(e^{jw})]=x[n]=\frac{1}{2\pi} \cdot \int_{2\pi}X(e^{jw}) \cdot e^{jwn} dw<br>$$</p>
+<ul>
+<li>频谱以 wΠ 为周期，逆变换时积分也对 2Π 范围积</li>
+</ul>
+<h3 id="周期信号"><a href="#周期信号" class="headerlink" title="周期信号"></a>周期信号</h3><h4 id="正变换-5"><a href="#正变换-5" class="headerlink" title="正变换"></a>正变换</h4><h4 id="逆变换-5"><a href="#逆变换-5" class="headerlink" title="逆变换"></a>逆变换</h4><h2 id="连续信号拉普拉斯变换"><a href="#连续信号拉普拉斯变换" class="headerlink" title="连续信号拉普拉斯变换"></a>连续信号拉普拉斯变换</h2><h2 id="离散信号Z变换"><a href="#离散信号Z变换" class="headerlink" title="离散信号Z变换"></a>离散信号Z变换</h2><h2 id="离散傅里叶变换-amp-快速傅里叶变换"><a href="#离散傅里叶变换-amp-快速傅里叶变换" class="headerlink" title="离散傅里叶变换 &amp; 快速傅里叶变换"></a>离散傅里叶变换 &amp; 快速傅里叶变换</h2>
     </div>
 
     
@@ -428,7 +462,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%A8%E6%9C%9F%E4%BF%A1%E5%8F%B7%E5%82%85%E9%87%8C%E5%8F%B6%E7%BA%A7%E6%95%B0"><span class="nav-text">周期信号傅里叶级数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9E%E7%BB%AD%E5%91%A8%E6%9C%9F%E4%BF%A1%E5%8F%B7%E7%9A%84%E5%82%85%E9%87%8C%E5%8F%B6%E7%BA%A7%E6%95%B0%EF%BC%88CTFS%EF%BC%89"><span class="nav-text">连续周期信号的傅里叶级数（CTFS）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A3%E5%8F%98%E6%8D%A2"><span class="nav-text">正变换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%86%E5%8F%98%E6%8D%A2"><span class="nav-text">逆变换</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A6%BB%E6%95%A3%E5%91%A8%E6%9C%9F%E4%BF%A1%E5%8F%B7%E7%9A%84%E5%82%85%E9%87%8C%E5%8F%B6%E7%BA%A7%E6%95%B0%EF%BC%88DTFS%EF%BC%89"><span class="nav-text">离散周期信号的傅里叶级数（DTFS）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A3%E5%8F%98%E6%8D%A2-1"><span class="nav-text">正变换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%86%E5%8F%98%E6%8D%A2-1"><span class="nav-text">逆变换</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9E%E7%BB%AD%E4%BF%A1%E5%8F%B7%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2"><span class="nav-text">连续信号傅里叶变换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9E%E7%BB%AD%E9%9D%9E%E5%91%A8%E6%9C%9F%E4%BF%A1%E5%8F%B7%E7%9A%84%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2"><span class="nav-text">连续非周期信号的傅里叶变换</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A6%BB%E6%95%A3%E4%BF%A1%E5%8F%B7%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2"><span class="nav-text">离散信号傅里叶变换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9E%E7%BB%AD%E4%BF%A1%E5%8F%B7%E6%8B%89%E6%99%AE%E6%8B%89%E6%96%AF%E5%8F%98%E6%8D%A2"><span class="nav-text">连续信号拉普拉斯变换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A6%BB%E6%95%A3%E4%BF%A1%E5%8F%B7Z%E5%8F%98%E6%8D%A2"><span class="nav-text">离散信号Z变换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A6%BB%E6%95%A3%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2-amp-%E5%BF%AB%E9%80%9F%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2"><span class="nav-text">离散傅里叶变换 &amp; 快速傅里叶变换</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%A8%E6%9C%9F%E4%BF%A1%E5%8F%B7%E5%82%85%E9%87%8C%E5%8F%B6%E7%BA%A7%E6%95%B0"><span class="nav-text">周期信号傅里叶级数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9E%E7%BB%AD%E5%91%A8%E6%9C%9F%E4%BF%A1%E5%8F%B7%EF%BC%88CTFS%EF%BC%89"><span class="nav-text">连续周期信号（CTFS）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A3%E5%8F%98%E6%8D%A2"><span class="nav-text">正变换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%86%E5%8F%98%E6%8D%A2"><span class="nav-text">逆变换</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A6%BB%E6%95%A3%E5%91%A8%E6%9C%9F%E4%BF%A1%E5%8F%B7%EF%BC%88DTFS%EF%BC%89"><span class="nav-text">离散周期信号（DTFS）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A3%E5%8F%98%E6%8D%A2-1"><span class="nav-text">正变换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%86%E5%8F%98%E6%8D%A2-1"><span class="nav-text">逆变换</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9E%E7%BB%AD%E4%BF%A1%E5%8F%B7%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2%EF%BC%88CTFT%EF%BC%89"><span class="nav-text">连续信号傅里叶变换（CTFT）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%9E%E5%91%A8%E6%9C%9F%E8%BF%9E%E7%BB%AD%E4%BF%A1%E5%8F%B7"><span class="nav-text">非周期连续信号</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A3%E5%8F%98%E6%8D%A2-2"><span class="nav-text">正变换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%86%E5%8F%98%E6%8D%A2-2"><span class="nav-text">逆变换</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%91%A8%E6%9C%9F%E8%BF%9E%E7%BB%AD%E4%BF%A1%E5%8F%B7"><span class="nav-text">周期连续信号</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A3%E5%8F%98%E6%8D%A2-3"><span class="nav-text">正变换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%86%E5%8F%98%E6%8D%A2-3"><span class="nav-text">逆变换</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A6%BB%E6%95%A3%E4%BF%A1%E5%8F%B7%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2%EF%BC%88DTFT%EF%BC%89"><span class="nav-text">离散信号傅里叶变换（DTFT）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%9E%E5%91%A8%E6%9C%9F%E4%BF%A1%E5%8F%B7"><span class="nav-text">非周期信号</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A3%E5%8F%98%E6%8D%A2-4"><span class="nav-text">正变换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%86%E5%8F%98%E6%8D%A2-4"><span class="nav-text">逆变换</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%91%A8%E6%9C%9F%E4%BF%A1%E5%8F%B7"><span class="nav-text">周期信号</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A3%E5%8F%98%E6%8D%A2-5"><span class="nav-text">正变换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%86%E5%8F%98%E6%8D%A2-5"><span class="nav-text">逆变换</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9E%E7%BB%AD%E4%BF%A1%E5%8F%B7%E6%8B%89%E6%99%AE%E6%8B%89%E6%96%AF%E5%8F%98%E6%8D%A2"><span class="nav-text">连续信号拉普拉斯变换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A6%BB%E6%95%A3%E4%BF%A1%E5%8F%B7Z%E5%8F%98%E6%8D%A2"><span class="nav-text">离散信号Z变换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A6%BB%E6%95%A3%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2-amp-%E5%BF%AB%E9%80%9F%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2"><span class="nav-text">离散傅里叶变换 &amp; 快速傅里叶变换</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
