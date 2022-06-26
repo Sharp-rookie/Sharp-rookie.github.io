@@ -32,12 +32,12 @@
           }
       })();
   </script>
-  <meta name="description" content="&amp;emsp;&amp;emsp;针对退化的人脸图像恢复问题，常见的方法有使用DNN端到端训练的，也有使用Style GAN等GAN模型进行重建的。最近比较流行的是既使用GAN来生成细节纹理，由融合DNN提取的特征保证结构一致。 &amp;emsp;&amp;emsp;本文设计了能够识别退化程度，并动态调整融合比例的网络模型 Panini-NET 具体工作：  提出了一种无监督退化表示学习策略，用于提取退化图像的判别退化表">
+  <meta name="description" content="&amp;emsp;&amp;emsp;针对退化的人脸图像恢复问题，常见的方法有使用DNN端到端训练的，也有使用Style GAN等GAN模型进行重建的。最近比较流行的是既使用GAN来生成细节纹理，又融合DNN提取的特征来保证结构一致。 &amp;emsp;&amp;emsp;本文设计了能够识别退化程度，并动态调整融合比例的网络模型 Panini-NET 具体工作：  提出了一种无监督退化表示学习策略，用于提取退化图像的判别退化">
 <meta property="og:type" content="article">
 <meta property="og:title" content="一种人脸图像恢复的融合方案">
 <meta property="og:url" content="https://sharp-rookie.github.io/2022/06/25/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91%E4%B8%80%E7%A7%8D%E4%BA%BA%E8%84%B8%E5%9B%BE%E7%89%87%E6%81%A2%E5%A4%8D%E7%9A%84%E8%9E%8D%E5%90%88%E6%96%B9%E6%A1%88/index.html">
 <meta property="og:site_name" content="最忆是江南">
-<meta property="og:description" content="&amp;emsp;&amp;emsp;针对退化的人脸图像恢复问题，常见的方法有使用DNN端到端训练的，也有使用Style GAN等GAN模型进行重建的。最近比较流行的是既使用GAN来生成细节纹理，由融合DNN提取的特征保证结构一致。 &amp;emsp;&amp;emsp;本文设计了能够识别退化程度，并动态调整融合比例的网络模型 Panini-NET 具体工作：  提出了一种无监督退化表示学习策略，用于提取退化图像的判别退化表">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;针对退化的人脸图像恢复问题，常见的方法有使用DNN端到端训练的，也有使用Style GAN等GAN模型进行重建的。最近比较流行的是既使用GAN来生成细节纹理，又融合DNN提取的特征来保证结构一致。 &amp;emsp;&amp;emsp;本文设计了能够识别退化程度，并动态调整融合比例的网络模型 Panini-NET 具体工作：  提出了一种无监督退化表示学习策略，用于提取退化图像的判别退化">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202206252005780.png">
 <meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202206252005780.png">
@@ -65,7 +65,7 @@
 <meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202206252148683.png">
 <meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202206252150151.png">
 <meta property="article:published_time" content="2022-06-25T13:54:31.070Z">
-<meta property="article:modified_time" content="2022-06-25T14:02:31.774Z">
+<meta property="article:modified_time" content="2022-06-26T05:15:09.900Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="AI">
 <meta property="article:tag" content="Deep Learning">
@@ -316,7 +316,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>&emsp;&emsp;针对退化的人脸图像恢复问题，常见的方法有使用DNN端到端训练的，也有使用Style GAN等GAN模型进行重建的。最近比较流行的是既使用GAN来生成细节纹理，由融合DNN提取的特征保证结构一致。</p>
+        <p>&emsp;&emsp;针对退化的人脸图像恢复问题，常见的方法有使用DNN端到端训练的，也有使用Style GAN等GAN模型进行重建的。最近比较流行的是既使用GAN来生成细节纹理，又融合DNN提取的特征来保证结构一致。</p>
 <p>&emsp;&emsp;本文设计了能够识别退化程度，并动态调整融合比例的网络模型 Panini-NET</p>
 <p><strong>具体工作：</strong></p>
 <ul>
@@ -342,10 +342,9 @@
 </ul>
 <p><strong>本文所作工作：</strong></p>
 <ul>
-<li><p>提出了一种无监督退化表示学习策略，用于提取退化图像的判别退化表示（DR），可以作为动态融合的全局条件</p>
+<li><p>提出了一种退化表示的无监督学习策略，可提取图像的退化表示（DR），作为动态融合的全局条件</p>
 </li>
 <li><p>提出了一种退化感知特征插值（DAFI）模块，可以根据退化表示（DR）的情况来动态融合图像特征和 GAN Prior 的两种类型信息</p>
-<p>  文章还通过实验展示了 DAFI 的效率和可编辑性</p>
 </li>
 <li><p>提出了一种新颖的基于 GAN Prior 的退化感知特征插值网络，Panini-Net。用于融合上面两个模块的功能，能考虑到各种退化水平，平衡真实性和保真度</p>
 </li>
@@ -501,7 +500,7 @@
 <ol>
 <li>通过 UDRL 策略预训练 DRE</li>
 <li>加载预训练的 StyleGAN2 Generator作为GPM</li>
-<li>微调整个 Panini-Net为了提供稳定的退化表示，我们在微调期间修复了 DRE 的参数。 Panini-Net 的其余参数是可学习的</li>
+<li>微调整个 Panini-Net 网络，例如 DRE 的参数</li>
 </ol>
 <p><strong>损失函数：</strong></p>
 <p>使用 L1 loss、VGG perceptual loss 和 adversarial loss。 StyleGAN2 的预训练鉴别器也用于对抗性训练。</p>
@@ -593,8 +592,8 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/06/25/%E5%8F%98%E6%8D%A2%E6%80%BB%E7%BB%93/" rel="prev" title="这么多变换公式真的记不住啊">
-      <i class="fa fa-chevron-left"></i> 这么多变换公式真的记不住啊
+    <a href="/2022/06/25/%E5%8F%98%E6%8D%A2%E6%80%BB%E7%BB%93/" rel="prev" title="时域频域的各种变换公式">
+      <i class="fa fa-chevron-left"></i> 时域频域的各种变换公式
     </a></div>
       <div class="post-nav-item"></div>
     </div>
