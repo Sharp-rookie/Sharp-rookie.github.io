@@ -216,6 +216,110 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://sharp-rookie.github.io/2022/07/09/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91%E4%B8%80%E7%A7%8D%E7%BC%96%E7%A0%81%E7%BC%93%E5%AD%98%E5%88%86%E5%B8%83%E5%86%B3%E7%AD%96%E7%9A%84%E4%BC%98%E5%8C%96%E6%96%B9%E6%A1%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Lrk612">
+      <meta itemprop="description" content="Lrk's blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="最忆是江南">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/07/09/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91%E4%B8%80%E7%A7%8D%E7%BC%96%E7%A0%81%E7%BC%93%E5%AD%98%E5%88%86%E5%B8%83%E5%86%B3%E7%AD%96%E7%9A%84%E4%BC%98%E5%8C%96%E6%96%B9%E6%A1%88/" class="post-title-link" itemprop="url">一种编码缓存分布决策的优化方案</a>
+        </h2>
+
+        <div class="post-meta">
+         
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-09 08:43:23" itemprop="dateCreated datePublished" datetime="2022-07-09T08:43:23+08:00">2022-07-09</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">论文阅读</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2022/07/09/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91%E4%B8%80%E7%A7%8D%E7%BC%96%E7%A0%81%E7%BC%93%E5%AD%98%E5%88%86%E5%B8%83%E5%86%B3%E7%AD%96%E7%9A%84%E4%BC%98%E5%8C%96%E6%96%B9%E6%A1%88/" class="post-meta-item leancloud_visitors" data-flag-title="一种编码缓存分布决策的优化方案" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/07/09/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91%E4%B8%80%E7%A7%8D%E7%BC%96%E7%A0%81%E7%BC%93%E5%AD%98%E5%88%86%E5%B8%83%E5%86%B3%E7%AD%96%E7%9A%84%E4%BC%98%E5%8C%96%E6%96%B9%E6%A1%88/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/07/09/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91%E4%B8%80%E7%A7%8D%E7%BC%96%E7%A0%81%E7%BC%93%E5%AD%98%E5%88%86%E5%B8%83%E5%86%B3%E7%AD%96%E7%9A%84%E4%BC%98%E5%8C%96%E6%96%B9%E6%A1%88/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>&emsp;&emsp;编码缓存通过将每个文件的不同编码段分布在多个缓存节点中，有效地利用了无线网络中的累积存储大小。本文目标是使用深度学习工具找到一种无线编码缓存策略，以最小化总折扣网络成本，其中包括传输延迟和缓存替换成本。难点在于未知的时变内容流行度以及连续动作空间的高维度。</p>
+<p><strong>具体工作：</strong></p>
+<ul>
+<li>出了一种基于<strong>聚类</strong>的<strong>长短期记忆</strong>（C-LTSM）方法来使用历史请求信息来预测内容请求的数量。这种方法通过聚类利用不同文件之间的历史请求信息的相关性。</li>
+<li>基于预测结果，我们提出了一种有<strong>监督</strong>的<strong>深度确定性策略梯度</strong>（SDDPG）方法。一方面，这种方法可以通过使用 actor-critic 架构来学习连续动作空间中的缓存策略。另一方面，它通过基于近似问题的解决方案对参与者网络进行预训练来加速学习过程，从而最小化每个时隙的成本。</li>
+</ul>
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/202207081739838.png" alt="image-20220708173948693" style="zoom: 35%;" /></p>
+<p><strong>原文</strong></p>
+<p><a target="_blank" rel="noopener" href="https://lrk612.com/resources/Deep_Learning_for_Wireless_Coded_Caching_With_Unknown_and_Time-Variant_Content_Popularity.pdf">Deep Learning for Wireless Coded Caching With Unknown and Time-Variant Content Popularity</a></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/07/09/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91%E4%B8%80%E7%A7%8D%E7%BC%96%E7%A0%81%E7%BC%93%E5%AD%98%E5%88%86%E5%B8%83%E5%86%B3%E7%AD%96%E7%9A%84%E4%BC%98%E5%8C%96%E6%96%B9%E6%A1%88/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://sharp-rookie.github.io/2022/06/25/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91%E4%B8%80%E7%A7%8D%E4%BA%BA%E8%84%B8%E5%9B%BE%E7%89%87%E6%81%A2%E5%A4%8D%E7%9A%84%E8%9E%8D%E5%90%88%E6%96%B9%E6%A1%88/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1140,110 +1244,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://sharp-rookie.github.io/2022/04/22/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91%E5%9B%BE%E5%83%8F%E5%A4%8D%E5%8E%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Lrk612">
-      <meta itemprop="description" content="Lrk's blog">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="最忆是江南">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/04/22/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91%E5%9B%BE%E5%83%8F%E5%A4%8D%E5%8E%9F/" class="post-title-link" itemprop="url">【数字图像处理】图像复原</a>
-        </h2>
-
-        <div class="post-meta">
-         
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-04-22 21:59:17" itemprop="dateCreated datePublished" datetime="2022-04-22T21:59:17+08:00">2022-04-22</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0-%E5%AE%9E%E9%AA%8C-%E8%AF%BE%E8%AE%BE/" itemprop="url" rel="index"><span itemprop="name">笔记&实验&课设</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2022/04/22/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91%E5%9B%BE%E5%83%8F%E5%A4%8D%E5%8E%9F/" class="post-meta-item leancloud_visitors" data-flag-title="【数字图像处理】图像复原" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/04/22/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91%E5%9B%BE%E5%83%8F%E5%A4%8D%E5%8E%9F/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/04/22/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91%E5%9B%BE%E5%83%8F%E5%A4%8D%E5%8E%9F/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><strong>数字图像处理第五章知识总结：</strong></p>
-<ul>
-<li>图像的退化和复原</li>
-<li>含噪图像复原方法</li>
-<li>退化函数估计复原</li>
-<li>逆滤波与维纳滤波</li>
-<li>几何校正</li>
-<li>图像的投影重建</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/04/22/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91%E5%9B%BE%E5%83%8F%E5%A4%8D%E5%8E%9F/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1315,7 +1315,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-count">59</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

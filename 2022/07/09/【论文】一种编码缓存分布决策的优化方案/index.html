@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"sharp-rookie.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+<script> 
+   (function(){
+          if(''){
+              if (prompt('请输入文章密码') !== ''){
+                  alert('密码错误！');
+                  history.back();
+              }
+          }
+      })();
+  </script>
+  <meta name="description" content="&amp;emsp;&amp;emsp;编码缓存通过将每个文件的不同编码段分布在多个缓存节点中，有效地利用了无线网络中的累积存储大小。本文目标是使用深度学习工具找到一种无线编码缓存策略，以最小化总折扣网络成本，其中包括传输延迟和缓存替换成本。难点在于未知的时变内容流行度以及连续动作空间的高维度。 具体工作：  出了一种基于聚类的长短期记忆（C-LTSM）方法来使用历史请求信息来预测内容请求的数量。这种方法通过聚类">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一种编码缓存分布决策的优化方案">
+<meta property="og:url" content="https://sharp-rookie.github.io/2022/07/09/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91%E4%B8%80%E7%A7%8D%E7%BC%96%E7%A0%81%E7%BC%93%E5%AD%98%E5%88%86%E5%B8%83%E5%86%B3%E7%AD%96%E7%9A%84%E4%BC%98%E5%8C%96%E6%96%B9%E6%A1%88/index.html">
+<meta property="og:site_name" content="最忆是江南">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;编码缓存通过将每个文件的不同编码段分布在多个缓存节点中，有效地利用了无线网络中的累积存储大小。本文目标是使用深度学习工具找到一种无线编码缓存策略，以最小化总折扣网络成本，其中包括传输延迟和缓存替换成本。难点在于未知的时变内容流行度以及连续动作空间的高维度。 具体工作：  出了一种基于聚类的长短期记忆（C-LTSM）方法来使用历史请求信息来预测内容请求的数量。这种方法通过聚类">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202207081739838.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202207081739838.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202207081807288.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202207081826623.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202207081827822.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202207081913971.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202207081914951.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202207081918828.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202207082020281.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202207082033432.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202207082047584.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202207082049165.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202207082119121.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202207082122272.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202207082124072.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202207082125475.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202207082132835.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202207082159875.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202207082207312.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202207082211551.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202207082211489.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202207082212006.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202207082213384.png">
+<meta property="article:published_time" content="2022-07-09T00:43:23.781Z">
+<meta property="article:modified_time" content="2022-07-09T00:42:49.502Z">
+<meta property="article:author" content="Lrk612">
+<meta property="article:tag" content="5G">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="Deep Learning">
+<meta property="article:tag" content="Reinforcement Learning">
+<meta property="article:tag" content="6G">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202207081739838.png">
+
+<link rel="canonical" href="https://sharp-rookie.github.io/2022/07/09/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91%E4%B8%80%E7%A7%8D%E7%BC%96%E7%A0%81%E7%BC%93%E5%AD%98%E5%88%86%E5%B8%83%E5%86%B3%E7%AD%96%E7%9A%84%E4%BC%98%E5%8C%96%E6%96%B9%E6%A1%88/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>一种编码缓存分布决策的优化方案 | 最忆是江南</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+        <a target="_blank" rel="noopener" href="https://github.com/Sharp-rookie" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">最忆是江南</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Love actually is all around</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th-list fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-papers">
+
+    <a href="/papers/" rel="section"><i class="fa fa-book fa-fw"></i>论文阅读</a>
+
+  </li>
+        <li class="menu-item menu-item-friendlink">
+
+    <a href="/friendlink/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="fa fa-download fa-fw"></i>资源</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://sharp-rookie.github.io/2022/07/09/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91%E4%B8%80%E7%A7%8D%E7%BC%96%E7%A0%81%E7%BC%93%E5%AD%98%E5%88%86%E5%B8%83%E5%86%B3%E7%AD%96%E7%9A%84%E4%BC%98%E5%8C%96%E6%96%B9%E6%A1%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Lrk612">
+      <meta itemprop="description" content="Lrk's blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="最忆是江南">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          一种编码缓存分布决策的优化方案
+        </h1>
+
+        <div class="post-meta">
+         
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-09 08:43:23" itemprop="dateCreated datePublished" datetime="2022-07-09T08:43:23+08:00">2022-07-09</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">论文阅读</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2022/07/09/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91%E4%B8%80%E7%A7%8D%E7%BC%96%E7%A0%81%E7%BC%93%E5%AD%98%E5%88%86%E5%B8%83%E5%86%B3%E7%AD%96%E7%9A%84%E4%BC%98%E5%8C%96%E6%96%B9%E6%A1%88/" class="post-meta-item leancloud_visitors" data-flag-title="一种编码缓存分布决策的优化方案" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/07/09/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91%E4%B8%80%E7%A7%8D%E7%BC%96%E7%A0%81%E7%BC%93%E5%AD%98%E5%88%86%E5%B8%83%E5%86%B3%E7%AD%96%E7%9A%84%E4%BC%98%E5%8C%96%E6%96%B9%E6%A1%88/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/07/09/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91%E4%B8%80%E7%A7%8D%E7%BC%96%E7%A0%81%E7%BC%93%E5%AD%98%E5%88%86%E5%B8%83%E5%86%B3%E7%AD%96%E7%9A%84%E4%BC%98%E5%8C%96%E6%96%B9%E6%A1%88/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>&emsp;&emsp;编码缓存通过将每个文件的不同编码段分布在多个缓存节点中，有效地利用了无线网络中的累积存储大小。本文目标是使用深度学习工具找到一种无线编码缓存策略，以最小化总折扣网络成本，其中包括传输延迟和缓存替换成本。难点在于未知的时变内容流行度以及连续动作空间的高维度。</p>
+<p><strong>具体工作：</strong></p>
+<ul>
+<li>出了一种基于<strong>聚类</strong>的<strong>长短期记忆</strong>（C-LTSM）方法来使用历史请求信息来预测内容请求的数量。这种方法通过聚类利用不同文件之间的历史请求信息的相关性。</li>
+<li>基于预测结果，我们提出了一种有<strong>监督</strong>的<strong>深度确定性策略梯度</strong>（SDDPG）方法。一方面，这种方法可以通过使用 actor-critic 架构来学习连续动作空间中的缓存策略。另一方面，它通过基于近似问题的解决方案对参与者网络进行预训练来加速学习过程，从而最小化每个时隙的成本。</li>
+</ul>
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/202207081739838.png" alt="image-20220708173948693" style="zoom: 35%;" /></p>
+<p><strong>原文</strong></p>
+<p><a target="_blank" rel="noopener" href="https://lrk612.com/resources/Deep_Learning_for_Wireless_Coded_Caching_With_Unknown_and_Time-Variant_Content_Popularity.pdf">Deep Learning for Wireless Coded Caching With Unknown and Time-Variant Content Popularity</a></p>
+<span id="more"></span>
+<p>&nbsp;</p>
+<h1 id="文章概述"><a href="#文章概述" class="headerlink" title="文章概述"></a>文章概述</h1><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>移动设备上支持富媒体的应用程序快速发展，例如 YouTube 和优酷。大量的数据请求和庞大的数据量给核心网和无线接入网带来了相当大的流量负担。</p>
+<p>一种有前途的解决方案，称为<strong>边缘缓存</strong>，是在网络资源丰富的非高峰期将流行内容存储在无线网络边缘。在高峰流量期间，缓存的内容可以在用户请求时立即提供服务，而无需从核心网络获取。这样，边缘缓存可以有效减轻流量负担，减少传输延迟，提升用户体验，受到了学术界和工业界的极大关注。</p>
+<blockquote>
+<p>感觉跟电脑里的缓存作用一样</p>
+</blockquote>
+<p>现有的缓存技术大致可以分为两类，<strong>非编码缓存</strong>和<strong>编码缓存</strong>。在未编码的缓存中，每个文件要么完全缓存而不分区，要么根本不缓存在缓存节点中。在编码缓存中，每个文件可以划分为多个段，然后使用例如最大距离可分离（MDS）代码对这些段进行编码，并在不同节点中分布缓存。一般来说，编码缓存优于未编码缓存，因为前者可以更好地利用不同节点之间的累积缓存大小。</p>
+<blockquote>
+<p>文件分段的依据是？</p>
+<p>分布在不同节点，那怎么聚合、然后发给用户？</p>
+<p>最大距离可分离代码（MDS）是什么？</p>
+</blockquote>
+<p>边缘缓存的使用高度依赖于对内容流行度的了解，但是这通常是事先未知的。由于新内容的到来和无线环境中的用户移动性，内容流行度也可能随时间和空间动态变化。为此，机器学习已经成为一种强大的工具，可以根据历史观察预测内容流行度或用户请求，然后做出缓存决策以优化无线网络中的某些目标函数。</p>
+<blockquote>
+<p>用机器学习是为了更好地预测用户请求的流行内容 ——&gt; 基于历史数据的预测（回归）问题</p>
+</blockquote>
+<h2 id="难点"><a href="#难点" class="headerlink" title="难点"></a>难点</h2><ul>
+<li><p>首先，无线网络中配备缓存的基站或辅助节点通常只能访问用户请求信息，而不是用户或文件上下文。因此，不能应用用于推荐系统的传统上下文感知预测算法。</p>
+<blockquote>
+<p>基站不保存历史信息，只感知当前内容 ——&gt; 缺乏时序序列</p>
+</blockquote>
+</li>
+<li><p>其次，由于覆盖范围有限，每个基站只能与有限数量的用户进行通信。因此，与基于云的学习相比，每个基站可用的数据集非常稀疏，因此难以准确预测用户请求。</p>
+<blockquote>
+<p>单个基站可观测到的数据集中，样本稀疏、数量少 ——&gt; 解决方法：K-均值聚类</p>
+</blockquote>
+</li>
+<li><p>第三，流行度预测和缓存放置策略是紧密耦合的，因为缓存决策会影响流行度预测的准确性，而预测的流行度又会影响缓存决策。</p>
+<blockquote>
+<p>预测 与 决策 相互影响，相当于联合优化问题 ——&gt; 选择做解耦，还是端到端训练呢？</p>
+<p><strong>如果是解耦逐一求解，那如何处理二者相互影响的作用呢？保证解耦不再相互影响？还是本文的解就是联合最优解呢？</strong></p>
+</blockquote>
+</li>
+<li><p>最后，在多单元网络中，多个节点之间的缓存决策应协同做出，因此受到维数灾难的影响</p>
+<blockquote>
+<p><strong>决策问题中，多节点的联合动作空间随节点数量增长，维度爆炸 ——&gt; 太熟悉了有没有啊 hhhh~</strong></p>
+</blockquote>
+</li>
+</ul>
+<h2 id="本文工作"><a href="#本文工作" class="headerlink" title="本文工作"></a>本文工作</h2><p>本文通过将深度学习技术应用于多小区网络中的无线编码缓存来解决上述一些挑战（内容流行度未知且随时间变化）。</p>
+<p>在 [3] 中的网络模型的基础上，根据机器学习算法预测的流行内容和用户请求，对每个缓存节点的缓存内容进行更新。</p>
+<blockquote>
+<p>[3]：每个文件首先由 MDS 代码编码，然后分布存储在不同的缓存节点。只要从附近的缓存节点或宏基站收集到足够数量的文件编码位，用户就可以恢复其请求的文件。</p>
+</blockquote>
+<p>本文首先提出了一种基于聚类的长短期记忆（C-LSTM）预测框架，通过使用聚类和循环神经网络（RNN）在线预测内容请求的数量。该框架将历史请求模式作为内容特征进行聚类。聚类过程利用了所有文件之间历史请求模式的相关性。然后将聚类结果发送到一组 LSTM 网络，以预测每个 LSTM 网络对应一个聚类的内容请求。</p>
+<blockquote>
+<p>思想：先聚类，然后每一类都维护一个LSTM用于预测</p>
+<p>可行性：属于同一主题的文件的请求模式通常是相似的（无监督聚类依据）、文件请求模式通常是周期性的（LSTM预测依据）</p>
+</blockquote>
+<p>我们的第二个贡献是提出了一种有监督的深度确定性策略梯度 (SDDPG) 方法，以根据预测的内容请求决策每个文件的多少编码部分应存储在每个缓存节点中。</p>
+<blockquote>
+<p>DDPG给出文件不同编码部分分别应该存在哪个缓存节点中</p>
+<p><strong>为加速学习过程，文章用近似问题的解决方案生成数据集，对DDPG做有监督的预训练 ——&gt; 太熟悉了！</strong></p>
+<p>优化目标：最小化 传输延迟 和 缓存替换成本 的总成本</p>
+<p>可行性：<strong>问题属于非平稳马尔可夫决策过程，状态和动作空间都连续且高维，适合DDPG ——&gt; 太熟悉了！</strong></p>
+<p>兼容性调整：为了保证 actor 网络的输出满足每个缓存节点的缓存容量约束，使用sigmoid函数作为输出层的激活函数，并在输出层之后添加线性缩放</p>
+</blockquote>
+<h1 id="相关工作"><a href="#相关工作" class="headerlink" title="相关工作"></a>相关工作</h1><p>针对<strong>静态</strong>内容流行度的预测和缓存策略研究。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>索引</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[4]、[5]</td>
+<td>迁移学习：通过利用从代理域获得的先验信息来改进流行度分布的估计</td>
+</tr>
+<tr>
+<td>[6]</td>
+<td>考虑用户内容流行度的多样性，用 DDPG 根据环境的反馈来学习缓存策略</td>
+</tr>
+<tr>
+<td>[7]</td>
+<td>基于协同过滤估计全局内容流行度，用于缓存决策，以最大化小蜂窝网络中的平均用户请求满意度</td>
+</tr>
+<tr>
+<td>[8]</td>
+<td>在由移动边缘缓存和支持缓存的 D2D 通信组成的框架下，最小化系统流量传输的能量成本</td>
+</tr>
+<tr>
+<td>[9]</td>
+<td>提出了一种基于 LSTM 和外部存储器的方案来增强基站的决策能力</td>
+</tr>
+<tr>
+<td>[10]</td>
+<td>提出了一种基于深度强化学习的联合主动缓存放置和功率分配策略，其中一组节点协同服务内容请求</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>实际场景中，用户请求内容动态变化时，上述工作不再适用。</p>
+<p>针对<strong>动态</strong>内容流行度（用户偏好变化）的预测研究：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>索引</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[11]</td>
+<td>考虑用户的上下文信息，用多臂老虎机在线学习基于上下文的内容流行度</td>
+</tr>
+<tr>
+<td>[12]</td>
+<td>用线性预测模型通过利用内容特征和位置差异来估计未来的内容点击量</td>
+</tr>
+<tr>
+<td>[13]</td>
+<td>研究了内容的未来流行度与其上下文之间的关系</td>
+</tr>
+<tr>
+<td>[14]</td>
+<td>采用了两个潜在的循环神经网络（RNN）来根据用户的上下文预测用户的移动性和内容流行度</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>如果缓存节点由移动网络运营商运营，则只能观察本地内容请求，无法获得用户上下文和内容特征信息，以上工作不再适用。</p>
+<p>只使用在实际系统中易于观察的历史内容请求的工作有：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>索引</th>
+<th>内容</th>
+<th>对比本文</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[15]</td>
+<td>提出一种分组线性回归模型，分组依据是请求内容的持续时长；用历史请求估计未来请求，然后用强化学习给出缓存策略</td>
+<td>本文工作利用文件请求模式之间的相关性来分组聚类，而不是持续时长</td>
+</tr>
+<tr>
+<td>[16]-[19]</td>
+<td>将 LSTM 网络应用于内容流行度预测，每个时间序列的独立预测（不关注彼此相似性）</td>
+<td>本文工作中先聚类，用相同的 LSTM 网络处理相似的文件请求模式，提高准确率</td>
+</tr>
+<tr>
+<td>[20]-[21]</td>
+<td>不做预测，直接强化学习端到端学习缓存策略</td>
+<td>——</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>还有工作研究了未知内容流行度的编码缓存的优化：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>索引</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[22]</td>
+<td>用多臂老虎机来学习由 Zipf 分布建模的内容流行度，然后优化编码缓存放置在小型蜂窝网络中</td>
+</tr>
+<tr>
+<td>[23]</td>
+<td>提出了一种基于深度强化学习的方法，以最大化启用编码缓存的雾无线电接入网络中的成功传输概率</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>上述工作都只关注临时缓存决策，而不是长期缓存策略。而本文将缓存替换成本考虑在内，最小化网络传输延迟和替换成本的总成本</p>
+<p>此外，还有许多工作将深度学习应用于各种通信任务。例如[24]-[26] 中，DNN 用于解决资源分配问题。但其主要目的是降低对应优化问题的计算复杂度，没想着提高性能。但是本文使用深度学习不仅可以降低计算复杂度，还可以提高最终结果的性能。</p>
+<h1 id="本文研究的问题"><a href="#本文研究的问题" class="headerlink" title="本文研究的问题"></a>本文研究的问题</h1><h2 id="网络模型"><a href="#网络模型" class="headerlink" title="网络模型"></a>网络模型</h2><p>本文的无线缓存网络场景具有一个宏基站 (MBS)、<code>N</code> 个缓存节点和 <code>K</code> 个用户：</p>
+<ul>
+<li>节点总集：<code>N^+ = &#123;0,1,...,N &#125;</code>，其中下标 <code>n=0</code> 的表示 MBS</li>
+<li>缓存节点集：<code>N = &#123;1,2,...,N &#125;</code></li>
+<li>用户集合：<code>K = &#123;1,2,...,K&#125;</code>，其中每个用户可以代表同一区域的一组用户</li>
+<li>缓存节点有通信范围，记 <code>Nk ⊆ N+</code> 表示用户 <code>k</code> 可以通信的缓存节点集（包括 MBS）</li>
+<li>缓存节点 <code>n</code> 向用户 <code>k</code> 传输一个比特的延迟记为 <code>δkn</code>，对于 <code>n∈Nk</code> 和 <code>k∈K</code>，延迟主要取决于通信距离</li>
+<li>将用户 <code>k</code> 的通信范围 Nk 中的缓存节点按照通信比特延迟的升序排序，令 <code>(j)k</code> 表示到用户 <code>k</code> 的延迟第 <code>j</code> 短的缓存节点的索引下标</li>
+<li>设所有用户都可以从 MBS 下载文件，但单位比特延迟更长，即：<code>δk,0 &gt; δk,n, ∀n∈Nk\&#123;0&#125;</code></li>
+</ul>
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/202207081739838.png" alt="image-20220708173948693" style="zoom: 40%;" /></p>
+<center>图 1</center>
+
+<p>文件缓存与访问场景建模为：</p>
+<ul>
+<li>由 <code>F</code> 个文件组成的内容目录记为 <code>set F = &#123;1,2,...，F&#125;</code>，设每个文件具有相同长度的 <code>B</code> 位</li>
+<li>缓存节点最多存储 <code>M·B (M&lt;F)</code> 位，并且 MBS 可以访问目录中的所有文件</li>
+<li>在每个时隙 <code>t∈&#123;1,2,...&#125;</code>，用户 <code>k</code> 的需求向量为：<code>dk(t) = [dk1(t), dk2(t), ..., dkF(t)]</code>，其中 <code>dkf(t)≥0</code> 表示对文件 <code>f∈F</code> 的请求数</li>
+<li>考虑到新内容的动态到达，如果文件 <code>f</code> 在时隙 <code>t</code> 不可用，则 <code>dkf(t)=0, ∀k∈K</code></li>
+<li>记 <code>d(t) = [d1(t), d2(t), ..., dK(t)]</code> 为所有用户在时隙 <code>t</code> 的需求向量</li>
+<li>设每个时隙 <code>t</code> 的持续时间足够长，能让所有用户请求都在一个时隙内得到服务</li>
+</ul>
+<p>本文仿照 [3] 中方式，设每个文件都由无速率 MDS 代码编码，编码位独立且分布地存储在缓存节点上。使用 MDS 编码，只要从 MBS 或缓存节点以任何顺序收集 <code>B</code> 个编码位，就可以检索文件。</p>
+<ul>
+<li><p>设 <code>Λn(t) = [λ1n(t), λ2n(t), ..., λFn(t)]</code> 表示缓存节点 <code>n∈N</code> 在时隙 <code>t</code> 的缓存向量变量，其中 <code>λfn(t) ∈ [0,1]</code> 表示文件 <code>f∈F</code> 被缓存在这个节点</p>
+</li>
+<li><p>令 <code>Λ(t) = [Λ1(t), Λ2(t), ..., ΛN(t)]</code> 表示所有缓存节点的缓存向量</p>
+</li>
+<li><p>从缓存节点 <code>n∈Nk</code> 到用户 <code>k∈K</code> 的链路上下载一小部分编码比特 <code>λfn(t)B</code> 的延迟为：<code>λfn(t) * δknB</code></p>
+</li>
+<li><p>如果用户 <code>k</code> 可以在时隙 <code>t</code> 从其最佳的 <code>j</code> 个缓存节点共同存储的编码位中检索其请求的文件 <code>f</code>，则延迟由下式给出：</p>
+<p>  <img src="https://my-picture-1311448338.file.myqcloud.com/img/202207081807288.png" alt="image-20220708180726230" style="zoom: 35%;" /></p>
+<blockquote>
+<p>没理解这个公式成立的原因是什么</p>
+</blockquote>
+</li>
+<li><p>注意，只有当 <code>∑^(j−1)_(i=1) λf,(i)k &lt; 1</code> 且 <code>∑^j_(i=1) λf,(i)k ≥ 1</code> 时，用户 <code>k</code> 才能从其最佳的 <code>j</code> 个缓存节点下载完整的文件 <code>f</code></p>
+<blockquote>
+<p>没理解这句话成立的原因是什么</p>
+</blockquote>
+</li>
+<li><p>j = |Nk| 的特殊情况，用户 k 从 MBS 下载未缓存的部分，即 (j)k = 0。</p>
+</li>
+<li><p>例如图 1 中，用户 1 请求 <code>f1</code> 并接收到部分 <code>λ1,1</code> 和 <code>λ1,2</code> 的 <code>f1</code> 分别来自缓存节点 1 和 2。剩余部分 <code>(1- λ1, 1-λ1,2)</code> 从 MBS 获得。根据 [3] 中结论，用户 <code>k</code> 下载文件 <code>f</code> 的延迟为：</p>
+<p>  <img src="https://my-picture-1311448338.file.myqcloud.com/img/202207081826623.png" alt="image-20220708182658578" style="zoom:35%;" /></p>
+</li>
+<li><p>因此，在时隙 <code>t</code> 中满足所有用户请求 <code>d(t)</code> 的总传输延迟为：</p>
+<p>  <img src="https://my-picture-1311448338.file.myqcloud.com/img/202207081827822.png" alt="image-20220708182719781" style="zoom:35%;" /></p>
+</li>
+</ul>
+<p>本文还考虑了更新缓存内容的替换成本。将每个时间槽的替换成本定义为缓存文件数与所有缓存节点和文件上的前一个时间槽相比的总增量。</p>
+<ul>
+<li><p>重置成本可表示为：</p>
+<p>  <img src="https://my-picture-1311448338.file.myqcloud.com/img/202207081913971.png" alt="image-20220708191359923" style="zoom:35%;" /></p>
+</li>
+<li><p>考虑传输延迟和替换成本，本文将时隙 t 的网络成本定义为：</p>
+<p>  <img src="https://my-picture-1311448338.file.myqcloud.com/img/202207081914951.png" alt="image-20220708191415910" style="zoom:35%;" /></p>
+  <center>其中 β>0 是平衡两种成本的权重因子</center>
+
+
+
+</li>
+</ul>
+<h2 id="问题建模"><a href="#问题建模" class="headerlink" title="问题建模"></a>问题建模</h2><p>本文目标是通过优化编码缓存放置来最小化无限时长内总成本的期望，可以表述为：</p>
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/202207081918828.png" alt="image-20220708191817758" style="zoom:35%;" /></p>
+<p>其中 γ ∈ [0, 1] 是一个折扣因子，反映了未来网络成本对当前缓存决策的影响。由于在做出缓存决策 <code>Λ(t)</code> 之前无法预见每个时隙的瞬时内容请求 <code>d(t)</code>，所以问题是比较困难的。</p>
+<p>本文的求解方法在每个时隙中的总体执行顺序如图 2 所示：</p>
+<ol>
+<li>在每个时隙开始时，首先根据历史信息预测对目录中记录内容的请求数</li>
+<li>缓存决策网络根据预测的请求数量和前一个时隙的缓存状态，决定当前时隙的缓存分配</li>
+<li>在时间段内，用户提交文件请求，内容交付阶段发生</li>
+<li>内容交付后，根据实际请求更新预测模型的参数</li>
+<li>同时，缓存决策网络根据从环境中观察到的实际网络成本进行训练</li>
+</ol>
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/202207082020281.png" alt="image-20220708202038230" style="zoom:50%;" /></p>
+<center>图 2</center>
+
+
+
+<h1 id="基于聚类和-LSTM-的请求预测"><a href="#基于聚类和-LSTM-的请求预测" class="headerlink" title="基于聚类和 LSTM 的请求预测"></a>基于聚类和 LSTM 的请求预测</h1><p>传统的预测方法假设文件是独立的，因此每个文件对应一个预测网络。但是由于核心网络中的文件数量众多，这会消耗大量的计算资源。由于日常工作的特点，大部分文件请求模式都是周期性的。此外，具有相似上下文的文件通常是由同一个用户请求的，因此它们接收到的请求模式相似。</p>
+<p>在本节中，首先通过利用上述所有文件之间历史请求模式的相关性，使用 K-means 聚类对时变内容请求进行分类。然后利用 LSTM 网络来预测每个集群在每个时隙的内容请求。算法整体称为聚类 LSTM (C-LSTM) 预测方法。</p>
+<h2 id="对内容请求的-K-均值聚类"><a href="#对内容请求的-K-均值聚类" class="headerlink" title="对内容请求的 K-均值聚类"></a>对内容请求的 K-均值聚类</h2><p>由于每个用户的请求数通常很小，因此难以预测。本文改为预测每个时间段中每个文件的请求总数。设 <code>d(t) = [d1(t), d2(t), ..., dF(t)]</code> 其中 <code>df(t)</code> 表示在时隙 <code>t</code> 内所有用户对文件 <code>f∈F</code> 的预测请求数，即 <code>df(t) = ∑_(k∈K) dk,f(t)</code>。</p>
+<p>令 <code>p_tf ∈ Rρ</code> 表示文件 <code>f</code> 在时隙 <code>t</code> 的一个 <code>ρ</code> 维特征向量，定义为：</p>
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/202207082033432.png" alt="image-20220708203329389" style="zoom:35%;" /></p>
+<p>特征向量 <code>p_tf</code> 包含文件 <code>f</code> 在前 <code>ρ</code> 个时隙内的历史请求数量，其中 <code>ρ</code> 是一个超参数。为了利用所有文件之间历史请求模式的相关性进行内容请求预测，本文建议将所有文件的观察到的特征向量划分为 <code>C</code> 个集群，其中 <code>C</code> 是超参数。通过聚类，一个文件的请求预测不仅可以使用该文件的请求信息，还可以使用其他文件的请求信息，从而可以更加准确。此外，由于聚类的数量 <code>C</code> 通常远小于文件的数量 <code>F</code>，因此与每个文件的独立预测相比，每个聚类可以用来训练预测网络的样本数量大大增加。</p>
+<p>聚类步骤：</p>
+<ol>
+<li><p>为消除请求数绝对值的差异，对所有文件的特征向量各自做了归一化，方法是除以自身最大元素值</p>
+</li>
+<li><p>两个归一化后特征向量之间的相似性由其欧式距离表征</p>
+</li>
+<li><p>接下来开始聚类，先随机选择 F 个特征向量，其中的某一个作为第一个初始聚类中心 pc1</p>
+</li>
+<li><p>然后随机选择每个后续初始聚类中心，其概率与从自身到已选择的最近中心的距离成正比</p>
+</li>
+<li><p>从 t ≥ ρ + 1 的时隙开始，每次都根据最小欧式距离准则确定新特征向量的类型：</p>
+<p> <img src="https://my-picture-1311448338.file.myqcloud.com/img/202207082047584.png" alt="image-20220708204757535" style="zoom:35%;" /></p>
+</li>
+<li><p>在时隙 t 结束时，通过对集群内的特征向量求平均，来更新每个集群的中心：</p>
+<p> <img src="https://my-picture-1311448338.file.myqcloud.com/img/202207082049165.png" alt="image-20220708204927123" style="zoom:35%;" /></p>
+</li>
+</ol>
+<p>随着时隙 t 的增加，每个簇的中心逐渐趋于稳定。最后属于同一簇的特征向量之间的相关性会越来越强。相关性反映了文件请求数变化趋势的相似性。</p>
+<h2 id="LSTM-预测用户请求"><a href="#LSTM-预测用户请求" class="headerlink" title="LSTM 预测用户请求"></a>LSTM 预测用户请求</h2><p>基于上一小节的聚类结果，本文提出了一种基于集群的 LSTM 预测框架，可以在线更新网络参数，从而逐步提高预测的准确性。</p>
+<p>对于每个集群，使用具有三个 LSTM 层、一个输入层和一个输出层的网络来进行预测。令 Li(·) 表示对应于簇 i 的 LSTM 网络的输出函数，参数为： θi。请求数的预测值  <code>̃df (t)</code> 为：</p>
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/202207082119121.png" alt="image-20220708211940077" style="zoom: 65%;" /></p>
+<p>为了提高训练的稳定性，本文使用回放缓冲区来记录训练样本，把每次的（输入向量、预测向量、真实向量）组合存入回放缓冲区。每次从回放缓冲区中均匀地采样一个小批量来更新 LSTM 网络。损失函数定义为：</p>
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/202207082122272.png" alt="image-20220708212253232" style="zoom:55%;" /></p>
+<p>LSTM 预测的整体示意图如图 3 所示。随着时隙 <code>t</code> 的增加，存储在同一个重放缓冲区中的归一化特征向量变得越来越相似，这使得 LSTM 网络更容易学习。</p>
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/202207082124072.png" alt="image-20220708212424003" style="zoom:50%;" /></p>
+<center>图 3</center>
+
+<p>聚合和预测的完整训练步骤如下：</p>
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/202207082125475.png" alt="image-20220708212546400" style="zoom: 50%;" /></p>
+<h1 id="基于有监督-DDPG-的缓存决策"><a href="#基于有监督-DDPG-的缓存决策" class="headerlink" title="基于有监督 DDPG 的缓存决策"></a>基于有监督 DDPG 的缓存决策</h1><h2 id="DDPG-训练框架"><a href="#DDPG-训练框架" class="headerlink" title="DDPG 训练框架"></a>DDPG 训练框架</h2><p>优化问题可以看作是一个可以用 RL 解决的实时控制问题。 RL 的基本要素定义如下：</p>
+<ul>
+<li><p>状态：<code>st = [̃d(t), Λ(t − 1)]</code> 其中  <code>̃d(t)</code> 是在时隙 <code>t</code> 对文件的预测请求数， <code>Λ(t − 1)</code> 是前一个时隙的缓存状态</p>
+</li>
+<li><p>动作：<code>at = Λ(t)</code>，表示缓存节点的缓存向量</p>
+</li>
+<li><p>奖励：在时间槽 t 结束时观察到的网络成本的负数 <code>r_t(st, at) = -C(t)</code></p>
+</li>
+<li><p>回报：时间槽 t 的回报定义为未来回报总和：</p>
+<p>  <img src="https://my-picture-1311448338.file.myqcloud.com/img/202207082132835.png" alt="image-20220708213233784" style="zoom:35%;" /></p>
+</li>
+</ul>
+<p>令 <code>μ : S → A</code> 表示将任何状态 <code>s∈S</code> 映射到任何动作 <code>a∈A</code> 的策略。本文将优化问题建模为具有初始状态分布 <code>p(s1)</code> 的非平稳马尔可夫决策过程和过渡动力学 <code>p(st+1|st, μ(st))</code>。目标是从初始分布 <code>Jμ = Eri, si∼E [R1]</code> 中学习最大化预期奖励的策略，其中 <code>E</code> 代表环境。由于状态和动作都是高维且连续的，本文采用了 DDPG。</p>
+<p>为了更好地利用DDPG算法解决缓存决策问题，本文特别设计了 actor 网络和 critic 网络的结构。对于actor网络，为了保证actor输出满足缓存约束，使用sigmoid作为输出层的激活函数。此外，为了满足缓存容量限制，向每个 actor 的输出引入了缩放过程，缩放后缓存节点 n 对应的缓存向量为：</p>
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/202207082159875.png" alt="image-20220708215952819" style="zoom:35%;" /></p>
+<p>acotr结构如图所示。</p>
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/202207082207312.png" alt="image-20220708220715247" style="zoom:45%;" /></p>
+<center>图 4</center>
+
+<p>对于critic网络，由于输入类型和维度不同，即 s_t 和 a_t，本文将第一个隐藏层的神经元分成两部分，分别对 s_t 和 a_t 进行特征提取。</p>
+<h2 id="有监督预训练"><a href="#有监督预训练" class="headerlink" title="有监督预训练"></a>有监督预训练</h2><p>与大多数无模型强化学习算法一样，DDPG 通常需要大量训练集才能找到解决方案。此外，本文问题中的奖励函数涉及传输延迟和替换成本，因此难以学习。为了解决这些问题，在本节中使用监督学习来预训练 actor 和 cirtic 网络。训练样本是从通过将实际请求与预测请求近似来最小化每个时隙网络成本而不是总网络成本的问题的解决方案生成的。</p>
+<p>首先根据每个用户在前一个时隙的实际请求数，将预测的请求 <code>̃d(t)</code> 分配给每个用户。预测的传输延迟计算为</p>
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/202207082211551.png" alt="image-20220708221123500" style="zoom:50%;" /></p>
+<p>然后将原始问题解耦为一系列以 <code>t</code> 为索引的子问题。每个子问题都是在当前时隙最小化网络成本，公式为：</p>
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/202207082211489.png" alt="image-20220708221153447" style="zoom:50%;" /></p>
+<p>这是一个可以有效解决的凸问题。问题的参数 <code>[̃d(t), Λ(t − 1)]</code> 和优化变量 <code>Λ(t)</code> 分别对应于 actor 网络的输入 <code>s_t</code> 和输出 <code>a_t</code>。由此对 actor 网络进行预训练。训练集的第 <code>t</code> 个训练样本 <code>(xt, yt)</code> 定义为 <code>((̃d(t), Λ(t − 1)), Λ∗(t))</code> ，其中 <code>Λ∗(t)</code> 是最优解。损失函数为：</p>
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/202207082212006.png" alt="image-20220708221238972" style="zoom:35%;" /></p>
+<p>对 actor 网络预训练后，使用 actor 网络的输出来预训练 critic 网络。方法与DDPG算法相同，只是不更新 actor 网络权重。使用第一个时隙进行预训练。在预训练之后，由于此子问题的解决方案仅对应近似问题而不是原始问题，因此使用 DDPG 在预训练网络的基础上进一步训练对本文问题的求解。</p>
+<p>有监督DDPG的完整训练步骤如下：</p>
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/202207082213384.png" alt="image-20220708221339306" style="zoom:60%;" /></p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Lrk612
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://sharp-rookie.github.io/2022/07/09/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91%E4%B8%80%E7%A7%8D%E7%BC%96%E7%A0%81%E7%BC%93%E5%AD%98%E5%88%86%E5%B8%83%E5%86%B3%E7%AD%96%E7%9A%84%E4%BC%98%E5%8C%96%E6%96%B9%E6%A1%88/" title="一种编码缓存分布决策的优化方案">https://sharp-rookie.github.io/2022/07/09/【论文】一种编码缓存分布决策的优化方案/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/5G/" rel="tag"># 5G</a>
+              <a href="/tags/AI/" rel="tag"># AI</a>
+              <a href="/tags/Deep-Learning/" rel="tag"># Deep Learning</a>
+              <a href="/tags/Reinforcement-Learning/" rel="tag"># Reinforcement Learning</a>
+              <a href="/tags/6G/" rel="tag"># 6G</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/06/25/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91%E4%B8%80%E7%A7%8D%E4%BA%BA%E8%84%B8%E5%9B%BE%E7%89%87%E6%81%A2%E5%A4%8D%E7%9A%84%E8%9E%8D%E5%90%88%E6%96%B9%E6%A1%88/" rel="prev" title="一种人脸图像恢复的融合方案">
+      <i class="fa fa-chevron-left"></i> 一种人脸图像恢复的融合方案
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E6%A6%82%E8%BF%B0"><span class="nav-text">文章概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9A%BE%E7%82%B9"><span class="nav-text">难点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E6%96%87%E5%B7%A5%E4%BD%9C"><span class="nav-text">本文工作</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C"><span class="nav-text">相关工作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%AC%E6%96%87%E7%A0%94%E7%A9%B6%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-text">本文研究的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B"><span class="nav-text">网络模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%BB%BA%E6%A8%A1"><span class="nav-text">问题建模</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E8%81%9A%E7%B1%BB%E5%92%8C-LSTM-%E7%9A%84%E8%AF%B7%E6%B1%82%E9%A2%84%E6%B5%8B"><span class="nav-text">基于聚类和 LSTM 的请求预测</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E5%86%85%E5%AE%B9%E8%AF%B7%E6%B1%82%E7%9A%84-K-%E5%9D%87%E5%80%BC%E8%81%9A%E7%B1%BB"><span class="nav-text">对内容请求的 K-均值聚类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LSTM-%E9%A2%84%E6%B5%8B%E7%94%A8%E6%88%B7%E8%AF%B7%E6%B1%82"><span class="nav-text">LSTM 预测用户请求</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E6%9C%89%E7%9B%91%E7%9D%A3-DDPG-%E7%9A%84%E7%BC%93%E5%AD%98%E5%86%B3%E7%AD%96"><span class="nav-text">基于有监督 DDPG 的缓存决策</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#DDPG-%E8%AE%AD%E7%BB%83%E6%A1%86%E6%9E%B6"><span class="nav-text">DDPG 训练框架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%89%E7%9B%91%E7%9D%A3%E9%A2%84%E8%AE%AD%E7%BB%83"><span class="nav-text">有监督预训练</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Lrk612"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Lrk612</p>
+  <div class="site-description" itemprop="description">Lrk's blog</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">29</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.google.com/" title="https:&#x2F;&#x2F;www.google.com" rel="noopener" target="_blank">Google</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://arxiv.org/" title="https:&#x2F;&#x2F;arxiv.org&#x2F;" rel="noopener" target="_blank">arXiv</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://ieeexplore.ieee.org/Xplore/home.jsp" title="https:&#x2F;&#x2F;ieeexplore.ieee.org&#x2F;Xplore&#x2F;home.jsp" rel="noopener" target="_blank">IEEE Xplore</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        <!-- 访问量 -->
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客数<span id="busuanzi_value_site_uv"></span>人</span>
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+$(document).ready(function() {
+
+    var int = setInterval(fixCount, 50);  // 50ms周期检测函数
+    var countOffset = 20000;  // 初始化首次数据
+
+    function fixCount() {            
+       if (document.getElementById("busuanzi_container_site_pv").style.display != "none")
+        {
+            $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + countOffset); 
+            clearInterval(int);
+        }                  
+        if ($("#busuanzi_container_site_pv").css("display") != "none")
+        {
+            $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + countOffset); // 加上初始数据 
+            clearInterval(int); // 停止检测
+        }  
+    }
+       	
+});
+</script> 
+
+
+<!-- 版权 -->
+<div class="copyright">
+  
+  &copy; 2021-12-1 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lrk612</span>
+</div>
+
+<!-- ICP备案 -->
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">ICP备案 </a>
+      <img src="https://my-picture-1311448338.file.myqcloud.com/img/20211209170739.png" style="display: inline-block;"><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=2021035798" rel="noopener" target="_blank">豫ICP备2021035798号 </a>
+  </div>
+
+<!-- 不知道是什么 -->
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'fH6OdGBcCG8D6jC8NeeJlX9b-gzGzoHsz',
+      appKey     : '1UoIb6vszMw6wl0n7kreb4Xz',
+      placeholder: "Just go go ^_^",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+    var infoEle = document.querySelector('#comments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0){
+      infoEle.childNodes.forEach(function(item) {
+        item.parentNode.removeChild(item);
+      });
+    }
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
