@@ -216,6 +216,105 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://sharp-rookie.github.io/2022/07/23/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91%E4%B8%80%E7%A7%8D%E7%AB%AF%E5%88%B0%E7%AB%AF%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E8%A7%86%E9%A2%91%E5%8E%8B%E7%BC%A9%E6%96%B9%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Lrk612">
+      <meta itemprop="description" content="Lrk's blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="最忆是江南">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/07/23/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91%E4%B8%80%E7%A7%8D%E7%AB%AF%E5%88%B0%E7%AB%AF%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E8%A7%86%E9%A2%91%E5%8E%8B%E7%BC%A9%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">一种端到端的深度学习视频压缩方法</a>
+        </h2>
+
+        <div class="post-meta">
+         
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-23 15:01:53" itemprop="dateCreated datePublished" datetime="2022-07-23T15:01:53+08:00">2022-07-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">论文阅读</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2022/07/23/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91%E4%B8%80%E7%A7%8D%E7%AB%AF%E5%88%B0%E7%AB%AF%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E8%A7%86%E9%A2%91%E5%8E%8B%E7%BC%A9%E6%96%B9%E6%B3%95/" class="post-meta-item leancloud_visitors" data-flag-title="一种端到端的深度学习视频压缩方法" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/07/23/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91%E4%B8%80%E7%A7%8D%E7%AB%AF%E5%88%B0%E7%AB%AF%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E8%A7%86%E9%A2%91%E5%8E%8B%E7%BC%A9%E6%96%B9%E6%B3%95/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/07/23/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91%E4%B8%80%E7%A7%8D%E7%AB%AF%E5%88%B0%E7%AB%AF%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E8%A7%86%E9%A2%91%E5%8E%8B%E7%BC%A9%E6%96%B9%E6%B3%95/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>&emsp;&emsp;传统的视频压缩方法使用预测编码架构，并对运动信息和残差信息进行编码。而本文提出了第一个端到端视频压缩深度模型，该模型联合优化了所有视频压缩方法。采用基于学习的光流估计来获取运动信息并重建当前帧，然后使用两个自动编码器风格的神经网络来压缩相应的运动和残差信息。损失函数考虑了减少压缩比特数和提高解码视频质量之间的权衡。代码发布在 <a target="_blank" rel="noopener" href="https://github.com/GuoLusjtu/DVC">https://github.com/GuoLusjtu/DVC</a></p>
+<p><img src="https://my-picture-1311448338.file.myqcloud.com/img/202207230944569.png" alt="image-20220723094419493" style="zoom: 45%;" /></p>
+<p><strong>原文</strong></p>
+<p><a target="_blank" rel="noopener" href="https://lrk612.com/resources/DVC%20An%20End-to-end%20Deep%20Video%20Compression%20Framework.pdf">DVC An End-to-end Deep Video Compression Framework</a></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/07/23/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91%E4%B8%80%E7%A7%8D%E7%AB%AF%E5%88%B0%E7%AB%AF%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E8%A7%86%E9%A2%91%E5%8E%8B%E7%BC%A9%E6%96%B9%E6%B3%95/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://sharp-rookie.github.io/2022/07/09/%E3%80%90%E8%AE%BA%E6%96%87%E3%80%91%E4%B8%80%E7%A7%8D%E7%BC%96%E7%A0%81%E7%BC%93%E5%AD%98%E5%88%86%E5%B8%83%E5%86%B3%E7%AD%96%E7%9A%84%E4%BC%98%E5%8C%96%E6%96%B9%E6%A1%88/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1138,112 +1237,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://sharp-rookie.github.io/2022/04/22/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91Matlab%EF%BC%9A%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Lrk612">
-      <meta itemprop="description" content="Lrk's blog">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="最忆是江南">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/04/22/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91Matlab%EF%BC%9A%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B/" class="post-title-link" itemprop="url">【数字图像处理】Matlab：边缘检测</a>
-        </h2>
-
-        <div class="post-meta">
-         
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-04-22 22:33:50" itemprop="dateCreated datePublished" datetime="2022-04-22T22:33:50+08:00">2022-04-22</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0-%E5%AE%9E%E9%AA%8C-%E8%AF%BE%E8%AE%BE/" itemprop="url" rel="index"><span itemprop="name">笔记&实验&课设</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2022/04/22/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91Matlab%EF%BC%9A%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B/" class="post-meta-item leancloud_visitors" data-flag-title="【数字图像处理】Matlab：边缘检测" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/04/22/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91Matlab%EF%BC%9A%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/04/22/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91Matlab%EF%BC%9A%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Matlab实验：频域数字图像增强</p>
-<ul>
-<li>点检测模板</li>
-<li>线检测模板</li>
-<li>JPEG编码</li>
-<li>图像边缘检测</li>
-<li>零交叉边缘检测</li>
-<li>马尔算子检测车牌</li>
-<li>Hough变换——线检测</li>
-</ul>
-<p><img src="https://my-picture-1311448338.file.myqcloud.com/img2/20220421222926.jpg" alt="2" style="zoom:25%;" /></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/04/22/%E3%80%90%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E3%80%91Matlab%EF%BC%9A%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1315,7 +1308,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">60</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
