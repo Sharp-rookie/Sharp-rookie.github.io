@@ -51,6 +51,7 @@
 <meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202208151024506.png">
 <meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202208131453341.png">
 <meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/20220209161905.png">
+<meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202208241338496.png">
 <meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202208131529996.png">
 <meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202208131535372.png">
 <meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202208131543783.png">
@@ -75,7 +76,7 @@
 <meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202208171326974.png">
 <meta property="og:image" content="https://my-picture-1311448338.file.myqcloud.com/img/202208171332044.png">
 <meta property="article:published_time" content="2022-08-17T13:52:24.577Z">
-<meta property="article:modified_time" content="2022-08-17T13:52:08.675Z">
+<meta property="article:modified_time" content="2022-08-24T05:38:51.818Z">
 <meta property="article:author" content="Lrk612">
 <meta property="article:tag" content="Algorithm">
 <meta property="article:tag" content="优化问题">
@@ -165,39 +166,14 @@
 
 <nav class="site-nav">
   <ul id="menu" class="main-menu menu">
-        <li class="menu-item menu-item-home">
+        <li class="menu-item menu-item-title_page">
 
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+    <a href="/title_page/" rel="section"><i class="fa fa-book fa-fw"></i>title_page</a>
 
   </li>
-        <li class="menu-item menu-item-categories">
+        <li class="menu-item menu-item-story">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th-list fa-fw"></i>分类</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
-
-  </li>
-        <li class="menu-item menu-item-papers">
-
-    <a href="/papers/" rel="section"><i class="fa fa-book fa-fw"></i>论文阅读</a>
-
-  </li>
-        <li class="menu-item menu-item-friendlink">
-
-    <a href="/friendlink/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
-
-  </li>
-        <li class="menu-item menu-item-resources">
-
-    <a href="/resources/" rel="section"><i class="fa fa-download fa-fw"></i>资源</a>
+    <a href="/story/" rel="section"><i class="fa fa-book fa-fw"></i>story</a>
 
   </li>
         <li class="menu-item menu-item-about">
@@ -427,11 +403,17 @@
 <h5 id="A3C算法：Asynchronous-Advantage-Actor-Critic"><a href="#A3C算法：Asynchronous-Advantage-Actor-Critic" class="headerlink" title="A3C算法：Asynchronous Advantage Actor-Critic"></a>A3C算法：Asynchronous Advantage Actor-Critic</h5><p><img src="https://my-picture-1311448338.file.myqcloud.com/img/20220209161905.png" alt="image-20220209161905574" style="zoom: 33%;" /></p>
 <p>更新思路：</p>
 <ul>
-<li>A3C 一开始有一个 global network。上面提到，policy network 跟 value network 是绑(tie)在一起的，它们的前几个层会被绑一起。global network 包含 policy 的部分和 value 的部分</li>
-<li>假设 global network 的参数是 θ1，这时开很多个 worker。每一个 worker 就用一张 CPU 去跑，每一个 worker 工作前都会把 global network 的参数复制过来。</li>
-<li>接下来每个 worker 的 actor 跟环境做互动，能够收集到有多样性的数据</li>
-<li>每一个 actor 跟环境互动完之后就会计算出梯度。计算出梯度以后就把梯度传回给中央控制中心，然后中央的控制中心就会拿这个梯度去更新 global network 的参数</li>
-<li>每一个 actor 就是各做各的，不管彼此，这就是所谓 “Asynchronous”</li>
+<li><p>A3C 一开始有一个 global network。上面提到，policy network 跟 value network 是绑(tie)在一起的，它们的前几个层会被绑一起。global network 包含 policy 的部分和 value 的部分</p>
+</li>
+<li><p>假设 global network 的参数是 θ1，这时开很多个 worker。每一个 worker 就用一张 CPU 去跑，每一个 worker 工作前都会把 global network 的参数复制过来。</p>
+</li>
+<li><p>接下来每个 worker 的 actor 跟环境做互动，能够收集到有多样性的数据</p>
+</li>
+<li><p>每一个 actor 跟环境互动完之后就会计算出梯度。计算出梯度以后就把梯度传回给中央控制中心，然后中央的控制中心就会拿这个梯度去更新 global network 的参数</p>
+</li>
+<li><p>每一个 actor 就是各做各的，不管彼此，这就是所谓 “Asynchronous”</p>
+<p>  <img src="https://my-picture-1311448338.file.myqcloud.com/img/202208241338496.png" alt="image-20220824133841379" style="zoom: 40%;" /></p>
+</li>
 </ul>
 <h5 id="GAN-与-Actor-Critic"><a href="#GAN-与-Actor-Critic" class="headerlink" title="GAN 与 Actor-Critic"></a>GAN 与 Actor-Critic</h5><p>其实 GAN 跟 Actor-Critic 的方法是非常类似的，有一篇 paper 叫做 <code>Connecting Generative Adversarial Network and Actor-Critic Methods</code>。GAN 跟 Actor-Critic 都是以难训练而闻名的，这篇文献上收集了各式各样的方法，告诉说怎么样可以把 GAN 训练起来，怎么样可以把 Actor-Critic 训练起来。因为做 GAN 跟 Actor-Critic 的是两群人，所以这篇 paper 里面就列出说在 GAN 上面有哪些技术是有人做过的，在 Actor-Critic 上面，有哪些技术是有人做过的。在 GAN 上面有试过的技术，可以试着应用在 Actor-Critic 上，在 Actor-Critic 上面做过的技术，可以试着应用在 GAN 上面</p>
 <h4 id="OnPolicy-策略梯度的不足"><a href="#OnPolicy-策略梯度的不足" class="headerlink" title="OnPolicy 策略梯度的不足"></a>OnPolicy 策略梯度的不足</h4><blockquote>
@@ -739,21 +721,18 @@
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
+          <a href="/archives">
           <span class="site-state-item-count">61</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-          
         <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-          
         <span class="site-state-item-count">29</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
@@ -831,7 +810,7 @@ $(document).ready(function() {
 <div class="copyright">
   
   &copy; 2021-12-1 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
