@@ -294,6 +294,7 @@ setInterval(function() {
         var futruetime =  new Date('2024/2/17').getTime(); // 未来时间转换为时间戳
         var msec = nowtime-futruetime; // 毫秒 未来时间-现在时间
         var time = (msec/1000);  // 毫秒/1000
+        time = time - 3*60*60-19*60; // 从2024.2.17 3：19开始
         var day = parseInt(time/86400); // 天  24*60*60*1000
         var hour = parseInt(time/3600)-24*day;    // 小时 60*60 总小时数-过去的小时数=现在的小时数
         var minute = parseInt(time%3600/60); // 分 -(day*24) 以60秒为一整份 取余 剩下秒数 秒数/60 就是分钟数
