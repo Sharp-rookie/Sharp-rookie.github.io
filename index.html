@@ -1,30 +1,40 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<HTML>
- <HEAD>
-  <TITLE> New Document </TITLE>
-  <META NAME="Generator" CONTENT="EditPlus">
-  <META NAME="Author" CONTENT="">
-  <META NAME="Keywords" CONTENT="">
-  <META NAME="Description" CONTENT="">
-  <style>
-  html, body {
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>动态爱心</title>
+
+<style>
+html, body {
   height: 100%;
   padding: 0;
   margin: 0;
   background: #000;
+overflow:hidden;
 }
 canvas {
   position: absolute;
   width: 100%;
   height: 100%;
 }
-  </style>
- </HEAD>
- 
- <BODY>
-  <canvas id="pinkboard"></canvas>
-  <script>
-  /*
+            h1{
+  position:absolute;
+  width: 100%;
+top:5%;
+  text-align: center;
+  font-family: 'Love Ya Like A Sister', cursive;
+  font-size: 40px;
+  color: #ea80b0;
+  padding: 0 20px;
+}
+</style>
+</head>
+<body>
+
+<canvas id="pinkboard"></canvas>
+
+<script>
+/*
  * Settings
  */
 var settings = {
@@ -36,12 +46,12 @@ var settings = {
     size:      30, // particle size in pixels
   },
 };
- 
+
 /*
- * RequestAnimationFrame polyfill by Erik Möller
+ * RequestAnimationFrame polyfill by Erik M?ller
  */
 (function(){var b=0;var c=["ms","moz","webkit","o"];for(var a=0;a<c.length&&!window.requestAnimationFrame;++a){window.requestAnimationFrame=window[c[a]+"RequestAnimationFrame"];window.cancelAnimationFrame=window[c[a]+"CancelAnimationFrame"]||window[c[a]+"CancelRequestAnimationFrame"]}if(!window.requestAnimationFrame){window.requestAnimationFrame=function(h,e){var d=new Date().getTime();var f=Math.max(0,16-(d-b));var g=window.setTimeout(function(){h(d+f)},f);b=d+f;return g}}if(!window.cancelAnimationFrame){window.cancelAnimationFrame=function(d){clearTimeout(d)}}}());
- 
+
 /*
  * Point class
  */
@@ -69,7 +79,7 @@ var Point = (function() {
   };
   return Point;
 })();
- 
+
 /*
  * Particle class
  */
@@ -106,7 +116,7 @@ var Particle = (function() {
   };
   return Particle;
 })();
- 
+
 /*
  * ParticlePool class
  */
@@ -115,7 +125,7 @@ var ParticlePool = (function() {
       firstActive = 0,
       firstFree   = 0,
       duration    = settings.particles.duration;
-  
+
   function ParticlePool(length) {
     // create and populate particle pool
     particles = new Array(length);
@@ -124,7 +134,7 @@ var ParticlePool = (function() {
   }
   ParticlePool.prototype.add = function(x, y, dx, dy) {
     particles[firstFree].initialize(x, y, dx, dy);
-    
+
     // handle circular queue
     firstFree++;
     if (firstFree   == particles.length) firstFree   = 0;
@@ -133,7 +143,7 @@ var ParticlePool = (function() {
   };
   ParticlePool.prototype.update = function(deltaTime) {
     var i;
-    
+
     // update active particles
     if (firstActive < firstFree) {
       for (i = firstActive; i < firstFree; i++)
@@ -145,14 +155,14 @@ var ParticlePool = (function() {
       for (i = 0; i < firstFree; i++)
         particles[i].update(deltaTime);
     }
-    
+
     // remove inactive particles
     while (particles[firstActive].age >= duration && firstActive != firstFree) {
       firstActive++;
       if (firstActive == particles.length) firstActive = 0;
     }
-    
-    
+
+
   };
   ParticlePool.prototype.draw = function(context, image) {
     // draw active particles
@@ -169,7 +179,7 @@ var ParticlePool = (function() {
   };
   return ParticlePool;
 })();
- 
+
 /*
  * Putting it all together
  */
@@ -178,7 +188,7 @@ var ParticlePool = (function() {
       particles = new ParticlePool(settings.particles.length),
       particleRate = settings.particles.length / settings.particles.duration, // particles/sec
       time;
-  
+
   // get point on heart with -PI <= t <= PI
   function pointOnHeart(t) {
     return new Point(
@@ -186,7 +196,7 @@ var ParticlePool = (function() {
       130 * Math.cos(t) - 50 * Math.cos(2 * t) - 20 * Math.cos(3 * t) - 10 * Math.cos(4 * t) + 25
     );
   }
-  
+
   // creating the particle image using a dummy canvas
   var image = (function() {
     var canvas  = document.createElement('canvas'),
@@ -219,20 +229,20 @@ var ParticlePool = (function() {
     image.src = canvas.toDataURL();
     return image;
   })();
-  
+
   // render that thing!
   function render() {
     // next animation frame
     requestAnimationFrame(render);
-    
+
     // update time
     var newTime   = new Date().getTime() / 1000,
         deltaTime = newTime - (time || newTime);
     time = newTime;
-    
+
     // clear canvas
     context.clearRect(0, 0, canvas.width, canvas.height);
-    
+
     // create new particles
     var amount = particleRate * deltaTime;
     for (var i = 0; i < amount; i++) {
@@ -240,25 +250,56 @@ var ParticlePool = (function() {
       var dir = pos.clone().length(settings.particles.velocity);
       particles.add(canvas.width / 2 + pos.x, canvas.height / 2 - pos.y, dir.x, -dir.y);
     }
-    
+
     // update and draw particles
     particles.update(deltaTime);
     particles.draw(context, image);
   }
-  
+
   // handle (re-)sizing of the canvas
   function onResize() {
     canvas.width  = canvas.clientWidth;
     canvas.height = canvas.clientHeight;
   }
   window.onresize = onResize;
-  
+
   // delay rendering bootstrap
   setTimeout(function() {
     onResize();
     render();
   }, 10);
-})(document.getElementById('pinkboard'));
-  </script>
- </BODY>
-</HTML>
+})(document.getElementById('pinkboard'));</script>
+<h1 id="h1"></h1>
+<b style="  position:absolute;
+  width: 50%;
+top:90%;
+left:24%;
+  text-align: center;
+  transform:translateY(-50%);
+  font-family: 'Love Ya Like A Sister', cursive;
+  font-size: 40px;
+  color: #ea80b0;
+  padding: 0 20px;">我喜欢你，喜欢你胜过其他所有</b>
+<audio autoplay="autopaly" loop="loop" id="audios" preload="auto">
+    <source src="http://music.163.com/song/media/outer/url?id=526464145.mp3" />
+</audio>
+<!-- <script>
+window.onload=function starttime(){
+setInterval(function() {
+				time();
+			}, 1000);
+}
+    function time() {
+        var nowtime = new Date().getTime(); // 现在时间转换为时间戳
+        var futruetime =  new Date('2024/2/17').getTime(); // 未来时间转换为时间戳
+        var msec = nowtime-futruetime; // 毫秒 未来时间-现在时间
+        var time = (msec/1000);  // 毫秒/1000
+        var day = parseInt(time/86400); // 天  24*60*60*1000
+        var hour = parseInt(time/3600)-24*day;    // 小时 60*60 总小时数-过去的小时数=现在的小时数
+        var minute = parseInt(time%3600/60); // 分 -(day*24) 以60秒为一整份 取余 剩下秒数 秒数/60 就是分钟数
+        var second = parseInt(time%60);  // 以60秒为一整份 取余 剩下秒数
+        document.getElementById("h1").innerHTML = "我们在一起：<br>"+day+"天"+hour+"小时"+minute+"分"+second+"秒啦！";
+    }
+</script> -->
+</body>
+</html>
